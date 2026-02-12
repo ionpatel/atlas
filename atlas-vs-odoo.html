@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas vs Odoo — Complete Feature Comparison</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #111111;
+    --card: #1a1a1a;
+    --elevated: #222222;
+    --border: #2a2a2a;
+    --muted: #888888;
+    --dim: #555555;
+    --warm: #f5f0eb;
+    --accent: #CDB49E;
+    --accent-hover: #d4c0ad;
+    --accent-muted: #3a3028;
+    --green: #34d399;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --violet: #a78bfa;
+    --amber: #fbbf24;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--warm);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+
+  /* slides */
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-inner { max-width: 1100px; width: 100%; position: relative; z-index: 2; }
+  .slide:nth-child(even) { background: #0e0e0e; }
+
+  /* ambient */
+  .glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* typography */
+  h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; }
+  h2 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; }
+  h3 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+  .subtitle { color: var(--muted); font-size: 1.15rem; max-width: 650px; line-height: 1.7; }
+  .label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); }
+  .big-number { font-size: 4rem; font-weight: 900; letter-spacing: -0.04em; }
+  .accent { color: var(--accent); }
+  .green { color: var(--green); }
+  .red { color: var(--red); }
+  .strike { text-decoration: line-through; color: #444; text-decoration-color: var(--red); }
+
+  /* cards */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.4s ease;
+  }
+  .card:hover { border-color: rgba(205,180,158,0.2); }
+
+  /* grid */
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .slide { padding: 60px 24px; }
+  }
+
+  /* comparison table */
+  .compare-table { width: 100%; border-collapse: collapse; }
+  .compare-table th, .compare-table td {
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  .compare-table th { color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600; }
+  .compare-table th:nth-child(2) { color: var(--accent); }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .compare-table td:nth-child(2) { font-weight: 600; }
+
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: #444; }
+  .partial { color: var(--amber); font-size: 0.8rem; }
+
+  /* badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .badge-accent { background: var(--accent-muted); color: var(--accent); border: 1px solid rgba(205,180,158,0.15); }
+  .badge-green { background: rgba(52,211,153,0.1); color: var(--green); border: 1px solid rgba(52,211,153,0.2); }
+  .badge-red { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+
+  /* progress bar */
+  .progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--elevated);
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  /* divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 40px 0;
+  }
+
+  /* nav dots */
+  .nav-dots {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 100;
+  }
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nav-dot.active { background: var(--accent); transform: scale(1.4); }
+
+  /* category row */
+  .cat-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(42,42,42,0.5);
+  }
+  .cat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .cat-status {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* animate on scroll */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* footer */
+  footer {
+    padding: 40px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: var(--dim);
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav dots -->
+<div class="nav-dots" id="navDots"></div>
+
+<!-- ═══════════ SLIDE 1: TITLE ═══════════ -->
+<div class="slide" id="s1">
+  <div class="glow" style="width:600px;height:400px;background:rgba(205,180,158,0.04);top:-100px;right:-100px"></div>
+  <div class="slide-inner" style="text-align:center">
+    <div class="fade-up">
+      <div class="badge badge-accent" style="margin-bottom:32px">⚡ Feature Comparison 2026</div>
+      <h1>
+        <span class="accent">Atlas</span> vs Odoo
+      </h1>
+      <p class="subtitle" style="margin:24px auto 0;max-width:600px">
+        A complete side-by-side analysis of features, pricing, and capabilities.
+        Everything Odoo does — Atlas does better, cheaper, and faster.
+      </p>
+      <div style="margin-top:48px;display:flex;align-items:center;justify-content:center;gap:40px">
+        <div>
+          <div style="width:64px;height:64px;border-radius:16px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.5rem;color:var(--bg);margin:0 auto">A</div>
+          <p style="margin-top:12px;font-weight:600">Atlas ERP</p>
+          <p style="color:var(--dim);font-size:0.8rem">$9/user/mo</p>
+        </div>
+        <span style="font-size:2rem;color:var(--dim)">vs</span>
+        <div>
+          <div style="width:64px;height:64px;border-radius:16px;background:var(--elevated);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto">🟣</div>
+          <p style="margin-top:12px;font-weight:600;color:var(--muted)">Odoo</p>
+          <p style="color:var(--dim);font-size:0.8rem">$24.90-49/user/mo</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SLIDE 2: PRICING ═══════════ -->
+<div class="slide" id="s2">
+  <div class="slide-inner">
+    <div class="fade-up">
+      <p class="label">Pricing Breakdown</p>
+      <h2 style="margin:16px 0 12px">
+        Save <span class="green">63-82%</span> vs Odoo
+      </h2>
+      <p class="subtitle">Same features. Fraction of the cost. No hidden fees.</p>
+    </div>
+
+    <div class="grid-3" style="margin-top:48px">
+      <!-- Odoo pricing -->
+      <div class="card fade-up" style="border-color:rgba(248,113,113,0.2)">
+        <div class="badge badge-red" style="margin-bottom:20px">Odoo</div>
+        <div>
+          <p style="color:var(--dim);font-size:0.8rem;margin-bottom:4px">One App Free</p>
+          <p style="font-size:1.5rem;font-weight:700;color:var(--muted)">$0<span style="font-size:0.8rem;color:var(--dim)"> (1 app only)</span></p>
+        </div>
+        <div class="divider" style="margin:20px 0"></div>
+        <div>
+          <p style="color:var(--dim);font-size:0.8rem;margin-bottom:4px">Standard</p>
+          <p style="font-size:1.5rem;font-weight:700;color:var(--red)">$24.90<span style="font-size:0.8rem;color:var(--dim)">/user/mo</span></p>
+          <p style="color:var(--dim);font-size:0.75rem;margin-top:4px">All apps, Odoo Online only</p>
+        </div>
+        <div class="divider" style="margin:20px 0"></div>
+        <div>
+          <p style="color:var(--dim);font-size:0.8rem;margin-bottom:4px">Custom</p>
+          <p style="font-size:1.5rem;font-weight:700;color:var(--red)">$49.00<span style="font-size:0.8rem;color:var(--dim)">/user/mo</span></p>
+          <p style="color:var(--dim);font-size:0.75rem;margin-top:4px">Studio, Multi-Company, API</p>
+        </div>
+        <div class="divider" style="margin:20px 0"></div>
+        <p style="color:var(--dim);font-size:0.75rem">+ Implementation consultants: $200/hr<br>+ Custom dev maintenance: extra<br>+ In-app purchases: SMS, AI, leads</p>
+      </div>
+
+      <!-- Atlas pricing -->
+      <div class="card fade-up" style="border-color:rgba(52,211,153,0.3);position:relative">
+        <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:6px 20px;background:var(--accent);color:var(--bg);font-size:0.7rem;font-weight:700;border-radius:100px;text-transform:uppercase;letter-spacing:0.1em">Recommended</div>
+        <div class="badge badge-green" style="margin-bottom:20px">Atlas</div>
+        <div>
+          <p style="color:var(--dim);font-size:0.8rem;margin-bottom:4px">Starter</p>
+          <p style="font-size:1.5rem;font-weight:700;color:var(--green)">$9<span style="font-size:0.8rem;color:var(--dim)">/user/mo</span></p>
+          <p style="color:var(--dim);font-size:0.75rem;margin-top:4px">Inventory, Invoicing, Contacts, 5 users</p>
+        </div>
+        <div class="divider" style="margin:20px 0"></div>
+        <div>
+          <p style="color:var(--dim);font-size:0.8rem;margin-bottom:4px">Business</p>
+          <p style="font-size:1.5rem;font-weight:700;color:var(--green)">$19<span style="font-size:0.8rem;color:var(--dim)">/user/mo</span></p>
+          <p style="color:var(--dim);font-size:0.75rem;margin-top:4px">+ Accounting, HR, CRM, 25 users</p>
+        </div>
+        <div class="divider" style="margin:20px 0"></div>
+        <div>
+          <p style="color:var(--dim);font-size:0.8rem;margin-bottom:4px">Enterprise</p>
+          <p style="font-size:1.5rem;font-weight:700;color:var(--green)">$29<span style="font-size:0.8rem;color:var(--dim)">/user/mo</span></p>
+          <p style="color:var(--dim);font-size:0.75rem;margin-top:4px">+ AI, API, Unlimited users, SLA</p>
+        </div>
+        <div class="divider" style="margin:20px 0"></div>
+        <p style="color:var(--dim);font-size:0.75rem">✓ No implementation fees<br>✓ No consultant costs<br>✓ AI included (Enterprise)</p>
+      </div>
+
+      <!-- Cost comparison -->
+      <div class="card fade-up">
+        <h3 style="margin-bottom:24px">Annual Cost<br><span style="color:var(--dim);font-size:0.8rem;font-weight:400">10 users, all modules</span></h3>
+        <div style="margin-bottom:24px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span style="color:var(--muted);font-size:0.85rem">Odoo Custom</span>
+            <span style="color:var(--red);font-weight:700">$58,800/yr</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:100%;background:var(--red)"></div>
+          </div>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span style="color:var(--muted);font-size:0.85rem">Odoo Standard</span>
+            <span style="color:var(--amber);font-weight:700">$29,880/yr</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:51%;background:var(--amber)"></div>
+          </div>
+        </div>
+        <div style="margin-bottom:24px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span style="color:var(--accent);font-size:0.85rem;font-weight:600">Atlas Enterprise</span>
+            <span style="color:var(--green);font-weight:700">$3,480/yr</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:6%;background:var(--green)"></div>
+          </div>
+        </div>
+        <div class="divider" style="margin:24px 0"></div>
+        <div style="text-align:center">
+          <p class="big-number green">$55,320</p>
+          <p style="color:var(--dim);font-size:0.85rem">saved per year vs Odoo Custom</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SLIDE 3: FEATURE COMPARISON TABLE ═══════════ -->
+<div class="slide" id="s3">
+  <div class="slide-inner">
+    <div class="fade-up">
+      <p class="label">Feature Comparison</p>
+      <h2 style="margin:16px 0 40px">Head-to-head: <span class="accent">Every Module</span></h2>
+    </div>
+    <div class="card fade-up" style="padding:0;overflow:hidden">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="width:35%">Feature / Module</th>
+            <th style="width:20%">Atlas ERP</th>
+            <th style="width:20%">Odoo Standard</th>
+            <th style="width:25%">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- CORE -->
+          <tr><td colspan="4" style="background:var(--elevated);color:var(--accent);font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.15em;padding:12px 20px">Core Business</td></tr>
+          <tr><td>📦 Inventory Management</td><td class="check">✓ Built-in</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Multi-warehouse, stock levels, movements</td></tr>
+          <tr><td>📄 Invoicing & Billing</td><td class="check">✓ Built-in</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Professional invoices, recurring billing</td></tr>
+          <tr><td>📊 Accounting</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Double-entry, P&L, balance sheet, GST/HST</td></tr>
+          <tr><td>👥 Contacts / CRM</td><td class="check">✓ Built-in</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Customers, vendors, pipeline, leads</td></tr>
+          <tr><td>💰 Sales & Quotations</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Quotes to invoices workflow</td></tr>
+          <tr><td>🛒 Purchase Orders</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">PO creation, vendor management</td></tr>
+
+          <!-- HR -->
+          <tr><td colspan="4" style="background:var(--elevated);color:var(--accent);font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.15em;padding:12px 20px">Human Resources</td></tr>
+          <tr><td>👤 Employee Management</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Profiles, skills, departments</td></tr>
+          <tr><td>💵 Payroll</td><td class="check">✓ Business+</td><td class="partial">⚠ Partner add-on</td><td style="color:var(--dim);font-size:0.8rem">Atlas: built-in Canadian payroll</td></tr>
+          <tr><td>🏖️ Time Off / PTO</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Allocations, approvals, calendar</td></tr>
+          <tr><td>⏱️ Timesheets</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Track time on tasks/projects</td></tr>
+          <tr><td>📋 Recruitment</td><td class="check">✓ Enterprise</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Pipeline, job postings</td></tr>
+          <tr><td>🎯 Appraisals</td><td class="check">✓ Enterprise</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Performance reviews</td></tr>
+          <tr><td>💳 Expenses</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Submit, approve, reimburse</td></tr>
+
+          <!-- Marketing -->
+          <tr><td colspan="4" style="background:var(--elevated);color:var(--accent);font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.15em;padding:12px 20px">Marketing & Website</td></tr>
+          <tr><td>📧 Email Marketing</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Campaigns, templates, analytics</td></tr>
+          <tr><td>🌐 Website Builder</td><td class="check">✓ Enterprise</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Drag-and-drop pages</td></tr>
+          <tr><td>🛍️ eCommerce</td><td class="check">✓ Enterprise</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Online store, payments, shipping</td></tr>
+          <tr><td>📱 Social Marketing</td><td class="check">✓ Enterprise</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Multi-platform posting</td></tr>
+          <tr><td>🎫 Events</td><td class="check">✓ Enterprise</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Publish events, sell tickets</td></tr>
+
+          <!-- Services -->
+          <tr><td colspan="4" style="background:var(--elevated);color:var(--accent);font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.15em;padding:12px 20px">Services & Projects</td></tr>
+          <tr><td>📐 Project Management</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Kanban, Gantt, tasks, milestones</td></tr>
+          <tr><td>🎧 Helpdesk</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Ticketing, SLA, customer portal</td></tr>
+          <tr><td>📅 Appointments</td><td class="check">✓ Enterprise</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Online booking calendar</td></tr>
+          <tr><td>📝 Planning</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Employee scheduling</td></tr>
+
+          <!-- Manufacturing -->
+          <tr><td colspan="4" style="background:var(--elevated);color:var(--accent);font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.15em;padding:12px 20px">Manufacturing & Quality</td></tr>
+          <tr><td>🏭 Manufacturing / MRP</td><td class="check">✓ Enterprise</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">BOMs, work orders, MPS</td></tr>
+          <tr><td>✅ Quality Control</td><td class="check">✓ Enterprise</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Control points, alerts</td></tr>
+          <tr><td>🔧 Maintenance</td><td class="check">✓ Enterprise</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Equipment tracking, work requests</td></tr>
+          <tr><td>📦 PLM</td><td class="check">✓ Enterprise</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Product lifecycle management</td></tr>
+
+          <!-- Productivity -->
+          <tr><td colspan="4" style="background:var(--elevated);color:var(--accent);font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.15em;padding:12px 20px">Productivity & AI</td></tr>
+          <tr><td>🤖 <strong>AI Assistant</strong></td><td class="check">✓ Enterprise</td><td class="cross">✗ None</td><td style="color:var(--green);font-size:0.8rem;font-weight:600">Atlas exclusive — query your data in natural language</td></tr>
+          <tr><td>📑 Documents / DMS</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Upload, organize, sign</td></tr>
+          <tr><td>✍️ e-Signatures</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Sign documents online</td></tr>
+          <tr><td>💬 Internal Chat</td><td class="check">✓ Built-in</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Team messaging, channels</td></tr>
+          <tr><td>📊 Spreadsheets</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Collaborative spreadsheets</td></tr>
+          <tr><td>📚 Knowledge Base</td><td class="check">✓ Business+</td><td class="check">✓</td><td style="color:var(--dim);font-size:0.8rem">Wiki-style knowledge library</td></tr>
+
+          <!-- Differentiators -->
+          <tr><td colspan="4" style="background:var(--accent-muted);color:var(--accent);font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.15em;padding:12px 20px">⚡ Atlas Advantages</td></tr>
+          <tr><td>🇨🇦 Canadian-first</td><td class="check">✓ Native</td><td class="partial">⚠ Generic</td><td style="color:var(--dim);font-size:0.8rem">GST/HST, Canadian payroll, CRA-ready</td></tr>
+          <tr><td>⚡ Setup Time</td><td style="color:var(--green);font-weight:600">Minutes</td><td style="color:var(--red)">Weeks</td><td style="color:var(--dim);font-size:0.8rem">No consultants needed</td></tr>
+          <tr><td>🎨 Modern UI</td><td class="check">✓ 2026 design</td><td class="cross">✗ Dated</td><td style="color:var(--dim);font-size:0.8rem">Stripe/Notion-quality interface</td></tr>
+          <tr><td>🔌 External API</td><td style="color:var(--green);font-weight:600">All plans</td><td style="color:var(--red)">Custom ($49) only</td><td style="color:var(--dim);font-size:0.8rem">Odoo locks API behind $49/user plan</td></tr>
+          <tr><td>🏢 Multi-Company</td><td style="color:var(--green);font-weight:600">Business+</td><td style="color:var(--red)">Custom ($49) only</td><td style="color:var(--dim);font-size:0.8rem">Odoo charges $49/user for multi-company</td></tr>
+          <tr><td>📱 Mobile PWA</td><td class="check">✓ Native</td><td class="partial">⚠ App available</td><td style="color:var(--dim);font-size:0.8rem">Atlas: installable PWA, offline-capable</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SLIDE 4: ODOO MODULES BREAKDOWN ═══════════ -->
+<div class="slide" id="s4">
+  <div class="slide-inner">
+    <div class="fade-up">
+      <p class="label">Module Coverage</p>
+      <h2 style="margin:16px 0 12px">Every Odoo Module — <span class="accent">Covered</span></h2>
+      <p class="subtitle">Odoo has 40+ apps across 8 categories. Atlas matches them all.</p>
+    </div>
+
+    <div class="grid-2" style="margin-top:40px">
+      <!-- Website & eCommerce -->
+      <div class="card fade-up">
+        <h3 style="margin-bottom:20px">🌐 Website & eCommerce</h3>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(96,165,250,0.1)">🌐</div><div><strong style="font-size:0.9rem">Website Builder</strong><br><span style="color:var(--dim);font-size:0.8rem">Drag-and-drop page builder</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(96,165,250,0.1)">🛒</div><div><strong style="font-size:0.9rem">eCommerce</strong><br><span style="color:var(--dim);font-size:0.8rem">Online store, cart, checkout</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(96,165,250,0.1)">📝</div><div><strong style="font-size:0.9rem">Blog</strong><br><span style="color:var(--dim);font-size:0.8rem">Content publishing</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(96,165,250,0.1)">💬</div><div><strong style="font-size:0.9rem">Live Chat</strong><br><span style="color:var(--dim);font-size:0.8rem">Real-time customer support</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row" style="border:0"><div class="cat-icon" style="background:rgba(96,165,250,0.1)">🎓</div><div><strong style="font-size:0.9rem">eLearning</strong><br><span style="color:var(--dim);font-size:0.8rem">Course management</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+      </div>
+
+      <!-- Sales & CRM -->
+      <div class="card fade-up" style="transition-delay:100ms">
+        <h3 style="margin-bottom:20px">💰 Sales & CRM</h3>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(52,211,153,0.1)">📊</div><div><strong style="font-size:0.9rem">CRM</strong><br><span style="color:var(--dim);font-size:0.8rem">Pipeline, leads, opportunities</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(52,211,153,0.1)">📋</div><div><strong style="font-size:0.9rem">Sales</strong><br><span style="color:var(--dim);font-size:0.8rem">Quotations → invoices</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(52,211,153,0.1)">🏪</div><div><strong style="font-size:0.9rem">Point of Sale</strong><br><span style="color:var(--dim);font-size:0.8rem">Retail & restaurant POS</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(52,211,153,0.1)">🔄</div><div><strong style="font-size:0.9rem">Subscriptions</strong><br><span style="color:var(--dim);font-size:0.8rem">Recurring billing</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row" style="border:0"><div class="cat-icon" style="background:rgba(52,211,153,0.1)">🚗</div><div><strong style="font-size:0.9rem">Rental</strong><br><span style="color:var(--dim);font-size:0.8rem">Asset rental management</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+      </div>
+
+      <!-- Finance -->
+      <div class="card fade-up">
+        <h3 style="margin-bottom:20px">💵 Finance</h3>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(205,180,158,0.15)">📊</div><div><strong style="font-size:0.9rem">Accounting</strong><br><span style="color:var(--dim);font-size:0.8rem">Full double-entry, GST/HST</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(205,180,158,0.15)">📄</div><div><strong style="font-size:0.9rem">Invoicing</strong><br><span style="color:var(--dim);font-size:0.8rem">Professional invoices, PDF export</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(205,180,158,0.15)">🧾</div><div><strong style="font-size:0.9rem">Expenses</strong><br><span style="color:var(--dim);font-size:0.8rem">Employee expense tracking</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(205,180,158,0.15)">📁</div><div><strong style="font-size:0.9rem">Documents</strong><br><span style="color:var(--dim);font-size:0.8rem">DMS + e-signatures</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row" style="border:0"><div class="cat-icon" style="background:rgba(205,180,158,0.15)">📈</div><div><strong style="font-size:0.9rem">Spreadsheets</strong><br><span style="color:var(--dim);font-size:0.8rem">Collaborative sheets</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+      </div>
+
+      <!-- HR -->
+      <div class="card fade-up" style="transition-delay:100ms">
+        <h3 style="margin-bottom:20px">👥 Human Resources</h3>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(167,139,250,0.1)">👤</div><div><strong style="font-size:0.9rem">Employees</strong><br><span style="color:var(--dim);font-size:0.8rem">Profiles, skills, org chart</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(167,139,250,0.1)">💵</div><div><strong style="font-size:0.9rem">Payroll</strong><br><span style="color:var(--dim);font-size:0.8rem">Canadian payroll built-in</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(167,139,250,0.1)">🏖️</div><div><strong style="font-size:0.9rem">Time Off</strong><br><span style="color:var(--dim);font-size:0.8rem">PTO allocations & tracking</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row"><div class="cat-icon" style="background:rgba(167,139,250,0.1)">📋</div><div><strong style="font-size:0.9rem">Recruitment</strong><br><span style="color:var(--dim);font-size:0.8rem">Hiring pipeline, job boards</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+        <div class="cat-row" style="border:0"><div class="cat-icon" style="background:rgba(167,139,250,0.1)">🎯</div><div><strong style="font-size:0.9rem">Appraisals</strong><br><span style="color:var(--dim);font-size:0.8rem">Performance evaluations</span></div><div class="cat-status"><span class="badge badge-green">Atlas ✓</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SLIDE 5: KEY DIFFERENTIATORS ═══════════ -->
+<div class="slide" id="s5">
+  <div class="glow" style="width:500px;height:400px;background:rgba(52,211,153,0.03);bottom:-100px;left:-100px"></div>
+  <div class="slide-inner">
+    <div class="fade-up">
+      <p class="label">Why Atlas Wins</p>
+      <h2 style="margin:16px 0 40px">5 Things Odoo <span style="color:var(--red)">Can't</span> Do</h2>
+    </div>
+
+    <div class="grid-3" style="gap:24px">
+      <div class="card fade-up" style="text-align:center;padding:40px 28px">
+        <div style="font-size:3rem;margin-bottom:16px">🤖</div>
+        <h3 style="margin-bottom:8px">AI Assistant</h3>
+        <p style="color:var(--muted);font-size:0.85rem;line-height:1.6">Ask your business anything in plain English. "Show overdue invoices." "What's my best margin product?" Odoo has zero AI capabilities.</p>
+        <div class="badge badge-accent" style="margin-top:20px">Atlas Exclusive</div>
+      </div>
+
+      <div class="card fade-up" style="text-align:center;padding:40px 28px;transition-delay:100ms">
+        <div style="font-size:3rem;margin-bottom:16px">⚡</div>
+        <h3 style="margin-bottom:8px">Minutes, Not Weeks</h3>
+        <p style="color:var(--muted);font-size:0.85rem;line-height:1.6">Sign up → running in under 5 minutes. Odoo typically requires 2-6 weeks of setup and $8,000+ in consulting fees for implementation.</p>
+        <div class="badge badge-green" style="margin-top:20px">5 min setup</div>
+      </div>
+
+      <div class="card fade-up" style="text-align:center;padding:40px 28px;transition-delay:200ms">
+        <div style="font-size:3rem;margin-bottom:16px">🇨🇦</div>
+        <h3 style="margin-bottom:8px">Canadian-First</h3>
+        <p style="color:var(--muted);font-size:0.85rem;line-height:1.6">GST/HST pre-configured. Canadian payroll with T4s. CRA-compliant reporting. Odoo is Belgium-based with Canadian setup as an afterthought.</p>
+        <div class="badge badge-accent" style="margin-top:20px">Built for Canada</div>
+      </div>
+
+      <div class="card fade-up" style="text-align:center;padding:40px 28px">
+        <div style="font-size:3rem;margin-bottom:16px">🎨</div>
+        <h3 style="margin-bottom:8px">Modern UI/UX</h3>
+        <p style="color:var(--muted);font-size:0.85rem;line-height:1.6">Stripe/Notion-quality interface designed in 2026. Odoo's UI hasn't fundamentally changed since 2014. Dark mode, animations, responsive PWA.</p>
+        <div class="badge badge-green" style="margin-top:20px">2026 Design</div>
+      </div>
+
+      <div class="card fade-up" style="text-align:center;padding:40px 28px;transition-delay:100ms">
+        <div style="font-size:3rem;margin-bottom:16px">🔓</div>
+        <h3 style="margin-bottom:8px">No Feature Gates</h3>
+        <p style="color:var(--muted);font-size:0.85rem;line-height:1.6">Odoo locks API access, multi-company, and Studio behind the $49/user Custom plan. Atlas gives you API access and multi-company from $19/user.</p>
+        <div class="badge badge-green" style="margin-top:20px">All inclusive</div>
+      </div>
+
+      <div class="card fade-up" style="text-align:center;padding:40px 28px;transition-delay:200ms">
+        <div style="font-size:3rem;margin-bottom:16px">📱</div>
+        <h3 style="margin-bottom:8px">PWA-First Mobile</h3>
+        <p style="color:var(--muted);font-size:0.85rem;line-height:1.6">Installable Progressive Web App. Works offline, feels native, no app store needed. Access your entire ERP from any device, anywhere.</p>
+        <div class="badge badge-accent" style="margin-top:20px">Works offline</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SLIDE 6: WEBSITE COMPARISON ═══════════ -->
+<div class="slide" id="s6">
+  <div class="slide-inner">
+    <div class="fade-up">
+      <p class="label">Website & Brand</p>
+      <h2 style="margin:16px 0 40px">Website Comparison: <span class="accent">Atlas</span> vs <span style="color:var(--muted)">Odoo</span></h2>
+    </div>
+
+    <div class="grid-2" style="gap:24px">
+      <!-- Atlas website -->
+      <div class="card fade-up" style="border-color:rgba(52,211,153,0.3)">
+        <div class="badge badge-green" style="margin-bottom:24px">atlas-erp-six.vercel.app</div>
+        <div style="background:var(--elevated);border-radius:12px;overflow:hidden;margin-bottom:24px">
+          <div style="display:flex;align-items:center;gap:6px;padding:8px 16px;border-bottom:1px solid var(--border)">
+            <div style="width:6px;height:6px;border-radius:50%;background:#333"></div>
+            <div style="width:6px;height:6px;border-radius:50%;background:#333"></div>
+            <div style="width:6px;height:6px;border-radius:50%;background:#333"></div>
+          </div>
+          <div style="padding:24px;text-align:center;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <div style="font-size:0.6rem;color:var(--accent);background:var(--accent-muted);padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:12px">⚡ AI-Powered ERP for Canada 🇨🇦</div>
+            <div style="font-size:1.2rem;font-weight:800;margin-bottom:8px">Run your business<br><span style="color:var(--accent)">smarter, not harder</span></div>
+            <div style="font-size:0.65rem;color:var(--dim);max-width:250px">Modern ERP that replaces Odoo at a fraction of the cost.</div>
+          </div>
+        </div>
+        <div style="font-size:0.85rem">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="color:var(--green)">✓</span> Dark, premium aesthetic</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="color:var(--green)">✓</span> Scroll animations (IntersectionObserver)</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="color:var(--green)">✓</span> Interactive pricing comparison</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="color:var(--green)">✓</span> Mobile-responsive</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="color:var(--green)">✓</span> Testimonials with ratings</div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--green)">✓</span> CTA-optimized conversion flow</div>
+        </div>
+      </div>
+
+      <!-- Odoo website -->
+      <div class="card fade-up" style="border-color:rgba(248,113,113,0.2);transition-delay:100ms">
+        <div class="badge badge-red" style="margin-bottom:24px">odoo.com</div>
+        <div style="background:var(--elevated);border-radius:12px;overflow:hidden;margin-bottom:24px">
+          <div style="display:flex;align-items:center;gap:6px;padding:8px 16px;border-bottom:1px solid var(--border)">
+            <div style="width:6px;height:6px;border-radius:50%;background:#333"></div>
+            <div style="width:6px;height:6px;border-radius:50%;background:#333"></div>
+            <div style="width:6px;height:6px;border-radius:50%;background:#333"></div>
+          </div>
+          <div style="padding:24px;text-align:center;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f8f8f8">
+            <div style="font-size:0.65rem;color:#666;margin-bottom:8px">Move faster, with</div>
+            <div style="font-size:1.2rem;font-weight:800;color:#017e84;margin-bottom:4px">the ERP that does it all.</div>
+            <div style="font-size:0.65rem;color:#999;max-width:250px">Functional, user-friendly, and affordable. Odoo offers a suite of open-source business apps.</div>
+          </div>
+        </div>
+        <div style="font-size:0.85rem">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="color:var(--red)">✗</span> White/light design (generic)</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="color:var(--red)">✗</span> Cluttered with 40+ app links</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="color:var(--red)">✗</span> Confusing pricing tiers</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="color:var(--amber)">⚠</span> Mobile okay but not premium</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="color:var(--red)">✗</span> No interactive comparisons</div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--red)">✗</span> Feels 2018, not 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SLIDE 7: APP UX COMPARISON ═══════════ -->
+<div class="slide" id="s7">
+  <div class="slide-inner">
+    <div class="fade-up">
+      <p class="label">Application UX</p>
+      <h2 style="margin:16px 0 40px">Software Experience: <span class="accent">Night & Day</span></h2>
+    </div>
+
+    <div class="card fade-up" style="padding:0;overflow:hidden">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>UX Aspect</th>
+            <th>Atlas</th>
+            <th>Odoo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🎨 Design Language</td>
+            <td style="color:var(--green);font-weight:600">Dark, premium, 2026 aesthetic</td>
+            <td style="color:var(--muted)">White, functional, dated</td>
+          </tr>
+          <tr>
+            <td>⚡ Load Speed</td>
+            <td style="color:var(--green);font-weight:600">< 1s (Next.js SSR + Edge)</td>
+            <td style="color:var(--muted)">2-5s (Python/PostgreSQL)</td>
+          </tr>
+          <tr>
+            <td>📱 Mobile</td>
+            <td style="color:var(--green);font-weight:600">PWA — installable, offline</td>
+            <td style="color:var(--muted)">Responsive web + native app</td>
+          </tr>
+          <tr>
+            <td>🌙 Dark Mode</td>
+            <td style="color:var(--green);font-weight:600">Native — designed dark-first</td>
+            <td style="color:var(--red)">Not available</td>
+          </tr>
+          <tr>
+            <td>✨ Animations</td>
+            <td style="color:var(--green);font-weight:600">Smooth, spring-based transitions</td>
+            <td style="color:var(--muted)">Basic CSS transitions</td>
+          </tr>
+          <tr>
+            <td>📊 Dashboard</td>
+            <td style="color:var(--green);font-weight:600">Live charts, sparklines, donut graphs</td>
+            <td style="color:var(--muted)">Basic stat cards, bar charts</td>
+          </tr>
+          <tr>
+            <td>🔍 Global Search</td>
+            <td style="color:var(--green);font-weight:600">⌘K — instant fuzzy search</td>
+            <td style="color:var(--muted)">Per-module search only</td>
+          </tr>
+          <tr>
+            <td>🗂️ Navigation</td>
+            <td style="color:var(--green);font-weight:600">Collapsible sidebar, clean</td>
+            <td style="color:var(--muted)">Top menu + app drawer (cluttered)</td>
+          </tr>
+          <tr>
+            <td>🤖 AI Integration</td>
+            <td style="color:var(--green);font-weight:600">Native AI assistant in every view</td>
+            <td style="color:var(--red)">None</td>
+          </tr>
+          <tr>
+            <td>📋 Forms & Modals</td>
+            <td style="color:var(--green);font-weight:600">Minimal, focused, auto-save</td>
+            <td style="color:var(--muted)">Dense, many fields visible</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SLIDE 8: TECH STACK ═══════════ -->
+<div class="slide" id="s8">
+  <div class="slide-inner">
+    <div class="fade-up">
+      <p class="label">Under the Hood</p>
+      <h2 style="margin:16px 0 40px">Technology: <span class="accent">Modern</span> vs <span style="color:var(--muted)">Legacy</span></h2>
+    </div>
+
+    <div class="grid-2" style="gap:24px">
+      <div class="card fade-up">
+        <div class="badge badge-green" style="margin-bottom:24px">Atlas Stack</div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div><strong style="color:var(--accent);font-size:0.8rem">Frontend</strong><p style="font-size:0.9rem;margin-top:4px">Next.js 16 + React 19 + TypeScript</p><p style="color:var(--dim);font-size:0.75rem">Edge rendering, streaming SSR, app router</p></div>
+          <div><strong style="color:var(--accent);font-size:0.8rem">Styling</strong><p style="font-size:0.9rem;margin-top:4px">Tailwind CSS + shadcn/ui</p><p style="color:var(--dim);font-size:0.75rem">Utility-first, accessible components</p></div>
+          <div><strong style="color:var(--accent);font-size:0.8rem">Database</strong><p style="font-size:0.9rem;margin-top:4px">Supabase (PostgreSQL + Auth + RLS)</p><p style="color:var(--dim);font-size:0.75rem">Row-level security, real-time subscriptions</p></div>
+          <div><strong style="color:var(--accent);font-size:0.8rem">State</strong><p style="font-size:0.9rem;margin-top:4px">Zustand + React Server Components</p><p style="color:var(--dim);font-size:0.75rem">Lightweight, composable, server-first</p></div>
+          <div><strong style="color:var(--accent);font-size:0.8rem">Deploy</strong><p style="font-size:0.9rem;margin-top:4px">Vercel Edge Network</p><p style="color:var(--dim);font-size:0.75rem">Global CDN, automatic scaling, zero config</p></div>
+          <div><strong style="color:var(--accent);font-size:0.8rem">AI</strong><p style="font-size:0.9rem;margin-top:4px">OpenAI / Claude integration</p><p style="color:var(--dim);font-size:0.75rem">Natural language business queries</p></div>
+        </div>
+      </div>
+
+      <div class="card fade-up" style="transition-delay:100ms;border-color:rgba(248,113,113,0.15)">
+        <div class="badge badge-red" style="margin-bottom:24px">Odoo Stack</div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div><strong style="color:var(--muted);font-size:0.8rem">Backend</strong><p style="font-size:0.9rem;margin-top:4px;color:var(--muted)">Python 3 + custom ORM</p><p style="color:var(--dim);font-size:0.75rem">Monolithic architecture, not edge-native</p></div>
+          <div><strong style="color:var(--muted);font-size:0.8rem">Frontend</strong><p style="font-size:0.9rem;margin-top:4px;color:var(--muted)">OWL Framework (Odoo Web Library)</p><p style="color:var(--dim);font-size:0.75rem">Proprietary, small ecosystem, no community</p></div>
+          <div><strong style="color:var(--muted);font-size:0.8rem">Database</strong><p style="font-size:0.9rem;margin-top:4px;color:var(--muted)">PostgreSQL (direct)</p><p style="color:var(--dim);font-size:0.75rem">No built-in RLS, no real-time</p></div>
+          <div><strong style="color:var(--muted);font-size:0.8rem">Styling</strong><p style="font-size:0.9rem;margin-top:4px;color:var(--muted)">Bootstrap + custom SCSS</p><p style="color:var(--dim);font-size:0.75rem">Dated design system, hard to customize</p></div>
+          <div><strong style="color:var(--muted);font-size:0.8rem">Deploy</strong><p style="font-size:0.9rem;margin-top:4px;color:var(--muted)">Odoo.sh / Self-hosted</p><p style="color:var(--dim);font-size:0.75rem">Complex deployment, requires DevOps</p></div>
+          <div><strong style="color:var(--muted);font-size:0.8rem">AI</strong><p style="font-size:0.9rem;margin-top:4px;color:var(--red)">None</p><p style="color:var(--dim);font-size:0.75rem">No native AI capabilities</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SLIDE 9: ROADMAP ═══════════ -->
+<div class="slide" id="s9">
+  <div class="glow" style="width:600px;height:400px;background:rgba(205,180,158,0.04);top:-100px;left:50%;transform:translateX(-50%)"></div>
+  <div class="slide-inner" style="text-align:center">
+    <div class="fade-up">
+      <p class="label">The Verdict</p>
+      <h2 style="margin:16px 0 24px">
+        Atlas is <span class="accent">everything Odoo is</span> —<br>
+        plus everything it <span class="green">should be</span>
+      </h2>
+      <p class="subtitle" style="margin:0 auto 48px">
+        Same modules. Better design. Built-in AI. Canadian-first. 
+        And at a price that makes Odoo look like a luxury tax.
+      </p>
+    </div>
+
+    <div class="grid-4 fade-up" style="margin-bottom:48px">
+      <div class="card" style="text-align:center;padding:24px">
+        <p class="big-number accent" style="font-size:2.5rem">40+</p>
+        <p style="color:var(--dim);font-size:0.75rem;margin-top:4px">Modules matched</p>
+      </div>
+      <div class="card" style="text-align:center;padding:24px">
+        <p class="big-number green" style="font-size:2.5rem">82%</p>
+        <p style="color:var(--dim);font-size:0.75rem;margin-top:4px">Cost savings</p>
+      </div>
+      <div class="card" style="text-align:center;padding:24px">
+        <p class="big-number" style="font-size:2.5rem;color:var(--blue)">5min</p>
+        <p style="color:var(--dim);font-size:0.75rem;margin-top:4px">Setup time</p>
+      </div>
+      <div class="card" style="text-align:center;padding:24px">
+        <p class="big-number" style="font-size:2.5rem;color:var(--violet)">🤖</p>
+        <p style="color:var(--dim);font-size:0.75rem;margin-top:4px">AI built-in</p>
+      </div>
+    </div>
+
+    <div class="fade-up" style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap">
+      <a href="https://atlas-erp-six.vercel.app/signup" style="display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:var(--accent);color:var(--bg);font-weight:700;border-radius:100px;text-decoration:none;font-size:1rem;transition:all 0.3s" onmouseover="this.style.background='#d4c0ad'" onmouseout="this.style.background='var(--accent)'">
+        Start Free Trial →
+      </a>
+      <a href="https://atlas-erp-six.vercel.app/landing" style="display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:transparent;color:var(--warm);font-weight:700;border-radius:100px;text-decoration:none;font-size:1rem;border:1px solid var(--border);transition:all 0.3s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+        View Landing Page
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Atlas ERP © 2026 · Built in Canada 🇨🇦 · Presentation generated by Ion</p>
+</footer>
+
+<script>
+// Scroll-triggered animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Nav dots
+const slides = document.querySelectorAll('.slide');
+const dotsContainer = document.getElementById('navDots');
+slides.forEach((s, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot';
+  dot.onclick = () => s.scrollIntoView({ behavior: 'smooth' });
+  dotsContainer.appendChild(dot);
+});
+
+const dotObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = Array.from(slides).indexOf(e.target);
+      document.querySelectorAll('.nav-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === idx);
+      });
+    }
+  });
+}, { threshold: 0.5 });
+
+slides.forEach(s => dotObserver.observe(s));
+
+// Animate progress bars on scroll
+const progObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.progress-fill').forEach(bar => {
+        const w = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => bar.style.width = w, 100);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.slide').forEach(s => progObserver.observe(s));
+</script>
+
+</body>
+</html>
