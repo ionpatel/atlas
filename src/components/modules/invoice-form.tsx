@@ -20,6 +20,14 @@ interface LineItem {
   unit_price: number;
 }
 
+const inputClass =
+  "w-full px-4 py-2.5 bg-[#111111] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] placeholder:text-[#888888]/50 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200";
+
+const lineInputClass =
+  "px-3 py-2 bg-[#111111] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 transition-all duration-200";
+
+const labelClass = "block text-sm font-medium text-[#888888] mb-2";
+
 export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
   const contacts = useContactsStore((s) => s.contacts);
   const products = useInventoryStore((s) => s.products);
@@ -52,7 +60,6 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
         if (l.key !== key) return l;
         const updated = { ...l, [field]: value };
 
-        // Auto-fill from product
         if (field === "product_id" && typeof value === "string" && value) {
           const product = products.find((p) => p.id === value);
           if (product) {
@@ -67,7 +74,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
   };
 
   const subtotal = lines.reduce((sum, l) => sum + l.quantity * l.unit_price, 0);
-  const tax = 0; // Can be extended
+  const tax = 0;
   const total = subtotal + tax;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -99,17 +106,15 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-            Contact *
-          </label>
+          <label className={labelClass}>Contact *</label>
           <select
             value={contactId}
             onChange={(e) => setContactId(e.target.value)}
             required
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className={inputClass}
           >
             <option value="">Select contact</option>
             {contacts.map((c) => (
@@ -121,38 +126,32 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-            Issue Date
-          </label>
+          <label className={labelClass}>Issue Date</label>
           <input
             type="date"
             value={issueDate}
             onChange={(e) => setIssueDate(e.target.value)}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className={inputClass}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-            Due Date
-          </label>
+          <label className={labelClass}>Due Date</label>
           <input
             type="date"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className={inputClass}
           />
         </div>
       </div>
 
       {/* Line Items */}
       <div>
-        <label className="block text-sm font-medium text-muted-foreground mb-2">
-          Line Items
-        </label>
+        <label className={labelClass}>Line Items</label>
         <div className="space-y-2">
           {/* Header */}
-          <div className="hidden sm:grid grid-cols-[1fr_2fr_80px_100px_80px_40px] gap-2 text-xs text-muted-foreground font-medium uppercase px-1">
+          <div className="hidden sm:grid grid-cols-[1fr_2fr_80px_100px_80px_40px] gap-2 text-[10px] text-[#888888] font-semibold uppercase tracking-widest px-1 pb-1">
             <span>Product</span>
             <span>Description</span>
             <span className="text-right">Qty</span>
@@ -169,7 +168,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
               <select
                 value={line.product_id}
                 onChange={(e) => updateLine(line.key, "product_id", e.target.value)}
-                className="px-2 py-1.5 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors"
+                className={lineInputClass}
               >
                 <option value="">Custom</option>
                 {products.map((p) => (
@@ -183,7 +182,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
                 type="text"
                 value={line.description}
                 onChange={(e) => updateLine(line.key, "description", e.target.value)}
-                className="px-2 py-1.5 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors"
+                className={lineInputClass}
                 placeholder="Description"
                 required
               />
@@ -193,7 +192,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
                 min="1"
                 value={line.quantity}
                 onChange={(e) => updateLine(line.key, "quantity", parseInt(e.target.value) || 1)}
-                className="px-2 py-1.5 bg-background border border-border rounded-lg text-sm text-right focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors"
+                className={`${lineInputClass} text-right`}
               />
 
               <input
@@ -202,17 +201,17 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
                 min="0"
                 value={line.unit_price}
                 onChange={(e) => updateLine(line.key, "unit_price", parseFloat(e.target.value) || 0)}
-                className="px-2 py-1.5 bg-background border border-border rounded-lg text-sm text-right focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors"
+                className={`${lineInputClass} text-right`}
               />
 
-              <div className="text-sm text-right font-medium px-1">
+              <div className="text-sm text-right font-medium text-[#CDB49E] px-1">
                 {formatCurrency(line.quantity * line.unit_price)}
               </div>
 
               <button
                 type="button"
                 onClick={() => removeLine(line.key)}
-                className="p-1.5 text-muted-foreground hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
+                className="p-2 text-[#888888] hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
                 disabled={lines.length <= 1}
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -224,7 +223,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
         <button
           type="button"
           onClick={addLine}
-          className="mt-2 flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 transition-colors"
+          className="mt-3 flex items-center gap-2 text-sm text-[#CDB49E] hover:text-[#d4c0ad] transition-colors font-medium"
         >
           <Plus className="w-3.5 h-3.5" />
           Add Line
@@ -233,47 +232,45 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
 
       {/* Totals */}
       <div className="flex justify-end">
-        <div className="w-64 space-y-1.5 text-sm">
-          <div className="flex justify-between text-muted-foreground">
+        <div className="w-64 space-y-2 text-sm">
+          <div className="flex justify-between text-[#888888]">
             <span>Subtotal</span>
-            <span>{formatCurrency(subtotal)}</span>
+            <span className="text-[#f5f0eb]">{formatCurrency(subtotal)}</span>
           </div>
-          <div className="flex justify-between text-muted-foreground">
+          <div className="flex justify-between text-[#888888]">
             <span>Tax</span>
-            <span>{formatCurrency(tax)}</span>
+            <span className="text-[#f5f0eb]">{formatCurrency(tax)}</span>
           </div>
-          <div className="flex justify-between font-semibold text-base border-t border-border pt-1.5">
-            <span>Total</span>
-            <span>{formatCurrency(total)}</span>
+          <div className="flex justify-between font-semibold text-base border-t border-[#2a2a2a] pt-2.5 mt-2.5">
+            <span className="text-[#f5f0eb]">Total</span>
+            <span className="text-[#CDB49E]">{formatCurrency(total)}</span>
           </div>
         </div>
       </div>
 
       {/* Notes */}
       <div>
-        <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-          Notes
-        </label>
+        <label className={labelClass}>Notes</label>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={2}
-          className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors resize-none"
+          className={`${inputClass} resize-none`}
           placeholder="Payment terms, special instructions..."
         />
       </div>
 
-      <div className="flex items-center justify-end gap-3 pt-2">
+      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#2a2a2a]">
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-lg hover:bg-muted transition-colors"
+          className="px-5 py-2.5 text-sm font-medium text-[#888888] hover:text-[#f5f0eb] bg-[#222222] border border-[#2a2a2a] rounded-lg hover:bg-[#2a2a2a] transition-all duration-200"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+          className="px-5 py-2.5 text-sm font-semibold bg-[#CDB49E] text-[#111111] rounded-lg hover:bg-[#d4c0ad] transition-all duration-200"
         >
           Create Invoice
         </button>

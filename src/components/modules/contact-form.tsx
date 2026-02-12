@@ -9,6 +9,11 @@ interface ContactFormProps {
   onCancel: () => void;
 }
 
+const inputClass =
+  "w-full px-4 py-2.5 bg-[#111111] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] placeholder:text-[#888888]/50 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200";
+
+const labelClass = "block text-sm font-medium text-[#888888] mb-2";
+
 export function ContactForm({ contact, onSubmit, onCancel }: ContactFormProps) {
   const [form, setForm] = useState({
     name: "",
@@ -44,69 +49,59 @@ export function ContactForm({ contact, onSubmit, onCancel }: ContactFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-            Name *
-          </label>
+          <label className={labelClass}>Name *</label>
           <input
             type="text"
             value={form.name}
             onChange={(e) => update("name", e.target.value)}
             required
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className={inputClass}
             placeholder="Full name or business name"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-            Email
-          </label>
+          <label className={labelClass}>Email</label>
           <input
             type="email"
             value={form.email}
             onChange={(e) => update("email", e.target.value)}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className={inputClass}
             placeholder="email@example.com"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-            Phone
-          </label>
+          <label className={labelClass}>Phone</label>
           <input
             type="tel"
             value={form.phone}
             onChange={(e) => update("phone", e.target.value)}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className={inputClass}
             placeholder="(416) 555-0000"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-            Company
-          </label>
+          <label className={labelClass}>Company</label>
           <input
             type="text"
             value={form.company}
             onChange={(e) => update("company", e.target.value)}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className={inputClass}
             placeholder="Company name"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-            Type *
-          </label>
+          <label className={labelClass}>Type *</label>
           <select
             value={form.type}
             onChange={(e) => update("type", e.target.value)}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className={inputClass}
           >
             <option value="customer">Customer</option>
             <option value="vendor">Vendor</option>
@@ -115,43 +110,39 @@ export function ContactForm({ contact, onSubmit, onCancel }: ContactFormProps) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-            Address
-          </label>
+          <label className={labelClass}>Address</label>
           <input
             type="text"
             value={form.address}
             onChange={(e) => update("address", e.target.value)}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className={inputClass}
             placeholder="Street address, city"
           />
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-            Notes
-          </label>
+          <label className={labelClass}>Notes</label>
           <textarea
             value={form.notes}
             onChange={(e) => update("notes", e.target.value)}
             rows={3}
-            className="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors resize-none"
+            className={`${inputClass} resize-none`}
             placeholder="Any additional notes..."
           />
         </div>
       </div>
 
-      <div className="flex items-center justify-end gap-3 pt-2">
+      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#2a2a2a]">
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-lg hover:bg-muted transition-colors"
+          className="px-5 py-2.5 text-sm font-medium text-[#888888] hover:text-[#f5f0eb] bg-[#222222] border border-[#2a2a2a] rounded-lg hover:bg-[#2a2a2a] transition-all duration-200"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+          className="px-5 py-2.5 text-sm font-semibold bg-[#CDB49E] text-[#111111] rounded-lg hover:bg-[#d4c0ad] transition-all duration-200"
         >
           {contact ? "Update Contact" : "Add Contact"}
         </button>

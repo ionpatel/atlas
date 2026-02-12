@@ -47,23 +47,23 @@ export function Modal({ open, onClose, title, children, className, size = "md" }
       }}
     >
       {/* Overlay */}
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" />
 
       {/* Dialog */}
       <div
         className={cn(
-          "relative w-full bg-card border border-border rounded-xl shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col",
+          "relative w-full bg-[#1a1a1a] border border-[#2a2a2a] rounded-2xl shadow-2xl shadow-black/40 animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col",
           sizeClasses[size],
           className
         )}
       >
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-border flex-shrink-0">
-            <h2 className="text-lg font-semibold">{title}</h2>
+          <div className="flex items-center justify-between px-6 py-5 border-b border-[#2a2a2a] flex-shrink-0">
+            <h2 className="text-base font-semibold text-[#f5f0eb]">{title}</h2>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              className="p-2 rounded-lg text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] transition-all duration-200"
             >
               <X className="w-4 h-4" />
             </button>
@@ -71,7 +71,7 @@ export function Modal({ open, onClose, title, children, className, size = "md" }
         )}
 
         {/* Body */}
-        <div className="overflow-y-auto flex-1 px-6 py-4">{children}</div>
+        <div className="overflow-y-auto flex-1 px-6 py-5">{children}</div>
       </div>
     </div>
   );

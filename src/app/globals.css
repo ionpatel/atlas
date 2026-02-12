@@ -4,44 +4,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Atlas Color Palette
+  Primary Dark: Charcoal Black #111111 (hsl 0 0% 6.7%)
+  Accent Warm:  Rodeo Dust    #CDB49E (hsl 27 30% 71%)
+  
+  Derived shades:
+  - Dark bg:      #111111
+  - Card bg:      #1a1a1a
+  - Elevated:     #222222
+  - Muted text:   #888888
+  - Border:       #2a2a2a
+  - Accent hover: #d4c0ad
+  - Accent muted: #3a3028
+*/
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
+    --background: 0 0% 6.7%;
+    --foreground: 30 15% 90%;
+    --card: 0 0% 10%;
+    --card-foreground: 30 15% 90%;
+    --primary: 27 30% 71%;
+    --primary-foreground: 0 0% 6.7%;
+    --secondary: 0 0% 13%;
+    --secondary-foreground: 30 15% 85%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 53%;
+    --accent: 27 15% 18%;
+    --accent-foreground: 27 30% 71%;
+    --destructive: 0 63% 45%;
+    --border: 0 0% 16.5%;
+    --input: 0 0% 16.5%;
+    --ring: 27 30% 71%;
     --radius: 0.75rem;
-  }
-
-  .dark {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 64%;
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 63% 31%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 217 91% 60%;
   }
 }
 

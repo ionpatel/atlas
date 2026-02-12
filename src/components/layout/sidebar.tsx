@@ -11,7 +11,6 @@ import {
   Settings,
   Bot,
   ChevronLeft,
-  Zap,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -31,24 +30,26 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "h-screen sticky top-0 border-r border-border bg-card flex flex-col transition-all duration-200",
-        collapsed ? "w-16" : "w-60"
+        "h-screen sticky top-0 bg-[#111111] flex flex-col transition-all duration-300 ease-in-out border-r border-[#1a1a1a]",
+        collapsed ? "w-[72px]" : "w-64"
       )}
     >
       {/* Logo */}
-      <div className="h-14 flex items-center px-4 border-b border-border">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <Zap className="w-4 h-4 text-primary-foreground" />
+      <div className="h-16 flex items-center px-5 border-b border-[#1a1a1a]">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-[#CDB49E] flex items-center justify-center flex-shrink-0">
+            <span className="text-[#111111] font-bold text-sm tracking-tight">A</span>
           </div>
           {!collapsed && (
-            <span className="font-bold text-lg tracking-tight">Atlas</span>
+            <span className="text-[#f5f0eb] font-semibold text-lg tracking-tight">
+              Atlas
+            </span>
           )}
         </div>
       </div>
 
-      {/* Nav */}
-      <nav className="flex-1 py-4 px-2 space-y-1">
+      {/* Navigation */}
+      <nav className="flex-1 py-6 px-3 space-y-1">
         {navItems.map((item) => {
           const isActive =
             pathname === item.href ||
@@ -58,13 +59,13 @@ export function Sidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200",
                 isActive
-                  ? "bg-primary/10 text-primary"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "bg-[#CDB49E] text-[#111111]"
+                  : "text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a]"
               )}
             >
-              <item.icon className="w-5 h-5 flex-shrink-0" />
+              <item.icon className={cn("w-[18px] h-[18px] flex-shrink-0", isActive && "text-[#111111]")} />
               {!collapsed && <span>{item.label}</span>}
             </Link>
           );
@@ -72,14 +73,14 @@ export function Sidebar() {
       </nav>
 
       {/* Collapse toggle */}
-      <div className="p-2 border-t border-border">
+      <div className="p-3 border-t border-[#1a1a1a]">
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="w-full flex items-center justify-center py-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
+          className="w-full flex items-center justify-center py-2.5 text-[#888888] hover:text-[#f5f0eb] rounded-lg hover:bg-[#1a1a1a] transition-all duration-200"
         >
           <ChevronLeft
             className={cn(
-              "w-4 h-4 transition-transform",
+              "w-4 h-4 transition-transform duration-300",
               collapsed && "rotate-180"
             )}
           />

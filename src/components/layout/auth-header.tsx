@@ -17,7 +17,6 @@ export function AuthHeader({ userInfo }: { userInfo: UserInfo }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Close menu on outside click
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -38,50 +37,51 @@ export function AuthHeader({ userInfo }: { userInfo: UserInfo }) {
     : userInfo.email[0].toUpperCase();
 
   return (
-    <header className="h-14 border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10 flex items-center justify-between px-6">
+    <header className="h-16 border-b border-[#1a1a1a] bg-[#111111] sticky top-0 z-10 flex items-center justify-between px-8">
       {/* Search */}
-      <div className="flex items-center gap-2 bg-muted rounded-lg px-3 py-2 w-80">
-        <Search className="w-4 h-4 text-muted-foreground" />
+      <div className="flex items-center gap-2.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-4 py-2.5 w-96 group focus-within:border-[#CDB49E]/40 transition-colors duration-200">
+        <Search className="w-4 h-4 text-[#888888] group-focus-within:text-[#CDB49E] transition-colors" />
         <input
           type="text"
           placeholder="Search anything..."
-          className="bg-transparent border-none outline-none text-sm w-full placeholder:text-muted-foreground"
+          className="bg-transparent border-none outline-none text-sm w-full text-[#f5f0eb] placeholder:text-[#888888]"
         />
-        <kbd className="text-xs text-muted-foreground bg-background px-1.5 py-0.5 rounded border border-border">
+        <kbd className="text-[10px] text-[#888888] bg-[#222222] px-1.5 py-0.5 rounded border border-[#2a2a2a] font-mono">
           ⌘K
         </kbd>
       </div>
 
       {/* Right side */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         {/* Org badge */}
         {userInfo.orgName && (
-          <div className="hidden md:flex items-center gap-1.5 text-xs text-muted-foreground bg-muted px-2.5 py-1.5 rounded-lg">
+          <div className="hidden md:flex items-center gap-1.5 text-xs text-[#888888] bg-[#1a1a1a] border border-[#2a2a2a] px-3 py-1.5 rounded-lg">
             <Building2 className="w-3 h-3" />
             <span>{userInfo.orgName}</span>
           </div>
         )}
 
-        <button className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative">
-          <Bell className="w-5 h-5" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full" />
+        {/* Notifications */}
+        <button className="p-2.5 rounded-lg hover:bg-[#1a1a1a] text-[#888888] hover:text-[#f5f0eb] transition-all duration-200 relative">
+          <Bell className="w-[18px] h-[18px]" />
+          <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-[#CDB49E] rounded-full" />
         </button>
 
         {/* User menu */}
         <div className="relative" ref={menuRef}>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="flex items-center gap-2 hover:bg-muted rounded-lg px-2 py-1.5 transition-colors"
+            className="flex items-center gap-3 hover:bg-[#1a1a1a] rounded-lg px-3 py-2 transition-all duration-200"
           >
-            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-semibold text-primary">
+            <div className="w-8 h-8 rounded-full bg-[#3a3028] flex items-center justify-center text-xs font-semibold text-[#CDB49E]">
               {initials}
             </div>
             <div className="hidden md:block text-left">
-              <p className="text-sm font-medium leading-tight">
+              <p className="text-sm font-medium text-[#f5f0eb] leading-tight">
                 {userInfo.fullName || userInfo.email}
               </p>
               {userInfo.role && (
-                <p className="text-xs text-muted-foreground capitalize">
+                <p className="text-[11px] text-[#888888] capitalize">
                   {userInfo.role}
                 </p>
               )}
@@ -89,12 +89,12 @@ export function AuthHeader({ userInfo }: { userInfo: UserInfo }) {
           </button>
 
           {menuOpen && (
-            <div className="absolute right-0 top-full mt-2 w-56 bg-card border border-border rounded-xl shadow-lg py-1 z-50">
-              <div className="px-4 py-3 border-b border-border">
-                <p className="text-sm font-medium">
+            <div className="absolute right-0 top-full mt-2 w-56 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl shadow-2xl shadow-black/40 py-1 z-50">
+              <div className="px-4 py-3 border-b border-[#2a2a2a]">
+                <p className="text-sm font-medium text-[#f5f0eb]">
                   {userInfo.fullName || "User"}
                 </p>
-                <p className="text-xs text-muted-foreground truncate">
+                <p className="text-xs text-[#888888] truncate mt-0.5">
                   {userInfo.email}
                 </p>
               </div>
@@ -102,7 +102,7 @@ export function AuthHeader({ userInfo }: { userInfo: UserInfo }) {
                 onClick={() => {
                   setMenuOpen(false);
                 }}
-                className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] transition-all duration-200"
               >
                 <User className="w-4 h-4" />
                 Profile
@@ -112,7 +112,7 @@ export function AuthHeader({ userInfo }: { userInfo: UserInfo }) {
                   setMenuOpen(false);
                   await logout();
                 }}
-                className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-400 hover:bg-muted transition-colors"
+                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-400/80 hover:text-red-400 hover:bg-[#222222] transition-all duration-200"
               >
                 <LogOut className="w-4 h-4" />
                 Sign out

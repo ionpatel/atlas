@@ -1,137 +1,736 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import Link from "next/link";
 import {
   Package,
   DollarSign,
   TrendingUp,
+  TrendingDown,
   AlertTriangle,
   ArrowUpRight,
   ArrowDownRight,
+  Plus,
+  FileText,
+  Users,
+  BarChart3,
+  Activity,
+  ChevronRight,
+  Clock,
+  CheckCircle2,
+  AlertCircle,
+  Send,
+  CircleDot,
+  Sparkles,
+  ArrowRight,
+  Eye,
 } from "lucide-react";
+import { useInventoryStore } from "@/stores/inventory-store";
+import { useInvoicesStore } from "@/stores/invoices-store";
+import { useContactsStore } from "@/stores/contacts-store";
+import { formatCurrency } from "@/lib/utils";
 
-const stats = [
-  {
-    label: "Total Products",
-    value: "1,284",
-    change: "+12%",
-    trend: "up",
-    icon: Package,
-  },
-  {
-    label: "Revenue (MTD)",
-    value: "$48,250",
-    change: "+8.2%",
-    trend: "up",
-    icon: DollarSign,
-  },
-  {
-    label: "Stock Value",
-    value: "$124,800",
-    change: "-2.1%",
-    trend: "down",
-    icon: TrendingUp,
-  },
-  {
-    label: "Low Stock Alerts",
-    value: "23",
-    change: "+5",
-    trend: "up",
-    icon: AlertTriangle,
-  },
-];
+/* ─────────────────────── helpers ─────────────────────── */
 
-const recentActivity = [
-  { action: "Stock received", detail: "42 units of Vitamin D3 at Grand Ave", time: "2m ago" },
-  { action: "Invoice paid", detail: "INV-2024-089 by MedSupply Co.", time: "15m ago" },
-  { action: "Transfer completed", detail: "18 units moved to Queen St", time: "1h ago" },
-  { action: "Low stock alert", detail: "Amoxicillin 500mg below threshold", time: "2h ago" },
-  { action: "New contact added", detail: "PharmaDist Inc. (Vendor)", time: "3h ago" },
-];
+function formatCompact(n: number) {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return n.toFixed(0);
+}
+
+function classNames(...classes: (string | boolean | undefined | null)[]) {
+  return classes.filter(Boolean).join(" ");
+}
+
+/* ─────────────────────── mini sparkline ─────────────────────── */
+
+function Sparkline({
+  data,
+  color = "#CDB49E",
+  height = 32,
+  width = 80,
+}: {
+  data: number[];
+  color?: string;
+  height?: number;
+  width?: number;
+}) {
+  if (data.length < 2) return null;
+  const max = Math.max(...data);
+  const min = Math.min(...data);
+  const range = max - min || 1;
+
+  const points = data
+    .map((v, i) => {
+      const x = (i / (data.length - 1)) * width;
+      const y = height - ((v - min) / range) * (height - 4) - 2;
+      return `${x},${y}`;
+    })
+    .join(" ");
+
+  const areaPoints = `0,${height} ${points} ${width},${height}`;
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      className="flex-shrink-0"
+    >
+      <defs>
+        <linearGradient id={`grad-${color.replace("#", "")}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity={0.2} />
+          <stop offset="100%" stopColor={color} stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      <polygon
+        points={areaPoints}
+        fill={`url(#grad-${color.replace("#", "")})`}
+      />
+      <polyline
+        points={points}
+        fill="none"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/* ─────────────────────── donut chart ─────────────────────── */
+
+function DonutChart({
+  segments,
+  size = 120,
+  thickness = 14,
+}: {
+  segments: { value: number; color: string; label: string }[];
+  size?: number;
+  thickness?: number;
+}) {
+  const total = segments.reduce((a, s) => a + s.value, 0);
+  if (total === 0) return null;
+
+  const radius = (size - thickness) / 2;
+  const circumference = 2 * Math.PI * radius;
+  let offset = 0;
+
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="-rotate-90">
+        {segments.map((seg, i) => {
+          const pct = seg.value / total;
+          const dashLength = pct * circumference;
+          const dashOffset = -offset;
+          offset += dashLength;
+          return (
+            <circle
+              key={i}
+              cx={size / 2}
+              cy={size / 2}
+              r={radius}
+              fill="none"
+              stroke={seg.color}
+              strokeWidth={thickness}
+              strokeDasharray={`${dashLength} ${circumference - dashLength}`}
+              strokeDashoffset={dashOffset}
+              strokeLinecap="round"
+              className="transition-all duration-700"
+            />
+          );
+        })}
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-lg font-bold text-[#f5f0eb]">{total}</span>
+        <span className="text-[10px] text-[#888888] uppercase tracking-wider">
+          Total
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────── bar chart ─────────────────────── */
+
+function BarChart({
+  data,
+}: {
+  data: { label: string; value: number; accent?: boolean }[];
+}) {
+  const maxVal = Math.max(...data.map((d) => d.value), 1);
+
+  return (
+    <div className="flex items-end justify-between gap-2 h-[140px] px-1">
+      {data.map((d, i) => {
+        const heightPct = (d.value / maxVal) * 100;
+        return (
+          <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
+            <span className="text-[10px] text-[#888888] opacity-0 group-hover:opacity-100 transition-opacity font-mono">
+              {formatCompact(d.value)}
+            </span>
+            <div className="w-full relative flex-1 flex items-end">
+              <div
+                className={classNames(
+                  "w-full rounded-t-md transition-all duration-500 ease-out",
+                  d.accent
+                    ? "bg-[#CDB49E] group-hover:bg-[#d4c0ad]"
+                    : "bg-[#CDB49E]/15 group-hover:bg-[#CDB49E]/30"
+                )}
+                style={{ height: `${Math.max(heightPct, 3)}%` }}
+              />
+            </div>
+            <span className="text-[10px] text-[#555555] uppercase tracking-wider whitespace-nowrap">
+              {d.label}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ─────────────────────── status icon ─────────────────────── */
+
+function InvoiceStatusIcon({ status }: { status: string }) {
+  switch (status) {
+    case "paid":
+      return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />;
+    case "sent":
+      return <Send className="w-3.5 h-3.5 text-[#CDB49E]" />;
+    case "overdue":
+      return <AlertCircle className="w-3.5 h-3.5 text-red-400" />;
+    case "draft":
+      return <CircleDot className="w-3.5 h-3.5 text-[#555555]" />;
+    default:
+      return <CircleDot className="w-3.5 h-3.5 text-[#555555]" />;
+  }
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const styles: Record<string, string> = {
+    paid: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    sent: "bg-[#3a3028] text-[#CDB49E] border-[#CDB49E]/20",
+    overdue: "bg-red-500/10 text-red-400 border-red-500/20",
+    draft: "bg-[#222222] text-[#888888] border-[#2a2a2a]",
+  };
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium border ${styles[status] || styles.draft}`}
+    >
+      <InvoiceStatusIcon status={status} />
+      {status.charAt(0).toUpperCase() + status.slice(1)}
+    </span>
+  );
+}
+
+/* ════════════════════════ MAIN DASHBOARD ════════════════════════ */
 
 export default function DashboardPage() {
+  const { products } = useInventoryStore();
+  const { invoices, getContactName } = useInvoicesStore();
+  const { contacts } = useContactsStore();
+
+  /* ── derived stats ── */
+  const stats = useMemo(() => {
+    const activeProducts = products.filter((p) => p.is_active).length;
+    const totalCostValue = products.reduce(
+      (sum, p) => sum + p.cost_price,
+      0
+    );
+    const totalSellValue = products.reduce(
+      (sum, p) => sum + p.sell_price,
+      0
+    );
+
+    const totalRevenue = invoices
+      .filter((i) => i.status === "paid")
+      .reduce((sum, i) => sum + i.total, 0);
+
+    const totalOutstanding = invoices
+      .filter((i) => i.status === "sent" || i.status === "overdue")
+      .reduce((sum, i) => sum + i.total, 0);
+
+    const overdueCount = invoices.filter((i) => i.status === "overdue").length;
+    const paidCount = invoices.filter((i) => i.status === "paid").length;
+    const sentCount = invoices.filter((i) => i.status === "sent").length;
+    const draftCount = invoices.filter((i) => i.status === "draft").length;
+
+    const customerCount = contacts.filter(
+      (c) => c.type === "customer" || c.type === "both"
+    ).length;
+    const vendorCount = contacts.filter(
+      (c) => c.type === "vendor" || c.type === "both"
+    ).length;
+
+    return {
+      activeProducts,
+      totalProducts: products.length,
+      totalCostValue,
+      totalSellValue,
+      totalRevenue,
+      totalOutstanding,
+      overdueCount,
+      paidCount,
+      sentCount,
+      draftCount,
+      customerCount,
+      vendorCount,
+      totalContacts: contacts.length,
+    };
+  }, [products, invoices, contacts]);
+
+  /* ── top products by margin ── */
+  const topProducts = useMemo(() => {
+    return [...products]
+      .filter((p) => p.is_active)
+      .map((p) => ({
+        ...p,
+        margin: p.sell_price - p.cost_price,
+        marginPct:
+          p.cost_price > 0
+            ? ((p.sell_price - p.cost_price) / p.cost_price) * 100
+            : 0,
+      }))
+      .sort((a, b) => b.marginPct - a.marginPct)
+      .slice(0, 5);
+  }, [products]);
+
+  /* ── recent invoices ── */
+  const recentInvoices = useMemo(() => {
+    return [...invoices]
+      .sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      )
+      .slice(0, 5);
+  }, [invoices]);
+
+  /* ── simulated revenue data for chart (7 months) ── */
+  const revenueData = useMemo(() => {
+    const months = ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb"];
+    const base = stats.totalRevenue || 6550;
+    return months.map((m, i) => ({
+      label: m,
+      value: Math.round(base * (0.6 + Math.random() * 0.5 + i * 0.05)),
+      accent: i === months.length - 1,
+    }));
+  }, [stats.totalRevenue]);
+
+  /* ── invoice breakdown for donut ── */
+  const invoiceSegments = useMemo(
+    () => [
+      { value: stats.paidCount, color: "#34d399", label: "Paid" },
+      { value: stats.sentCount, color: "#CDB49E", label: "Sent" },
+      { value: stats.overdueCount, color: "#f87171", label: "Overdue" },
+      { value: stats.draftCount, color: "#555555", label: "Draft" },
+    ],
+    [stats]
+  );
+
+  /* ── sparkline sample data ── */
+  const sparkRevenue = [32, 45, 38, 52, 48, 61, 58, 65];
+  const sparkProducts = [40, 42, 44, 43, 46, 45, 48, 48];
+  const sparkOutstanding = [20, 25, 18, 30, 22, 28, 19, 15];
+
   return (
-    <div className="space-y-6">
-      {/* Page title */}
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Overview of your business
-        </p>
+    <div className="space-y-6 max-w-[1400px]">
+      {/* ── Page header ── */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-[#f5f0eb]">
+            Dashboard
+          </h1>
+          <p className="text-[#888888] text-sm mt-1">
+            Welcome back. Here&apos;s your business at a glance.
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/invoices"
+            className="flex items-center gap-2 px-4 py-2.5 border border-[#2a2a2a] rounded-lg text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+          >
+            <FileText className="w-4 h-4" />
+            New Invoice
+          </Link>
+          <Link
+            href="/inventory"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
+          >
+            <Plus className="w-4 h-4" />
+            Add Product
+          </Link>
+        </div>
       </div>
 
-      {/* Stats grid */}
+      {/* ── Stat cards ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="bg-card border border-border rounded-xl p-5 hover:border-primary/30 transition-colors"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <stat.icon className="w-4 h-4 text-primary" />
-              </div>
-              <span
-                className={`flex items-center gap-0.5 text-xs font-medium ${
-                  stat.trend === "up" ? "text-emerald-500" : "text-red-500"
-                }`}
-              >
-                {stat.trend === "up" ? (
-                  <ArrowUpRight className="w-3 h-3" />
-                ) : (
-                  <ArrowDownRight className="w-3 h-3" />
-                )}
-                {stat.change}
+        {/* Revenue */}
+        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#CDB49E]/20 transition-all duration-300 group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 rounded-lg bg-emerald-500/10">
+              <DollarSign className="w-4 h-4 text-emerald-400" />
+            </div>
+            <Sparkline data={sparkRevenue} color="#34d399" />
+          </div>
+          <p className="text-2xl font-bold text-[#f5f0eb] tracking-tight">
+            {formatCurrency(stats.totalRevenue)}
+          </p>
+          <div className="flex items-center justify-between mt-2">
+            <p className="text-xs text-[#888888] uppercase tracking-wider">
+              Revenue (Paid)
+            </p>
+            <span className="flex items-center gap-0.5 text-[11px] font-medium text-emerald-400">
+              <ArrowUpRight className="w-3 h-3" />
+              +12.5%
+            </span>
+          </div>
+        </div>
+
+        {/* Outstanding */}
+        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#CDB49E]/20 transition-all duration-300 group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 rounded-lg bg-[#3a3028]">
+              <Clock className="w-4 h-4 text-[#CDB49E]" />
+            </div>
+            <Sparkline data={sparkOutstanding} color="#CDB49E" />
+          </div>
+          <p className="text-2xl font-bold text-[#CDB49E] tracking-tight">
+            {formatCurrency(stats.totalOutstanding)}
+          </p>
+          <div className="flex items-center justify-between mt-2">
+            <p className="text-xs text-[#888888] uppercase tracking-wider">
+              Outstanding
+            </p>
+            {stats.overdueCount > 0 && (
+              <span className="flex items-center gap-1 text-[11px] font-medium text-red-400">
+                <AlertTriangle className="w-3 h-3" />
+                {stats.overdueCount} overdue
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Products */}
+        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#CDB49E]/20 transition-all duration-300 group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 rounded-lg bg-violet-500/10">
+              <Package className="w-4 h-4 text-violet-400" />
+            </div>
+            <Sparkline data={sparkProducts} color="#a78bfa" />
+          </div>
+          <p className="text-2xl font-bold text-[#f5f0eb] tracking-tight">
+            {stats.totalProducts}
+          </p>
+          <div className="flex items-center justify-between mt-2">
+            <p className="text-xs text-[#888888] uppercase tracking-wider">
+              Products
+            </p>
+            <span className="text-[11px] text-[#555555]">
+              {stats.activeProducts} active
+            </span>
+          </div>
+        </div>
+
+        {/* Contacts */}
+        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#CDB49E]/20 transition-all duration-300 group">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 rounded-lg bg-blue-500/10">
+              <Users className="w-4 h-4 text-blue-400" />
+            </div>
+            <div className="flex items-center gap-3 text-[11px]">
+              <span className="text-[#888888]">
+                {stats.customerCount}{" "}
+                <span className="text-[#555555]">cust</span>
+              </span>
+              <span className="text-[#888888]">
+                {stats.vendorCount}{" "}
+                <span className="text-[#555555]">vend</span>
               </span>
             </div>
-            <p className="text-2xl font-bold">{stat.value}</p>
-            <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
           </div>
-        ))}
+          <p className="text-2xl font-bold text-[#f5f0eb] tracking-tight">
+            {stats.totalContacts}
+          </p>
+          <div className="flex items-center justify-between mt-2">
+            <p className="text-xs text-[#888888] uppercase tracking-wider">
+              Contacts
+            </p>
+            <span className="flex items-center gap-0.5 text-[11px] font-medium text-blue-400">
+              <ArrowUpRight className="w-3 h-3" />
+              +3 this month
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* Content grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent activity */}
-        <div className="lg:col-span-2 bg-card border border-border rounded-xl">
-          <div className="p-5 border-b border-border">
-            <h2 className="font-semibold">Recent Activity</h2>
+      {/* ── Row 2: Revenue chart + Invoice breakdown ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Revenue trend chart */}
+        <div className="lg:col-span-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
+          <div className="px-6 py-5 border-b border-[#2a2a2a] flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <BarChart3 className="w-4 h-4 text-[#888888]" />
+              <h2 className="text-sm font-semibold text-[#f5f0eb]">
+                Revenue Trend
+              </h2>
+            </div>
+            <span className="text-[11px] text-[#555555]">Last 7 months</span>
           </div>
-          <div className="divide-y divide-border">
-            {recentActivity.map((item, i) => (
-              <div key={i} className="px-5 py-3.5 flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium">{item.action}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {item.detail}
-                  </p>
+          <div className="p-6">
+            <BarChart data={revenueData} />
+          </div>
+        </div>
+
+        {/* Invoice breakdown donut */}
+        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
+          <div className="px-6 py-5 border-b border-[#2a2a2a] flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-[#f5f0eb]">
+              Invoice Status
+            </h2>
+            <Link
+              href="/invoices"
+              className="text-[11px] text-[#555555] hover:text-[#CDB49E] transition-colors flex items-center gap-1"
+            >
+              View all <ChevronRight className="w-3 h-3" />
+            </Link>
+          </div>
+          <div className="p-6 flex flex-col items-center gap-5">
+            <DonutChart segments={invoiceSegments} />
+            <div className="grid grid-cols-2 gap-x-6 gap-y-2.5 w-full">
+              {invoiceSegments.map((seg) => (
+                <div key={seg.label} className="flex items-center gap-2">
+                  <div
+                    className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: seg.color }}
+                  />
+                  <span className="text-xs text-[#888888]">{seg.label}</span>
+                  <span className="text-xs font-semibold text-[#f5f0eb] ml-auto">
+                    {seg.value}
+                  </span>
                 </div>
-                <span className="text-xs text-muted-foreground whitespace-nowrap ml-4">
-                  {item.time}
-                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Row 3: Recent invoices + Top products ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* Recent invoices */}
+        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
+          <div className="px-6 py-5 border-b border-[#2a2a2a] flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <FileText className="w-4 h-4 text-[#888888]" />
+              <h2 className="text-sm font-semibold text-[#f5f0eb]">
+                Recent Invoices
+              </h2>
+            </div>
+            <Link
+              href="/invoices"
+              className="text-[11px] text-[#555555] hover:text-[#CDB49E] transition-colors flex items-center gap-1"
+            >
+              View all <ChevronRight className="w-3 h-3" />
+            </Link>
+          </div>
+          <div>
+            {recentInvoices.length === 0 ? (
+              <div className="px-6 py-12 text-center">
+                <FileText className="w-8 h-8 mx-auto mb-3 text-[#888888]/30" />
+                <p className="text-sm text-[#888888]">No invoices yet</p>
               </div>
+            ) : (
+              recentInvoices.map((inv, i) => (
+                <div
+                  key={inv.id}
+                  className={classNames(
+                    "px-6 py-4 flex items-center justify-between transition-colors hover:bg-[#222222]/50 cursor-pointer",
+                    i < recentInvoices.length - 1 &&
+                      "border-b border-[#2a2a2a]/50"
+                  )}
+                >
+                  <div className="flex items-center gap-4 min-w-0">
+                    <div className="w-9 h-9 rounded-lg bg-[#222222] flex items-center justify-center flex-shrink-0">
+                      <InvoiceStatusIcon status={inv.status} />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-medium text-[#f5f0eb] font-mono">
+                          {inv.invoice_number}
+                        </p>
+                        <StatusBadge status={inv.status} />
+                      </div>
+                      <p className="text-xs text-[#888888] mt-0.5 truncate">
+                        {getContactName(inv.contact_id)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right flex-shrink-0 ml-4">
+                    <p className="text-sm font-semibold text-[#f5f0eb]">
+                      {formatCurrency(inv.total)}
+                    </p>
+                    <p className="text-[11px] text-[#555555] mt-0.5">
+                      {new Date(inv.issue_date).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Top products by margin */}
+        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
+          <div className="px-6 py-5 border-b border-[#2a2a2a] flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <TrendingUp className="w-4 h-4 text-[#888888]" />
+              <h2 className="text-sm font-semibold text-[#f5f0eb]">
+                Top Products by Margin
+              </h2>
+            </div>
+            <Link
+              href="/inventory"
+              className="text-[11px] text-[#555555] hover:text-[#CDB49E] transition-colors flex items-center gap-1"
+            >
+              View all <ChevronRight className="w-3 h-3" />
+            </Link>
+          </div>
+          <div>
+            {topProducts.length === 0 ? (
+              <div className="px-6 py-12 text-center">
+                <Package className="w-8 h-8 mx-auto mb-3 text-[#888888]/30" />
+                <p className="text-sm text-[#888888]">No products yet</p>
+              </div>
+            ) : (
+              topProducts.map((p, i) => (
+                <div
+                  key={p.id}
+                  className={classNames(
+                    "px-6 py-4 flex items-center justify-between transition-colors hover:bg-[#222222]/50 cursor-pointer",
+                    i < topProducts.length - 1 &&
+                      "border-b border-[#2a2a2a]/50"
+                  )}
+                >
+                  <div className="flex items-center gap-4 min-w-0">
+                    <div className="w-9 h-9 rounded-lg bg-[#3a3028] flex items-center justify-center flex-shrink-0">
+                      <Package className="w-4 h-4 text-[#CDB49E]" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-[#f5f0eb] truncate">
+                        {p.name}
+                      </p>
+                      <p className="text-xs text-[#888888] mt-0.5">
+                        {p.category || "Uncategorized"} · {p.sku}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right flex-shrink-0 ml-4">
+                    <p className="text-sm font-semibold text-emerald-400">
+                      +{formatCurrency(p.margin)}
+                    </p>
+                    <p className="text-[11px] text-[#555555] mt-0.5">
+                      {p.marginPct.toFixed(0)}% margin
+                    </p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Row 4: Quick actions + AI teaser ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Quick actions */}
+        <div className="lg:col-span-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
+          <div className="px-6 py-5 border-b border-[#2a2a2a]">
+            <h2 className="text-sm font-semibold text-[#f5f0eb]">
+              Quick Actions
+            </h2>
+          </div>
+          <div className="p-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              {
+                label: "Add Product",
+                icon: Package,
+                href: "/inventory",
+                color: "bg-violet-500/10",
+                iconColor: "text-violet-400",
+              },
+              {
+                label: "New Invoice",
+                icon: FileText,
+                href: "/invoices",
+                color: "bg-[#3a3028]",
+                iconColor: "text-[#CDB49E]",
+              },
+              {
+                label: "Add Contact",
+                icon: Users,
+                href: "/contacts",
+                color: "bg-blue-500/10",
+                iconColor: "text-blue-400",
+              },
+              {
+                label: "View Reports",
+                icon: BarChart3,
+                href: "/",
+                color: "bg-emerald-500/10",
+                iconColor: "text-emerald-400",
+              },
+            ].map((action) => (
+              <Link
+                key={action.label}
+                href={action.href}
+                className="flex flex-col items-center gap-3 p-5 rounded-xl hover:bg-[#222222] transition-all duration-200 group text-center"
+              >
+                <div
+                  className={`p-3 rounded-xl ${action.color} group-hover:scale-110 transition-transform duration-200`}
+                >
+                  <action.icon className={`w-5 h-5 ${action.iconColor}`} />
+                </div>
+                <span className="text-xs font-medium text-[#888888] group-hover:text-[#f5f0eb] transition-colors">
+                  {action.label}
+                </span>
+              </Link>
             ))}
           </div>
         </div>
 
-        {/* Quick actions */}
-        <div className="bg-card border border-border rounded-xl">
-          <div className="p-5 border-b border-border">
-            <h2 className="font-semibold">Quick Actions</h2>
+        {/* AI Assistant teaser */}
+        <div className="bg-gradient-to-br from-[#1a1a1a] to-[#1e1914] border border-[#2a2a2a] rounded-xl p-6 flex flex-col justify-between relative overflow-hidden">
+          {/* Ambient glow */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#CDB49E]/5 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="p-2 rounded-lg bg-[#3a3028]">
+                <Sparkles className="w-4 h-4 text-[#CDB49E]" />
+              </div>
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#CDB49E]">
+                Coming Soon
+              </span>
+            </div>
+            <h3 className="text-base font-semibold text-[#f5f0eb] mb-2">
+              AI Assistant
+            </h3>
+            <p className="text-xs text-[#888888] leading-relaxed mb-6">
+              Ask anything about your business. &quot;What&apos;s my best-selling
+              product?&quot; &quot;Show overdue invoices.&quot; &quot;Forecast next month&apos;s
+              revenue.&quot;
+            </p>
           </div>
-          <div className="p-4 space-y-2">
-            {[
-              "Add Product",
-              "Create Invoice",
-              "Record Stock",
-              "Add Contact",
-              "Transfer Stock",
-            ].map((action) => (
-              <button
-                key={action}
-                className="w-full text-left px-4 py-3 rounded-lg text-sm hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
-              >
-                {action}
-              </button>
-            ))}
-          </div>
+          <Link
+            href="/ai"
+            className="relative z-10 flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#CDB49E]/10 text-[#CDB49E] text-sm font-medium hover:bg-[#CDB49E]/20 transition-all duration-200 border border-[#CDB49E]/10"
+          >
+            Try it out
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       </div>
     </div>

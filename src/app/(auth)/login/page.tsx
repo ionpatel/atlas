@@ -30,16 +30,16 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="text-center mb-6">
-        <h1 className="text-xl font-semibold">Welcome back</h1>
-        <p className="text-sm text-muted-foreground mt-1">
+      <div className="text-center mb-8">
+        <h1 className="text-xl font-semibold text-[#f5f0eb]">Welcome back</h1>
+        <p className="text-sm text-[#888888] mt-1.5">
           Sign in to your Atlas account
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
-          <div className="bg-destructive/10 text-red-400 text-sm rounded-lg px-4 py-3 border border-red-900/50">
+          <div className="bg-red-500/5 text-red-400 text-sm rounded-lg px-4 py-3 border border-red-500/20">
             {error}
           </div>
         )}
@@ -47,7 +47,7 @@ export default function LoginPage() {
         <div className="space-y-2">
           <label
             htmlFor="email"
-            className="text-sm font-medium text-muted-foreground"
+            className="block text-sm font-medium text-[#888888]"
           >
             Email
           </label>
@@ -58,14 +58,14 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@company.com"
             required
-            className="w-full h-10 px-3 rounded-lg border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className="w-full h-11 px-4 rounded-lg border border-[#2a2a2a] bg-[#111111] text-[#f5f0eb] text-sm placeholder:text-[#888888]/60 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200"
           />
         </div>
 
         <div className="space-y-2">
           <label
             htmlFor="password"
-            className="text-sm font-medium text-muted-foreground"
+            className="block text-sm font-medium text-[#888888]"
           >
             Password
           </label>
@@ -76,14 +76,14 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••"
             required
-            className="w-full h-10 px-3 rounded-lg border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+            className="w-full h-11 px-4 rounded-lg border border-[#2a2a2a] bg-[#111111] text-[#f5f0eb] text-sm placeholder:text-[#888888]/60 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full h-10 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full h-11 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
         >
           {loading ? (
             <>
@@ -96,11 +96,11 @@ export default function LoginPage() {
         </button>
       </form>
 
-      <p className="text-center text-sm text-muted-foreground mt-6">
+      <p className="text-center text-sm text-[#888888] mt-8">
         Don&apos;t have an account?{" "}
         <Link
           href="/signup"
-          className="text-primary hover:underline font-medium"
+          className="text-[#CDB49E] hover:text-[#d4c0ad] font-medium transition-colors"
         >
           Create one
         </Link>
