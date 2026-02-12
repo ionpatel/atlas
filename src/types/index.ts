@@ -104,3 +104,96 @@ export interface InvoiceItem {
   unit_price: number;
   total: number;
 }
+
+export interface Account {
+  id: string;
+  org_id: string;
+  code: string;
+  name: string;
+  type: 'asset' | 'liability' | 'equity' | 'revenue' | 'expense';
+  parent_id?: string;
+  balance: number;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface JournalEntry {
+  id: string;
+  org_id: string;
+  entry_number: string;
+  date: string;
+  description: string;
+  status: 'draft' | 'posted' | 'cancelled';
+  lines: JournalLine[];
+  created_at: string;
+}
+
+export interface JournalLine {
+  id: string;
+  entry_id: string;
+  account_id: string;
+  account_name?: string;
+  description: string;
+  debit: number;
+  credit: number;
+}
+
+export interface TaxConfig {
+  id: string;
+  org_id: string;
+  name: string;
+  rate: number;
+  is_active: boolean;
+}
+
+export interface SalesOrder {
+  id: string;
+  org_id: string;
+  contact_id: string;
+  order_number: string;
+  status: 'draft' | 'confirmed' | 'invoiced' | 'cancelled';
+  order_date: string;
+  delivery_date?: string;
+  subtotal: number;
+  tax: number;
+  total: number;
+  notes?: string;
+  created_at: string;
+}
+
+export interface SalesOrderLine {
+  id: string;
+  order_id: string;
+  product_id?: string;
+  description: string;
+  quantity: number;
+  unit_price: number;
+  tax_rate: number;
+  total: number;
+}
+
+export interface PurchaseOrder {
+  id: string;
+  org_id: string;
+  vendor_id: string;
+  order_number: string;
+  status: 'draft' | 'sent' | 'received' | 'billed' | 'cancelled';
+  order_date: string;
+  expected_date?: string;
+  subtotal: number;
+  tax: number;
+  total: number;
+  notes?: string;
+  created_at: string;
+}
+
+export interface PurchaseOrderLine {
+  id: string;
+  order_id: string;
+  product_id?: string;
+  description: string;
+  quantity: number;
+  unit_price: number;
+  tax_rate: number;
+  total: number;
+}

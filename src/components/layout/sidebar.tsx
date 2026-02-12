@@ -5,19 +5,27 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
+  LayoutGrid,
   Package,
   FileText,
+  ShoppingCart,
+  Truck,
   Users,
   Settings,
   Bot,
+  Calculator,
   ChevronLeft,
 } from "lucide-react";
 import { useState } from "react";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/apps", label: "Apps", icon: LayoutGrid },
   { href: "/inventory", label: "Inventory", icon: Package },
   { href: "/invoices", label: "Invoices", icon: FileText },
+  { href: "/sales", label: "Sales", icon: ShoppingCart },
+  { href: "/purchase", label: "Purchase", icon: Truck },
+  { href: "/accounting", label: "Accounting", icon: Calculator },
   { href: "/contacts", label: "Contacts", icon: Users },
   { href: "/ai", label: "AI Assistant", icon: Bot },
   { href: "/settings", label: "Settings", icon: Settings },
