@@ -678,7 +678,7 @@ export default function DashboardPage() {
               {
                 label: "View Reports",
                 icon: BarChart3,
-                href: "/",
+                href: "/dashboard",
                 color: "bg-emerald-500/10",
                 iconColor: "text-emerald-400",
               },

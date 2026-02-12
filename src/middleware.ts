@@ -43,21 +43,37 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Auth pages — redirect to dashboard if already logged in
-  if (user && (pathname === "/login" || pathname === "/signup")) {
+  // Redirect /landing to /
+  if (pathname === "/landing") {
     const url = request.nextUrl.clone();
     url.pathname = "/";
     return NextResponse.redirect(url);
   }
 
+  // Auth pages — redirect to dashboard if already logged in
+  if (user && (pathname === "/login" || pathname === "/signup")) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
+  }
+
   // Protected routes — redirect to login if not authenticated
-  const isProtectedRoute =
-    pathname === "/" ||
-    pathname.startsWith("/inventory") ||
-    pathname.startsWith("/invoices") ||
-    pathname.startsWith("/contacts") ||
-    pathname.startsWith("/ai") ||
-    pathname.startsWith("/settings");
+  const protectedPrefixes = [
+    "/dashboard",
+    "/inventory",
+    "/invoices",
+    "/sales",
+    "/purchase",
+    "/accounting",
+    "/contacts",
+    "/apps",
+    "/settings",
+    "/ai",
+  ];
+
+  const isProtectedRoute = protectedPrefixes.some(
+    (prefix) => pathname === prefix || pathname.startsWith(prefix + "/")
+  );
 
   if (!user && isProtectedRoute) {
     const url = request.nextUrl.clone();

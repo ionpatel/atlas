@@ -94,7 +94,7 @@ export function useAuth() {
       }
 
       await getCurrentUser();
-      router.push("/");
+      router.push("/dashboard");
       router.refresh();
     },
     [supabase, router, getCurrentUser, setLoading]
@@ -135,7 +135,7 @@ export function useAuth() {
       // Give it a moment, then load the user context.
       await new Promise((r) => setTimeout(r, 500));
       await getCurrentUser();
-      router.push("/");
+      router.push("/dashboard");
       router.refresh();
     },
     [supabase, router, getCurrentUser, setLoading]

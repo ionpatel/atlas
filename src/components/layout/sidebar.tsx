@@ -19,7 +19,7 @@ import {
 import { useState } from "react";
 
 const navItems = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/apps", label: "Apps", icon: LayoutGrid },
   { href: "/inventory", label: "Inventory", icon: Package },
   { href: "/invoices", label: "Invoices", icon: FileText },
@@ -44,7 +44,7 @@ export function Sidebar() {
     >
       {/* Logo */}
       <div className="h-16 flex items-center px-5 border-b border-[#1a1a1a]">
-        <div className="flex items-center gap-3">
+        <Link href="/dashboard" className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-[#CDB49E] flex items-center justify-center flex-shrink-0">
             <span className="text-[#111111] font-bold text-sm tracking-tight">A</span>
           </div>
@@ -53,7 +53,7 @@ export function Sidebar() {
               Atlas
             </span>
           )}
-        </div>
+        </Link>
       </div>
 
       {/* Navigation */}
@@ -61,7 +61,7 @@ export function Sidebar() {
         {navItems.map((item) => {
           const isActive =
             pathname === item.href ||
-            (item.href !== "/" && pathname.startsWith(item.href));
+            (item.href !== "/dashboard" && pathname.startsWith(item.href));
           return (
             <Link
               key={item.href}

@@ -22,9 +22,10 @@ import {
 
 /* ─────────────────────── palette tokens ─────────────────────── */
 // bg: #111111 | card: #1a1a1a | elevated: #222222
-// border: #2a2a2a | muted text: #888888
+// border: #2a2a2a | muted text: #888888 | dim: #555555
 // accent: #CDB49E | accent-hover: #d4c0ad | accent-muted: #3a3028
 // warm white: #f5f0eb
+// green: #34d399 | red: #f87171 | blue: #60a5fa | violet: #a78bfa | amber: #fbbf24
 
 /* ─────────────────────── scroll reveal ─────────────────────── */
 function useInView(threshold = 0.12) {
@@ -71,6 +72,510 @@ function Reveal({
   );
 }
 
+/* ─────────────────────── ANIMATED DASHBOARD MOCKUP ─────────────────────── */
+
+const MOCKUP_KEYFRAMES = `
+@keyframes countUp {
+  from { --num: 0; }
+  to { --num: var(--target); }
+}
+@keyframes barGrow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes drawLine {
+  from { stroke-dashoffset: 300; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.5) translateY(10px); }
+  70% { transform: scale(1.05) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes toastSlide {
+  0% { opacity: 0; transform: translateY(-20px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes donutFill {
+  from { stroke-dashoffset: var(--circumference); }
+  to { stroke-dashoffset: var(--final-offset); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(205,180,158,0.15); }
+  50% { box-shadow: 0 0 20px 4px rgba(205,180,158,0.1); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes typing {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+@keyframes blink {
+  0%, 50% { border-right-color: #CDB49E; }
+  51%, 100% { border-right-color: transparent; }
+}
+`;
+
+function AnimatedStatCard({
+  label,
+  value,
+  prefix,
+  suffix,
+  color,
+  delay,
+  sparkData,
+}: {
+  label: string;
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  color: string;
+  delay: number;
+  sparkData: number[];
+}) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const { ref, visible } = useInView(0.3);
+
+  useEffect(() => {
+    if (!visible || started) return;
+    const timeout = setTimeout(() => {
+      setStarted(true);
+      const duration = 1800;
+      const steps = 60;
+      const stepTime = duration / steps;
+      let step = 0;
+      const interval = setInterval(() => {
+        step++;
+        const progress = step / steps;
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setCount(Math.round(value * eased));
+        if (step >= steps) clearInterval(interval);
+      }, stepTime);
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [visible, started, value, delay]);
+
+  const formatNum = (n: number) => {
+    if (prefix === "$") {
+      return "$" + n.toLocaleString();
+    }
+    return n.toLocaleString() + (suffix || "");
+  };
+
+  // Mini sparkline path
+  const sparkW = 60;
+  const sparkH = 20;
+  const max = Math.max(...sparkData);
+  const min = Math.min(...sparkData);
+  const range = max - min || 1;
+  const points = sparkData
+    .map((v, i) => {
+      const x = (i / (sparkData.length - 1)) * sparkW;
+      const y = sparkH - ((v - min) / range) * (sparkH - 4) - 2;
+      return `${x},${y}`;
+    })
+    .join(" ");
+
+  return (
+    <div
+      ref={ref}
+      className="p-3 rounded-xl bg-[#222222] border border-[#2a2a2a] text-left"
+      style={{
+        animation: visible ? `fadeInScale 0.6s cubic-bezier(.16,1,.3,1) ${delay}ms both` : "none",
+      }}
+    >
+      <div className="flex items-center justify-between mb-1.5">
+        <p className="text-[9px] text-[#555555] uppercase tracking-wider font-medium">
+          {label}
+        </p>
+        <svg
+          width={sparkW}
+          height={sparkH}
+          viewBox={`0 0 ${sparkW} ${sparkH}`}
+          className="opacity-60"
+        >
+          <polyline
+            points={points}
+            fill="none"
+            stroke={color}
+            strokeWidth={1.5}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray="300"
+            style={{
+              animation: visible
+                ? `drawLine 2s cubic-bezier(.16,1,.3,1) ${delay + 400}ms both`
+                : "none",
+            }}
+          />
+        </svg>
+      </div>
+      <p className="text-base sm:text-lg font-bold" style={{ color }}>
+        {formatNum(count)}
+      </p>
+    </div>
+  );
+}
+
+function AnimatedBarChart({ visible, delay }: { visible: boolean; delay: number }) {
+  const bars = [40, 65, 45, 80, 55, 90, 70, 85, 60, 95, 75, 88];
+
+  return (
+    <div className="h-24 rounded-xl bg-[#222222] border border-[#2a2a2a] flex items-end justify-center gap-1 sm:gap-1.5 px-3 pb-3 pt-2 overflow-hidden">
+      {bars.map((h, i) => (
+        <div
+          key={i}
+          className="flex-1 max-w-[24px] rounded-t origin-bottom"
+          style={{
+            height: `${h}%`,
+            background: i === 9 ? "#CDB49E" : "rgba(205,180,158,0.15)",
+            transform: visible ? "scaleY(1)" : "scaleY(0)",
+            transition: `transform 0.8s cubic-bezier(.16,1,.3,1) ${delay + i * 80}ms`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function AnimatedDonutChart({ visible, delay }: { visible: boolean; delay: number }) {
+  const segments = [
+    { value: 45, color: "#34d399", label: "Paid" },
+    { value: 25, color: "#CDB49E", label: "Sent" },
+    { value: 15, color: "#f87171", label: "Overdue" },
+    { value: 15, color: "#555555", label: "Draft" },
+  ];
+  const size = 80;
+  const thickness = 8;
+  const radius = (size - thickness) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const total = segments.reduce((a, s) => a + s.value, 0);
+  let offset = 0;
+
+  return (
+    <div className="flex items-center gap-3">
+      <div className="relative" style={{ width: size, height: size }}>
+        <svg width={size} height={size} className="-rotate-90">
+          {segments.map((seg, i) => {
+            const pct = seg.value / total;
+            const dashLength = pct * circumference;
+            const dashGap = circumference - dashLength;
+            const currentOffset = -offset;
+            offset += dashLength;
+            return (
+              <circle
+                key={i}
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={seg.color}
+                strokeWidth={thickness}
+                strokeLinecap="round"
+                strokeDasharray={`${dashLength} ${dashGap}`}
+                style={{
+                  strokeDashoffset: visible ? currentOffset : circumference,
+                  transition: `stroke-dashoffset 1.2s cubic-bezier(.16,1,.3,1) ${delay + i * 200}ms`,
+                }}
+              />
+            );
+          })}
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-xs font-bold text-[#f5f0eb]">100</span>
+          <span className="text-[7px] text-[#555555] uppercase">Total</span>
+        </div>
+      </div>
+      <div className="space-y-1">
+        {segments.map((seg, i) => (
+          <div
+            key={seg.label}
+            className="flex items-center gap-1.5"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateX(0)" : "translateX(10px)",
+              transition: `all 0.5s cubic-bezier(.16,1,.3,1) ${delay + 400 + i * 100}ms`,
+            }}
+          >
+            <div
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ backgroundColor: seg.color }}
+            />
+            <span className="text-[8px] text-[#888888]">{seg.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ActivityFeed({ visible, delay }: { visible: boolean; delay: number }) {
+  const items = [
+    { text: "Invoice #1042 paid", accent: "#34d399", time: "2m ago" },
+    { text: "New order received", accent: "#60a5fa", time: "5m ago" },
+    { text: "Stock alert: Widget A", accent: "#fbbf24", time: "12m ago" },
+  ];
+
+  return (
+    <div className="space-y-1.5">
+      {items.map((item, i) => (
+        <div
+          key={i}
+          className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-[#1a1a1a]"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(12px)",
+            transition: `all 0.6s cubic-bezier(.16,1,.3,1) ${delay + i * 150}ms`,
+          }}
+        >
+          <div
+            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+            style={{ backgroundColor: item.accent }}
+          />
+          <span className="text-[8px] sm:text-[9px] text-[#888888] truncate flex-1">
+            {item.text}
+          </span>
+          <span className="text-[7px] text-[#555555] flex-shrink-0">{item.time}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── Floating cards around the dashboard ── */
+
+function FloatingInvoiceCard({ visible, delay }: { visible: boolean; delay: number }) {
+  return (
+    <div
+      className="absolute -right-3 sm:-right-6 top-[40%] w-[140px] sm:w-[160px] z-20"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateX(0)" : "translateX(40px)",
+        transition: `all 0.8s cubic-bezier(.16,1,.3,1) ${delay}ms`,
+      }}
+    >
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-3 shadow-2xl shadow-black/60">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-[8px] font-mono text-[#888888]">INV-1042</span>
+          <span className="text-[7px] px-1.5 py-0.5 rounded-full bg-[#34d399]/10 text-[#34d399] font-medium border border-[#34d399]/20">
+            Paid
+          </span>
+        </div>
+        <p className="text-xs font-semibold text-[#f5f0eb]">$2,450.00</p>
+        <p className="text-[8px] text-[#555555] mt-1">Maple Leaf Co.</p>
+        <div className="mt-2 h-px bg-[#2a2a2a]" />
+        <p className="text-[7px] text-[#555555] mt-1.5">Due: Feb 15, 2026</p>
+      </div>
+    </div>
+  );
+}
+
+function FloatingNotificationToast({ visible, delay }: { visible: boolean; delay: number }) {
+  return (
+    <div
+      className="absolute -left-2 sm:-left-4 top-[20%] w-[150px] sm:w-[170px] z-20"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0) scale(1)" : "translateY(-20px) scale(0.95)",
+        transition: `all 0.7s cubic-bezier(.16,1,.3,1) ${delay}ms`,
+      }}
+    >
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-3 shadow-2xl shadow-black/60">
+        <div className="flex items-center gap-2 mb-1.5">
+          <div className="w-4 h-4 rounded-full bg-[#34d399]/15 flex items-center justify-center flex-shrink-0">
+            <Check size={8} className="text-[#34d399]" />
+          </div>
+          <span className="text-[8px] font-semibold text-[#f5f0eb]">Payment Received</span>
+        </div>
+        <p className="text-[8px] text-[#888888] leading-relaxed">
+          $1,200 from Northern Supply has been processed.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function FloatingProductCard({ visible, delay }: { visible: boolean; delay: number }) {
+  return (
+    <div
+      className="absolute -right-2 sm:-right-5 bottom-[15%] w-[130px] sm:w-[150px] z-20"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateX(0) scale(1)" : "translateX(30px) scale(0.9)",
+        transition: `all 0.8s cubic-bezier(.16,1,.3,1) ${delay}ms`,
+      }}
+    >
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-3 shadow-2xl shadow-black/60">
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-5 h-5 rounded bg-[#a78bfa]/15 flex items-center justify-center">
+            <Package size={10} className="text-[#a78bfa]" />
+          </div>
+          <span className="text-[8px] font-semibold text-[#f5f0eb] truncate">Widget Pro X</span>
+        </div>
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[7px] text-[#555555]">Stock Level</span>
+          <span className="text-[8px] font-medium text-[#fbbf24]">Low</span>
+        </div>
+        <div className="h-1.5 rounded-full bg-[#222222] overflow-hidden">
+          <div
+            className="h-full rounded-full bg-[#fbbf24]"
+            style={{
+              width: visible ? "25%" : "0%",
+              transition: `width 1.2s cubic-bezier(.16,1,.3,1) ${delay + 300}ms`,
+            }}
+          />
+        </div>
+        <p className="text-[7px] text-[#555555] mt-1.5">12 / 50 units</p>
+      </div>
+    </div>
+  );
+}
+
+function FloatingAIChatBubble({ visible, delay }: { visible: boolean; delay: number }) {
+  return (
+    <div
+      className="absolute -left-2 sm:-left-5 bottom-[10%] w-[155px] sm:w-[175px] z-20"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0) scale(1)" : "translateY(20px) scale(0.85)",
+        transition: `all 0.9s cubic-bezier(.16,1,.3,1) ${delay}ms`,
+      }}
+    >
+      <div
+        className="bg-[#1a1a1a] border border-[#CDB49E]/20 rounded-xl p-3 shadow-2xl shadow-black/60"
+        style={{
+          animation: visible ? "pulseGlow 3s ease-in-out infinite" : "none",
+          animationDelay: `${delay + 1000}ms`,
+        }}
+      >
+        <div className="flex items-center gap-1.5 mb-2">
+          <div className="w-4 h-4 rounded-lg bg-[#3a3028] flex items-center justify-center">
+            <Sparkles size={8} className="text-[#CDB49E]" />
+          </div>
+          <span className="text-[8px] font-semibold text-[#CDB49E]">Atlas AI</span>
+        </div>
+        <p className="text-[8px] text-[#888888] leading-relaxed">
+          Revenue is up 12% this month. Your top seller is Widget Pro X.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function AnimatedDashboardMockup() {
+  const { ref, visible } = useInView(0.15);
+
+  return (
+    <div ref={ref} className="mt-20 mx-auto max-w-3xl relative">
+      <style dangerouslySetInnerHTML={{ __html: MOCKUP_KEYFRAMES }} />
+
+      {/* Floating cards */}
+      <FloatingNotificationToast visible={visible} delay={1200} />
+      <FloatingInvoiceCard visible={visible} delay={1400} />
+      <FloatingProductCard visible={visible} delay={1600} />
+      <FloatingAIChatBubble visible={visible} delay={1800} />
+
+      {/* Main dashboard card */}
+      <div
+        className="rounded-2xl border border-[#2a2a2a] bg-[#1a1a1a] overflow-hidden shadow-2xl shadow-black/40"
+        style={{
+          animation: visible ? "fadeInScale 0.8s cubic-bezier(.16,1,.3,1) both" : "none",
+        }}
+      >
+        {/* Browser chrome */}
+        <div className="flex items-center gap-2 px-5 py-3 border-b border-[#2a2a2a] bg-[#161616]">
+          <div className="flex gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#f87171]/60" />
+            <div className="w-2.5 h-2.5 rounded-full bg-[#fbbf24]/60" />
+            <div className="w-2.5 h-2.5 rounded-full bg-[#34d399]/60" />
+          </div>
+          <div className="flex-1 text-center">
+            <div className="inline-block px-4 py-1 rounded-md bg-[#222222] text-[10px] text-[#555555] font-mono">
+              app.atlas-erp.ca/dashboard
+            </div>
+          </div>
+        </div>
+
+        {/* Dashboard content */}
+        <div className="p-4 sm:p-6 min-h-[320px] sm:min-h-[380px]">
+          {/* Stat cards row */}
+          <div className="grid grid-cols-4 gap-2 sm:gap-3 mb-4">
+            <AnimatedStatCard
+              label="Revenue"
+              value={48250}
+              prefix="$"
+              color="#CDB49E"
+              delay={200}
+              sparkData={[32, 45, 38, 52, 48, 61, 58, 65]}
+            />
+            <AnimatedStatCard
+              label="Orders"
+              value={142}
+              color="#34d399"
+              delay={350}
+              sparkData={[20, 28, 25, 35, 30, 38, 32, 40]}
+            />
+            <AnimatedStatCard
+              label="Products"
+              value={1247}
+              color="#a78bfa"
+              delay={500}
+              sparkData={[40, 42, 44, 43, 46, 45, 48, 50]}
+            />
+            <AnimatedStatCard
+              label="Invoices"
+              value={89}
+              color="#fbbf24"
+              delay={650}
+              sparkData={[15, 20, 18, 25, 22, 28, 24, 30]}
+            />
+          </div>
+
+          {/* Charts row */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
+            <div className="col-span-2">
+              <AnimatedBarChart visible={visible} delay={800} />
+            </div>
+            <div className="rounded-xl bg-[#222222] border border-[#2a2a2a] p-2.5 flex items-center justify-center">
+              <AnimatedDonutChart visible={visible} delay={1000} />
+            </div>
+          </div>
+
+          {/* Activity feed */}
+          <div className="rounded-xl bg-[#222222] border border-[#2a2a2a] p-2.5">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[8px] sm:text-[9px] font-semibold text-[#888888] uppercase tracking-wider">
+                Recent Activity
+              </span>
+              <span className="text-[7px] text-[#555555]">Live</span>
+            </div>
+            <ActivityFeed visible={visible} delay={1200} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─────────────────────── NAV ─────────────────────── */
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -98,7 +603,7 @@ function Nav() {
     >
       <div className="mx-auto max-w-6xl px-6 flex items-center justify-between h-[72px]">
         {/* Logo */}
-        <Link href="/landing" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-3 group">
           <div className="w-9 h-9 rounded-lg bg-[#CDB49E] flex items-center justify-center font-bold text-sm text-[#111111] transition-transform duration-300 group-hover:scale-105">
             A
           </div>
@@ -221,7 +726,7 @@ function Hero() {
               />
             </Link>
             <Link
-              href="/login"
+              href="/dashboard"
               className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-transparent text-[#f5f0eb] font-semibold text-base hover:bg-[#1a1a1a] transition-all duration-300 border border-[#2a2a2a] hover:border-[#3a3028]"
             >
               See Live Demo
@@ -235,62 +740,8 @@ function Hero() {
           </p>
         </Reveal>
 
-        {/* Dashboard mockup */}
-        <Reveal delay={560}>
-          <div className="mt-20 mx-auto max-w-3xl">
-            <div className="rounded-2xl border border-[#2a2a2a] bg-[#1a1a1a] overflow-hidden shadow-2xl shadow-black/40">
-              {/* Browser chrome */}
-              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-[#2a2a2a] bg-[#161616]">
-                <div className="flex gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#333333]" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#333333]" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#333333]" />
-                </div>
-                <div className="flex-1 text-center">
-                  <div className="inline-block px-4 py-1 rounded-md bg-[#222222] text-[11px] text-[#555555] font-mono">
-                    app.atlas-erp.ca
-                  </div>
-                </div>
-              </div>
-              {/* Dashboard content */}
-              <div className="p-6 sm:p-8 min-h-[280px] sm:min-h-[340px]">
-                <div className="grid grid-cols-4 gap-3 mb-6">
-                  {[
-                    { label: "Revenue", value: "$24,500", accent: "text-[#CDB49E]" },
-                    { label: "Orders", value: "142", accent: "text-emerald-400" },
-                    { label: "Products", value: "1,247", accent: "text-violet-400" },
-                    { label: "Invoices", value: "89", accent: "text-amber-400" },
-                  ].map((stat) => (
-                    <div
-                      key={stat.label}
-                      className="p-3 rounded-xl bg-[#222222] border border-[#2a2a2a] text-center"
-                    >
-                      <p className="text-[10px] text-[#555555] uppercase tracking-wider">
-                        {stat.label}
-                      </p>
-                      <p className={`text-lg font-bold mt-1 ${stat.accent}`}>
-                        {stat.value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-                <div className="h-28 rounded-xl bg-[#222222] border border-[#2a2a2a] flex items-center justify-center px-4">
-                  <div className="flex items-end gap-1.5 w-full justify-center">
-                    {[40, 65, 45, 80, 55, 90, 70, 85, 60, 95, 75, 88].map(
-                      (h, i) => (
-                        <div
-                          key={i}
-                          className="w-4 sm:w-6 rounded-t bg-[#CDB49E]/20 transition-all"
-                          style={{ height: `${h}%` }}
-                        />
-                      ),
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Reveal>
+        {/* Animated Dashboard mockup */}
+        <AnimatedDashboardMockup />
       </div>
     </section>
   );
@@ -876,7 +1327,7 @@ function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
           {/* Brand column */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/landing" className="flex items-center gap-2.5 mb-5">
+            <Link href="/" className="flex items-center gap-2.5 mb-5">
               <div className="w-8 h-8 rounded-lg bg-[#CDB49E] flex items-center justify-center font-bold text-xs text-[#111111]">
                 A
               </div>
