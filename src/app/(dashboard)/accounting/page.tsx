@@ -17,12 +17,18 @@ import {
   BarChart3,
   FileText,
   Minus,
+  Upload,
+  CreditCard,
+  Landmark,
+  ShoppingCart,
+  MonitorSmartphone,
 } from "lucide-react";
 import { useAccountingStore } from "@/stores/accounting-store";
 import { Modal } from "@/components/ui/modal";
+import { BillForm } from "@/components/modules/bill-form";
 import { useToastStore } from "@/components/ui/toast";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import type { Account, JournalEntry, JournalLine } from "@/types";
+import type { Account, JournalEntry, JournalLine, Bill } from "@/types";
 
 /* ──────────────────────────── Shared Badges ──────────────────────────── */
 
@@ -368,85 +374,283 @@ function JournalEntryForm({
   );
 }
 
-/* ──────────────────────────── Tab: Overview ──────────────────────────── */
+/* ──────────────────────────── Tab: Overview (Odoo-style) ──────────────────────────── */
+
+const invoiceBarData = [
+  { label: "Overdue", count: 3, amount: 4250, color: "#f87171" },
+  { label: "This Week", count: 5, amount: 7800, color: "#fbbf24" },
+  { label: "Next Week", count: 2, amount: 3200, color: "#60a5fa" },
+  { label: "Later", count: 4, amount: 6100, color: "#a78bfa" },
+  { label: "Not Due", count: 8, amount: 12400, color: "#34d399" },
+];
+
+const bankCards = [
+  { name: "Search 26,000+\nbanks", abbr: "🔍", bg: "bg-[#3a3028]", text: "text-[#CDB49E]" },
+  { name: "RBC", abbr: "RBC", bg: "bg-[#003DA5]", text: "text-white" },
+  { name: "TD Bank", abbr: "TD", bg: "bg-[#2E8B57]", text: "text-white" },
+  { name: "BMO", abbr: "BMO", bg: "bg-[#0075BE]", text: "text-white" },
+  { name: "Scotiabank", abbr: "BNS", bg: "bg-[#EC111A]", text: "text-white" },
+  { name: "CIBC", abbr: "CIBC", bg: "bg-[#C41F3E]", text: "text-white" },
+  { name: "Desjardins", abbr: "DES", bg: "bg-[#00874E]", text: "text-white" },
+  { name: "National", abbr: "NBC", bg: "bg-[#E31937]", text: "text-white" },
+  { name: "HSBC", abbr: "HSBC", bg: "bg-[#DB0011]", text: "text-white" },
+];
 
 function OverviewTab() {
-  const { getProfitAndLoss, getBalanceSheet, getTaxSummary } = useAccountingStore();
-  const pnl = getProfitAndLoss();
-  const bs = getBalanceSheet();
-  const tax = getTaxSummary();
+  const addToast = useToastStore((s) => s.addToast);
+  const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
+  const [billModalOpen, setBillModalOpen] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
 
-  const summaryCards = [
-    { label: "Total Assets", value: bs.totalAssets, icon: TrendingUp, color: "text-blue-400", bg: "bg-blue-500/10" },
-    { label: "Total Liabilities", value: bs.totalLiabilities, icon: TrendingDown, color: "text-[#f87171]", bg: "bg-red-500/10" },
-    { label: "Total Equity", value: bs.totalEquity, icon: DollarSign, color: "text-violet-400", bg: "bg-violet-500/10" },
-    { label: "Net Income", value: pnl.netIncome, icon: BarChart3, color: "text-[#34d399]", bg: "bg-emerald-500/10" },
-  ];
+  const maxAmount = Math.max(...invoiceBarData.map((d) => d.amount));
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragOver(false);
+    addToast("Document uploaded. Processing...");
+  };
+
+  const handleUpload = () => {
+    addToast("Document uploaded. Processing...");
+  };
+
+  const handleBillSubmit = (bill: Bill) => {
+    setBillModalOpen(false);
+    addToast(`Bill ${bill.bill_number} created successfully`);
+  };
 
   return (
-    <div className="space-y-6">
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {summaryCards.map((card) => (
-          <div
-            key={card.label}
-            className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-medium text-[#888888]">{card.label}</span>
-              <div className={`w-8 h-8 rounded-lg ${card.bg} flex items-center justify-center`}>
-                <card.icon className={`w-4 h-4 ${card.color}`} />
-              </div>
-            </div>
-            <p className="text-xl font-semibold text-[#f5f0eb]">
-              {formatCurrency(card.value)}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      {/* ── Top-Left: Sales ── */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <div className="flex items-start justify-between mb-1">
+          <div>
+            <h3 className="text-base font-semibold text-[#34d399]">Sales</h3>
+            <p className="text-xs text-[#888888] mt-0.5">
+              Get Paid online. Send electronic invoices.
             </p>
           </div>
-        ))}
+          <button
+            onClick={() => setInvoiceModalOpen(true)}
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#CDB49E] text-[#111111] rounded-lg text-xs font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            New
+          </button>
+        </div>
+
+        {/* Mini bar chart */}
+        <div className="mt-5 space-y-3">
+          {invoiceBarData.map((bar) => (
+            <div key={bar.label} className="flex items-center gap-3">
+              <span className="text-[11px] text-[#888888] w-20 text-right shrink-0">
+                {bar.label}
+              </span>
+              <div className="flex-1 h-6 bg-[#222222] rounded-md overflow-hidden relative">
+                <div
+                  className="h-full rounded-md transition-all duration-500"
+                  style={{
+                    width: `${Math.max((bar.amount / maxAmount) * 100, 8)}%`,
+                    backgroundColor: bar.color,
+                    opacity: 0.85,
+                  }}
+                />
+              </div>
+              <span className="text-[11px] font-medium text-[#f5f0eb] w-16 text-right shrink-0">
+                {bar.count} · {formatCurrency(bar.amount)}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Mini P&L */}
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
-          <h3 className="text-sm font-semibold text-[#f5f0eb] mb-4">Profit & Loss Summary</h3>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-[#888888]">Total Revenue</span>
-              <span className="text-sm font-semibold text-[#34d399]">{formatCurrency(pnl.totalRevenue)}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-[#888888]">Total Expenses</span>
-              <span className="text-sm font-semibold text-[#f87171]">{formatCurrency(pnl.totalExpenses)}</span>
-            </div>
-            <div className="border-t border-[#2a2a2a] pt-3 flex items-center justify-between">
-              <span className="text-sm font-semibold text-[#f5f0eb]">Net Income</span>
-              <span className={`text-sm font-bold ${pnl.netIncome >= 0 ? "text-[#34d399]" : "text-[#f87171]"}`}>
-                {formatCurrency(pnl.netIncome)}
-              </span>
-            </div>
+      {/* ── Top-Right: Purchases ── */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <div className="flex items-start justify-between mb-1">
+          <div>
+            <h3 className="text-base font-semibold text-[#CDB49E]">Purchases</h3>
+            <p className="text-xs text-[#888888] mt-0.5">
+              Let AI scan your bill. Pay easily.
+            </p>
           </div>
+          <button
+            onClick={handleUpload}
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#CDB49E] text-[#111111] rounded-lg text-xs font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
+          >
+            <Upload className="w-3.5 h-3.5" />
+            Upload
+          </button>
         </div>
 
-        {/* Tax Summary */}
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
-          <h3 className="text-sm font-semibold text-[#f5f0eb] mb-4">Tax Summary (GST/HST)</h3>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-[#888888]">Tax Collected</span>
-              <span className="text-sm font-semibold text-[#f5f0eb]">{formatCurrency(tax.collected)}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-[#888888]">Tax Paid (ITC)</span>
-              <span className="text-sm font-semibold text-[#f5f0eb]">{formatCurrency(tax.paid)}</span>
-            </div>
-            <div className="border-t border-[#2a2a2a] pt-3 flex items-center justify-between">
-              <span className="text-sm font-semibold text-[#f5f0eb]">Net Owing</span>
-              <span className={`text-sm font-bold ${tax.netOwing >= 0 ? "text-[#fbbf24]" : "text-[#34d399]"}`}>
-                {formatCurrency(tax.netOwing)}
-              </span>
-            </div>
-          </div>
+        {/* Drag & drop zone */}
+        <div
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          className={`mt-4 flex flex-col items-center justify-center border-2 border-dashed rounded-xl py-8 transition-all duration-200 ${
+            dragOver
+              ? "border-[#CDB49E] bg-[#3a3028]/30"
+              : "border-[#2a2a2a] bg-[#222222]/30 hover:border-[#555555]"
+          }`}
+        >
+          <Upload
+            className={`w-8 h-8 mb-2 transition-colors duration-200 ${
+              dragOver ? "text-[#CDB49E]" : "text-[#555555]"
+            }`}
+          />
+          <span className="text-sm font-medium text-[#888888]">Drag & drop</span>
         </div>
+
+        <div className="flex items-center gap-3 mt-3">
+          <div className="flex-1 h-px bg-[#2a2a2a]" />
+          <span className="text-[11px] text-[#555555]">or</span>
+          <div className="flex-1 h-px bg-[#2a2a2a]" />
+        </div>
+
+        <button
+          onClick={() => setBillModalOpen(true)}
+          className="mt-3 w-full text-center text-sm text-[#CDB49E] hover:text-[#d4c0ad] font-medium transition-colors duration-200"
+        >
+          Create a bill manually
+        </button>
+      </div>
+
+      {/* ── Bottom-Left: Bank ── */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <div className="mb-4">
+          <h3 className="text-base font-semibold text-[#60a5fa]">Bank</h3>
+          <p className="text-xs text-[#888888] mt-0.5">
+            Connect your bank. Match invoices automatically.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2.5">
+          {bankCards.map((bank, i) => (
+            <button
+              key={i}
+              onClick={() => addToast("Bank connection coming soon", "info")}
+              className="group flex flex-col items-center justify-center aspect-square rounded-xl border border-[#2a2a2a] hover:border-[#CDB49E]/40 transition-all duration-200 hover:scale-[1.03]"
+              style={{ backgroundColor: i === 0 ? undefined : undefined }}
+            >
+              <div
+                className={`w-10 h-10 rounded-lg ${bank.bg} flex items-center justify-center mb-1.5 group-hover:shadow-lg transition-shadow duration-200`}
+              >
+                <span className={`text-xs font-bold ${bank.text} leading-none`}>
+                  {bank.abbr}
+                </span>
+              </div>
+              <span className="text-[10px] text-[#888888] text-center leading-tight px-1 whitespace-pre-line">
+                {bank.name}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Bottom-Right: Point of Sale ── */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <div className="mb-4">
+          <h3 className="text-base font-semibold text-[#a78bfa]">Point of Sale</h3>
+          <p className="text-xs text-[#888888] mt-0.5">
+            Manage retail transactions
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center justify-center py-10">
+          <div className="w-14 h-14 rounded-2xl bg-[#222222] border border-[#2a2a2a] flex items-center justify-center mb-4">
+            <MonitorSmartphone className="w-7 h-7 text-[#555555]" />
+          </div>
+          <p className="text-sm font-medium text-[#888888] mb-1">Coming Soon</p>
+          <p className="text-xs text-[#555555] text-center max-w-xs mb-5">
+            Accept in-person payments, track cash registers, and manage retail operations from one place.
+          </p>
+          <button
+            disabled
+            className="px-5 py-2.5 bg-[#222222] text-[#555555] rounded-lg text-sm font-medium border border-[#2a2a2a] cursor-not-allowed"
+          >
+            Set up POS
+          </button>
+        </div>
+      </div>
+
+      {/* ── Modals ── */}
+      <Modal open={invoiceModalOpen} onClose={() => setInvoiceModalOpen(false)} title="New Invoice" size="xl">
+        <InvoiceFormInline onClose={() => setInvoiceModalOpen(false)} />
+      </Modal>
+
+      <Modal open={billModalOpen} onClose={() => setBillModalOpen(false)} title="New Bill" size="xl">
+        <BillForm onSubmit={handleBillSubmit} onCancel={() => setBillModalOpen(false)} />
+      </Modal>
+    </div>
+  );
+}
+
+/* Simple inline invoice form for the Sales "New" button */
+function InvoiceFormInline({ onClose }: { onClose: () => void }) {
+  const addToast = useToastStore((s) => s.addToast);
+  return (
+    <div className="space-y-5">
+      <p className="text-sm text-[#888888]">
+        Quick invoice creation — fill in the details below.
+      </p>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs font-medium text-[#888888] mb-1.5">Customer Name</label>
+          <input
+            type="text"
+            placeholder="e.g. Acme Corp"
+            className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] placeholder:text-[#555555] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-[#888888] mb-1.5">Amount</label>
+          <input
+            type="number"
+            placeholder="0.00"
+            step="0.01"
+            className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] placeholder:text-[#555555] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200"
+          />
+        </div>
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-[#888888] mb-1.5">Description</label>
+        <input
+          type="text"
+          placeholder="Invoice description"
+          className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] placeholder:text-[#555555] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200"
+        />
+      </div>
+      <div className="flex items-center justify-end gap-3 pt-2">
+        <button
+          type="button"
+          onClick={onClose}
+          className="px-5 py-2.5 border border-[#2a2a2a] rounded-lg text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] transition-all duration-200"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            addToast("Invoice created successfully");
+            onClose();
+          }}
+          className="px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
+        >
+          Create Invoice
+        </button>
       </div>
     </div>
   );

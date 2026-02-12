@@ -197,3 +197,34 @@ export interface PurchaseOrderLine {
   tax_rate: number;
   total: number;
 }
+
+export interface Bill {
+  id: string;
+  org_id: string;
+  type: 'bill' | 'receipt';
+  bill_number: string;
+  vendor_id: string;
+  vendor_name?: string;
+  bill_reference?: string;
+  bill_date: string;
+  accounting_date: string;
+  due_date: string;
+  payment_reference?: string;
+  status: 'draft' | 'posted' | 'cancelled';
+  lines: BillLine[];
+  subtotal: number;
+  tax: number;
+  total: number;
+  created_at: string;
+}
+
+export interface BillLine {
+  id: string;
+  bill_id: string;
+  label: string;
+  account_id: string;
+  quantity: number;
+  price: number;
+  tax_rate: number;
+  amount: number;
+}
