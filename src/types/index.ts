@@ -239,3 +239,52 @@ export interface BillLine {
   tax_rate: number;
   amount: number;
 }
+
+export interface Lead {
+  id: string;
+  org_id: string;
+  name: string;
+  contact_name: string;
+  company: string;
+  email: string;
+  phone?: string;
+  amount: number;
+  stage: 'new' | 'qualified' | 'proposition' | 'won' | 'lost';
+  priority: 0 | 1 | 2 | 3;
+  tags: string[];
+  assigned_to: string;
+  next_activity?: string;
+  next_activity_date?: string;
+  created_at: string;
+}
+
+export interface Employee {
+  id: string;
+  org_id: string;
+  name: string;
+  job_title: string;
+  department: string;
+  email: string;
+  phone: string;
+  start_date: string;
+  status: 'active' | 'on_leave' | 'terminated';
+  tags: string[];
+  avatar_color: string;
+  created_at: string;
+}
+
+export interface Project {
+  id: string;
+  org_id: string;
+  name: string;
+  customer: string;
+  start_date: string;
+  end_date: string;
+  tags: string[];
+  task_count: number;
+  milestone_progress: string;
+  status: 'on_track' | 'at_risk' | 'off_track' | 'done';
+  is_favorite: boolean;
+  assigned_to: string[];
+  created_at: string;
+}

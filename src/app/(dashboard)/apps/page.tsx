@@ -23,6 +23,7 @@ import {
   ChevronDown,
   ChevronRight,
   Lock,
+  Target,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -84,6 +85,16 @@ const apps: AppItem[] = [
     category: "Core Business",
   },
   {
+    name: "CRM",
+    description: "Pipeline, leads & opportunities",
+    href: "/crm",
+    icon: Target,
+    iconBg: "bg-red-500/10",
+    iconColor: "text-red-400",
+    available: true,
+    category: "Core Business",
+  },
+  {
     name: "Accounting",
     description: "General ledger & financial reports",
     href: "/accounting",
@@ -122,7 +133,7 @@ const apps: AppItem[] = [
     icon: UserCheck,
     iconBg: "bg-blue-500/10",
     iconColor: "text-blue-400",
-    available: false,
+    available: true,
     category: "Human Resources",
   },
   {
@@ -154,7 +165,7 @@ const apps: AppItem[] = [
     icon: FolderKanban,
     iconBg: "bg-violet-500/10",
     iconColor: "text-violet-400",
-    available: false,
+    available: true,
     category: "Services",
   },
   {

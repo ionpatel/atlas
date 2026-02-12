@@ -15,6 +15,9 @@ import {
   Bot,
   Calculator,
   ChevronLeft,
+  Target,
+  UserCircle,
+  FolderKanban,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -27,6 +30,9 @@ const navItems = [
   { href: "/purchase", label: "Purchase", icon: Truck },
   { href: "/accounting", label: "Accounting", icon: Calculator },
   { href: "/contacts", label: "Contacts", icon: Users },
+  { href: "/crm", label: "CRM", icon: Target },
+  { href: "/employees", label: "Employees", icon: UserCircle },
+  { href: "/projects", label: "Projects", icon: FolderKanban },
   { href: "/ai", label: "AI Assistant", icon: Bot },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
