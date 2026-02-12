@@ -1,17 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { Plus, Search, Filter, Mail, Phone, Pencil, Trash2, Users, X } from "lucide-react";
+import { useState, useMemo, useCallback, useRef } from "react";
+import {
+  Plus, Search, Filter, Mail, Phone, Pencil, Trash2, Users, X,
+  List, LayoutGrid, Download, Upload, FileText, Clock,
+  ShoppingCart, Package, UserPlus, ChevronRight, ExternalLink,
+} from "lucide-react";
 import { useContactsStore } from "@/stores/contacts-store";
+import { useInvoicesStore } from "@/stores/invoices-store";
 import { Modal } from "@/components/ui/modal";
 import { ContactForm } from "@/components/modules/contact-form";
 import { useToastStore } from "@/components/ui/toast";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Contact } from "@/types";
 
 function TypeBadge({ type }: { type: string }) {
   const styles: Record<string, string> = {
-    vendor: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-    customer: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    vendor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    customer: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
     both: "bg-[#3a3028] text-[#CDB49E] border-[#CDB49E]/20",
   };
   const label = type.charAt(0).toUpperCase() + type.slice(1);
@@ -19,6 +25,304 @@ function TypeBadge({ type }: { type: string }) {
     <span className={`px-2.5 py-1 rounded-full text-[11px] font-medium border ${styles[type]}`}>
       {label}
     </span>
+  );
+}
+
+function StatCard({
+  label,
+  count,
+  icon: Icon,
+  color,
+}: {
+  label: string;
+  count: number;
+  icon: React.ElementType;
+  color: string;
+}) {
+  const colorMap: Record<string, { bg: string; text: string; iconBg: string }> = {
+    accent: { bg: "bg-[#3a3028]/50", text: "text-[#CDB49E]", iconBg: "bg-[#3a3028]" },
+    green: { bg: "bg-emerald-500/5", text: "text-emerald-400", iconBg: "bg-emerald-500/10" },
+    blue: { bg: "bg-blue-500/5", text: "text-blue-400", iconBg: "bg-blue-500/10" },
+    violet: { bg: "bg-violet-500/5", text: "text-violet-400", iconBg: "bg-violet-500/10" },
+  };
+  const c = colorMap[color] || colorMap.accent;
+  return (
+    <div className={`${c.bg} border border-[#2a2a2a] rounded-xl p-5`}>
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-xs font-medium text-[#888888] uppercase tracking-wider">{label}</span>
+        <div className={`w-8 h-8 rounded-lg ${c.iconBg} flex items-center justify-center`}>
+          <Icon className={`w-4 h-4 ${c.text}`} />
+        </div>
+      </div>
+      <div className={`text-2xl font-bold ${c.text}`}>{count}</div>
+    </div>
+  );
+}
+
+function ContactDetailPanel({
+  contact,
+  onClose,
+  onEdit,
+}: {
+  contact: Contact;
+  onClose: () => void;
+  onEdit: (c: Contact) => void;
+}) {
+  const [tab, setTab] = useState<"overview" | "invoices" | "activity">("overview");
+  const getInvoicesForContact = useInvoicesStore((s) => s.getInvoicesForContact);
+  const getContactName = useInvoicesStore((s) => s.getContactName);
+  const contactInvoices = getInvoicesForContact(contact.id);
+
+  const borderColor =
+    contact.type === "customer"
+      ? "border-l-emerald-400"
+      : contact.type === "vendor"
+      ? "border-l-blue-400"
+      : "border-l-[#CDB49E]";
+
+  return (
+    <div className="fixed inset-0 z-50 flex justify-end" onClick={onClose}>
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
+      <div
+        className={`relative w-full max-w-lg bg-[#1a1a1a] border-l-4 ${borderColor} shadow-2xl shadow-black/40 animate-in slide-in-from-right duration-300 h-full overflow-y-auto`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="sticky top-0 bg-[#1a1a1a] border-b border-[#2a2a2a] px-6 py-5 z-10">
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-[#3a3028] flex items-center justify-center flex-shrink-0">
+                <span className="text-xl font-bold text-[#CDB49E]">
+                  {contact.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                </span>
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-[#f5f0eb]">{contact.name}</h2>
+                <div className="flex items-center gap-2 mt-1">
+                  {contact.company && (
+                    <span className="text-sm text-[#888888]">{contact.company}</span>
+                  )}
+                  <TypeBadge type={contact.type} />
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => onEdit(contact)}
+                className="p-2 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
+              >
+                <Pencil className="w-4 h-4" />
+              </button>
+              <button
+                onClick={onClose}
+                className="p-2 rounded-lg text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] transition-all duration-200"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Quick actions */}
+          <div className="flex items-center gap-2 mt-4">
+            {contact.email && (
+              <a
+                href={`mailto:${contact.email}`}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#888888] hover:text-[#CDB49E] border border-[#2a2a2a] rounded-lg hover:border-[#CDB49E]/30 hover:bg-[#3a3028]/30 transition-all duration-200"
+              >
+                <Mail className="w-3 h-3" />
+                Email
+              </a>
+            )}
+            {contact.phone && (
+              <a
+                href={`tel:${contact.phone}`}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#888888] hover:text-[#CDB49E] border border-[#2a2a2a] rounded-lg hover:border-[#CDB49E]/30 hover:bg-[#3a3028]/30 transition-all duration-200"
+              >
+                <Phone className="w-3 h-3" />
+                Call
+              </a>
+            )}
+          </div>
+
+          {/* Tabs */}
+          <div className="flex items-center gap-1 mt-4 -mb-5 pb-0">
+            {(["overview", "invoices", "activity"] as const).map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 transition-all duration-200 ${
+                  tab === t
+                    ? "border-[#CDB49E] text-[#CDB49E] bg-[#222222]"
+                    : "border-transparent text-[#888888] hover:text-[#f5f0eb]"
+                }`}
+              >
+                {t.charAt(0).toUpperCase() + t.slice(1)}
+                {t === "invoices" && contactInvoices.length > 0 && (
+                  <span className="ml-1.5 px-1.5 py-0.5 text-[10px] bg-[#3a3028] text-[#CDB49E] rounded-full">
+                    {contactInvoices.length}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Tab Content */}
+        <div className="px-6 py-6">
+          {tab === "overview" && (
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 gap-4">
+                {[
+                  { label: "Email", value: contact.email, icon: Mail },
+                  { label: "Phone", value: contact.phone, icon: Phone },
+                  { label: "Company", value: contact.company, icon: Package },
+                  { label: "Address", value: contact.address, icon: ExternalLink },
+                ].map(
+                  (field) =>
+                    field.value && (
+                      <div key={field.label} className="bg-[#111111] border border-[#2a2a2a] rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-1">
+                          <field.icon className="w-3.5 h-3.5 text-[#555555]" />
+                          <span className="text-[10px] font-semibold text-[#888888] uppercase tracking-widest">{field.label}</span>
+                        </div>
+                        <p className="text-sm text-[#f5f0eb] pl-5.5">{field.value}</p>
+                      </div>
+                    )
+                )}
+                {contact.notes && (
+                  <div className="bg-[#111111] border border-[#2a2a2a] rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <FileText className="w-3.5 h-3.5 text-[#555555]" />
+                      <span className="text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Notes</span>
+                    </div>
+                    <p className="text-sm text-[#f5f0eb]">{contact.notes}</p>
+                  </div>
+                )}
+                <div className="bg-[#111111] border border-[#2a2a2a] rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Clock className="w-3.5 h-3.5 text-[#555555]" />
+                    <span className="text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Added</span>
+                  </div>
+                  <p className="text-sm text-[#f5f0eb]">{formatDate(contact.created_at)}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {tab === "invoices" && (
+            <div className="space-y-3">
+              {contactInvoices.length === 0 ? (
+                <div className="text-center py-12">
+                  <FileText className="w-8 h-8 mx-auto mb-3 text-[#888888]/40" />
+                  <p className="text-sm text-[#888888]">No invoices for this contact</p>
+                </div>
+              ) : (
+                contactInvoices.map((inv) => {
+                  const statusColor: Record<string, string> = {
+                    paid: "text-emerald-400",
+                    sent: "text-[#CDB49E]",
+                    overdue: "text-red-400",
+                    draft: "text-[#888888]",
+                    cancelled: "text-[#555555]",
+                  };
+                  return (
+                    <div
+                      key={inv.id}
+                      className="bg-[#111111] border border-[#2a2a2a] rounded-lg p-4 hover:border-[#CDB49E]/25 transition-all duration-200"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-sm font-mono font-medium text-[#f5f0eb]">{inv.invoice_number}</span>
+                          <p className="text-xs text-[#888888] mt-0.5">{formatDate(inv.issue_date)}</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-sm font-semibold text-[#CDB49E]">{formatCurrency(inv.total)}</span>
+                          <p className={`text-xs mt-0.5 capitalize ${statusColor[inv.status] || "text-[#888888]"}`}>
+                            {inv.status}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          )}
+
+          {tab === "activity" && (
+            <div className="text-center py-12">
+              <Clock className="w-8 h-8 mx-auto mb-3 text-[#888888]/40" />
+              <p className="text-sm text-[#888888]">No activity yet</p>
+              <p className="text-xs text-[#555555] mt-1">Activity will appear here once you interact with this contact</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ImportModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [dragOver, setDragOver] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const addToast = useToastStore((s) => s.addToast);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setDragOver(false);
+      addToast("CSV import is a placeholder — no file was processed", "info");
+      onClose();
+    },
+    [addToast, onClose]
+  );
+
+  const handleFileSelect = useCallback(() => {
+    addToast("CSV import is a placeholder — no file was processed", "info");
+    onClose();
+  }, [addToast, onClose]);
+
+  return (
+    <Modal open={open} onClose={onClose} title="Import Contacts">
+      <div className="space-y-4">
+        <p className="text-sm text-[#888888]">Upload a CSV file to import contacts. The file should have columns: Name, Email, Phone, Company, Type.</p>
+        <div
+          className={`border-2 border-dashed rounded-xl p-10 text-center transition-all duration-200 cursor-pointer ${
+            dragOver
+              ? "border-[#CDB49E] bg-[#3a3028]/30"
+              : "border-[#2a2a2a] hover:border-[#CDB49E]/40"
+          }`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setDragOver(true);
+          }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={handleDrop}
+          onClick={() => fileRef.current?.click()}
+        >
+          <Upload className="w-10 h-10 mx-auto mb-3 text-[#888888]/60" />
+          <p className="text-sm text-[#f5f0eb] font-medium">
+            Drop your CSV here or click to browse
+          </p>
+          <p className="text-xs text-[#888888] mt-1">Supports .csv files up to 5MB</p>
+          <input
+            ref={fileRef}
+            type="file"
+            accept=".csv"
+            className="hidden"
+            onChange={handleFileSelect}
+          />
+        </div>
+        <div className="flex justify-end">
+          <button
+            onClick={onClose}
+            className="px-5 py-2.5 text-sm font-medium text-[#888888] hover:text-[#f5f0eb] bg-[#222222] border border-[#2a2a2a] rounded-lg hover:bg-[#2a2a2a] transition-all duration-200"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </Modal>
   );
 }
 
@@ -40,8 +344,24 @@ export default function ContactsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingContact, setEditingContact] = useState<Contact | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
+  const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+  const [importOpen, setImportOpen] = useState(false);
+  const [showExportMenu, setShowExportMenu] = useState(false);
 
   const filtered = filteredContacts();
+
+  // Stats
+  const stats = useMemo(() => {
+    const now = new Date();
+    const weekAgo = new Date(now.getTime() - 7 * 86400000);
+    return {
+      total: contacts.length,
+      customers: contacts.filter((c) => c.type === "customer" || c.type === "both").length,
+      vendors: contacts.filter((c) => c.type === "vendor" || c.type === "both").length,
+      recent: contacts.filter((c) => new Date(c.created_at) >= weekAgo).length,
+    };
+  }, [contacts]);
 
   const handleAdd = (data: Omit<Contact, "id" | "org_id" | "created_at">) => {
     const newContact: Contact = {
@@ -65,7 +385,38 @@ export default function ContactsPage() {
   const handleDelete = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
     deleteContact(id);
+    if (selectedContact?.id === id) setSelectedContact(null);
     addToast("Contact deleted", "info");
+  };
+
+  const handleExportCSV = () => {
+    const headers = ["Name", "Email", "Phone", "Company", "Type", "Address"];
+    const rows = contacts.map((c) => [c.name, c.email || "", c.phone || "", c.company || "", c.type, c.address || ""]);
+    const csv = [headers.join(","), ...rows.map((r) => r.map((v) => `"${v}"`).join(","))].join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "contacts.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+    setShowExportMenu(false);
+    addToast("Contacts exported");
+  };
+
+  const handleContactClick = (c: Contact) => {
+    setSelectedContact(c);
+  };
+
+  const handleEditFromPanel = (c: Contact) => {
+    setSelectedContact(null);
+    setEditingContact(c);
+  };
+
+  const borderColorForType = (type: string) => {
+    if (type === "customer") return "border-l-emerald-400";
+    if (type === "vendor") return "border-l-blue-400";
+    return "border-l-[#CDB49E]";
   };
 
   return (
@@ -80,16 +431,47 @@ export default function ContactsPage() {
             {filtered.length} of {contacts.length} contacts
           </p>
         </div>
-        <button
-          onClick={() => setModalOpen(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
-        >
-          <Plus className="w-4 h-4" />
-          Add Contact
-        </button>
+        <div className="flex items-center gap-2">
+          {/* Import/Export */}
+          <div className="relative">
+            <div className="flex items-center border border-[#2a2a2a] rounded-lg overflow-hidden">
+              <button
+                onClick={handleExportCSV}
+                className="flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Export
+              </button>
+              <div className="w-px h-6 bg-[#2a2a2a]" />
+              <button
+                onClick={() => setImportOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+              >
+                <Upload className="w-3.5 h-3.5" />
+                Import
+              </button>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setModalOpen(true)}
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
+          >
+            <Plus className="w-4 h-4" />
+            Add Contact
+          </button>
+        </div>
       </div>
 
-      {/* Search & Filters */}
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard label="Total Contacts" count={stats.total} icon={Users} color="accent" />
+        <StatCard label="Customers" count={stats.customers} icon={ShoppingCart} color="green" />
+        <StatCard label="Vendors" count={stats.vendors} icon={Package} color="blue" />
+        <StatCard label="Recently Added" count={stats.recent} icon={UserPlus} color="violet" />
+      </div>
+
+      {/* Search, Filters & View Toggle */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#CDB49E]/40 transition-colors duration-200">
           <Search className="w-4 h-4 text-[#888888]" />
@@ -117,6 +499,32 @@ export default function ContactsPage() {
           <Filter className="w-4 h-4" />
           Filter
         </button>
+
+        {/* View toggle */}
+        <div className="flex items-center border border-[#2a2a2a] rounded-lg overflow-hidden ml-auto">
+          <button
+            onClick={() => setViewMode("list")}
+            className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+              viewMode === "list"
+                ? "bg-[#3a3028] text-[#CDB49E]"
+                : "text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a]"
+            }`}
+          >
+            <List className="w-4 h-4" />
+            List
+          </button>
+          <button
+            onClick={() => setViewMode("grid")}
+            className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+              viewMode === "grid"
+                ? "bg-[#3a3028] text-[#CDB49E]"
+                : "text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a]"
+            }`}
+          >
+            <LayoutGrid className="w-4 h-4" />
+            Cards
+          </button>
+        </div>
       </div>
 
       {showFilters && (
@@ -134,65 +542,197 @@ export default function ContactsPage() {
         </div>
       )}
 
-      {/* Card Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filtered.length === 0 ? (
-          <div className="col-span-full text-center py-16 text-[#888888] text-sm">
-            <Users className="w-8 h-8 mx-auto mb-3 text-[#888888]/40" />
-            No contacts found
-          </div>
-        ) : (
-          filtered.map((c) => (
-            <div
-              key={c.id}
-              onClick={() => setEditingContact(c)}
-              className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 hover:border-[#CDB49E]/25 transition-all duration-300 cursor-pointer group"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="w-11 h-11 rounded-full bg-[#3a3028] flex items-center justify-center group-hover:bg-[#CDB49E]/20 transition-colors duration-300">
-                  <span className="text-sm font-bold text-[#CDB49E]">{c.name[0]}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <TypeBadge type={c.type} />
-                  <div className="hidden group-hover:flex items-center gap-1">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setEditingContact(c);
-                      }}
-                      className="p-1.5 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
-                    >
-                      <Pencil className="w-3 h-3" />
-                    </button>
-                    <button
-                      onClick={(e) => handleDelete(e, c.id)}
-                      className="p-1.5 rounded-lg text-[#888888] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
-                    >
-                      <Trash2 className="w-3 h-3" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <h3 className="font-semibold text-sm text-[#f5f0eb]">{c.name}</h3>
-              <p className="text-xs text-[#888888] mt-0.5">{c.company || "—"}</p>
-              <div className="mt-4 space-y-2 border-t border-[#2a2a2a] pt-4">
-                {c.email && (
-                  <div className="flex items-center gap-2.5 text-xs text-[#888888] group-hover:text-[#888888]">
-                    <Mail className="w-3 h-3 text-[#888888]/60" />
-                    <span className="truncate">{c.email}</span>
-                  </div>
-                )}
-                {c.phone && (
-                  <div className="flex items-center gap-2.5 text-xs text-[#888888]">
-                    <Phone className="w-3 h-3 text-[#888888]/60" />
-                    {c.phone}
-                  </div>
-                )}
-              </div>
+      {/* Grid/Card View */}
+      {viewMode === "grid" && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filtered.length === 0 ? (
+            <div className="col-span-full text-center py-16 text-[#888888] text-sm">
+              <Users className="w-8 h-8 mx-auto mb-3 text-[#888888]/40" />
+              No contacts found
             </div>
-          ))
-        )}
-      </div>
+          ) : (
+            filtered.map((c) => (
+              <div
+                key={c.id}
+                onClick={() => handleContactClick(c)}
+                className={`bg-[#1a1a1a] border border-[#2a2a2a] border-l-4 ${borderColorForType(c.type)} rounded-xl p-6 hover:border-[#CDB49E]/25 transition-all duration-300 cursor-pointer group`}
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-11 h-11 rounded-full bg-[#3a3028] flex items-center justify-center group-hover:bg-[#CDB49E]/20 transition-colors duration-300">
+                    <span className="text-sm font-bold text-[#CDB49E]">
+                      {c.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <TypeBadge type={c.type} />
+                    <div className="hidden group-hover:flex items-center gap-1">
+                      {c.email && (
+                        <a
+                          href={`mailto:${c.email}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="p-1.5 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
+                          title="Email"
+                        >
+                          <Mail className="w-3 h-3" />
+                        </a>
+                      )}
+                      {c.phone && (
+                        <a
+                          href={`tel:${c.phone}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="p-1.5 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
+                          title="Call"
+                        >
+                          <Phone className="w-3 h-3" />
+                        </a>
+                      )}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditingContact(c);
+                        }}
+                        className="p-1.5 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
+                        title="Edit"
+                      >
+                        <Pencil className="w-3 h-3" />
+                      </button>
+                      <button
+                        onClick={(e) => handleDelete(e, c.id)}
+                        className="p-1.5 rounded-lg text-[#888888] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                        title="Delete"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <h3 className="font-semibold text-sm text-[#f5f0eb]">{c.name}</h3>
+                <p className="text-xs text-[#888888] mt-0.5">{c.company || "—"}</p>
+                <div className="mt-4 space-y-2 border-t border-[#2a2a2a] pt-4">
+                  {c.email && (
+                    <div className="flex items-center gap-2.5 text-xs text-[#888888]">
+                      <Mail className="w-3 h-3 text-[#888888]/60" />
+                      <span className="truncate">{c.email}</span>
+                    </div>
+                  )}
+                  {c.phone && (
+                    <div className="flex items-center gap-2.5 text-xs text-[#888888]">
+                      <Phone className="w-3 h-3 text-[#888888]/60" />
+                      {c.phone}
+                    </div>
+                  )}
+                </div>
+                <div className="mt-3 flex items-center justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <span className="text-xs text-[#CDB49E] flex items-center gap-1">
+                    View details <ChevronRight className="w-3 h-3" />
+                  </span>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+
+      {/* List View */}
+      {viewMode === "list" && (
+        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-[#2a2a2a]">
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Name</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Company</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Email</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Phone</th>
+                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Type</th>
+                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest w-32">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-16 text-center text-[#888888] text-sm">
+                    <Users className="w-8 h-8 mx-auto mb-3 text-[#888888]/40" />
+                    No contacts found
+                  </td>
+                </tr>
+              ) : (
+                filtered.map((c, i) => (
+                  <tr
+                    key={c.id}
+                    onClick={() => handleContactClick(c)}
+                    className={`hover:bg-[#222222] transition-colors duration-150 cursor-pointer border-b border-[#2a2a2a]/50 last:border-0 ${
+                      i % 2 === 1 ? "bg-[#111111]/40" : ""
+                    }`}
+                  >
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-[#3a3028] flex items-center justify-center flex-shrink-0">
+                          <span className="text-xs font-bold text-[#CDB49E]">
+                            {c.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                          </span>
+                        </div>
+                        <span className="text-sm font-medium text-[#f5f0eb]">{c.name}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-[#888888]">{c.company || "—"}</td>
+                    <td className="px-6 py-4 text-sm text-[#888888]">{c.email || "—"}</td>
+                    <td className="px-6 py-4 text-sm text-[#888888]">{c.phone || "—"}</td>
+                    <td className="px-6 py-4 text-right">
+                      <TypeBadge type={c.type} />
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-end gap-1">
+                        {c.email && (
+                          <a
+                            href={`mailto:${c.email}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="p-2 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
+                          >
+                            <Mail className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                        {c.phone && (
+                          <a
+                            href={`tel:${c.phone}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="p-2 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
+                          >
+                            <Phone className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setEditingContact(c);
+                          }}
+                          className="p-2 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
+                        >
+                          <Pencil className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={(e) => handleDelete(e, c.id)}
+                          className="p-2 rounded-lg text-[#888888] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Contact Detail Panel */}
+      {selectedContact && (
+        <ContactDetailPanel
+          contact={selectedContact}
+          onClose={() => setSelectedContact(null)}
+          onEdit={handleEditFromPanel}
+        />
+      )}
 
       {/* Add Modal */}
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title="Add Contact">
@@ -211,6 +751,9 @@ export default function ContactsPage() {
           onCancel={() => setEditingContact(null)}
         />
       </Modal>
+
+      {/* Import Modal */}
+      <ImportModal open={importOpen} onClose={() => setImportOpen(false)} />
     </div>
   );
 }

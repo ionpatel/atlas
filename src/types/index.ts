@@ -31,6 +31,12 @@ export interface Product {
   sell_price: number;
   unit: string;
   is_active: boolean;
+  stock_quantity: number;
+  min_quantity: number;
+  weight?: number;
+  dimensions?: string;
+  internal_notes?: string;
+  image_url?: string;
   created_at: string;
 }
 
@@ -92,6 +98,8 @@ export interface Invoice {
   tax: number;
   total: number;
   notes?: string;
+  payment_terms?: "net15" | "net30" | "net60" | "due_on_receipt";
+  currency?: "CAD" | "USD" | "EUR";
   created_at: string;
 }
 
@@ -102,8 +110,11 @@ export interface InvoiceItem {
   description: string;
   quantity: number;
   unit_price: number;
+  tax_rate: number;
   total: number;
 }
+
+export type InvoiceLineType = "line" | "section" | "note";
 
 export interface Account {
   id: string;

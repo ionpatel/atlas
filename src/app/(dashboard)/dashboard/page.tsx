@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   Package,
@@ -24,6 +24,17 @@ import {
   Sparkles,
   ArrowRight,
   Eye,
+  Bell,
+  Star,
+  ShoppingCart,
+  Calculator,
+  Truck,
+  Receipt,
+  PackageCheck,
+  UserPlus,
+  RefreshCcw,
+  Settings,
+  CreditCard,
 } from "lucide-react";
 import { useInventoryStore } from "@/stores/inventory-store";
 import { useInvoicesStore } from "@/stores/invoices-store";
@@ -40,6 +51,22 @@ function formatCompact(n: number) {
 
 function classNames(...classes: (string | boolean | undefined | null)[]) {
   return classes.filter(Boolean).join(" ");
+}
+
+function getGreeting(): string {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 17) return "Good afternoon";
+  return "Good evening";
+}
+
+function getFormattedDate(): string {
+  return new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
 
 /* ─────────────────────── mini sparkline ─────────────────────── */
@@ -225,6 +252,149 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
+/* ─────────────────────── KPI comparison ─────────────────────── */
+
+function KpiComparison({ value, label }: { value: number; label: string }) {
+  const isPositive = value >= 0;
+  return (
+    <span
+      className={`flex items-center gap-0.5 text-[11px] font-medium ${
+        isPositive ? "text-emerald-400" : "text-red-400"
+      }`}
+    >
+      {isPositive ? (
+        <ArrowUpRight className="w-3 h-3" />
+      ) : (
+        <ArrowDownRight className="w-3 h-3" />
+      )}
+      {isPositive ? "+" : ""}
+      {value}% {label}
+    </span>
+  );
+}
+
+/* ─────────────────────── notification bell ─────────────────────── */
+
+function NotificationBell({ overdueCount, lowStockCount }: { overdueCount: number; lowStockCount: number }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const totalNotifs = overdueCount + (lowStockCount > 0 ? 1 : 0) + 1; // +1 for "new orders" mock
+
+  const notifications = [
+    {
+      label: `${overdueCount} invoice${overdueCount !== 1 ? "s" : ""} overdue`,
+      color: "bg-red-400",
+      href: "/invoices",
+      icon: AlertCircle,
+    },
+    {
+      label: `${lowStockCount} product${lowStockCount !== 1 ? "s" : ""} low on stock`,
+      color: "bg-amber-400",
+      href: "/inventory",
+      icon: AlertTriangle,
+    },
+    {
+      label: "2 new orders today",
+      color: "bg-emerald-400",
+      href: "/sales",
+      icon: ShoppingCart,
+    },
+  ];
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="relative p-2.5 rounded-lg border border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+      >
+        <Bell className="w-4 h-4" />
+        {totalNotifs > 0 && (
+          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-400 text-[9px] font-bold text-[#111111] flex items-center justify-center">
+            {totalNotifs > 9 ? "9+" : totalNotifs}
+          </span>
+        )}
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-12 w-72 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl shadow-2xl shadow-black/50 z-50 overflow-hidden">
+          <div className="px-4 py-3 border-b border-[#2a2a2a]">
+            <p className="text-xs font-semibold text-[#f5f0eb]">Notifications</p>
+          </div>
+          {notifications.map((n, i) => (
+            <Link
+              key={i}
+              href={n.href}
+              onClick={() => setOpen(false)}
+              className={classNames(
+                "flex items-center gap-3 px-4 py-3 hover:bg-[#222222] transition-colors",
+                i < notifications.length - 1 && "border-b border-[#2a2a2a]/50"
+              )}
+            >
+              <div className={`w-2 h-2 rounded-full ${n.color} flex-shrink-0`} />
+              <n.icon className="w-3.5 h-3.5 text-[#555555] flex-shrink-0" />
+              <span className="text-xs text-[#888888]">{n.label}</span>
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─────────────────────── activity timeline ─────────────────────── */
+
+const TIMELINE_EVENTS = [
+  {
+    icon: CheckCircle2,
+    color: "text-emerald-400",
+    dotColor: "bg-emerald-400",
+    title: "Invoice #INV-2026-003 paid",
+    description: "Payment received from Sunrise Wellness Clinic",
+    time: "2 hours ago",
+  },
+  {
+    icon: PackageCheck,
+    color: "text-violet-400",
+    dotColor: "bg-violet-400",
+    title: "Stock received: Amoxicillin 500mg",
+    description: "150 units added to warehouse inventory",
+    time: "5 hours ago",
+  },
+  {
+    icon: UserPlus,
+    color: "text-blue-400",
+    dotColor: "bg-blue-400",
+    title: "New contact added",
+    description: "Metro Health Supplies added as vendor",
+    time: "Yesterday at 4:30 PM",
+  },
+  {
+    icon: AlertTriangle,
+    color: "text-amber-400",
+    dotColor: "bg-amber-400",
+    title: "Low stock alert: Ibuprofen 200mg",
+    description: "Stock fell below minimum threshold (25/40)",
+    time: "Yesterday at 2:15 PM",
+  },
+  {
+    icon: Send,
+    color: "text-[#CDB49E]",
+    dotColor: "bg-[#CDB49E]",
+    title: "Invoice #INV-2026-005 sent",
+    description: "Emailed to GreenLeaf Pharmacy",
+    time: "2 days ago",
+  },
+];
+
 /* ════════════════════════ MAIN DASHBOARD ════════════════════════ */
 
 export default function DashboardPage() {
@@ -264,6 +434,10 @@ export default function DashboardPage() {
       (c) => c.type === "vendor" || c.type === "both"
     ).length;
 
+    const lowStockCount = products.filter(
+      (p) => p.stock_quantity > 0 && p.stock_quantity < p.min_quantity
+    ).length;
+
     return {
       activeProducts,
       totalProducts: products.length,
@@ -278,6 +452,7 @@ export default function DashboardPage() {
       customerCount,
       vendorCount,
       totalContacts: contacts.length,
+      lowStockCount,
     };
   }, [products, invoices, contacts]);
 
@@ -316,7 +491,8 @@ export default function DashboardPage() {
       value: Math.round(base * (0.6 + Math.random() * 0.5 + i * 0.05)),
       accent: i === months.length - 1,
     }));
-  }, [stats.totalRevenue]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /* ── invoice breakdown for donut ── */
   const invoiceSegments = useMemo(
@@ -334,19 +510,33 @@ export default function DashboardPage() {
   const sparkProducts = [40, 42, 44, 43, 46, 45, 48, 48];
   const sparkOutstanding = [20, 25, 18, 30, 22, 28, 19, 15];
 
+  /* ── favorite modules ── */
+  const favoriteModules = [
+    { label: "Inventory", icon: Package, href: "/inventory", color: "text-violet-400", bg: "bg-violet-500/10" },
+    { label: "Invoices", icon: FileText, href: "/invoices", color: "text-[#CDB49E]", bg: "bg-[#3a3028]" },
+    { label: "Contacts", icon: Users, href: "/contacts", color: "text-blue-400", bg: "bg-blue-500/10" },
+    { label: "Sales", icon: ShoppingCart, href: "/sales", color: "text-emerald-400", bg: "bg-emerald-500/10" },
+    { label: "Purchases", icon: Truck, href: "/purchases", color: "text-amber-400", bg: "bg-amber-500/10" },
+    { label: "Accounting", icon: Calculator, href: "/accounting", color: "text-pink-400", bg: "bg-pink-500/10" },
+  ];
+
   return (
     <div className="space-y-6 max-w-[1400px]">
-      {/* ── Page header ── */}
-      <div className="flex items-center justify-between">
+      {/* ── Welcome section + Notification bell ── */}
+      <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-[#f5f0eb]">
-            Dashboard
+            {getGreeting()}, Demo User
           </h1>
           <p className="text-[#888888] text-sm mt-1">
-            Welcome back. Here&apos;s your business at a glance.
+            {getFormattedDate()}
+          </p>
+          <p className="text-[#555555] text-xs mt-1">
+            Here&apos;s your business at a glance — stay on top of what matters.
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <NotificationBell overdueCount={stats.overdueCount} lowStockCount={stats.lowStockCount} />
           <Link
             href="/invoices"
             className="flex items-center gap-2 px-4 py-2.5 border border-[#2a2a2a] rounded-lg text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
@@ -364,7 +554,31 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── Stat cards ── */}
+      {/* ── Favorites bar ── */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
+        <div className="px-5 py-3 border-b border-[#2a2a2a] flex items-center gap-2">
+          <Star className="w-3.5 h-3.5 text-[#CDB49E]" />
+          <span className="text-xs font-semibold text-[#888888] uppercase tracking-wider">Favorites</span>
+        </div>
+        <div className="flex items-center gap-1 px-3 py-2.5 overflow-x-auto">
+          {favoriteModules.map((mod) => (
+            <Link
+              key={mod.label}
+              href={mod.href}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-lg hover:bg-[#222222] transition-all duration-200 flex-shrink-0 group"
+            >
+              <div className={`p-1.5 rounded-md ${mod.bg}`}>
+                <mod.icon className={`w-3.5 h-3.5 ${mod.color}`} />
+              </div>
+              <span className="text-xs font-medium text-[#888888] group-hover:text-[#f5f0eb] transition-colors">
+                {mod.label}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Stat cards with KPI comparisons ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Revenue */}
         <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#CDB49E]/20 transition-all duration-300 group">
@@ -381,10 +595,7 @@ export default function DashboardPage() {
             <p className="text-xs text-[#888888] uppercase tracking-wider">
               Revenue (Paid)
             </p>
-            <span className="flex items-center gap-0.5 text-[11px] font-medium text-emerald-400">
-              <ArrowUpRight className="w-3 h-3" />
-              +12.5%
-            </span>
+            <KpiComparison value={12} label="vs last month" />
           </div>
         </div>
 
@@ -403,12 +614,7 @@ export default function DashboardPage() {
             <p className="text-xs text-[#888888] uppercase tracking-wider">
               Outstanding
             </p>
-            {stats.overdueCount > 0 && (
-              <span className="flex items-center gap-1 text-[11px] font-medium text-red-400">
-                <AlertTriangle className="w-3 h-3" />
-                {stats.overdueCount} overdue
-              </span>
-            )}
+            <KpiComparison value={-8} label="vs last month" />
           </div>
         </div>
 
@@ -427,9 +633,7 @@ export default function DashboardPage() {
             <p className="text-xs text-[#888888] uppercase tracking-wider">
               Products
             </p>
-            <span className="text-[11px] text-[#555555]">
-              {stats.activeProducts} active
-            </span>
+            <KpiComparison value={5} label="vs last month" />
           </div>
         </div>
 
@@ -457,10 +661,7 @@ export default function DashboardPage() {
             <p className="text-xs text-[#888888] uppercase tracking-wider">
               Contacts
             </p>
-            <span className="flex items-center gap-0.5 text-[11px] font-medium text-blue-400">
-              <ArrowUpRight className="w-3 h-3" />
-              +3 this month
-            </span>
+            <KpiComparison value={15} label="vs last month" />
           </div>
         </div>
       </div>
@@ -516,7 +717,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── Row 3: Recent invoices + Top products ── */}
+      {/* ── Row 3: Recent invoices + Activity Timeline ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Recent invoices */}
         <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
@@ -583,67 +784,103 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Top products by margin */}
+        {/* Activity Timeline */}
         <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
           <div className="px-6 py-5 border-b border-[#2a2a2a] flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <TrendingUp className="w-4 h-4 text-[#888888]" />
+              <Activity className="w-4 h-4 text-[#888888]" />
               <h2 className="text-sm font-semibold text-[#f5f0eb]">
-                Top Products by Margin
+                Recent Activity
               </h2>
             </div>
-            <Link
-              href="/inventory"
-              className="text-[11px] text-[#555555] hover:text-[#CDB49E] transition-colors flex items-center gap-1"
-            >
-              View all <ChevronRight className="w-3 h-3" />
-            </Link>
+            <span className="text-[11px] text-[#555555]">Last 7 days</span>
           </div>
-          <div>
-            {topProducts.length === 0 ? (
-              <div className="px-6 py-12 text-center">
-                <Package className="w-8 h-8 mx-auto mb-3 text-[#888888]/30" />
-                <p className="text-sm text-[#888888]">No products yet</p>
-              </div>
-            ) : (
-              topProducts.map((p, i) => (
-                <div
-                  key={p.id}
-                  className={classNames(
-                    "px-6 py-4 flex items-center justify-between transition-colors hover:bg-[#222222]/50 cursor-pointer",
-                    i < topProducts.length - 1 &&
-                      "border-b border-[#2a2a2a]/50"
-                  )}
-                >
-                  <div className="flex items-center gap-4 min-w-0">
-                    <div className="w-9 h-9 rounded-lg bg-[#3a3028] flex items-center justify-center flex-shrink-0">
-                      <Package className="w-4 h-4 text-[#CDB49E]" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium text-[#f5f0eb] truncate">
-                        {p.name}
-                      </p>
-                      <p className="text-xs text-[#888888] mt-0.5">
-                        {p.category || "Uncategorized"} · {p.sku}
-                      </p>
-                    </div>
+          <div className="p-6">
+            <div className="space-y-0">
+              {TIMELINE_EVENTS.map((event, i) => (
+                <div key={i} className="flex gap-4 group">
+                  {/* Timeline line + dot */}
+                  <div className="flex flex-col items-center">
+                    <div className={`w-2.5 h-2.5 rounded-full ${event.dotColor} flex-shrink-0 mt-1.5 ring-4 ring-[#1a1a1a]`} />
+                    {i < TIMELINE_EVENTS.length - 1 && (
+                      <div className="w-px flex-1 bg-[#2a2a2a] my-1" />
+                    )}
                   </div>
-                  <div className="text-right flex-shrink-0 ml-4">
-                    <p className="text-sm font-semibold text-emerald-400">
-                      +{formatCurrency(p.margin)}
-                    </p>
-                    <p className="text-[11px] text-[#555555] mt-0.5">
-                      {p.marginPct.toFixed(0)}% margin
-                    </p>
+
+                  {/* Content */}
+                  <div className={classNames("pb-6 min-w-0 flex-1", i === TIMELINE_EVENTS.length - 1 && "pb-0")}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <event.icon className={`w-3.5 h-3.5 ${event.color} flex-shrink-0`} />
+                      <p className="text-sm font-medium text-[#f5f0eb] truncate">{event.title}</p>
+                    </div>
+                    <p className="text-xs text-[#888888] mb-1">{event.description}</p>
+                    <p className="text-[11px] text-[#555555]">{event.time}</p>
                   </div>
                 </div>
-              ))
-            )}
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* ── Row 4: Quick actions + AI teaser ── */}
+      {/* ── Row 4: Top products by margin ── */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
+        <div className="px-6 py-5 border-b border-[#2a2a2a] flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <TrendingUp className="w-4 h-4 text-[#888888]" />
+            <h2 className="text-sm font-semibold text-[#f5f0eb]">
+              Top Products by Margin
+            </h2>
+          </div>
+          <Link
+            href="/inventory"
+            className="text-[11px] text-[#555555] hover:text-[#CDB49E] transition-colors flex items-center gap-1"
+          >
+            View all <ChevronRight className="w-3 h-3" />
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          {topProducts.length === 0 ? (
+            <div className="px-6 py-12 text-center col-span-2">
+              <Package className="w-8 h-8 mx-auto mb-3 text-[#888888]/30" />
+              <p className="text-sm text-[#888888]">No products yet</p>
+            </div>
+          ) : (
+            topProducts.map((p, i) => (
+              <div
+                key={p.id}
+                className={classNames(
+                  "px-6 py-4 flex items-center justify-between transition-colors hover:bg-[#222222]/50 cursor-pointer border-b border-[#2a2a2a]/50"
+                )}
+              >
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="w-9 h-9 rounded-lg bg-[#3a3028] flex items-center justify-center flex-shrink-0">
+                    <Package className="w-4 h-4 text-[#CDB49E]" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-[#f5f0eb] truncate">
+                      {p.name}
+                    </p>
+                    <p className="text-xs text-[#888888] mt-0.5">
+                      {p.category || "Uncategorized"} · {p.sku}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right flex-shrink-0 ml-4">
+                  <p className="text-sm font-semibold text-emerald-400">
+                    +{formatCurrency(p.margin)}
+                  </p>
+                  <p className="text-[11px] text-[#555555] mt-0.5">
+                    {p.marginPct.toFixed(0)}% margin
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* ── Row 5: Quick actions + AI teaser ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Quick actions */}
         <div className="lg:col-span-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
