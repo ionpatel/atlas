@@ -252,6 +252,68 @@ function CreatePayRunModal({
   );
 }
 
+/* ─────────── export helper ─────────── */
+
+function exportPayRunToCSV(payRun: PayRun) {
+  const headers = [
+    "Employee",
+    "Gross Pay",
+    "Federal Tax",
+    "Provincial Tax",
+    "CPP",
+    "EI",
+    "Other Deductions",
+    "Total Deductions",
+    "Net Pay",
+  ];
+
+  const rows = payRun.payStubs.map((stub) => [
+    stub.employeeName,
+    stub.grossPay.toFixed(2),
+    stub.federalTax.toFixed(2),
+    stub.provincialTax.toFixed(2),
+    stub.cpp.toFixed(2),
+    stub.ei.toFixed(2),
+    stub.otherDeductions.toFixed(2),
+    stub.totalDeductions.toFixed(2),
+    stub.netPay.toFixed(2),
+  ]);
+
+  // Add summary row
+  rows.push([]);
+  rows.push([
+    "TOTALS",
+    payRun.totalGross.toFixed(2),
+    payRun.payStubs.reduce((sum, s) => sum + s.federalTax, 0).toFixed(2),
+    payRun.payStubs.reduce((sum, s) => sum + s.provincialTax, 0).toFixed(2),
+    payRun.payStubs.reduce((sum, s) => sum + s.cpp, 0).toFixed(2),
+    payRun.payStubs.reduce((sum, s) => sum + s.ei, 0).toFixed(2),
+    payRun.payStubs.reduce((sum, s) => sum + s.otherDeductions, 0).toFixed(2),
+    payRun.totalDeductions.toFixed(2),
+    payRun.totalNet.toFixed(2),
+  ]);
+
+  const csvContent = [
+    `Pay Run: ${payRun.name}`,
+    `Period: ${payRun.periodStart} to ${payRun.periodEnd}`,
+    `Pay Date: ${payRun.payDate}`,
+    `Status: ${payRun.status.toUpperCase()}`,
+    "",
+    headers.join(","),
+    ...rows.map((row) => row.join(",")),
+  ].join("\n");
+
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `payroll-${payRun.name.replace(/\s+/g, "-").toLowerCase()}.csv`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
 /* ─────────── pay stub detail ─────────── */
 
 function PayStubDetail({
@@ -356,7 +418,10 @@ function PayStubDetail({
             <span>Includes CPP & EI contributions</span>
           </div>
           <div className="flex gap-3">
-            <button className="flex items-center gap-2 px-4 py-2.5 border border-[#2a2a2a] rounded-lg text-sm font-medium text-[#888888] hover:text-[#f5f0eb] hover:border-[#3a3a3a] transition-all duration-200">
+            <button 
+              onClick={() => exportPayRunToCSV(payRun)}
+              className="flex items-center gap-2 px-4 py-2.5 border border-[#2a2a2a] rounded-lg text-sm font-medium text-[#888888] hover:text-[#f5f0eb] hover:border-[#3a3a3a] transition-all duration-200"
+            >
               <Download className="w-4 h-4" />
               Export
             </button>
