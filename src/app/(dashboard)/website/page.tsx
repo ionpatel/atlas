@@ -3902,6 +3902,41 @@ export default function WebsitePage() {
           <button onClick={() => setView("preview")} className="px-3 py-1.5 text-sm text-[#888] hover:text-white border border-[#333] rounded-lg flex items-center gap-2 hover:border-[#444]">
             <Eye className="w-4 h-4" /> Preview
           </button>
+          <button 
+            onClick={() => {
+              // Generate and download HTML
+              const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas Website</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: #0a0a0a; }
+    ${document.querySelector('style[data-atlas-animations]')?.textContent || ''}
+  </style>
+</head>
+<body>
+${elements.map(el => {
+  const styles = Object.entries(el.styles || {}).map(([k, v]) => \`\${k.replace(/([A-Z])/g, '-$1').toLowerCase()}: \${v}\`).join('; ');
+  return \`<div style="\${styles}">\${el.content}</div>\`;
+}).join('\\n')}
+</body>
+</html>`;
+              const blob = new Blob([html], { type: 'text/html' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'website.html';
+              a.click();
+              URL.revokeObjectURL(url);
+            }}
+            className="px-3 py-1.5 text-sm text-[#888] hover:text-white border border-[#333] rounded-lg flex items-center gap-2 hover:border-[#444]"
+          >
+            <Download className="w-4 h-4" /> Export
+          </button>
           <button className="px-4 py-1.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 flex items-center gap-2">
             <Rocket className="w-4 h-4" /> Publish
           </button>
