@@ -18,6 +18,7 @@ import {
   Target,
   UserCircle,
   FolderKanban,
+  Wallet,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -32,6 +33,7 @@ const navItems = [
   { href: "/contacts", label: "Contacts", icon: Users },
   { href: "/crm", label: "CRM", icon: Target },
   { href: "/employees", label: "Employees", icon: UserCircle },
+  { href: "/payroll", label: "Payroll", icon: Wallet },
   { href: "/projects", label: "Projects", icon: FolderKanban },
   { href: "/ai", label: "AI Assistant", icon: Bot },
   { href: "/settings", label: "Settings", icon: Settings },
