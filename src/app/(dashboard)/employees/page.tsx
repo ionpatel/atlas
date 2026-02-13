@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import {
   Plus,
   Search,
@@ -156,6 +156,8 @@ function DepartmentSidebar({
 /* ═══════════════════════ EMPLOYEES PAGE ═══════════════════════ */
 
 export default function EmployeesPage() {
+  const DEMO_ORG_ID = "00000000-0000-0000-0000-000000000001";
+  
   const {
     employees,
     searchQuery,
@@ -163,7 +165,14 @@ export default function EmployeesPage() {
     setSearchQuery,
     setFilter,
     filteredEmployees,
+    fetchEmployees,
+    loading,
   } = useEmployeesStore();
+
+  // Fetch employees on mount
+  useEffect(() => {
+    fetchEmployees(DEMO_ORG_ID);
+  }, [fetchEmployees]);
 
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const filtered = filteredEmployees();
