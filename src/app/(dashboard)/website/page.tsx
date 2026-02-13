@@ -24,11 +24,18 @@ import { ImageLibrary } from "@/components/website/image-library";
 import { SEOSettingsPanel, SEOSettings } from "@/components/website/seo-settings";
 import { StylePresetsPanel, StylePreset } from "@/components/website/style-presets";
 import { FormBuilder, FormConfig } from "@/components/website/form-builder";
+import { IntegrationsPanel, Integration } from "@/components/website/integrations-panel";
+import { CodeInjectionPanel, CodeInjection } from "@/components/website/code-injection";
+import { PageSettingsPanel, PageSettings } from "@/components/website/page-settings";
+import { VersionHistoryPanel, PageVersion, useVersionHistory } from "@/components/website/version-history";
+import { DomainSettingsPanel, DomainConfig } from "@/components/website/domain-settings";
+import { TemplatePreviewModal, TemplateCard, TEMPLATE_THUMBNAILS } from "@/components/website/template-preview";
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ATLAS WEBSITE BUILDER PRO v2.1
+   ATLAS WEBSITE BUILDER PRO v2.2
    Shopify + Wix + Figma Level Website Builder
    + Image Library, SEO Settings, Style Presets, Form Builder
+   + Integrations, Code Injection, Page Settings, Version History, Domains
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ─────────────────────────── TYPES ─────────────────────────── */
@@ -4350,6 +4357,43 @@ export default function WebsitePage() {
   const [showFormBuilder, setShowFormBuilder] = useState(false);
   const [selectedFormId, setSelectedFormId] = useState<string | null>(null);
   
+  // Additional panels: Integrations, Code Injection, Page Settings, Version History, Domains
+  const [showIntegrations, setShowIntegrations] = useState(false);
+  const [showCodeInjection, setShowCodeInjection] = useState(false);
+  const [showPageSettings, setShowPageSettings] = useState(false);
+  const [showVersionHistory, setShowVersionHistory] = useState(false);
+  const [showDomainSettings, setShowDomainSettings] = useState(false);
+  const [showTemplatePreview, setShowTemplatePreview] = useState<string | null>(null);
+  
+  // Integrations state
+  const [integrations, setIntegrations] = useState<Integration[]>([]);
+  
+  // Code Injection state
+  const [codeInjection, setCodeInjection] = useState<CodeInjection>({
+    headStart: "",
+    headEnd: "",
+    bodyStart: "",
+    bodyEnd: "",
+    customCSS: "",
+    enabled: true,
+  });
+  
+  // Page Settings state (per-page)
+  const [pageSettings, setPageSettings] = useState<PageSettings>({
+    slug: "/",
+    title: "Home",
+    visibility: "public",
+    scheduleEnabled: false,
+    noIndex: false,
+    noFollow: false,
+  });
+  
+  // Version History state
+  const [versions, setVersions] = useState<PageVersion[]>([]);
+  
+  // Domain Settings state
+  const [domains, setDomains] = useState<DomainConfig[]>([]);
+  
   // SEO Settings state
   const [seoSettings, setSeoSettings] = useState<SEOSettings>({
     metaTitle: "",
@@ -4773,21 +4817,58 @@ export default function WebsitePage() {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* SEO & Style Buttons */}
-          <button 
-            onClick={() => setShowSEOPanel(true)} 
-            className="p-2 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#1a1a1a]"
-            title="SEO Settings"
-          >
-            <Search className="w-4 h-4" />
-          </button>
-          <button 
-            onClick={() => setShowStylePresets(true)} 
-            className="p-2 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#1a1a1a]"
-            title="Style Presets"
-          >
-            <Palette className="w-4 h-4" />
-          </button>
+          {/* Settings & Tools Dropdown */}
+          <div className="flex items-center gap-1 p-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
+            <button 
+              onClick={() => setShowSEOPanel(true)} 
+              className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
+              title="SEO Settings"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => setShowStylePresets(true)} 
+              className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
+              title="Style Presets"
+            >
+              <Palette className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => setShowIntegrations(true)} 
+              className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
+              title="Integrations (Analytics, Chat)"
+            >
+              <BarChart3 className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => setShowCodeInjection(true)} 
+              className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
+              title="Code Injection"
+            >
+              <Code className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => setShowPageSettings(true)} 
+              className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
+              title="Page Settings"
+            >
+              <Settings2 className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => setShowVersionHistory(true)} 
+              className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
+              title="Version History"
+            >
+              <Clock className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => setShowDomainSettings(true)} 
+              className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
+              title="Domain Settings"
+            >
+              <Globe className="w-4 h-4" />
+            </button>
+          </div>
           <div className="h-5 w-px bg-[#333]" />
           <button onClick={() => setShowPanels(p => ({ ...p, left: !p.left }))} className={cn("p-2 rounded", showPanels.left ? "text-[#CDB49E]" : "text-[#555]")}>
             <PanelLeft className="w-4 h-4" />
@@ -5057,6 +5138,161 @@ ${bodyContent}
             />
           </div>
         </div>
+      )}
+
+      {/* Integrations Panel Modal */}
+      {showIntegrations && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-[#111] rounded-2xl border border-[#333] w-[600px] max-h-[80vh] overflow-hidden shadow-2xl">
+            <IntegrationsPanel
+              integrations={integrations}
+              onChange={setIntegrations}
+              onClose={() => setShowIntegrations(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Code Injection Panel Modal */}
+      {showCodeInjection && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-[#111] rounded-2xl border border-[#333] w-[800px] max-h-[85vh] overflow-hidden shadow-2xl">
+            <CodeInjectionPanel
+              code={codeInjection}
+              onChange={setCodeInjection}
+              onClose={() => setShowCodeInjection(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Page Settings Modal */}
+      {showPageSettings && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-[#111] rounded-2xl border border-[#333] w-[550px] max-h-[80vh] overflow-hidden shadow-2xl">
+            <PageSettingsPanel
+              settings={pageSettings}
+              onChange={setPageSettings}
+              onClose={() => setShowPageSettings(false)}
+              siteUrl="yoursite.atlas.app"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Version History Modal */}
+      {showVersionHistory && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-[#111] rounded-2xl border border-[#333] w-[700px] max-h-[80vh] overflow-hidden shadow-2xl">
+            <VersionHistoryPanel
+              versions={versions}
+              currentElements={elements}
+              onRestore={(version) => {
+                try {
+                  const restored = JSON.parse(version.elementsSnapshot);
+                  setElements(restored);
+                  setShowVersionHistory(false);
+                } catch (e) {
+                  console.error("Failed to restore version:", e);
+                }
+              }}
+              onSaveVersion={(name, description) => {
+                const newVersion: PageVersion = {
+                  id: `v-${Date.now()}`,
+                  name,
+                  createdAt: new Date().toISOString(),
+                  elementsSnapshot: JSON.stringify(elements),
+                  isAutosave: false,
+                  isStarred: false,
+                  description,
+                  elementCount: elements.length,
+                };
+                setVersions(prev => [newVersion, ...prev].slice(0, 50));
+              }}
+              onDeleteVersion={(id) => {
+                setVersions(prev => prev.filter(v => v.id !== id));
+              }}
+              onToggleStar={(id) => {
+                setVersions(prev => prev.map(v => 
+                  v.id === id ? { ...v, isStarred: !v.isStarred } : v
+                ));
+              }}
+              onClose={() => setShowVersionHistory(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Domain Settings Modal */}
+      {showDomainSettings && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-[#111] rounded-2xl border border-[#333] w-[650px] max-h-[80vh] overflow-hidden shadow-2xl">
+            <DomainSettingsPanel
+              domains={domains}
+              defaultDomain="yoursite.atlas.app"
+              onAddDomain={async (domain) => {
+                const newDomain: DomainConfig = {
+                  id: `dom-${Date.now()}`,
+                  domain,
+                  isPrimary: domains.length === 0,
+                  status: "pending",
+                  sslStatus: "pending",
+                  dnsRecords: [
+                    { type: "A", name: "@", value: "76.76.21.21", verified: false },
+                    { type: "CNAME", name: "www", value: "cname.atlas.app", verified: false },
+                  ],
+                };
+                setDomains(prev => [...prev, newDomain]);
+                return newDomain;
+              }}
+              onRemoveDomain={(id) => {
+                setDomains(prev => prev.filter(d => d.id !== id));
+              }}
+              onSetPrimary={(id) => {
+                setDomains(prev => prev.map(d => ({
+                  ...d,
+                  isPrimary: d.id === id,
+                })));
+              }}
+              onVerifyDomain={async (id) => {
+                // Simulate verification
+                await new Promise(r => setTimeout(r, 2000));
+                setDomains(prev => prev.map(d => 
+                  d.id === id 
+                    ? { 
+                        ...d, 
+                        status: "active" as const, 
+                        sslStatus: "active" as const,
+                        verifiedAt: new Date().toISOString(),
+                        dnsRecords: d.dnsRecords.map(r => ({ ...r, verified: true })),
+                      } 
+                    : d
+                ));
+              }}
+              onClose={() => setShowDomainSettings(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Template Preview Modal */}
+      {showTemplatePreview && (
+        <TemplatePreviewModal
+          template={TEMPLATES.find(t => t.id === showTemplatePreview) || TEMPLATES[0]}
+          templates={TEMPLATES.map(t => ({
+            id: t.id,
+            name: t.name,
+            category: t.category,
+            preview: t.preview,
+            popular: t.popular,
+          }))}
+          onSelect={(id) => {
+            setSelectedTemplate(id);
+            setView("editor");
+            setShowTemplatePreview(null);
+          }}
+          onClose={() => setShowTemplatePreview(null)}
+        />
       )}
     </div>
   );
