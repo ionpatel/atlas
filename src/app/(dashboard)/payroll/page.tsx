@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   DollarSign,
   Users,
@@ -627,9 +627,14 @@ function PayStubDetail({
 /* ═══════════════════════ PAYROLL PAGE ═══════════════════════ */
 
 export default function PayrollPage() {
-  const { payRuns, compensations, createPayRun, approvePayRun, markAsPaid } = usePayrollStore();
+  const { payRuns, compensations, createPayRun, approvePayRun, markAsPaid, fetchPayRuns, loading } = usePayrollStore();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedPayRun, setSelectedPayRun] = useState<PayRun | null>(null);
+
+  // Fetch pay runs on mount
+  useEffect(() => {
+    fetchPayRuns("org1");
+  }, [fetchPayRuns]);
 
   // Calculate stats
   const stats = useMemo(() => {
@@ -651,8 +656,8 @@ export default function PayrollPage() {
     };
   }, [payRuns, compensations]);
 
-  const handleCreatePayRun = (data: { name: string; payPeriod: PayPeriod; periodStart: string; periodEnd: string; payDate: string }) => {
-    const newRun = createPayRun({
+  const handleCreatePayRun = async (data: { name: string; payPeriod: PayPeriod; periodStart: string; periodEnd: string; payDate: string }) => {
+    const newRun = await createPayRun({
       ...data,
       orgId: "org1",
       status: "draft",

@@ -1,8 +1,8 @@
 import { create } from "zustand";
+import { createClient } from "@/lib/supabase/client";
 
 // 2026 Canadian Tax Constants
 const TAX_CONSTANTS_2026 = {
-  // CPP (Canada Pension Plan)
   cpp: {
     maxPensionableEarnings: 71300,
     basicExemption: 3500,
@@ -10,14 +10,12 @@ const TAX_CONSTANTS_2026 = {
     employerRate: 0.0595,
     maxContribution: 4034.10,
   },
-  // EI (Employment Insurance)
   ei: {
     maxInsurableEarnings: 65700,
     employeeRate: 0.0163,
-    employerRate: 0.02282, // 1.4x employee rate
+    employerRate: 0.02282,
     maxEmployeeContribution: 1071.51,
   },
-  // Federal Tax Brackets 2026
   federal: {
     brackets: [
       { min: 0, max: 55867, rate: 0.15 },
@@ -28,7 +26,6 @@ const TAX_CONSTANTS_2026 = {
     ],
     basicPersonalAmount: 15705,
   },
-  // Ontario Provincial Tax Brackets 2026 (default)
   ontario: {
     brackets: [
       { min: 0, max: 51446, rate: 0.0505 },
@@ -70,8 +67,6 @@ export interface PayStub {
   periodStart: string;
   periodEnd: string;
   payDate: string;
-  
-  // Earnings
   regularHours: number;
   regularRate: number;
   regularPay: number;
@@ -82,19 +77,13 @@ export interface PayStub {
   commission: number;
   vacation: number;
   grossPay: number;
-  
-  // Deductions
   federalTax: number;
   provincialTax: number;
   cpp: number;
   ei: number;
   otherDeductions: number;
   totalDeductions: number;
-  
-  // Net
   netPay: number;
-  
-  // YTD
   ytdGross: number;
   ytdFederalTax: number;
   ytdProvincialTax: number;
@@ -116,7 +105,7 @@ export interface PayRun {
   totalGross: number;
   totalDeductions: number;
   totalNet: number;
-  totalEmployerCost: number; // Includes employer CPP, EI
+  totalEmployerCost: number;
   payStubs: PayStub[];
   createdAt: string;
   approvedAt?: string;
@@ -128,219 +117,241 @@ interface PayrollState {
   payRuns: PayRun[];
   currentPayRun: PayRun | null;
   loading: boolean;
+  error: string | null;
   
-  // Actions
+  // Async actions
+  fetchPayRuns: (orgId: string) => Promise<void>;
+  createPayRun: (payRun: Omit<PayRun, "id" | "payStubs" | "createdAt">) => Promise<PayRun>;
+  approvePayRun: (payRunId: string) => Promise<void>;
+  markAsPaid: (payRunId: string) => Promise<void>;
+  
+  // Sync helpers
   setCompensation: (comp: EmployeeCompensation) => void;
-  createPayRun: (payRun: Omit<PayRun, "id" | "payStubs" | "createdAt">) => PayRun;
   calculatePayStub: (employeeId: string, payRun: PayRun) => PayStub;
-  approvePayRun: (payRunId: string) => void;
-  markAsPaid: (payRunId: string) => void;
   getYtdTotals: (employeeId: string) => { gross: number; federal: number; provincial: number; cpp: number; ei: number; net: number };
 }
 
-// Tax calculation helpers
+// Tax helpers
 function calculateFederalTax(annualIncome: number): number {
   const { brackets, basicPersonalAmount } = TAX_CONSTANTS_2026.federal;
   const taxableIncome = Math.max(0, annualIncome - basicPersonalAmount);
-  
-  let tax = 0;
-  let remaining = taxableIncome;
-  
+  let tax = 0, remaining = taxableIncome;
   for (const bracket of brackets) {
     if (remaining <= 0) break;
     const taxableInBracket = Math.min(remaining, bracket.max - bracket.min);
     tax += taxableInBracket * bracket.rate;
     remaining -= taxableInBracket;
   }
-  
   return tax;
 }
 
-function calculateProvincialTax(annualIncome: number, province: Province): number {
-  // Using Ontario as default, would expand for other provinces
+function calculateProvincialTax(annualIncome: number, _province: Province): number {
   const { brackets, basicPersonalAmount } = TAX_CONSTANTS_2026.ontario;
   const taxableIncome = Math.max(0, annualIncome - basicPersonalAmount);
-  
-  let tax = 0;
-  let remaining = taxableIncome;
-  
+  let tax = 0, remaining = taxableIncome;
   for (const bracket of brackets) {
     if (remaining <= 0) break;
     const taxableInBracket = Math.min(remaining, bracket.max - bracket.min);
     tax += taxableInBracket * bracket.rate;
     remaining -= taxableInBracket;
   }
-  
   return tax;
 }
 
 function calculateCpp(annualIncome: number, ytdCpp: number): number {
   const { maxPensionableEarnings, basicExemption, employeeRate, maxContribution } = TAX_CONSTANTS_2026.cpp;
-  
   if (ytdCpp >= maxContribution) return 0;
-  
   const pensionableEarnings = Math.min(annualIncome, maxPensionableEarnings) - basicExemption;
   const annualCpp = Math.max(0, pensionableEarnings * employeeRate);
-  const remainingCpp = maxContribution - ytdCpp;
-  
-  return Math.min(annualCpp / 12, remainingCpp); // Monthly
+  return Math.min(annualCpp / 12, maxContribution - ytdCpp);
 }
 
 function calculateEi(annualIncome: number, ytdEi: number): number {
   const { maxInsurableEarnings, employeeRate, maxEmployeeContribution } = TAX_CONSTANTS_2026.ei;
-  
   if (ytdEi >= maxEmployeeContribution) return 0;
-  
   const insuredEarnings = Math.min(annualIncome, maxInsurableEarnings);
   const annualEi = insuredEarnings * employeeRate;
-  const remainingEi = maxEmployeeContribution - ytdEi;
-  
-  return Math.min(annualEi / 12, remainingEi); // Monthly
+  return Math.min(annualEi / 12, maxEmployeeContribution - ytdEi);
 }
 
-// Mock data
+// Mock data for demo mode
 const mockCompensations: EmployeeCompensation[] = [
-  {
-    employeeId: "e1", employeeName: "Alexandra Mitchell", department: "Management",
-    payType: "salary", annualSalary: 185000, hoursPerWeek: 40,
-    province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0,
-  },
-  {
-    employeeId: "e2", employeeName: "Jordan Kimura", department: "Engineering",
-    payType: "salary", annualSalary: 145000, hoursPerWeek: 40,
-    province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0,
-  },
-  {
-    employeeId: "e3", employeeName: "Sam Torres", department: "Engineering",
-    payType: "salary", annualSalary: 105000, hoursPerWeek: 40,
-    province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0,
-  },
-  {
-    employeeId: "e4", employeeName: "Priya Sharma", department: "Engineering",
-    payType: "salary", annualSalary: 92000, hoursPerWeek: 40,
-    province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0,
-  },
-  {
-    employeeId: "e5", employeeName: "Marcus Williams", department: "Sales",
-    payType: "salary", annualSalary: 125000, hoursPerWeek: 40,
-    province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0,
-  },
-  {
-    employeeId: "e7", employeeName: "David Park", department: "Support",
-    payType: "salary", annualSalary: 85000, hoursPerWeek: 40,
-    province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0,
-  },
-  {
-    employeeId: "e8", employeeName: "Lisa Nguyen", department: "Support",
-    payType: "hourly", hourlyRate: 32, hoursPerWeek: 40,
-    province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0,
-  },
-  {
-    employeeId: "e9", employeeName: "Ryan Foster", department: "Engineering",
-    payType: "salary", annualSalary: 98000, hoursPerWeek: 40,
-    province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0,
-  },
-  {
-    employeeId: "e10", employeeName: "Karen Webb", department: "Management",
-    payType: "salary", annualSalary: 115000, hoursPerWeek: 40,
-    province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0,
-  },
+  { employeeId: "e1", employeeName: "Alexandra Mitchell", department: "Management", payType: "salary", annualSalary: 185000, hoursPerWeek: 40, province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0 },
+  { employeeId: "e2", employeeName: "Jordan Kimura", department: "Engineering", payType: "salary", annualSalary: 145000, hoursPerWeek: 40, province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0 },
+  { employeeId: "e3", employeeName: "Sam Torres", department: "Engineering", payType: "salary", annualSalary: 105000, hoursPerWeek: 40, province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0 },
+  { employeeId: "e4", employeeName: "Priya Sharma", department: "Engineering", payType: "salary", annualSalary: 92000, hoursPerWeek: 40, province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0 },
+  { employeeId: "e5", employeeName: "Marcus Williams", department: "Sales", payType: "salary", annualSalary: 125000, hoursPerWeek: 40, province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0 },
+  { employeeId: "e7", employeeName: "David Park", department: "Support", payType: "salary", annualSalary: 85000, hoursPerWeek: 40, province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0 },
+  { employeeId: "e8", employeeName: "Lisa Nguyen", department: "Support", payType: "hourly", hourlyRate: 32, hoursPerWeek: 40, province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0 },
+  { employeeId: "e9", employeeName: "Ryan Foster", department: "Engineering", payType: "salary", annualSalary: 98000, hoursPerWeek: 40, province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0 },
+  { employeeId: "e10", employeeName: "Karen Webb", department: "Management", payType: "salary", annualSalary: 115000, hoursPerWeek: 40, province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0 },
 ];
 
+function generateMockPayStubs(payRun: Omit<PayRun, "payStubs">, compensations: EmployeeCompensation[]): PayStub[] {
+  return compensations.map((comp, idx) => {
+    const annualSalary = comp.payType === "salary" ? comp.annualSalary! : comp.hourlyRate! * comp.hoursPerWeek * 52;
+    const periodsPerYear = payRun.payPeriod === "monthly" ? 12 : payRun.payPeriod === "semi-monthly" ? 24 : payRun.payPeriod === "bi-weekly" ? 26 : 52;
+    const grossPay = annualSalary / periodsPerYear;
+    const federalTax = calculateFederalTax(annualSalary) / periodsPerYear;
+    const provincialTax = calculateProvincialTax(annualSalary, comp.province) / periodsPerYear;
+    const cpp = calculateCpp(annualSalary, 0);
+    const ei = calculateEi(annualSalary, 0);
+    const totalDeductions = federalTax + provincialTax + cpp + ei;
+    const netPay = grossPay - totalDeductions;
+    
+    return {
+      id: `ps-${payRun.id}-${idx}`,
+      employeeId: comp.employeeId,
+      employeeName: comp.employeeName,
+      payRunId: payRun.id,
+      periodStart: payRun.periodStart,
+      periodEnd: payRun.periodEnd,
+      payDate: payRun.payDate,
+      regularHours: comp.hoursPerWeek * 2,
+      regularRate: comp.payType === "hourly" ? comp.hourlyRate! : annualSalary / 2080,
+      regularPay: grossPay,
+      overtimeHours: 0, overtimeRate: 0, overtimePay: 0,
+      bonus: 0, commission: 0, vacation: 0,
+      grossPay, federalTax, provincialTax, cpp, ei,
+      otherDeductions: 0, totalDeductions, netPay,
+      ytdGross: grossPay * 2, ytdFederalTax: federalTax * 2, ytdProvincialTax: provincialTax * 2,
+      ytdCpp: cpp * 2, ytdEi: ei * 2, ytdNet: netPay * 2,
+    };
+  });
+}
+
 const mockPayRuns: PayRun[] = [
-  {
-    id: "pr1", orgId: "org1", name: "January 2026 - Period 1",
-    payPeriod: "semi-monthly", periodStart: "2026-01-01", periodEnd: "2026-01-15",
-    payDate: "2026-01-20", status: "paid", employeeCount: 9,
-    totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875,
-    payStubs: [], createdAt: "2026-01-16T10:00:00Z", approvedAt: "2026-01-17T14:00:00Z", paidAt: "2026-01-20T09:00:00Z",
-  },
-  {
-    id: "pr2", orgId: "org1", name: "January 2026 - Period 2",
-    payPeriod: "semi-monthly", periodStart: "2026-01-16", periodEnd: "2026-01-31",
-    payDate: "2026-02-05", status: "paid", employeeCount: 9,
-    totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875,
-    payStubs: [], createdAt: "2026-02-01T10:00:00Z", approvedAt: "2026-02-02T14:00:00Z", paidAt: "2026-02-05T09:00:00Z",
-  },
-  {
-    id: "pr3", orgId: "org1", name: "February 2026 - Period 1",
-    payPeriod: "semi-monthly", periodStart: "2026-02-01", periodEnd: "2026-02-15",
-    payDate: "2026-02-20", status: "approved", employeeCount: 9,
-    totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875,
-    payStubs: [], createdAt: "2026-02-16T10:00:00Z", approvedAt: "2026-02-17T14:00:00Z",
-  },
-];
+  { id: "pr1", orgId: "org1", name: "January 2026 - Period 1", payPeriod: "semi-monthly", periodStart: "2026-01-01", periodEnd: "2026-01-15", payDate: "2026-01-20", status: "paid", employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [], createdAt: "2026-01-16T10:00:00Z", approvedAt: "2026-01-17T14:00:00Z", paidAt: "2026-01-20T09:00:00Z" },
+  { id: "pr2", orgId: "org1", name: "January 2026 - Period 2", payPeriod: "semi-monthly", periodStart: "2026-01-16", periodEnd: "2026-01-31", payDate: "2026-02-05", status: "paid", employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [], createdAt: "2026-02-01T10:00:00Z", approvedAt: "2026-02-02T14:00:00Z", paidAt: "2026-02-05T09:00:00Z" },
+  { id: "pr3", orgId: "org1", name: "February 2026 - Period 1", payPeriod: "semi-monthly", periodStart: "2026-02-01", periodEnd: "2026-02-15", payDate: "2026-02-20", status: "approved", employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [], createdAt: "2026-02-16T10:00:00Z", approvedAt: "2026-02-17T14:00:00Z" },
+].map(pr => ({ ...pr, payStubs: generateMockPayStubs(pr, mockCompensations) }));
+
+const isSupabaseConfigured = () => !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+
+// Helper to convert snake_case DB rows to camelCase
+function mapPayRunFromDb(row: Record<string, unknown>, stubs: PayStub[] = []): PayRun {
+  return {
+    id: row.id as string,
+    orgId: row.org_id as string,
+    name: row.name as string,
+    payPeriod: row.pay_period as PayPeriod,
+    periodStart: row.period_start as string,
+    periodEnd: row.period_end as string,
+    payDate: row.pay_date as string,
+    status: row.status as PayRunStatus,
+    employeeCount: row.employee_count as number,
+    totalGross: Number(row.total_gross),
+    totalDeductions: Number(row.total_deductions),
+    totalNet: Number(row.total_net),
+    totalEmployerCost: Number(row.total_employer_cost),
+    payStubs: stubs,
+    createdAt: row.created_at as string,
+    approvedAt: row.approved_at as string | undefined,
+    paidAt: row.paid_at as string | undefined,
+  };
+}
+
+function mapPayStubFromDb(row: Record<string, unknown>): PayStub {
+  return {
+    id: row.id as string,
+    employeeId: row.employee_id as string,
+    employeeName: (row as Record<string, unknown>).employee_name as string || "Employee",
+    payRunId: row.pay_run_id as string,
+    periodStart: row.period_start as string,
+    periodEnd: row.period_end as string,
+    payDate: row.pay_date as string,
+    regularHours: Number(row.regular_hours),
+    regularRate: Number(row.regular_rate),
+    regularPay: Number(row.regular_pay),
+    overtimeHours: Number(row.overtime_hours),
+    overtimeRate: Number(row.overtime_rate),
+    overtimePay: Number(row.overtime_pay),
+    bonus: Number(row.bonus),
+    commission: Number(row.commission),
+    vacation: Number(row.vacation_pay),
+    grossPay: Number(row.gross_pay),
+    federalTax: Number(row.federal_tax),
+    provincialTax: Number(row.provincial_tax),
+    cpp: Number(row.cpp),
+    ei: Number(row.ei),
+    otherDeductions: Number(row.other_deductions),
+    totalDeductions: Number(row.total_deductions),
+    netPay: Number(row.net_pay),
+    ytdGross: Number(row.ytd_gross),
+    ytdFederalTax: Number(row.ytd_federal_tax),
+    ytdProvincialTax: Number(row.ytd_provincial_tax),
+    ytdCpp: Number(row.ytd_cpp),
+    ytdEi: Number(row.ytd_ei),
+    ytdNet: Number(row.ytd_net),
+  };
+}
 
 export const usePayrollStore = create<PayrollState>((set, get) => ({
   compensations: mockCompensations,
-  payRuns: mockPayRuns,
+  payRuns: [],
   currentPayRun: null,
   loading: false,
+  error: null,
 
-  setCompensation: (comp) =>
-    set((state) => ({
-      compensations: state.compensations.some((c) => c.employeeId === comp.employeeId)
-        ? state.compensations.map((c) => (c.employeeId === comp.employeeId ? comp : c))
-        : [...state.compensations, comp],
-    })),
+  fetchPayRuns: async (orgId: string) => {
+    if (!isSupabaseConfigured()) {
+      set({ payRuns: mockPayRuns, loading: false });
+      return;
+    }
 
-  createPayRun: (payRunData) => {
-    const id = `pr${Date.now()}`;
+    set({ loading: true, error: null });
+    try {
+      const supabase = createClient();
+      
+      // Fetch pay runs
+      const { data: runsData, error: runsError } = await supabase
+        .from("pay_runs")
+        .select("*")
+        .eq("org_id", orgId)
+        .order("created_at", { ascending: false });
+
+      if (runsError) throw runsError;
+      if (!runsData || runsData.length === 0) {
+        set({ payRuns: mockPayRuns, loading: false });
+        return;
+      }
+
+      // Fetch all pay stubs for these runs
+      const runIds = runsData.map(r => r.id);
+      const { data: stubsData, error: stubsError } = await supabase
+        .from("pay_stubs")
+        .select("*, employees(name)")
+        .in("pay_run_id", runIds);
+
+      if (stubsError) throw stubsError;
+
+      // Group stubs by pay_run_id
+      const stubsByRun: Record<string, PayStub[]> = {};
+      (stubsData || []).forEach((stub: Record<string, unknown>) => {
+        const runId = stub.pay_run_id as string;
+        if (!stubsByRun[runId]) stubsByRun[runId] = [];
+        const mapped = mapPayStubFromDb(stub);
+        // Get employee name from join
+        if (stub.employees && typeof stub.employees === 'object') {
+          mapped.employeeName = (stub.employees as { name: string }).name;
+        }
+        stubsByRun[runId].push(mapped);
+      });
+
+      const payRuns = runsData.map((row) => mapPayRunFromDb(row, stubsByRun[row.id] || []));
+      set({ payRuns, loading: false });
+    } catch (err) {
+      console.error("fetchPayRuns error:", err);
+      set({ payRuns: mockPayRuns, loading: false, error: String(err) });
+    }
+  },
+
+  createPayRun: async (payRunData) => {
     const { compensations } = get();
+    const id = crypto.randomUUID();
     
-    // Generate pay stubs for all active employees
-    const payStubs: PayStub[] = compensations.map((comp) => {
-      const ytd = get().getYtdTotals(comp.employeeId);
-      const annualSalary = comp.payType === "salary" 
-        ? comp.annualSalary! 
-        : comp.hourlyRate! * comp.hoursPerWeek * 52;
-      
-      const periodsPerYear = payRunData.payPeriod === "monthly" ? 12 
-        : payRunData.payPeriod === "semi-monthly" ? 24 
-        : payRunData.payPeriod === "bi-weekly" ? 26 : 52;
-      
-      const grossPay = annualSalary / periodsPerYear;
-      const federalTax = calculateFederalTax(annualSalary) / periodsPerYear;
-      const provincialTax = calculateProvincialTax(annualSalary, comp.province) / periodsPerYear;
-      const cpp = calculateCpp(annualSalary, ytd.cpp);
-      const ei = calculateEi(annualSalary, ytd.ei);
-      
-      const totalDeductions = federalTax + provincialTax + cpp + ei;
-      const netPay = grossPay - totalDeductions;
-      
-      return {
-        id: `ps${Date.now()}-${comp.employeeId}`,
-        employeeId: comp.employeeId,
-        employeeName: comp.employeeName,
-        payRunId: id,
-        periodStart: payRunData.periodStart,
-        periodEnd: payRunData.periodEnd,
-        payDate: payRunData.payDate,
-        regularHours: comp.hoursPerWeek * 2, // Semi-monthly
-        regularRate: comp.payType === "hourly" ? comp.hourlyRate! : annualSalary / 2080,
-        regularPay: grossPay,
-        overtimeHours: 0,
-        overtimeRate: 0,
-        overtimePay: 0,
-        bonus: 0,
-        commission: 0,
-        vacation: 0,
-        grossPay,
-        federalTax,
-        provincialTax,
-        cpp,
-        ei,
-        otherDeductions: 0,
-        totalDeductions,
-        netPay,
-        ytdGross: ytd.gross + grossPay,
-        ytdFederalTax: ytd.federal + federalTax,
-        ytdProvincialTax: ytd.provincial + provincialTax,
-        ytdCpp: ytd.cpp + cpp,
-        ytdEi: ytd.ei + ei,
-        ytdNet: ytd.net + netPay,
-      };
-    });
+    // Generate pay stubs
+    const payStubs = generateMockPayStubs({ ...payRunData, id }, compensations);
     
     const newPayRun: PayRun = {
       ...payRunData,
@@ -352,10 +363,120 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
       totalEmployerCost: payStubs.reduce((sum, ps) => sum + ps.grossPay + ps.cpp + (ps.ei * 1.4), 0),
       createdAt: new Date().toISOString(),
     };
-    
+
+    // Update local state immediately
     set((state) => ({ payRuns: [newPayRun, ...state.payRuns], currentPayRun: newPayRun }));
+
+    // Save to Supabase if configured
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = createClient();
+        
+        // Insert pay run
+        const { error: runError } = await supabase.from("pay_runs").insert({
+          id: newPayRun.id,
+          org_id: newPayRun.orgId,
+          name: newPayRun.name,
+          pay_period: newPayRun.payPeriod,
+          period_start: newPayRun.periodStart,
+          period_end: newPayRun.periodEnd,
+          pay_date: newPayRun.payDate,
+          status: newPayRun.status,
+          employee_count: newPayRun.employeeCount,
+          total_gross: newPayRun.totalGross,
+          total_deductions: newPayRun.totalDeductions,
+          total_net: newPayRun.totalNet,
+          total_employer_cost: newPayRun.totalEmployerCost,
+        });
+        if (runError) console.error("Error saving pay run:", runError);
+
+        // Insert pay stubs
+        const stubInserts = payStubs.map((ps) => ({
+          id: ps.id,
+          pay_run_id: ps.payRunId,
+          employee_id: ps.employeeId,
+          period_start: ps.periodStart,
+          period_end: ps.periodEnd,
+          pay_date: ps.payDate,
+          regular_hours: ps.regularHours,
+          regular_rate: ps.regularRate,
+          regular_pay: ps.regularPay,
+          overtime_hours: ps.overtimeHours,
+          overtime_rate: ps.overtimeRate,
+          overtime_pay: ps.overtimePay,
+          bonus: ps.bonus,
+          commission: ps.commission,
+          vacation_pay: ps.vacation,
+          gross_pay: ps.grossPay,
+          federal_tax: ps.federalTax,
+          provincial_tax: ps.provincialTax,
+          cpp: ps.cpp,
+          ei: ps.ei,
+          other_deductions: ps.otherDeductions,
+          total_deductions: ps.totalDeductions,
+          net_pay: ps.netPay,
+          ytd_gross: ps.ytdGross,
+          ytd_federal_tax: ps.ytdFederalTax,
+          ytd_provincial_tax: ps.ytdProvincialTax,
+          ytd_cpp: ps.ytdCpp,
+          ytd_ei: ps.ytdEi,
+          ytd_net: ps.ytdNet,
+        }));
+        
+        const { error: stubsError } = await supabase.from("pay_stubs").insert(stubInserts);
+        if (stubsError) console.error("Error saving pay stubs:", stubsError);
+      } catch (err) {
+        console.error("createPayRun save error:", err);
+      }
+    }
+
     return newPayRun;
   },
+
+  approvePayRun: async (payRunId: string) => {
+    const approvedAt = new Date().toISOString();
+    
+    set((state) => ({
+      payRuns: state.payRuns.map((pr) =>
+        pr.id === payRunId ? { ...pr, status: "approved" as const, approvedAt } : pr
+      ),
+    }));
+
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = createClient();
+        await supabase.from("pay_runs").update({ status: "approved", approved_at: approvedAt }).eq("id", payRunId);
+      } catch (err) {
+        console.error("approvePayRun error:", err);
+      }
+    }
+  },
+
+  markAsPaid: async (payRunId: string) => {
+    const paidAt = new Date().toISOString();
+    
+    set((state) => ({
+      payRuns: state.payRuns.map((pr) =>
+        pr.id === payRunId ? { ...pr, status: "paid" as const, paidAt } : pr
+      ),
+    }));
+
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = createClient();
+        await supabase.from("pay_runs").update({ status: "paid", paid_at: paidAt }).eq("id", payRunId);
+      } catch (err) {
+        console.error("markAsPaid error:", err);
+      }
+    }
+  },
+
+  setCompensation: (comp) =>
+    set((state) => ({
+      compensations: state.compensations.some((c) => c.employeeId === comp.employeeId)
+        ? state.compensations.map((c) => (c.employeeId === comp.employeeId ? comp : c))
+        : [...state.compensations, comp],
+    })),
 
   calculatePayStub: (employeeId, payRun) => {
     const { compensations } = get();
@@ -363,25 +484,19 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
     if (!comp) throw new Error("Employee compensation not found");
     
     const ytd = get().getYtdTotals(employeeId);
-    const annualSalary = comp.payType === "salary" 
-      ? comp.annualSalary! 
-      : comp.hourlyRate! * comp.hoursPerWeek * 52;
-    
-    const periodsPerYear = payRun.payPeriod === "monthly" ? 12 
-      : payRun.payPeriod === "semi-monthly" ? 24 
-      : payRun.payPeriod === "bi-weekly" ? 26 : 52;
+    const annualSalary = comp.payType === "salary" ? comp.annualSalary! : comp.hourlyRate! * comp.hoursPerWeek * 52;
+    const periodsPerYear = payRun.payPeriod === "monthly" ? 12 : payRun.payPeriod === "semi-monthly" ? 24 : payRun.payPeriod === "bi-weekly" ? 26 : 52;
     
     const grossPay = annualSalary / periodsPerYear;
     const federalTax = calculateFederalTax(annualSalary) / periodsPerYear;
     const provincialTax = calculateProvincialTax(annualSalary, comp.province) / periodsPerYear;
     const cpp = calculateCpp(annualSalary, ytd.cpp);
     const ei = calculateEi(annualSalary, ytd.ei);
-    
     const totalDeductions = federalTax + provincialTax + cpp + ei;
     const netPay = grossPay - totalDeductions;
     
     return {
-      id: `ps${Date.now()}-${employeeId}`,
+      id: crypto.randomUUID(),
       employeeId,
       employeeName: comp.employeeName,
       payRunId: payRun.id,
@@ -391,20 +506,10 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
       regularHours: comp.hoursPerWeek * 2,
       regularRate: comp.payType === "hourly" ? comp.hourlyRate! : annualSalary / 2080,
       regularPay: grossPay,
-      overtimeHours: 0,
-      overtimeRate: 0,
-      overtimePay: 0,
-      bonus: 0,
-      commission: 0,
-      vacation: 0,
-      grossPay,
-      federalTax,
-      provincialTax,
-      cpp,
-      ei,
-      otherDeductions: 0,
-      totalDeductions,
-      netPay,
+      overtimeHours: 0, overtimeRate: 0, overtimePay: 0,
+      bonus: 0, commission: 0, vacation: 0,
+      grossPay, federalTax, provincialTax, cpp, ei,
+      otherDeductions: 0, totalDeductions, netPay,
       ytdGross: ytd.gross + grossPay,
       ytdFederalTax: ytd.federal + federalTax,
       ytdProvincialTax: ytd.provincial + provincialTax,
@@ -413,20 +518,6 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
       ytdNet: ytd.net + netPay,
     };
   },
-
-  approvePayRun: (payRunId) =>
-    set((state) => ({
-      payRuns: state.payRuns.map((pr) =>
-        pr.id === payRunId ? { ...pr, status: "approved" as const, approvedAt: new Date().toISOString() } : pr
-      ),
-    })),
-
-  markAsPaid: (payRunId) =>
-    set((state) => ({
-      payRuns: state.payRuns.map((pr) =>
-        pr.id === payRunId ? { ...pr, status: "paid" as const, paidAt: new Date().toISOString() } : pr
-      ),
-    })),
 
   getYtdTotals: (employeeId) => {
     const { payRuns } = get();
