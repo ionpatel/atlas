@@ -10,6 +10,7 @@ import { Modal } from "@/components/ui/modal";
 import { InvoiceForm } from "@/components/modules/invoice-form";
 import { useToastStore } from "@/components/ui/toast";
 import { formatCurrency, formatDate } from "@/lib/utils";
+import { useInvoiceAccounting } from "@/lib/integrations";
 import type { Invoice, InvoiceItem } from "@/types";
 
 function StatusBadge({ status }: { status: string }) {
@@ -262,6 +263,7 @@ export default function InvoicesPage() {
   } = useInvoicesStore();
 
   const addToast = useToastStore((s) => s.addToast);
+  const { markAsPaid } = useInvoiceAccounting();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
@@ -321,15 +323,21 @@ export default function InvoicesPage() {
     addToast("Invoice deleted", "info");
   };
 
-  const handleStatusAction = (inv: Invoice) => {
+  const handleStatusAction = async (inv: Invoice) => {
     if (inv.status === "draft") {
       updateInvoice(inv.id, { status: "sent" });
       addToast(`${inv.invoice_number} marked as sent`);
-    } else if (inv.status === "sent") {
-      updateInvoice(inv.id, { status: "paid" });
-      addToast(`Payment registered for ${inv.invoice_number}`);
-    } else if (inv.status === "overdue") {
-      addToast(`Reminder sent for ${inv.invoice_number}`, "info");
+    } else if (inv.status === "sent" || inv.status === "overdue") {
+      // Use integration hook to mark as paid AND create journal entry
+      const result = await markAsPaid(inv.id);
+      if (result) {
+        addToast(
+          `Payment registered for ${inv.invoice_number} → Journal entry ${result.journalEntry.entry_number} created`,
+          "success"
+        );
+      } else {
+        addToast(`Failed to register payment for ${inv.invoice_number}`, "error");
+      }
     }
   };
 
