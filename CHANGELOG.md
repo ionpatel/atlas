@@ -4,6 +4,53 @@ All notable changes to Atlas ERP will be documented in this file.
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-02-13
+
+### Added
+- **Command Palette (⌘K)**
+  - Quick access to all actions with keyboard shortcut
+  - Search for commands, components, and settings
+  - Categorized by actions, navigation, components, settings, help
+  - Keyboard navigation with arrow keys
+  - Shows shortcuts for each command
+
+- **Keyboard Shortcuts Modal (⌘/)**
+  - Comprehensive list of all keyboard shortcuts
+  - Grouped by category (General, History, Elements, Viewport, Panels, Import/Export)
+  - Clean, organized modal design
+
+- **Onboarding Tour**
+  - First-time user welcome experience
+  - 8-step interactive tutorial
+  - Highlights key features (templates, components, editor, preview)
+  - Progress indicator and step navigation
+  - Persists completion state in localStorage
+  - Can be restarted from command palette
+
+- **Recent Pages**
+  - Tracks recently edited pages
+  - Shows in Pages panel sidebar
+  - Relative time display (e.g., "2m ago")
+  - Quick actions (open, rename, delete)
+  - Persists in localStorage
+
+- **Enhanced Keyboard Shortcuts**
+  - ⌘1/2/3 for device views (desktop/tablet/mobile)
+  - ⌘[ and ⌘] for panel toggles
+  - ⌘J for AI panel
+  - ⇧⌘E for export
+  - ⇧⌘I for import
+
+- **Landing Page Update**
+  - New "Website Builder Pro" section showcasing v3.1 features
+  - Interactive editor mockup
+  - Feature grid (90+ components, responsive preview, AI, e-commerce, animations)
+
+### Changed
+- Website Builder version bumped to v3.1
+- Command palette button added to toolbar with ⌘K hint
+- Added data-tour attributes for onboarding highlight targets
+
 ## [3.0.0] - 2026-02-13
 
 ### Added

@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { Sidebar } from "@/components/layout/sidebar";
 import { AuthHeader } from "@/components/layout/auth-header";
+import { KeyboardProvider } from "@/components/layout/keyboard-provider";
 import { ToastProvider } from "@/components/ui/toast-provider";
 import { ErrorBoundaryWrapper } from "./error-wrapper";
 
@@ -61,24 +62,26 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen">
-      {/* Skip link for keyboard navigation */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#CDB49E] focus:text-[#111] focus:rounded-lg focus:font-medium focus:text-sm focus:shadow-lg"
-      >
-        Skip to main content
-      </a>
-      <Sidebar />
-      <div className="flex-1 flex flex-col">
-        <AuthHeader userInfo={userInfo} />
-        <main id="main-content" className="flex-1 p-6" role="main">
-          <ErrorBoundaryWrapper>
-            {children}
-          </ErrorBoundaryWrapper>
-        </main>
+    <KeyboardProvider>
+      <div className="flex min-h-screen">
+        {/* Skip link for keyboard navigation */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#CDB49E] focus:text-[#111] focus:rounded-lg focus:font-medium focus:text-sm focus:shadow-lg"
+        >
+          Skip to main content
+        </a>
+        <Sidebar />
+        <div className="flex-1 flex flex-col">
+          <AuthHeader userInfo={userInfo} />
+          <main id="main-content" className="flex-1 p-6" role="main">
+            <ErrorBoundaryWrapper>
+              {children}
+            </ErrorBoundaryWrapper>
+          </main>
+        </div>
+        <ToastProvider />
       </div>
-      <ToastProvider />
-    </div>
+    </KeyboardProvider>
   );
 }

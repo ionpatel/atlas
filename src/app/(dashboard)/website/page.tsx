@@ -30,9 +30,13 @@ import { PageSettingsPanel, PageSettings } from "@/components/website/page-setti
 import { VersionHistoryPanel, PageVersion, useVersionHistory } from "@/components/website/version-history";
 import { DomainSettingsPanel, DomainConfig } from "@/components/website/domain-settings";
 import { TemplatePreviewModal, TemplateCard, TEMPLATE_THUMBNAILS } from "@/components/website/template-preview";
+import { CommandPalette } from "@/components/website/command-palette";
+import { KeyboardShortcuts } from "@/components/website/keyboard-shortcuts";
+import { OnboardingTour, useOnboardingTour } from "@/components/website/onboarding-tour";
+import { RecentPages, useRecentPages } from "@/components/website/recent-pages";
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ATLAS WEBSITE BUILDER PRO v3.0
+   ATLAS WEBSITE BUILDER PRO v3.1
    Shopify + Wix + Figma Level Website Builder
    + Image Library, SEO Settings, Style Presets, Form Builder
    + Integrations, Code Injection, Page Settings, Version History, Domains
@@ -5085,6 +5089,10 @@ function PagesPanel({
   onAddPage,
   onDeletePage,
   onRenamePage,
+  recentPages,
+  onOpenRecentPage,
+  onDeleteRecentPage,
+  onRenameRecentPage,
 }: {
   pages: { id: string; name: string; slug: string }[];
   currentPageId: string;
@@ -5092,14 +5100,33 @@ function PagesPanel({
   onAddPage: () => void;
   onDeletePage: (id: string) => void;
   onRenamePage: (id: string, name: string) => void;
+  recentPages?: { id: string; name: string; lastEdited: string; template?: string }[];
+  onOpenRecentPage?: (page: { id: string; name: string }) => void;
+  onDeleteRecentPage?: (pageId: string) => void;
+  onRenameRecentPage?: (pageId: string, newName: string) => void;
 }) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState("");
 
   return (
     <div className="flex-1 overflow-auto p-3">
+      {/* Recent Pages Section */}
+      {recentPages && recentPages.length > 0 && (
+        <div className="mb-4 pb-4 border-b border-[#222]">
+          <RecentPages
+            pages={recentPages}
+            currentPageId={currentPageId}
+            onOpenPage={onOpenRecentPage}
+            onDeletePage={onDeleteRecentPage}
+            onRenamePage={onRenameRecentPage}
+            maxItems={3}
+          />
+        </div>
+      )}
+      
+      {/* All Pages */}
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-semibold text-[#555] uppercase">Pages</span>
+        <span className="text-xs font-semibold text-[#555] uppercase">All Pages</span>
         <button onClick={onAddPage} className="p-1.5 text-[#CDB49E] hover:bg-[#CDB49E]/10 rounded-lg">
           <Plus className="w-4 h-4" />
         </button>
@@ -5307,6 +5334,7 @@ export default function WebsitePage() {
   const [showVersionHistory, setShowVersionHistory] = useState(false);
   const [showDomainSettings, setShowDomainSettings] = useState(false);
   const [showTemplatePreview, setShowTemplatePreview] = useState<string | null>(null);
+  const [showAIPanel, setShowAIPanel] = useState(false);
   
   // Integrations state
   const [integrations, setIntegrations] = useState<Integration[]>([]);
@@ -5378,6 +5406,12 @@ export default function WebsitePage() {
   const [showImportModal, setShowImportModal] = useState(false);
   const [importJSON, setImportJSON] = useState("");
   const [importError, setImportError] = useState<string | null>(null);
+  
+  // ===== NEW v3.1: Command Palette, Shortcuts, Onboarding =====
+  const [showCommandPalette, setShowCommandPalette] = useState(false);
+  const [showKeyboardShortcuts, setShowKeyboardShortcuts] = useState(false);
+  const { shouldShow: showOnboarding, setShouldShow: setShowOnboarding, resetTour } = useOnboardingTour();
+  const { recentPages, addRecentPage, removeRecentPage, renameRecentPage } = useRecentPages();
   
   // ===== NEW: Collaboration Comments =====
   const [showComments, setShowComments] = useState(false);
@@ -5451,8 +5485,19 @@ export default function WebsitePage() {
     const data = { pages, currentPageId, template: selectedTemplate, savedAt: new Date().toISOString() };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     setLastSaved(new Date());
+    
+    // Track recently edited page
+    const currentPageData = pages.find(p => p.id === currentPageId);
+    if (currentPageData) {
+      addRecentPage({
+        id: currentPageData.id,
+        name: currentPageData.name,
+        template: selectedTemplate || undefined,
+      });
+    }
+    
     setTimeout(() => setIsSaving(false), 500);
-  }, [pages, currentPageId, selectedTemplate]);
+  }, [pages, currentPageId, selectedTemplate, addRecentPage]);
 
   useEffect(() => {
     if (view === "editor" && elements.length > 0) {
@@ -5663,6 +5708,8 @@ export default function WebsitePage() {
       // Escape to deselect
       if (e.key === "Escape") {
         setSelectedElementId(null);
+        setShowCommandPalette(false);
+        setShowKeyboardShortcuts(false);
         return;
       }
       
@@ -5672,10 +5719,64 @@ export default function WebsitePage() {
         setView(view === "preview" ? "editor" : "preview");
         return;
       }
+      
+      // Command Palette (Cmd+K)
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setShowCommandPalette(prev => !prev);
+        return;
+      }
+      
+      // Keyboard Shortcuts (Cmd+/)
+      if (e.key === "/" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setShowKeyboardShortcuts(prev => !prev);
+        return;
+      }
+      
+      // AI Panel (Cmd+J)
+      if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setShowAIPanel(prev => !prev);
+        return;
+      }
+      
+      // Device views (Cmd+1, Cmd+2, Cmd+3)
+      if ((e.metaKey || e.ctrlKey) && !e.shiftKey) {
+        if (e.key === "1") { e.preventDefault(); setDevicePreview("desktop"); return; }
+        if (e.key === "2") { e.preventDefault(); setDevicePreview("tablet"); return; }
+        if (e.key === "3") { e.preventDefault(); setDevicePreview("mobile"); return; }
+      }
+      
+      // Toggle panels (Cmd+[ and Cmd+])
+      if ((e.metaKey || e.ctrlKey) && e.key === "[") {
+        e.preventDefault();
+        setShowPanels(prev => ({ ...prev, left: !prev.left }));
+        return;
+      }
+      if ((e.metaKey || e.ctrlKey) && e.key === "]") {
+        e.preventDefault();
+        setShowPanels(prev => ({ ...prev, right: !prev.right }));
+        return;
+      }
+      
+      // Export (Shift+Cmd+E)
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "e") {
+        e.preventDefault();
+        handleExportJSON();
+        return;
+      }
+      
+      // Import (Shift+Cmd+I)
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "i") {
+        e.preventDefault();
+        setShowImportModal(true);
+        return;
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [undo, redo, selectedElementId, handleDeleteElement, handleDuplicateElement, handleSave, view]);
+  }, [undo, redo, selectedElementId, handleDeleteElement, handleDuplicateElement, handleSave, view, handleExportJSON]);
 
   // Load template content when selected
   useEffect(() => {
@@ -5869,7 +5970,7 @@ export default function WebsitePage() {
             </button>
           </div>
 
-          <div className="flex items-center gap-1 p-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]" role="group" aria-label="Device preview">
+          <div data-tour="device-toggle" className="flex items-center gap-1 p-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]" role="group" aria-label="Device preview">
             {[
               { id: "desktop" as const, icon: Monitor, label: "Desktop preview" },
               { id: "tablet" as const, icon: Tablet, label: "Tablet preview" },
@@ -6004,8 +6105,21 @@ export default function WebsitePage() {
             <PanelRight className="w-4 h-4" aria-hidden="true" />
           </button>
           <div className="h-5 w-px bg-[#333]" />
+          
+          {/* Command Palette Trigger */}
+          <button 
+            onClick={() => setShowCommandPalette(true)} 
+            className="px-2.5 py-1.5 text-[10px] text-[#666] hover:text-white border border-[#333] rounded-lg flex items-center gap-1.5 hover:border-[#444] hover:bg-[#1a1a1a]"
+            title="Quick actions (⌘K)"
+          >
+            <Search className="w-3 h-3" />
+            <span className="hidden sm:inline">Quick actions</span>
+            <kbd className="px-1 py-0.5 bg-[#222] rounded text-[9px] border border-[#333]">⌘K</kbd>
+          </button>
+          
           <button 
             onClick={handleSave} 
+            data-tour="save"
             className={cn("px-3 py-1.5 text-sm font-medium rounded-lg flex items-center gap-2 transition-colors", isSaving ? "bg-emerald-600 text-white" : "text-[#888] hover:text-white border border-[#333] hover:border-[#444]")}
             aria-label={isSaving ? "Saving changes" : "Save changes"}
             aria-busy={isSaving}
@@ -6124,10 +6238,16 @@ ${bodyContent}
                 onAddPage={handleAddPage}
                 onDeletePage={handleDeletePage}
                 onRenamePage={handleRenamePage}
+                recentPages={recentPages}
+                onOpenRecentPage={(page) => setCurrentPageId(page.id)}
+                onDeleteRecentPage={removeRecentPage}
+                onRenameRecentPage={renameRecentPage}
               />
             )}
             {leftPanel === "components" && (
-              <ComponentsPanel onAdd={handleAddElement} />
+              <div data-tour="components">
+                <ComponentsPanel onAdd={handleAddElement} />
+              </div>
             )}
             {leftPanel === "media" && (
               <ImageLibrary
@@ -6159,6 +6279,7 @@ ${bodyContent}
 
         {/* CANVAS */}
         <main 
+          data-tour="canvas"
           className="flex-1 bg-[#1a1a1a] overflow-auto p-8 flex items-start justify-center"
           onClick={() => setSelectedElementId(null)}
           role="main"
@@ -6611,6 +6732,54 @@ ${bodyContent}
           )}
         </div>
       )}
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          v3.1 FEATURES: Command Palette, Keyboard Shortcuts, Onboarding
+          ═══════════════════════════════════════════════════════════════════ */}
+      
+      {/* Command Palette */}
+      <CommandPalette
+        isOpen={showCommandPalette}
+        onClose={() => setShowCommandPalette(false)}
+        onAddComponent={handleAddElement}
+        onUndo={undo}
+        onRedo={redo}
+        onSave={handleSave}
+        onPreview={() => setView("preview")}
+        onDuplicate={() => selectedElementId && handleDuplicateElement(selectedElementId)}
+        onDelete={() => selectedElementId && handleDeleteElement(selectedElementId)}
+        onOpenSettings={(panel) => {
+          switch (panel) {
+            case "seo": setShowSEOPanel(true); break;
+            case "styles": setShowStylePresets(true); break;
+            case "code": setShowCodeInjection(true); break;
+            case "integrations": setShowIntegrations(true); break;
+            case "domain": setShowDomainSettings(true); break;
+          }
+        }}
+        onSetDevice={setDevicePreview}
+        onToggleTheme={() => setThemeMode(m => m === "dark" ? "light" : "dark")}
+        onShowShortcuts={() => setShowKeyboardShortcuts(true)}
+        onShowOnboarding={() => setShowOnboarding(true)}
+        onExport={handleExportJSON}
+        onImport={() => setShowImportModal(true)}
+        onOpenAI={() => setShowAIPanel(true)}
+        currentTheme={themeMode}
+        selectedElementId={selectedElementId}
+      />
+      
+      {/* Keyboard Shortcuts Modal */}
+      <KeyboardShortcuts
+        isOpen={showKeyboardShortcuts}
+        onClose={() => setShowKeyboardShortcuts(false)}
+      />
+      
+      {/* Onboarding Tour */}
+      <OnboardingTour
+        isOpen={showOnboarding}
+        onClose={() => setShowOnboarding(false)}
+        onComplete={() => setShowOnboarding(false)}
+      />
     </div>
   );
 }
