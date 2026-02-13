@@ -1024,6 +1024,8 @@ function StylePanel({
   onStyleChange: (key: string, value: string) => void;
   onDelete: () => void;
 }) {
+  const [activeTab, setActiveTab] = useState<"style" | "layout" | "effects">("style");
+
   if (!element) {
     return (
       <div className="flex-1 flex items-center justify-center p-8 text-center">
@@ -1036,11 +1038,14 @@ function StylePanel({
   }
 
   const styles = element.styles;
+  const isTextElement = ["heading", "subheading", "text", "button", "buttonOutline", "link", "badge"].includes(element.type);
+  const isMediaElement = ["image", "imageRounded", "video", "avatar", "gallery"].includes(element.type);
+  const isSectionElement = ["hero", "heroWithImage", "features3", "features4", "testimonials", "pricing3", "team", "stats", "faq", "cta", "ctaBanner", "contact", "logoCloud", "navbar", "navbarDark", "footer", "footerSimple"].includes(element.type);
 
   return (
-    <div className="flex-1 overflow-auto">
+    <div className="flex-1 overflow-auto flex flex-col">
       {/* Element Info */}
-      <div className="p-4 border-b border-[#222] flex items-center justify-between">
+      <div className="p-4 border-b border-[#222] flex items-center justify-between shrink-0">
         <span className="text-xs px-2 py-1 rounded-full bg-[#CDB49E]/10 text-[#CDB49E] font-medium capitalize">
           {element.type}
         </span>
@@ -1049,195 +1054,334 @@ function StylePanel({
         </button>
       </div>
 
-      <div className="p-4 space-y-6">
-        {/* Typography */}
-        {["heading", "text", "button"].includes(element.type) && (
-          <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-[#555] uppercase">Typography</h4>
-            
-            <div>
-              <label className="text-xs text-[#888] mb-1 block">Font Size</label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="range"
-                  min="12"
-                  max="72"
-                  value={parseInt(styles.fontSize || "16")}
-                  onChange={(e) => onStyleChange("fontSize", e.target.value + "px")}
-                  className="flex-1 accent-[#CDB49E]"
-                />
-                <span className="text-xs text-white w-12">{styles.fontSize || "16px"}</span>
+      {/* Tabs */}
+      <div className="flex border-b border-[#222] shrink-0">
+        {[
+          { id: "style" as const, label: "Style" },
+          { id: "layout" as const, label: "Layout" },
+          { id: "effects" as const, label: "Effects" },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={cn(
+              "flex-1 py-2.5 text-xs font-medium transition-colors",
+              activeTab === tab.id ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666] hover:text-white"
+            )}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex-1 overflow-auto p-4 space-y-6">
+        {activeTab === "style" && (
+          <>
+            {/* Typography - for text elements */}
+            {isTextElement && (
+              <div className="space-y-3">
+                <h4 className="text-xs font-semibold text-[#555] uppercase">Typography</h4>
+                
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Font Size</label>
+                  <div className="flex items-center gap-2">
+                    <input type="range" min="12" max="96" value={parseInt(styles.fontSize || "16")} onChange={(e) => onStyleChange("fontSize", e.target.value + "px")} className="flex-1 accent-[#CDB49E]" />
+                    <input type="number" value={parseInt(styles.fontSize || "16")} onChange={(e) => onStyleChange("fontSize", e.target.value + "px")} className="w-16 px-2 py-1 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white text-center" />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Font Weight</label>
+                  <select value={styles.fontWeight || "400"} onChange={(e) => onStyleChange("fontWeight", e.target.value)} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                    <option value="300">Light (300)</option>
+                    <option value="400">Regular (400)</option>
+                    <option value="500">Medium (500)</option>
+                    <option value="600">Semibold (600)</option>
+                    <option value="700">Bold (700)</option>
+                    <option value="800">Extra Bold (800)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Line Height</label>
+                  <input type="text" value={styles.lineHeight || "1.5"} onChange={(e) => onStyleChange("lineHeight", e.target.value)} placeholder="e.g., 1.5 or 24px" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                </div>
+
+                <div>
+                  <label className="text-xs text-[#888] mb-1.5 block">Text Align</label>
+                  <div className="flex gap-1">
+                    {[{ value: "left", icon: AlignLeft }, { value: "center", icon: AlignCenter }, { value: "right", icon: AlignRight }].map(({ value, icon: Icon }) => (
+                      <button key={value} onClick={() => onStyleChange("textAlign", value)} className={cn("flex-1 p-2 rounded-lg border transition-colors", styles.textAlign === value ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                        <Icon className="w-4 h-4 mx-auto" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Text Color</label>
+                  <div className="flex items-center gap-2">
+                    <input type="color" value={styles.color || "#ffffff"} onChange={(e) => onStyleChange("color", e.target.value)} className="w-10 h-10 rounded border border-[#333] bg-transparent cursor-pointer" />
+                    <input type="text" value={styles.color || "#ffffff"} onChange={(e) => onStyleChange("color", e.target.value)} className="flex-1 px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white font-mono" />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Letter Spacing</label>
+                  <input type="text" value={styles.letterSpacing || "0"} onChange={(e) => onStyleChange("letterSpacing", e.target.value)} placeholder="e.g., 1px or 0.5em" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                </div>
+
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Text Transform</label>
+                  <select value={styles.textTransform || "none"} onChange={(e) => onStyleChange("textTransform", e.target.value)} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                    <option value="none">None</option>
+                    <option value="uppercase">UPPERCASE</option>
+                    <option value="lowercase">lowercase</option>
+                    <option value="capitalize">Capitalize</option>
+                  </select>
+                </div>
               </div>
-            </div>
+            )}
 
-            <div>
-              <label className="text-xs text-[#888] mb-1 block">Font Weight</label>
-              <select
-                value={styles.fontWeight || "400"}
-                onChange={(e) => onStyleChange("fontWeight", e.target.value)}
-                className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white"
-              >
-                {["300", "400", "500", "600", "700", "800"].map(w => (
-                  <option key={w} value={w}>{w}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="text-xs text-[#888] mb-1.5 block">Text Align</label>
-              <div className="flex gap-1">
+            {/* Background */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Background</h4>
+              <div>
+                <label className="text-xs text-[#888] mb-1 block">Color</label>
+                <div className="flex items-center gap-2">
+                  <input type="color" value={styles.backgroundColor || "#111111"} onChange={(e) => onStyleChange("backgroundColor", e.target.value)} className="w-10 h-10 rounded border border-[#333] bg-transparent cursor-pointer" />
+                  <input type="text" value={styles.backgroundColor || "transparent"} onChange={(e) => onStyleChange("backgroundColor", e.target.value)} className="flex-1 px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white font-mono" />
+                </div>
+              </div>
+              <div>
+                <label className="text-xs text-[#888] mb-1 block">Gradient (optional)</label>
+                <input type="text" value={styles.background || ""} onChange={(e) => onStyleChange("background", e.target.value)} placeholder="linear-gradient(135deg, #6366f1, #8b5cf6)" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white font-mono text-[11px]" />
+              </div>
+              <div className="grid grid-cols-4 gap-2">
                 {[
-                  { value: "left", icon: AlignLeft },
-                  { value: "center", icon: AlignCenter },
-                  { value: "right", icon: AlignRight },
-                ].map(({ value, icon: Icon }) => (
-                  <button
-                    key={value}
-                    onClick={() => onStyleChange("textAlign", value)}
-                    className={cn(
-                      "flex-1 p-2 rounded-lg border transition-colors",
-                      styles.textAlign === value
-                        ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]"
-                        : "border-[#333] text-[#666] hover:text-white"
-                    )}
-                  >
-                    <Icon className="w-4 h-4 mx-auto" />
+                  { c: "#0a0a0a", l: "Dark" },
+                  { c: "#111111", l: "Gray" },
+                  { c: "#CDB49E", l: "Gold" },
+                  { c: "linear-gradient(135deg, #6366f1, #8b5cf6)", l: "Purple" },
+                ].map((preset) => (
+                  <button key={preset.l} onClick={() => onStyleChange(preset.c.includes("gradient") ? "background" : "backgroundColor", preset.c)} className="p-2 rounded border border-[#333] hover:border-[#CDB49E] text-[10px] text-[#888]" style={{ background: preset.c }}>
+                    {preset.l}
                   </button>
                 ))}
               </div>
             </div>
 
-            <div>
-              <label className="text-xs text-[#888] mb-1 block">Text Color</label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="color"
-                  value={styles.color || "#ffffff"}
-                  onChange={(e) => onStyleChange("color", e.target.value)}
-                  className="w-10 h-10 rounded border border-[#333] bg-transparent cursor-pointer"
-                />
-                <input
-                  type="text"
-                  value={styles.color || "#ffffff"}
-                  onChange={(e) => onStyleChange("color", e.target.value)}
-                  className="flex-1 px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white font-mono"
-                />
+            {/* Border */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Border</h4>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Width</label>
+                  <input type="text" value={styles.borderWidth || "0"} onChange={(e) => onStyleChange("borderWidth", e.target.value)} placeholder="e.g., 1px" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Style</label>
+                  <select value={styles.borderStyle || "solid"} onChange={(e) => onStyleChange("borderStyle", e.target.value)} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                    <option value="none">None</option>
+                    <option value="solid">Solid</option>
+                    <option value="dashed">Dashed</option>
+                    <option value="dotted">Dotted</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="text-xs text-[#888] mb-1 block">Color</label>
+                <div className="flex items-center gap-2">
+                  <input type="color" value={styles.borderColor || "#333333"} onChange={(e) => onStyleChange("borderColor", e.target.value)} className="w-10 h-10 rounded border border-[#333] bg-transparent cursor-pointer" />
+                  <input type="text" value={styles.borderColor || "#333333"} onChange={(e) => onStyleChange("borderColor", e.target.value)} className="flex-1 px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white font-mono" />
+                </div>
+              </div>
+              <div>
+                <label className="text-xs text-[#888] mb-1 block">Radius</label>
+                <div className="flex items-center gap-2">
+                  <input type="range" min="0" max="100" value={parseInt(styles.borderRadius || "0")} onChange={(e) => onStyleChange("borderRadius", e.target.value + "px")} className="flex-1 accent-[#CDB49E]" />
+                  <input type="number" value={parseInt(styles.borderRadius || "0")} onChange={(e) => onStyleChange("borderRadius", e.target.value + "px")} className="w-16 px-2 py-1 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white text-center" />
+                </div>
               </div>
             </div>
-          </div>
+
+            {/* Media Size */}
+            {isMediaElement && (
+              <div className="space-y-3">
+                <h4 className="text-xs font-semibold text-[#555] uppercase">Size</h4>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs text-[#888] mb-1 block">Width</label>
+                    <input type="text" value={styles.width || "100%"} onChange={(e) => onStyleChange("width", e.target.value)} placeholder="100% or 500px" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                  </div>
+                  <div>
+                    <label className="text-xs text-[#888] mb-1 block">Height</label>
+                    <input type="text" value={styles.height || "auto"} onChange={(e) => onStyleChange("height", e.target.value)} placeholder="auto or 300px" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Object Fit</label>
+                  <select value={styles.objectFit || "cover"} onChange={(e) => onStyleChange("objectFit", e.target.value)} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                    <option value="cover">Cover</option>
+                    <option value="contain">Contain</option>
+                    <option value="fill">Fill</option>
+                    <option value="none">None</option>
+                  </select>
+                </div>
+              </div>
+            )}
+          </>
         )}
 
-        {/* Background */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-semibold text-[#555] uppercase">Background</h4>
-          <div>
-            <label className="text-xs text-[#888] mb-1 block">Color</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="color"
-                value={styles.backgroundColor || "#111111"}
-                onChange={(e) => onStyleChange("backgroundColor", e.target.value)}
-                className="w-10 h-10 rounded border border-[#333] bg-transparent cursor-pointer"
-              />
-              <input
-                type="text"
-                value={styles.backgroundColor || "transparent"}
-                onChange={(e) => onStyleChange("backgroundColor", e.target.value)}
-                className="flex-1 px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white font-mono"
-              />
+        {activeTab === "layout" && (
+          <>
+            {/* Spacing */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Padding</h4>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-[10px] text-[#666] mb-1 block">All Sides</label>
+                  <input type="text" value={styles.padding || ""} onChange={(e) => onStyleChange("padding", e.target.value)} placeholder="16px" className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white" />
+                </div>
+                <div>
+                  <label className="text-[10px] text-[#666] mb-1 block">Top</label>
+                  <input type="text" value={styles.paddingTop || ""} onChange={(e) => onStyleChange("paddingTop", e.target.value)} placeholder="0" className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white" />
+                </div>
+                <div>
+                  <label className="text-[10px] text-[#666] mb-1 block">Bottom</label>
+                  <input type="text" value={styles.paddingBottom || ""} onChange={(e) => onStyleChange("paddingBottom", e.target.value)} placeholder="0" className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white" />
+                </div>
+                <div>
+                  <label className="text-[10px] text-[#666] mb-1 block">Left / Right</label>
+                  <input type="text" value={styles.paddingLeft || ""} onChange={(e) => { onStyleChange("paddingLeft", e.target.value); onStyleChange("paddingRight", e.target.value); }} placeholder="0" className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white" />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Spacing */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-semibold text-[#555] uppercase">Spacing</h4>
-          
-          <div>
-            <label className="text-xs text-[#888] mb-1 block">Padding</label>
-            <input
-              type="text"
-              value={styles.padding || "0px"}
-              onChange={(e) => onStyleChange("padding", e.target.value)}
-              placeholder="e.g., 16px or 16px 32px"
-              className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white"
-            />
-          </div>
-
-          <div>
-            <label className="text-xs text-[#888] mb-1 block">Margin</label>
-            <input
-              type="text"
-              value={styles.margin || "0px"}
-              onChange={(e) => onStyleChange("margin", e.target.value)}
-              placeholder="e.g., 16px or 0 auto"
-              className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white"
-            />
-          </div>
-        </div>
-
-        {/* Border */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-semibold text-[#555] uppercase">Border</h4>
-          
-          <div>
-            <label className="text-xs text-[#888] mb-1 block">Radius</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="range"
-                min="0"
-                max="50"
-                value={parseInt(styles.borderRadius || "0")}
-                onChange={(e) => onStyleChange("borderRadius", e.target.value + "px")}
-                className="flex-1 accent-[#CDB49E]"
-              />
-              <span className="text-xs text-white w-12">{styles.borderRadius || "0px"}</span>
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Margin</h4>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-[10px] text-[#666] mb-1 block">All Sides</label>
+                  <input type="text" value={styles.margin || ""} onChange={(e) => onStyleChange("margin", e.target.value)} placeholder="0" className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white" />
+                </div>
+                <div>
+                  <label className="text-[10px] text-[#666] mb-1 block">Top</label>
+                  <input type="text" value={styles.marginTop || ""} onChange={(e) => onStyleChange("marginTop", e.target.value)} placeholder="0" className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white" />
+                </div>
+                <div>
+                  <label className="text-[10px] text-[#666] mb-1 block">Bottom</label>
+                  <input type="text" value={styles.marginBottom || ""} onChange={(e) => onStyleChange("marginBottom", e.target.value)} placeholder="0" className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white" />
+                </div>
+                <div>
+                  <label className="text-[10px] text-[#666] mb-1 block">Auto Center</label>
+                  <button onClick={() => onStyleChange("margin", "0 auto")} className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-[#888] hover:text-white hover:border-[#CDB49E]">Center</button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Size (for images) */}
-        {element.type === "image" && (
-          <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-[#555] uppercase">Size</h4>
-            <div>
-              <label className="text-xs text-[#888] mb-1 block">Width</label>
-              <input
-                type="text"
-                value={styles.width || "100%"}
-                onChange={(e) => onStyleChange("width", e.target.value)}
-                placeholder="e.g., 100%, 500px"
-                className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white"
-              />
+            {/* Size */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Size</h4>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Width</label>
+                  <input type="text" value={styles.width || ""} onChange={(e) => onStyleChange("width", e.target.value)} placeholder="auto" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Max Width</label>
+                  <input type="text" value={styles.maxWidth || ""} onChange={(e) => onStyleChange("maxWidth", e.target.value)} placeholder="none" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                </div>
+              </div>
             </div>
-          </div>
+
+            {/* Display */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Display</h4>
+              <select value={styles.display || "block"} onChange={(e) => onStyleChange("display", e.target.value)} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                <option value="block">Block</option>
+                <option value="inline-block">Inline Block</option>
+                <option value="flex">Flex</option>
+                <option value="grid">Grid</option>
+                <option value="none">None (Hidden)</option>
+              </select>
+            </div>
+          </>
         )}
 
-        {/* Shadow */}
-        <div className="space-y-3">
-          <h4 className="text-xs font-semibold text-[#555] uppercase">Shadow</h4>
-          <div className="grid grid-cols-4 gap-2">
-            {[
-              { label: "None", value: "none" },
-              { label: "SM", value: "0 1px 3px rgba(0,0,0,0.3)" },
-              { label: "MD", value: "0 4px 12px rgba(0,0,0,0.3)" },
-              { label: "LG", value: "0 10px 40px rgba(0,0,0,0.4)" },
-            ].map((s) => (
-              <button
-                key={s.label}
-                onClick={() => onStyleChange("boxShadow", s.value)}
-                className={cn(
-                  "py-2 text-xs rounded-lg border transition-colors",
-                  styles.boxShadow === s.value
-                    ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]"
-                    : "border-[#333] text-[#666] hover:text-white"
-                )}
-              >
-                {s.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        {activeTab === "effects" && (
+          <>
+            {/* Shadow */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Shadow</h4>
+              <div className="grid grid-cols-4 gap-2">
+                {[
+                  { label: "None", value: "none" },
+                  { label: "SM", value: "0 1px 3px rgba(0,0,0,0.3)" },
+                  { label: "MD", value: "0 4px 12px rgba(0,0,0,0.3)" },
+                  { label: "LG", value: "0 10px 40px rgba(0,0,0,0.4)" },
+                ].map((s) => (
+                  <button key={s.label} onClick={() => onStyleChange("boxShadow", s.value)} className={cn("py-2 text-xs rounded-lg border transition-colors", styles.boxShadow === s.value ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+              <input type="text" value={styles.boxShadow || ""} onChange={(e) => onStyleChange("boxShadow", e.target.value)} placeholder="Custom shadow CSS" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white font-mono text-[11px]" />
+            </div>
+
+            {/* Opacity */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Opacity</h4>
+              <div className="flex items-center gap-2">
+                <input type="range" min="0" max="100" value={parseFloat(styles.opacity || "1") * 100} onChange={(e) => onStyleChange("opacity", String(Number(e.target.value) / 100))} className="flex-1 accent-[#CDB49E]" />
+                <span className="text-xs text-white w-12">{Math.round(parseFloat(styles.opacity || "1") * 100)}%</span>
+              </div>
+            </div>
+
+            {/* Transform */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Transform</h4>
+              <div>
+                <label className="text-xs text-[#888] mb-1 block">Rotate</label>
+                <div className="flex items-center gap-2">
+                  <input type="range" min="-180" max="180" value={parseInt(styles.transform?.match(/rotate\(([-\d]+)/)?.[1] || "0")} onChange={(e) => onStyleChange("transform", `rotate(${e.target.value}deg)`)} className="flex-1 accent-[#CDB49E]" />
+                  <span className="text-xs text-white w-12">{styles.transform?.match(/rotate\(([-\d]+)/)?.[1] || "0"}°</span>
+                </div>
+              </div>
+              <div>
+                <label className="text-xs text-[#888] mb-1 block">Scale</label>
+                <div className="flex items-center gap-2">
+                  <input type="range" min="50" max="150" value={(parseFloat(styles.transform?.match(/scale\(([\d.]+)/)?.[1] || "1") * 100)} onChange={(e) => onStyleChange("transform", `scale(${Number(e.target.value) / 100})`)} className="flex-1 accent-[#CDB49E]" />
+                  <span className="text-xs text-white w-12">{Math.round((parseFloat(styles.transform?.match(/scale\(([\d.]+)/)?.[1] || "1") * 100))}%</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Filter */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Filters</h4>
+              <div>
+                <label className="text-xs text-[#888] mb-1 block">Blur</label>
+                <div className="flex items-center gap-2">
+                  <input type="range" min="0" max="20" value={parseInt(styles.filter?.match(/blur\((\d+)/)?.[1] || "0")} onChange={(e) => onStyleChange("filter", `blur(${e.target.value}px)`)} className="flex-1 accent-[#CDB49E]" />
+                  <span className="text-xs text-white w-12">{styles.filter?.match(/blur\((\d+)/)?.[1] || "0"}px</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Cursor */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Cursor</h4>
+              <select value={styles.cursor || "default"} onChange={(e) => onStyleChange("cursor", e.target.value)} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                <option value="default">Default</option>
+                <option value="pointer">Pointer (Hand)</option>
+                <option value="text">Text</option>
+                <option value="move">Move</option>
+                <option value="not-allowed">Not Allowed</option>
+              </select>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -1495,16 +1639,17 @@ export default function WebsitePage() {
         },
         {
           id: "el-features",
-          type: "features",
+          type: "features3",
           content: JSON.stringify({
             title: "Why Choose Us",
+            subtitle: "Powerful features to help you build faster",
             items: [
               { icon: "⚡", title: "Fast", description: "Lightning quick performance" },
               { icon: "🎨", title: "Beautiful", description: "Stunning visual design" },
               { icon: "🔒", title: "Secure", description: "Enterprise-grade security" },
             ],
           }),
-          styles: { padding: "64px 32px", backgroundColor: "#111111" },
+          styles: { padding: "80px 32px", backgroundColor: "#111111" },
         },
         {
           id: "el-cta",
