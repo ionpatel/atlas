@@ -3469,12 +3469,24 @@ function LayersPanel({
               <div className="text-xs text-white truncate capitalize">{el.type}</div>
               {details && <div className="text-[10px] text-[#555] truncate">{details}...</div>}
             </div>
-            <button onClick={(e) => { e.stopPropagation(); onToggleHidden(el.id); }} className="p-1 text-[#555] hover:text-white rounded opacity-0 group-hover:opacity-100">
-              {el.hidden ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
-            </button>
-            <button onClick={(e) => { e.stopPropagation(); onDelete(el.id); }} className="p-1 text-[#555] hover:text-red-400 rounded opacity-0 group-hover:opacity-100">
-              <Trash2 className="w-3 h-3" />
-            </button>
+            <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100">
+              {index > 0 && (
+                <button onClick={(e) => { e.stopPropagation(); onReorder(index, index - 1); }} className="p-1 text-[#555] hover:text-[#CDB49E] rounded" title="Move up">
+                  <ChevronUp className="w-3 h-3" />
+                </button>
+              )}
+              {index < elements.length - 1 && (
+                <button onClick={(e) => { e.stopPropagation(); onReorder(index, index + 1); }} className="p-1 text-[#555] hover:text-[#CDB49E] rounded" title="Move down">
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+              )}
+              <button onClick={(e) => { e.stopPropagation(); onToggleHidden(el.id); }} className="p-1 text-[#555] hover:text-white rounded" title={el.hidden ? "Show" : "Hide"}>
+                {el.hidden ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+              </button>
+              <button onClick={(e) => { e.stopPropagation(); onDelete(el.id); }} className="p-1 text-[#555] hover:text-red-400 rounded" title="Delete">
+                <Trash2 className="w-3 h-3" />
+              </button>
+            </div>
           </div>
         );
       })}
