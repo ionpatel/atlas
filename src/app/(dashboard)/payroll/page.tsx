@@ -627,17 +627,18 @@ function PayStubDetail({
 /* ═══════════════════════ PAYROLL PAGE ═══════════════════════ */
 
 export default function PayrollPage() {
-  const { payRuns, compensations, createPayRun, approvePayRun, markAsPaid, fetchPayRuns, loading } = usePayrollStore();
+  const { payRuns, compensations, createPayRun, approvePayRun, markAsPaid, fetchPayRuns, fetchCompensations, loading } = usePayrollStore();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedPayRun, setSelectedPayRun] = useState<PayRun | null>(null);
 
   // Demo org UUID
   const DEMO_ORG_ID = "00000000-0000-0000-0000-000000000001";
 
-  // Fetch pay runs on mount
+  // Fetch pay runs and compensations on mount
   useEffect(() => {
     fetchPayRuns(DEMO_ORG_ID);
-  }, [fetchPayRuns]);
+    fetchCompensations(DEMO_ORG_ID);
+  }, [fetchPayRuns, fetchCompensations]);
 
   // Calculate stats
   const stats = useMemo(() => {

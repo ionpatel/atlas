@@ -121,6 +121,7 @@ interface PayrollState {
   
   // Async actions
   fetchPayRuns: (orgId: string) => Promise<void>;
+  fetchCompensations: (orgId: string) => Promise<void>;
   createPayRun: (payRun: Omit<PayRun, "id" | "payStubs" | "createdAt">) => Promise<PayRun>;
   approvePayRun: (payRunId: string) => Promise<void>;
   markAsPaid: (payRunId: string) => Promise<void>;
@@ -347,6 +348,65 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
     } catch (err) {
       console.error("fetchPayRuns error:", err);
       set({ payRuns: mockPayRuns, loading: false, error: String(err) });
+    }
+  },
+
+  fetchCompensations: async (orgId: string) => {
+    if (!isSupabaseConfigured()) {
+      set({ compensations: mockCompensations });
+      return;
+    }
+
+    try {
+      const supabase = createClient();
+      
+      // Fetch employees with their compensations
+      const { data: employees, error: empError } = await supabase
+        .from("employees")
+        .select("id, name, department")
+        .eq("org_id", orgId)
+        .eq("status", "active");
+
+      if (empError) throw empError;
+      if (!employees || employees.length === 0) {
+        set({ compensations: mockCompensations });
+        return;
+      }
+
+      const employeeIds = employees.map((e: { id: string }) => e.id);
+      
+      const { data: comps, error: compError } = await supabase
+        .from("employee_compensations")
+        .select("*")
+        .in("employee_id", employeeIds);
+
+      if (compError) throw compError;
+
+      // Map to EmployeeCompensation format
+      const compensations: EmployeeCompensation[] = employees.map((emp: { id: string; name: string; department: string }) => {
+        const comp = (comps || []).find((c: { employee_id: string }) => c.employee_id === emp.id);
+        return {
+          employeeId: emp.id,
+          employeeName: emp.name,
+          department: emp.department || "",
+          payType: (comp?.pay_type as "salary" | "hourly") || "salary",
+          annualSalary: comp?.annual_salary ? Number(comp.annual_salary) : undefined,
+          hourlyRate: comp?.hourly_rate ? Number(comp.hourly_rate) : undefined,
+          hoursPerWeek: comp?.hours_per_week ? Number(comp.hours_per_week) : 40,
+          province: (comp?.province as Province) || "ON",
+          federalTd1Claim: comp?.federal_td1_claim ? Number(comp.federal_td1_claim) : 15705,
+          provincialTd1Claim: comp?.provincial_td1_claim ? Number(comp.provincial_td1_claim) : 11865,
+          additionalTax: comp?.additional_tax ? Number(comp.additional_tax) : 0,
+          bankAccount: comp?.bank_account,
+          bankTransit: comp?.bank_transit,
+          bankInstitution: comp?.bank_institution,
+        };
+      });
+
+      set({ compensations });
+    } catch (err) {
+      console.error("fetchCompensations error:", err);
+      set({ compensations: mockCompensations });
     }
   },
 
