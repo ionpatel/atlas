@@ -4820,70 +4820,89 @@ export default function WebsitePage() {
 
         <div className="flex items-center gap-2">
           {/* Settings & Tools Dropdown */}
-          <div className="flex items-center gap-1 p-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
+          <div className="flex items-center gap-1 p-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]" role="toolbar" aria-label="Page settings">
             <button 
               onClick={() => setShowSEOPanel(true)} 
               className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
               title="SEO Settings"
+              aria-label="Open SEO settings"
             >
-              <Search className="w-4 h-4" />
+              <Search className="w-4 h-4" aria-hidden="true" />
             </button>
             <button 
               onClick={() => setShowStylePresets(true)} 
               className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
               title="Style Presets"
+              aria-label="Open style presets"
             >
-              <Palette className="w-4 h-4" />
+              <Palette className="w-4 h-4" aria-hidden="true" />
             </button>
             <button 
               onClick={() => setShowIntegrations(true)} 
               className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
               title="Integrations (Analytics, Chat)"
+              aria-label="Open integrations panel"
             >
-              <BarChart3 className="w-4 h-4" />
+              <BarChart3 className="w-4 h-4" aria-hidden="true" />
             </button>
             <button 
               onClick={() => setShowCodeInjection(true)} 
               className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
               title="Code Injection"
+              aria-label="Open code injection panel"
             >
-              <Code className="w-4 h-4" />
+              <Code className="w-4 h-4" aria-hidden="true" />
             </button>
             <button 
               onClick={() => setShowPageSettings(true)} 
               className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
               title="Page Settings"
+              aria-label="Open page settings"
             >
-              <Settings2 className="w-4 h-4" />
+              <Settings2 className="w-4 h-4" aria-hidden="true" />
             </button>
             <button 
               onClick={() => setShowVersionHistory(true)} 
               className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
               title="Version History"
+              aria-label="Open version history"
             >
-              <Clock className="w-4 h-4" />
+              <Clock className="w-4 h-4" aria-hidden="true" />
             </button>
             <button 
               onClick={() => setShowDomainSettings(true)} 
               className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
               title="Domain Settings"
+              aria-label="Open domain settings"
             >
-              <Globe className="w-4 h-4" />
+              <Globe className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
           <div className="h-5 w-px bg-[#333]" />
-          <button onClick={() => setShowPanels(p => ({ ...p, left: !p.left }))} className={cn("p-2 rounded", showPanels.left ? "text-[#CDB49E]" : "text-[#555]")}>
-            <PanelLeft className="w-4 h-4" />
+          <button 
+            onClick={() => setShowPanels(p => ({ ...p, left: !p.left }))} 
+            className={cn("p-2 rounded", showPanels.left ? "text-[#CDB49E]" : "text-[#555]")}
+            aria-label={showPanels.left ? "Hide left panel" : "Show left panel"}
+            aria-pressed={showPanels.left}
+          >
+            <PanelLeft className="w-4 h-4" aria-hidden="true" />
           </button>
-          <button onClick={() => setShowPanels(p => ({ ...p, right: !p.right }))} className={cn("p-2 rounded", showPanels.right ? "text-[#CDB49E]" : "text-[#555]")}>
-            <PanelRight className="w-4 h-4" />
+          <button 
+            onClick={() => setShowPanels(p => ({ ...p, right: !p.right }))} 
+            className={cn("p-2 rounded", showPanels.right ? "text-[#CDB49E]" : "text-[#555]")}
+            aria-label={showPanels.right ? "Hide right panel" : "Show right panel"}
+            aria-pressed={showPanels.right}
+          >
+            <PanelRight className="w-4 h-4" aria-hidden="true" />
           </button>
           <div className="h-5 w-px bg-[#333]" />
           <button 
             onClick={handleSave} 
             className={cn("px-3 py-1.5 text-sm font-medium rounded-lg flex items-center gap-2 transition-colors", isSaving ? "bg-emerald-600 text-white" : "text-[#888] hover:text-white border border-[#333] hover:border-[#444]")}
+            aria-label={isSaving ? "Saving changes" : "Save changes"}
+            aria-busy={isSaving}
           >
-            <Save className="w-4 h-4" />
+            <Save className="w-4 h-4" aria-hidden="true" />
             {isSaving ? "Saving..." : "Save"}
           </button>
           {lastSaved && <span className="text-[10px] text-[#555]">{lastSaved.toLocaleTimeString()}</span>}
@@ -4950,33 +4969,45 @@ ${bodyContent}
       <div className="flex-1 flex overflow-hidden">
         {/* LEFT PANEL */}
         {showPanels.left && (
-          <div className="w-64 bg-[#111] border-r border-[#222] flex flex-col shrink-0">
-            <div className="flex border-b border-[#222]">
+          <aside className="w-64 bg-[#111] border-r border-[#222] flex flex-col shrink-0" aria-label="Website builder sidebar">
+            <nav className="flex border-b border-[#222]" role="tablist" aria-label="Sidebar navigation">
               <button
                 onClick={() => setLeftPanel("pages")}
                 className={cn("flex-1 py-2.5 text-[10px] flex items-center justify-center gap-0.5", leftPanel === "pages" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
+                role="tab"
+                aria-selected={leftPanel === "pages"}
+                aria-controls="panel-pages"
               >
-                <FileText className="w-3.5 h-3.5" /> Pages
+                <FileText className="w-3.5 h-3.5" aria-hidden="true" /> Pages
               </button>
               <button
                 onClick={() => setLeftPanel("components")}
                 className={cn("flex-1 py-2.5 text-[10px] flex items-center justify-center gap-0.5", leftPanel === "components" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
+                role="tab"
+                aria-selected={leftPanel === "components"}
+                aria-controls="panel-components"
               >
-                <Plus className="w-3.5 h-3.5" /> Add
+                <Plus className="w-3.5 h-3.5" aria-hidden="true" /> Add
               </button>
               <button
                 onClick={() => setLeftPanel("media")}
                 className={cn("flex-1 py-2.5 text-[10px] flex items-center justify-center gap-0.5", leftPanel === "media" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
+                role="tab"
+                aria-selected={leftPanel === "media"}
+                aria-controls="panel-media"
               >
-                <ImageIcon className="w-3.5 h-3.5" /> Media
+                <ImageIcon className="w-3.5 h-3.5" aria-hidden="true" /> Media
               </button>
               <button
                 onClick={() => setLeftPanel("layers")}
                 className={cn("flex-1 py-2.5 text-[10px] flex items-center justify-center gap-0.5", leftPanel === "layers" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
+                role="tab"
+                aria-selected={leftPanel === "layers"}
+                aria-controls="panel-layers"
               >
-                <Layers className="w-3.5 h-3.5" /> Layers
+                <Layers className="w-3.5 h-3.5" aria-hidden="true" /> Layers
               </button>
-            </div>
+            </nav>
             {leftPanel === "pages" && (
               <PagesPanel
                 pages={pages}
@@ -5015,13 +5046,15 @@ ${bodyContent}
                 onToggleHidden={handleToggleHidden}
               />
             )}
-          </div>
+          </aside>
         )}
 
         {/* CANVAS */}
-        <div 
+        <main 
           className="flex-1 bg-[#1a1a1a] overflow-auto p-8 flex items-start justify-center"
           onClick={() => setSelectedElementId(null)}
+          role="main"
+          aria-label="Website canvas - drag and drop elements here"
         >
           <div
             className={cn(
@@ -5056,26 +5089,26 @@ ${bodyContent}
               </div>
             )}
           </div>
-        </div>
+        </main>
 
         {/* RIGHT PANEL */}
         {showPanels.right && (
-          <div className="w-80 bg-[#111] border-l border-[#222] flex flex-col shrink-0">
+          <aside className="w-80 bg-[#111] border-l border-[#222] flex flex-col shrink-0" aria-label="Style editor panel">
             <div className="p-3 border-b border-[#222]">
-              <h3 className="text-xs font-semibold text-[#888] uppercase">Style Editor</h3>
+              <h3 className="text-xs font-semibold text-[#888] uppercase" id="style-editor-heading">Style Editor</h3>
             </div>
             <StylePanel
               element={selectedElement}
               onStyleChange={handleStyleChange}
               onDelete={() => selectedElementId && handleDeleteElement(selectedElementId)}
             />
-          </div>
+          </aside>
         )}
       </div>
 
       {/* SEO Settings Modal */}
       {showSEOPanel && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50" role="dialog" aria-modal="true" aria-labelledby="seo-dialog-title">
           <div className="bg-[#111] rounded-2xl border border-[#333] w-[600px] max-h-[80vh] overflow-hidden shadow-2xl">
             <SEOSettingsPanel
               settings={seoSettings}
