@@ -13,7 +13,7 @@ import {
   CircleDot, Maximize2, Video, Move, Lock, Unlock, RotateCcw,
   Undo2, Redo2, Save, Code, PanelLeft, PanelRight,
   Frame, Container, Rows, AlignStartVertical, AlignCenterVertical,
-  AlignEndVertical, GalleryHorizontal, Expand, ZoomIn, ZoomOut, Target,
+  AlignEndVertical, GalleryHorizontal, Expand, ZoomIn, ZoomOut,
   Droplets, Sparkle, Move3D, SquareDashed, PaletteIcon,
   AlignHorizontalJustifyStart, AlignHorizontalJustifyCenter, AlignHorizontalJustifyEnd,
   AlignHorizontalSpaceBetween, Trophy, Users, Clock, Award, MapPin, Phone, Download,
@@ -4777,40 +4777,42 @@ export default function WebsitePage() {
             <ChevronRight className="w-4 h-4 rotate-180" /> Templates
           </button>
           <div className="h-5 w-px bg-[#333]" />
-          <div className="flex items-center gap-1">
-            <button onClick={undo} disabled={history.past.length === 0} className="p-1.5 text-[#666] hover:text-white disabled:opacity-30" title="Undo (Ctrl+Z)">
-              <Undo2 className="w-4 h-4" />
+          <div className="flex items-center gap-1" role="group" aria-label="History controls">
+            <button onClick={undo} disabled={history.past.length === 0} className="p-1.5 text-[#666] hover:text-white disabled:opacity-30" title="Undo (Ctrl+Z)" aria-label="Undo last action">
+              <Undo2 className="w-4 h-4" aria-hidden="true" />
             </button>
-            <button onClick={redo} disabled={history.future.length === 0} className="p-1.5 text-[#666] hover:text-white disabled:opacity-30" title="Redo (Ctrl+Shift+Z)">
-              <Redo2 className="w-4 h-4" />
+            <button onClick={redo} disabled={history.future.length === 0} className="p-1.5 text-[#666] hover:text-white disabled:opacity-30" title="Redo (Ctrl+Shift+Z)" aria-label="Redo last undone action">
+              <Redo2 className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
           <span className="text-xs text-[#555]">{elements.length} elements</span>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
-            <button onClick={() => setZoom(Math.max(50, zoom - 25))} className="text-[#888] hover:text-white">
-              <ZoomOut className="w-3 h-3" />
+          <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]" role="group" aria-label="Zoom controls">
+            <button onClick={() => setZoom(Math.max(50, zoom - 25))} className="text-[#888] hover:text-white" aria-label="Zoom out">
+              <ZoomOut className="w-3 h-3" aria-hidden="true" />
             </button>
-            <span className="text-xs text-white w-10 text-center">{zoom}%</span>
-            <button onClick={() => setZoom(Math.min(150, zoom + 25))} className="text-[#888] hover:text-white">
-              <ZoomIn className="w-3 h-3" />
+            <span className="text-xs text-white w-10 text-center" aria-live="polite">{zoom}%</span>
+            <button onClick={() => setZoom(Math.min(150, zoom + 25))} className="text-[#888] hover:text-white" aria-label="Zoom in">
+              <ZoomIn className="w-3 h-3" aria-hidden="true" />
             </button>
           </div>
 
-          <div className="flex items-center gap-1 p-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
+          <div className="flex items-center gap-1 p-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]" role="group" aria-label="Device preview">
             {[
-              { id: "desktop" as const, icon: Monitor },
-              { id: "tablet" as const, icon: Tablet },
-              { id: "mobile" as const, icon: Smartphone },
-            ].map(({ id, icon: Icon }) => (
+              { id: "desktop" as const, icon: Monitor, label: "Desktop preview" },
+              { id: "tablet" as const, icon: Tablet, label: "Tablet preview" },
+              { id: "mobile" as const, icon: Smartphone, label: "Mobile preview" },
+            ].map(({ id, icon: Icon, label }) => (
               <button
                 key={id}
                 onClick={() => setDevicePreview(id)}
                 className={cn("p-1.5 rounded-md", devicePreview === id ? "bg-[#CDB49E]/10 text-[#CDB49E]" : "text-[#555] hover:text-white")}
+                aria-label={label}
+                aria-pressed={devicePreview === id}
               >
-                <Icon className="w-4 h-4" />
+                <Icon className="w-4 h-4" aria-hidden="true" />
               </button>
             ))}
           </div>

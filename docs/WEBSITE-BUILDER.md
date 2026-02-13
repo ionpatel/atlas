@@ -257,8 +257,67 @@ Hover effect classes:
 
 ---
 
+## Accessibility Features (NEW in v2.3)
+
+### Keyboard Navigation
+- **Skip Link**: Press Tab to reveal "Skip to main content" link
+- **Arrow Keys**: Navigate between elements in lists/grids
+- **Escape**: Deselect current element
+- **Ctrl/Cmd + Z/Y**: Undo/Redo
+- **Ctrl/Cmd + S**: Save
+- **Ctrl/Cmd + D**: Duplicate element
+- **Delete/Backspace**: Remove selected element
+- **Ctrl/Cmd + P**: Toggle preview
+
+### Screen Reader Support
+- ARIA labels on all interactive elements
+- Live regions for dynamic updates
+- Focus management in modals/panels
+
+### Motion Preferences
+- Respects `prefers-reduced-motion` system setting
+- Animations disabled when user prefers reduced motion
+
+### High Contrast
+- Supports `prefers-contrast: high` system setting
+- Enhanced borders and text contrast
+
+---
+
+## Mobile Editor (NEW in v2.3)
+
+### Touch Interactions
+- **Swipe**: Navigate between panels
+- **Long Press**: Context menu on elements
+- **Pinch**: Zoom canvas
+- **Touch Drag**: Reorder elements in layers panel
+
+### Mobile-Optimized UI
+- 44px minimum touch targets
+- Touch-friendly spacing
+- Responsive panels that stack on small screens
+
+---
+
+## Performance Optimizations (NEW in v2.3)
+
+### Lazy Loading
+- Images load only when entering viewport
+- 200px preload margin for smooth scrolling
+- Placeholder shimmer during load
+- Graceful error fallback for failed images
+
+### Error Handling
+- Error boundaries catch component failures
+- User-friendly error messages
+- "Try Again" and "Go to Dashboard" recovery options
+- Error details visible in development mode
+
+---
+
 ## Version History
 
 - **v2.0** (Feb 2026): Complete rebuild with 17 templates, 60+ components
 - **v2.1** (Feb 2026): Animation presets, gradients, responsive controls
 - **v2.2** (Feb 2026): Interactive components (countdown, social proof, accordion, tabs)
+- **v2.3** (Feb 2026): Accessibility, mobile editor, performance, error handling
