@@ -3624,18 +3624,55 @@ export default function WebsitePage() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const isInputActive = document.activeElement?.tagName === "INPUT" || 
+                           document.activeElement?.tagName === "TEXTAREA" ||
+                           (document.activeElement as HTMLElement)?.contentEditable === "true";
+      
+      // Undo/Redo
       if ((e.metaKey || e.ctrlKey) && e.key === "z") {
         e.preventDefault();
         if (e.shiftKey) redo();
         else undo();
+        return;
       }
-      if ((e.key === "Delete" || e.key === "Backspace") && selectedElementId && document.activeElement?.tagName !== "INPUT") {
+      
+      // Save
+      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+        e.preventDefault();
+        handleSave();
+        return;
+      }
+      
+      // Duplicate (Ctrl/Cmd + D)
+      if ((e.metaKey || e.ctrlKey) && e.key === "d" && selectedElementId && !isInputActive) {
+        e.preventDefault();
+        handleDuplicateElement(selectedElementId);
+        return;
+      }
+      
+      // Delete/Backspace
+      if ((e.key === "Delete" || e.key === "Backspace") && selectedElementId && !isInputActive) {
+        e.preventDefault();
         handleDeleteElement(selectedElementId);
+        return;
+      }
+      
+      // Escape to deselect
+      if (e.key === "Escape") {
+        setSelectedElementId(null);
+        return;
+      }
+      
+      // Toggle preview with P
+      if (e.key === "p" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setView(view === "preview" ? "editor" : "preview");
+        return;
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [undo, redo, selectedElementId, handleDeleteElement]);
+  }, [undo, redo, selectedElementId, handleDeleteElement, handleDuplicateElement, handleSave, view]);
 
   // Load template content when selected
   useEffect(() => {
