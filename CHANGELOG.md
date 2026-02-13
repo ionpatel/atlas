@@ -4,6 +4,56 @@ All notable changes to Atlas ERP will be documented in this file.
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-02-13
+
+### Added
+- **E-commerce Components**
+  - Shopping Cart with item list, totals, and checkout button
+  - Cart Item component with quantity controls
+  - Checkout Form with multi-step progress (Shipping/Payment/Review)
+  - Order Summary with promo code support
+  - Product Grid with badges, ratings, quick view
+  - Product Quick View modal with variants
+  - Add to Cart button with quantity selector
+  - Wishlist Button component
+
+- **Blog Components**
+  - Article Card with author, date, read time
+  - Featured Article Card (large layout)
+  - Author Bio with social links and stats
+  - Related Posts grid
+  - Blog Hero with category filters
+  - Category Tags (pills/badges)
+  - Reading Progress indicator
+  - Table of Contents with active highlighting
+
+- **Parallax & Scroll Animations**
+  - Parallax Section with background image
+  - Parallax Image with scale effect
+  - Scroll Reveal animation
+  - Fade on Scroll effect
+  - Slide on Scroll effect
+  - Scale on Scroll effect
+  - Animated Counter on scroll
+
+- **Light/Dark Theme Support**
+  - Toggle between dark and light mode
+  - Theme-aware color system
+  - Persists preference
+
+- **Import/Export JSON**
+  - Import designs from JSON file or paste
+  - Export full project to JSON
+  - Supports single page or multi-page projects
+  - Includes SEO settings and style presets
+
+- **Collaboration Comments UI**
+  - Comment threads on elements
+  - Reply support
+  - Resolve/unresolve comments
+  - Comment count badge
+  - Real-time comment panel
+
 ## [2.3.0] - 2026-02-13
 
 ### Added

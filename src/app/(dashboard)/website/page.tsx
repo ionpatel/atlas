@@ -17,7 +17,7 @@ import {
   Droplets, Sparkle, Move3D, SquareDashed, PaletteIcon,
   AlignHorizontalJustifyStart, AlignHorizontalJustifyCenter, AlignHorizontalJustifyEnd,
   AlignHorizontalSpaceBetween, Trophy, Users, Clock, Award, MapPin, Phone, Download,
-  Search, FormInput, Calendar,
+  Search, FormInput, Calendar, Sun, Moon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ImageLibrary } from "@/components/website/image-library";
@@ -32,10 +32,16 @@ import { DomainSettingsPanel, DomainConfig } from "@/components/website/domain-s
 import { TemplatePreviewModal, TemplateCard, TEMPLATE_THUMBNAILS } from "@/components/website/template-preview";
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ATLAS WEBSITE BUILDER PRO v2.2
+   ATLAS WEBSITE BUILDER PRO v3.0
    Shopify + Wix + Figma Level Website Builder
    + Image Library, SEO Settings, Style Presets, Form Builder
    + Integrations, Code Injection, Page Settings, Version History, Domains
+   + E-commerce Components (Cart, Checkout, Product Grid)
+   + Blog Components (Article Cards, Author Bio, Related Posts)
+   + Parallax & Scroll Animations
+   + Light/Dark Theme Support
+   + Import/Export JSON
+   + Collaboration Comments
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ─────────────────────────── TYPES ─────────────────────────── */
@@ -212,6 +218,35 @@ const COMPONENTS = {
     { id: "feedbackForm", name: "Feedback Form", icon: Star },
     { id: "eventRegistration", name: "Event Registration", icon: Calendar },
     { id: "customForm", name: "Custom Form", icon: FormInput },
+  ],
+  Ecommerce: [
+    { id: "shoppingCart", name: "Shopping Cart", icon: ShoppingBag },
+    { id: "cartItem", name: "Cart Item", icon: Square },
+    { id: "checkoutForm", name: "Checkout Form", icon: DollarSign },
+    { id: "orderSummary", name: "Order Summary", icon: FileText },
+    { id: "productGrid", name: "Product Grid", icon: Grid },
+    { id: "productQuickView", name: "Quick View", icon: Eye },
+    { id: "addToCart", name: "Add to Cart", icon: ShoppingBag },
+    { id: "wishlistButton", name: "Wishlist", icon: Heart },
+  ],
+  Blog: [
+    { id: "articleCard", name: "Article Card", icon: FileText },
+    { id: "articleCardFeatured", name: "Featured Article", icon: Star },
+    { id: "authorBio", name: "Author Bio", icon: CircleDot },
+    { id: "relatedPosts", name: "Related Posts", icon: Grid },
+    { id: "blogHero", name: "Blog Hero", icon: Zap },
+    { id: "categoryTags", name: "Category Tags", icon: LayoutGrid },
+    { id: "readingProgress", name: "Reading Progress", icon: BarChart3 },
+    { id: "tableOfContents", name: "Table of Contents", icon: AlignLeft },
+  ],
+  Parallax: [
+    { id: "parallaxSection", name: "Parallax Section", icon: Layers },
+    { id: "parallaxImage", name: "Parallax Image", icon: ImageIcon },
+    { id: "scrollReveal", name: "Scroll Reveal", icon: ChevronDown },
+    { id: "fadeOnScroll", name: "Fade on Scroll", icon: Sparkle },
+    { id: "slideOnScroll", name: "Slide on Scroll", icon: ArrowRight },
+    { id: "scaleOnScroll", name: "Scale on Scroll", icon: Maximize2 },
+    { id: "counterOnScroll", name: "Animated Counter", icon: BarChart3 },
   ],
 };
 
@@ -1090,6 +1125,304 @@ const getDefaultElement = (type: string): Partial<ElementData> => {
         successMessage: "Form submitted successfully!",
       }),
       styles: { padding: "60px 32px", backgroundColor: "#0a0a0a", maxWidth: "600px", margin: "0 auto" },
+    },
+
+    // === E-COMMERCE ===
+    shoppingCart: {
+      content: JSON.stringify({
+        title: "Your Cart",
+        emptyMessage: "Your cart is empty",
+        items: [
+          { id: "1", name: "Premium Wireless Headphones", price: 299, quantity: 1, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&q=80" },
+          { id: "2", name: "Leather Messenger Bag", price: 189, quantity: 2, image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200&q=80" },
+        ],
+        subtotal: 677,
+        shipping: 0,
+        tax: 54.16,
+        total: 731.16,
+        checkoutText: "Proceed to Checkout",
+        continueShopping: "Continue Shopping",
+      }),
+      styles: { padding: "48px", backgroundColor: "#111", borderRadius: "16px", maxWidth: "600px", margin: "0 auto" },
+    },
+    cartItem: {
+      content: JSON.stringify({
+        name: "Product Name",
+        price: 99,
+        quantity: 1,
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&q=80",
+        variant: "Black / Large",
+      }),
+      styles: { padding: "16px", backgroundColor: "#0a0a0a", borderRadius: "12px", border: "1px solid #222" },
+    },
+    checkoutForm: {
+      content: JSON.stringify({
+        title: "Checkout",
+        steps: ["Shipping", "Payment", "Review"],
+        currentStep: 0,
+        shippingFields: [
+          { type: "text", label: "Full Name", required: true, width: "full" },
+          { type: "email", label: "Email", required: true, width: "half" },
+          { type: "phone", label: "Phone", required: true, width: "half" },
+          { type: "text", label: "Address", required: true, width: "full" },
+          { type: "text", label: "City", required: true, width: "half" },
+          { type: "text", label: "Postal Code", required: true, width: "half" },
+          { type: "select", label: "Country", required: true, width: "full", options: ["United States", "Canada", "United Kingdom", "Australia"] },
+        ],
+        paymentMethods: ["Credit Card", "PayPal", "Apple Pay"],
+        secureCheckout: true,
+      }),
+      styles: { padding: "48px", backgroundColor: "#111", borderRadius: "20px", maxWidth: "700px", margin: "0 auto" },
+    },
+    orderSummary: {
+      content: JSON.stringify({
+        title: "Order Summary",
+        items: [
+          { name: "Premium Headphones", quantity: 1, price: 299 },
+          { name: "Leather Bag", quantity: 2, price: 378 },
+        ],
+        subtotal: 677,
+        shipping: 0,
+        discount: { code: "SAVE10", amount: 67.70 },
+        tax: 48.74,
+        total: 658.04,
+        promoCodeEnabled: true,
+      }),
+      styles: { padding: "32px", backgroundColor: "#0a0a0a", borderRadius: "16px", border: "1px solid #222" },
+    },
+    productGrid: {
+      content: JSON.stringify({
+        title: "Featured Products",
+        products: [
+          { id: "1", name: "Wireless Headphones", price: 299, originalPrice: 349, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80", rating: 4.8, reviews: 128, badge: "Sale" },
+          { id: "2", name: "Smart Watch", price: 449, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80", rating: 4.9, reviews: 256 },
+          { id: "3", name: "Camera Lens", price: 899, image: "https://images.unsplash.com/photo-1606986628253-e5c1b8d91b63?w=400&q=80", rating: 4.7, reviews: 89, badge: "New" },
+          { id: "4", name: "Leather Wallet", price: 89, originalPrice: 129, image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&q=80", rating: 4.6, reviews: 342, badge: "Sale" },
+        ],
+        columns: 4,
+        showRating: true,
+        showQuickView: true,
+      }),
+      styles: { padding: "80px 48px", backgroundColor: "#0a0a0a" },
+    },
+    productQuickView: {
+      content: JSON.stringify({
+        name: "Premium Wireless Headphones",
+        price: 299,
+        originalPrice: 349,
+        description: "Experience crystal-clear audio with our premium wireless headphones. Featuring active noise cancellation, 30-hour battery life, and premium materials.",
+        images: [
+          "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",
+          "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=600&q=80",
+        ],
+        variants: [
+          { type: "Color", options: ["Black", "White", "Silver"] },
+          { type: "Size", options: ["Standard", "Compact"] },
+        ],
+        rating: 4.8,
+        reviews: 128,
+        inStock: true,
+        features: ["Active Noise Cancellation", "30-hour Battery", "Premium Materials"],
+      }),
+      styles: { padding: "32px", backgroundColor: "#111", borderRadius: "20px", maxWidth: "800px" },
+    },
+    addToCart: {
+      content: JSON.stringify({
+        buttonText: "Add to Cart",
+        quantity: 1,
+        showQuantity: true,
+        style: "filled",
+      }),
+      styles: { display: "inline-flex", gap: "12px", alignItems: "center" },
+    },
+    wishlistButton: {
+      content: JSON.stringify({
+        isWishlisted: false,
+        showText: true,
+        textAdd: "Add to Wishlist",
+        textRemove: "Remove from Wishlist",
+      }),
+      styles: { display: "inline-flex", alignItems: "center", gap: "8px" },
+    },
+
+    // === BLOG ===
+    articleCard: {
+      content: JSON.stringify({
+        image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&q=80",
+        category: "Technology",
+        title: "The Future of AI in Web Development",
+        excerpt: "Explore how artificial intelligence is revolutionizing the way we build websites and applications.",
+        author: {
+          name: "Sarah Chen",
+          avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80",
+        },
+        date: "Feb 10, 2026",
+        readTime: "5 min read",
+        link: "#",
+      }),
+      styles: { backgroundColor: "#111", borderRadius: "16px", overflow: "hidden", border: "1px solid #222" },
+    },
+    articleCardFeatured: {
+      content: JSON.stringify({
+        image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80",
+        category: "Featured",
+        title: "Building Scalable Design Systems: A Complete Guide",
+        excerpt: "Learn how to create and maintain design systems that grow with your organization. From tokens to components, discover the best practices used by top tech companies.",
+        author: {
+          name: "Mike Johnson",
+          avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80",
+        },
+        date: "Feb 12, 2026",
+        readTime: "12 min read",
+        link: "#",
+      }),
+      styles: { backgroundColor: "#111", borderRadius: "20px", overflow: "hidden", padding: "0" },
+    },
+    authorBio: {
+      content: JSON.stringify({
+        name: "Sarah Chen",
+        role: "Senior Developer Advocate",
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80",
+        bio: "Sarah is a passionate developer advocate with 10+ years of experience building web applications. She loves sharing knowledge and helping others grow in their careers.",
+        social: {
+          twitter: "@sarahchen",
+          github: "sarahchen",
+          linkedin: "sarah-chen",
+        },
+        articleCount: 47,
+        followers: "12.5K",
+      }),
+      styles: { padding: "32px", backgroundColor: "#111", borderRadius: "16px", border: "1px solid #222" },
+    },
+    relatedPosts: {
+      content: JSON.stringify({
+        title: "Related Articles",
+        posts: [
+          { title: "10 CSS Tips Every Developer Should Know", image: "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=400&q=80", category: "CSS", readTime: "4 min" },
+          { title: "Introduction to TypeScript Generics", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&q=80", category: "TypeScript", readTime: "7 min" },
+          { title: "React Server Components Explained", image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&q=80", category: "React", readTime: "6 min" },
+        ],
+      }),
+      styles: { padding: "60px 32px", backgroundColor: "#0a0a0a" },
+    },
+    blogHero: {
+      content: JSON.stringify({
+        title: "Our Blog",
+        subtitle: "Insights, tutorials, and stories from our team",
+        categories: ["All", "Technology", "Design", "Business", "Culture"],
+        featuredPost: {
+          title: "The Complete Guide to Modern Web Development",
+          excerpt: "Everything you need to know about building modern web applications in 2026.",
+          image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=80",
+          author: "Team Atlas",
+          date: "Feb 13, 2026",
+        },
+      }),
+      styles: { padding: "80px 48px", backgroundColor: "#0a0a0a" },
+    },
+    categoryTags: {
+      content: JSON.stringify({
+        tags: ["Technology", "Design", "Business", "Marketing", "Development", "AI", "Startups"],
+        style: "pills",
+      }),
+      styles: { display: "flex", flexWrap: "wrap", gap: "8px", padding: "16px 0" },
+    },
+    readingProgress: {
+      content: JSON.stringify({
+        showPercentage: true,
+        position: "top",
+        color: "#CDB49E",
+        height: 3,
+      }),
+      styles: { position: "fixed", top: "0", left: "0", right: "0", zIndex: "1000" },
+    },
+    tableOfContents: {
+      content: JSON.stringify({
+        title: "Table of Contents",
+        items: [
+          { id: "intro", text: "Introduction", level: 1 },
+          { id: "getting-started", text: "Getting Started", level: 1 },
+          { id: "installation", text: "Installation", level: 2 },
+          { id: "configuration", text: "Configuration", level: 2 },
+          { id: "advanced", text: "Advanced Topics", level: 1 },
+          { id: "conclusion", text: "Conclusion", level: 1 },
+        ],
+        sticky: true,
+        highlightActive: true,
+      }),
+      styles: { padding: "24px", backgroundColor: "#111", borderRadius: "12px", border: "1px solid #222" },
+    },
+
+    // === PARALLAX & SCROLL ANIMATIONS ===
+    parallaxSection: {
+      content: JSON.stringify({
+        backgroundImage: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1600&q=80",
+        heading: "Experience Excellence",
+        subheading: "Where passion meets performance",
+        parallaxSpeed: 0.5,
+        overlay: "rgba(0,0,0,0.6)",
+        height: "80vh",
+      }),
+      styles: { position: "relative", minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", overflow: "hidden" },
+    },
+    parallaxImage: {
+      content: JSON.stringify({
+        image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80",
+        parallaxSpeed: 0.3,
+        scale: 1.2,
+      }),
+      styles: { width: "100%", height: "500px", overflow: "hidden", position: "relative" },
+    },
+    scrollReveal: {
+      content: JSON.stringify({
+        children: "This content will reveal on scroll",
+        animation: "fadeUp",
+        delay: 0,
+        duration: 800,
+        threshold: 0.2,
+        once: true,
+      }),
+      styles: { opacity: "0", transform: "translateY(40px)" },
+    },
+    fadeOnScroll: {
+      content: JSON.stringify({
+        children: "Content fades as you scroll",
+        fadeStart: 0,
+        fadeEnd: 300,
+        direction: "out",
+      }),
+      styles: { transition: "opacity 0.3s ease-out" },
+    },
+    slideOnScroll: {
+      content: JSON.stringify({
+        children: "Slides in from the side",
+        direction: "left",
+        distance: 100,
+        threshold: 0.3,
+      }),
+      styles: { opacity: "0", transform: "translateX(-100px)" },
+    },
+    scaleOnScroll: {
+      content: JSON.stringify({
+        children: "Scales up on scroll",
+        startScale: 0.8,
+        endScale: 1,
+        threshold: 0.5,
+      }),
+      styles: { transform: "scale(0.8)", transition: "transform 0.6s ease-out" },
+    },
+    counterOnScroll: {
+      content: JSON.stringify({
+        items: [
+          { target: 10000, label: "Happy Customers", prefix: "", suffix: "+" },
+          { target: 99.9, label: "Uptime", prefix: "", suffix: "%", decimals: 1 },
+          { target: 50, label: "Countries", prefix: "", suffix: "+" },
+          { target: 24, label: "Support", prefix: "", suffix: "/7" },
+        ],
+        duration: 2000,
+        startOnView: true,
+      }),
+      styles: { padding: "80px 48px", backgroundColor: "#111" },
     },
   };
   return defaults[type] || { content: "", styles: {} };
@@ -3565,6 +3898,616 @@ function ElementRenderer({
         );
       }
 
+      // === E-COMMERCE COMPONENTS ===
+      case "shoppingCart": {
+        const data = parseData();
+        const items = data.items || [];
+        return (
+          <div style={baseStyles}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
+              <h2 style={{ fontSize: "28px", fontWeight: "700", color: "#fff" }}>{data.title}</h2>
+              <span style={{ fontSize: "14px", color: "#888" }}>{items.length} items</span>
+            </div>
+            {items.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "60px 0", color: "#666" }}>
+                <ShoppingBag className="w-16 h-16 mx-auto mb-4 opacity-30" />
+                <p>{data.emptyMessage}</p>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "32px" }}>
+                  {items.map((item: any) => (
+                    <div key={item.id} style={{ display: "flex", gap: "16px", padding: "16px", backgroundColor: "#0a0a0a", borderRadius: "12px", border: "1px solid #222" }}>
+                      <img src={item.image} alt={item.name} style={{ width: "80px", height: "80px", borderRadius: "8px", objectFit: "cover" }} />
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: "16px", fontWeight: "600", color: "#fff" }}>{item.name}</div>
+                        <div style={{ fontSize: "14px", color: "#888", marginTop: "4px" }}>Qty: {item.quantity}</div>
+                      </div>
+                      <div style={{ fontSize: "18px", fontWeight: "600", color: "#CDB49E" }}>${item.price * item.quantity}</div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ borderTop: "1px solid #333", paddingTop: "24px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px", fontSize: "14px" }}>
+                    <span style={{ color: "#888" }}>Subtotal</span>
+                    <span style={{ color: "#fff" }}>${data.subtotal}</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px", fontSize: "14px" }}>
+                    <span style={{ color: "#888" }}>Shipping</span>
+                    <span style={{ color: "#fff" }}>{data.shipping === 0 ? "Free" : `$${data.shipping}`}</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px", fontSize: "14px" }}>
+                    <span style={{ color: "#888" }}>Tax</span>
+                    <span style={{ color: "#fff" }}>${data.tax?.toFixed(2)}</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: "16px", paddingTop: "16px", borderTop: "1px solid #333", fontSize: "20px", fontWeight: "700" }}>
+                    <span style={{ color: "#fff" }}>Total</span>
+                    <span style={{ color: "#CDB49E" }}>${data.total?.toFixed(2)}</span>
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "32px" }}>
+                  <div style={{ padding: "16px 24px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "10px", fontWeight: "600", textAlign: "center", cursor: "pointer" }}>{data.checkoutText}</div>
+                  <div style={{ padding: "14px 24px", border: "1px solid #333", color: "#888", borderRadius: "10px", textAlign: "center", cursor: "pointer" }}>{data.continueShopping}</div>
+                </div>
+              </>
+            )}
+          </div>
+        );
+      }
+
+      case "cartItem": {
+        const data = parseData();
+        return (
+          <div style={{ ...baseStyles, display: "flex", gap: "16px", alignItems: "center" }}>
+            <img src={data.image} alt={data.name} style={{ width: "80px", height: "80px", borderRadius: "8px", objectFit: "cover" }} />
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: "16px", fontWeight: "600", color: "#fff" }}>{data.name}</div>
+              <div style={{ fontSize: "13px", color: "#666", marginTop: "4px" }}>{data.variant}</div>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "8px" }}>
+                <div style={{ display: "flex", alignItems: "center", border: "1px solid #333", borderRadius: "6px" }}>
+                  <button style={{ padding: "6px 12px", color: "#888", background: "none", border: "none" }}>−</button>
+                  <span style={{ padding: "6px 12px", color: "#fff" }}>{data.quantity}</span>
+                  <button style={{ padding: "6px 12px", color: "#888", background: "none", border: "none" }}>+</button>
+                </div>
+              </div>
+            </div>
+            <div style={{ textAlign: "right" }}>
+              <div style={{ fontSize: "18px", fontWeight: "600", color: "#CDB49E" }}>${data.price}</div>
+              <button style={{ marginTop: "8px", fontSize: "12px", color: "#666", background: "none", border: "none", cursor: "pointer" }}>Remove</button>
+            </div>
+          </div>
+        );
+      }
+
+      case "checkoutForm": {
+        const data = parseData();
+        const steps = data.steps || ["Shipping", "Payment", "Review"];
+        return (
+          <div style={baseStyles}>
+            <div style={{ textAlign: "center", marginBottom: "40px" }}>
+              <h2 style={{ fontSize: "32px", fontWeight: "700", color: "#fff", marginBottom: "24px" }}>{data.title}</h2>
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "24px" }}>
+                {steps.map((step: string, i: number) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                      <div style={{ 
+                        width: "32px", height: "32px", borderRadius: "50%", 
+                        backgroundColor: i <= data.currentStep ? "#CDB49E" : "#333", 
+                        color: i <= data.currentStep ? "#111" : "#888",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: "14px", fontWeight: "600"
+                      }}>
+                        {i < data.currentStep ? "✓" : i + 1}
+                      </div>
+                      <span style={{ fontSize: "14px", color: i <= data.currentStep ? "#fff" : "#666" }}>{step}</span>
+                    </div>
+                    {i < steps.length - 1 && <div style={{ width: "60px", height: "2px", backgroundColor: i < data.currentStep ? "#CDB49E" : "#333" }} />}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "20px" }}>
+              {(data.shippingFields || []).map((field: any, i: number) => (
+                <div key={i} style={{ gridColumn: field.width === "full" ? "1 / -1" : "auto" }}>
+                  <label style={{ display: "block", fontSize: "13px", color: "#888", marginBottom: "8px" }}>
+                    {field.label} {field.required && <span style={{ color: "#CDB49E" }}>*</span>}
+                  </label>
+                  {field.type === "select" ? (
+                    <select style={{ width: "100%", padding: "14px 16px", backgroundColor: "#0a0a0a", border: "1px solid #333", borderRadius: "10px", color: "#fff", fontSize: "15px" }}>
+                      <option value="">Select...</option>
+                      {(field.options || []).map((opt: string) => <option key={opt} value={opt}>{opt}</option>)}
+                    </select>
+                  ) : (
+                    <input 
+                      type={field.type || "text"} 
+                      style={{ width: "100%", padding: "14px 16px", backgroundColor: "#0a0a0a", border: "1px solid #333", borderRadius: "10px", color: "#fff", fontSize: "15px" }} 
+                      placeholder={field.placeholder}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+            {data.secureCheckout && (
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "24px", padding: "16px", backgroundColor: "#0a0a0a", borderRadius: "10px" }}>
+                <Lock className="w-4 h-4 text-emerald-500" />
+                <span style={{ fontSize: "13px", color: "#888" }}>Your information is secure and encrypted</span>
+              </div>
+            )}
+            <div style={{ padding: "18px 32px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "10px", fontWeight: "600", textAlign: "center", marginTop: "32px", cursor: "pointer" }}>
+              Continue to Payment
+            </div>
+          </div>
+        );
+      }
+
+      case "orderSummary": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <h3 style={{ fontSize: "20px", fontWeight: "600", color: "#fff", marginBottom: "24px" }}>{data.title}</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "24px" }}>
+              {(data.items || []).map((item: any, i: number) => (
+                <div key={i} style={{ display: "flex", justifyContent: "space-between", fontSize: "14px" }}>
+                  <span style={{ color: "#888" }}>{item.name} × {item.quantity}</span>
+                  <span style={{ color: "#fff" }}>${item.price}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ borderTop: "1px solid #333", paddingTop: "16px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px", marginBottom: "12px" }}>
+                <span style={{ color: "#888" }}>Subtotal</span>
+                <span style={{ color: "#fff" }}>${data.subtotal}</span>
+              </div>
+              {data.discount && (
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px", marginBottom: "12px" }}>
+                  <span style={{ color: "#22c55e" }}>Discount ({data.discount.code})</span>
+                  <span style={{ color: "#22c55e" }}>-${data.discount.amount.toFixed(2)}</span>
+                </div>
+              )}
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px", marginBottom: "12px" }}>
+                <span style={{ color: "#888" }}>Shipping</span>
+                <span style={{ color: "#fff" }}>{data.shipping === 0 ? "Free" : `$${data.shipping}`}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px", marginBottom: "12px" }}>
+                <span style={{ color: "#888" }}>Tax</span>
+                <span style={{ color: "#fff" }}>${data.tax?.toFixed(2)}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "20px", fontWeight: "700", marginTop: "16px", paddingTop: "16px", borderTop: "1px solid #333" }}>
+                <span style={{ color: "#fff" }}>Total</span>
+                <span style={{ color: "#CDB49E" }}>${data.total?.toFixed(2)}</span>
+              </div>
+            </div>
+            {data.promoCodeEnabled && (
+              <div style={{ marginTop: "24px", display: "flex", gap: "12px" }}>
+                <input type="text" placeholder="Promo code" style={{ flex: 1, padding: "12px 16px", backgroundColor: "#111", border: "1px solid #333", borderRadius: "8px", color: "#fff" }} />
+                <button style={{ padding: "12px 20px", backgroundColor: "#333", color: "#fff", borderRadius: "8px", fontWeight: "500" }}>Apply</button>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      case "productGrid": {
+        const data = parseData();
+        const products = data.products || [];
+        const cols = data.columns || 4;
+        return (
+          <div style={baseStyles}>
+            {data.title && <div style={{ fontSize: "36px", fontWeight: "700", color: "#fff", textAlign: "center", marginBottom: "48px" }}>{data.title}</div>}
+            <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: "24px" }}>
+              {products.map((product: any) => (
+                <div key={product.id} style={{ backgroundColor: "#111", borderRadius: "16px", overflow: "hidden", border: "1px solid #222", position: "relative" }}>
+                  {product.badge && (
+                    <span style={{ position: "absolute", top: "12px", left: "12px", padding: "4px 12px", backgroundColor: product.badge === "Sale" ? "#ef4444" : "#CDB49E", color: "#fff", borderRadius: "20px", fontSize: "11px", fontWeight: "600", zIndex: 1 }}>{product.badge}</span>
+                  )}
+                  <div style={{ position: "relative", paddingTop: "100%", backgroundColor: "#0a0a0a" }}>
+                    <img src={product.image} alt={product.name} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+                    {data.showQuickView && (
+                      <div style={{ position: "absolute", bottom: "12px", right: "12px", display: "flex", gap: "8px" }}>
+                        <button style={{ width: "36px", height: "36px", backgroundColor: "rgba(0,0,0,0.7)", borderRadius: "50%", border: "none", color: "#fff", cursor: "pointer" }}>👁</button>
+                        <button style={{ width: "36px", height: "36px", backgroundColor: "rgba(0,0,0,0.7)", borderRadius: "50%", border: "none", color: "#fff", cursor: "pointer" }}>♡</button>
+                      </div>
+                    )}
+                  </div>
+                  <div style={{ padding: "20px" }}>
+                    <div style={{ fontSize: "16px", fontWeight: "600", color: "#fff", marginBottom: "8px" }}>{product.name}</div>
+                    {data.showRating && product.rating && (
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+                        <span style={{ color: "#fbbf24" }}>{"★".repeat(Math.floor(product.rating))}</span>
+                        <span style={{ fontSize: "12px", color: "#888" }}>({product.reviews})</span>
+                      </div>
+                    )}
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                      <span style={{ fontSize: "20px", fontWeight: "700", color: "#CDB49E" }}>${product.price}</span>
+                      {product.originalPrice && <span style={{ fontSize: "14px", color: "#666", textDecoration: "line-through" }}>${product.originalPrice}</span>}
+                    </div>
+                    <button style={{ width: "100%", marginTop: "16px", padding: "12px", backgroundColor: "#222", border: "none", borderRadius: "8px", color: "#fff", fontWeight: "500", cursor: "pointer" }}>Add to Cart</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      case "productQuickView": {
+        const data = parseData();
+        return (
+          <div style={{ ...baseStyles, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              <div style={{ position: "relative", paddingTop: "100%", backgroundColor: "#0a0a0a", borderRadius: "16px", overflow: "hidden" }}>
+                <img src={(data.images || [])[0]} alt={data.name} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+              </div>
+              <div style={{ display: "flex", gap: "12px" }}>
+                {(data.images || []).map((img: string, i: number) => (
+                  <div key={i} style={{ width: "80px", height: "80px", backgroundColor: "#0a0a0a", borderRadius: "8px", overflow: "hidden", border: i === 0 ? "2px solid #CDB49E" : "2px solid transparent" }}>
+                    <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              {data.inStock && <span style={{ display: "inline-block", padding: "4px 12px", backgroundColor: "#22c55e20", color: "#22c55e", borderRadius: "20px", fontSize: "11px", fontWeight: "600", marginBottom: "16px" }}>In Stock</span>}
+              <h2 style={{ fontSize: "32px", fontWeight: "700", color: "#fff", marginBottom: "16px" }}>{data.name}</h2>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+                <span style={{ color: "#fbbf24" }}>{"★".repeat(Math.floor(data.rating || 5))}</span>
+                <span style={{ fontSize: "14px", color: "#888" }}>({data.reviews} reviews)</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "24px" }}>
+                <span style={{ fontSize: "36px", fontWeight: "700", color: "#CDB49E" }}>${data.price}</span>
+                {data.originalPrice && <span style={{ fontSize: "20px", color: "#666", textDecoration: "line-through" }}>${data.originalPrice}</span>}
+              </div>
+              <p style={{ fontSize: "15px", color: "#888", lineHeight: "1.6", marginBottom: "24px" }}>{data.description}</p>
+              {(data.variants || []).map((variant: any, i: number) => (
+                <div key={i} style={{ marginBottom: "20px" }}>
+                  <label style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#fff", marginBottom: "10px" }}>{variant.type}</label>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    {(variant.options || []).map((opt: string, j: number) => (
+                      <button key={j} style={{ padding: "10px 20px", backgroundColor: j === 0 ? "#CDB49E" : "#222", color: j === 0 ? "#111" : "#fff", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: "500", cursor: "pointer" }}>{opt}</button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <div style={{ display: "flex", gap: "16px", marginTop: "32px" }}>
+                <button style={{ flex: 1, padding: "16px 24px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "10px", border: "none", fontWeight: "600", fontSize: "15px", cursor: "pointer" }}>Add to Cart</button>
+                <button style={{ padding: "16px", backgroundColor: "#222", color: "#fff", borderRadius: "10px", border: "none", cursor: "pointer" }}>♡</button>
+              </div>
+              {data.features && (
+                <div style={{ marginTop: "32px", padding: "20px", backgroundColor: "#0a0a0a", borderRadius: "12px" }}>
+                  <div style={{ fontSize: "14px", fontWeight: "600", color: "#fff", marginBottom: "12px" }}>Features</div>
+                  {(data.features || []).map((feat: string, i: number) => (
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", fontSize: "13px", color: "#888" }}>
+                      <span style={{ color: "#22c55e" }}>✓</span> {feat}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      case "addToCart": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            {data.showQuantity && (
+              <div style={{ display: "inline-flex", alignItems: "center", border: "1px solid #333", borderRadius: "8px", marginRight: "16px" }}>
+                <button style={{ padding: "12px 16px", background: "none", border: "none", color: "#888", cursor: "pointer" }}>−</button>
+                <span style={{ padding: "12px 16px", color: "#fff", fontWeight: "500" }}>{data.quantity}</span>
+                <button style={{ padding: "12px 16px", background: "none", border: "none", color: "#888", cursor: "pointer" }}>+</button>
+              </div>
+            )}
+            <button style={{ padding: "16px 32px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "10px", border: "none", fontWeight: "600", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px" }}>
+              <ShoppingBag className="w-4 h-4" /> {data.buttonText}
+            </button>
+          </div>
+        );
+      }
+
+      case "wishlistButton": {
+        const data = parseData();
+        return (
+          <button style={{ ...baseStyles, padding: "12px 20px", backgroundColor: data.isWishlisted ? "#ef444420" : "#222", color: data.isWishlisted ? "#ef4444" : "#888", borderRadius: "8px", border: "none", cursor: "pointer" }}>
+            <Heart className="w-4 h-4" style={{ display: "inline", marginRight: data.showText ? "8px" : "0" }} />
+            {data.showText && (data.isWishlisted ? data.textRemove : data.textAdd)}
+          </button>
+        );
+      }
+
+      // === BLOG COMPONENTS ===
+      case "articleCard": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <div style={{ position: "relative", paddingTop: "56.25%", backgroundColor: "#0a0a0a", overflow: "hidden", borderRadius: "12px 12px 0 0" }}>
+              <img src={data.image} alt={data.title} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+              <span style={{ position: "absolute", top: "16px", left: "16px", padding: "6px 14px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "20px", fontSize: "11px", fontWeight: "600" }}>{data.category}</span>
+            </div>
+            <div style={{ padding: "24px" }}>
+              <h3 style={{ fontSize: "20px", fontWeight: "600", color: "#fff", marginBottom: "12px", lineHeight: "1.3" }}>{data.title}</h3>
+              <p style={{ fontSize: "14px", color: "#888", lineHeight: "1.6", marginBottom: "20px" }}>{data.excerpt}</p>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <img src={data.author?.avatar} alt={data.author?.name} style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover" }} />
+                  <div>
+                    <div style={{ fontSize: "13px", fontWeight: "500", color: "#fff" }}>{data.author?.name}</div>
+                    <div style={{ fontSize: "12px", color: "#666" }}>{data.date}</div>
+                  </div>
+                </div>
+                <span style={{ fontSize: "12px", color: "#666" }}>{data.readTime}</span>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      case "articleCardFeatured": {
+        const data = parseData();
+        return (
+          <div style={{ ...baseStyles, display: "grid", gridTemplateColumns: "1.5fr 1fr", overflow: "hidden" }}>
+            <div style={{ position: "relative" }}>
+              <img src={data.image} alt={data.title} style={{ width: "100%", height: "100%", objectFit: "cover", minHeight: "400px" }} />
+              <span style={{ position: "absolute", top: "24px", left: "24px", padding: "8px 16px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "20px", fontSize: "12px", fontWeight: "600" }}>{data.category}</span>
+            </div>
+            <div style={{ padding: "40px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <h2 style={{ fontSize: "32px", fontWeight: "700", color: "#fff", marginBottom: "20px", lineHeight: "1.2" }}>{data.title}</h2>
+              <p style={{ fontSize: "16px", color: "#888", lineHeight: "1.6", marginBottom: "32px" }}>{data.excerpt}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                <img src={data.author?.avatar} alt={data.author?.name} style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover" }} />
+                <div>
+                  <div style={{ fontSize: "15px", fontWeight: "500", color: "#fff" }}>{data.author?.name}</div>
+                  <div style={{ fontSize: "13px", color: "#666" }}>{data.date} · {data.readTime}</div>
+                </div>
+              </div>
+              <div style={{ marginTop: "32px", padding: "14px 28px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "8px", fontWeight: "600", display: "inline-block", width: "fit-content", cursor: "pointer" }}>Read Article →</div>
+            </div>
+          </div>
+        );
+      }
+
+      case "authorBio": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <div style={{ display: "flex", gap: "24px", alignItems: "flex-start" }}>
+              <img src={data.avatar} alt={data.name} style={{ width: "100px", height: "100px", borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: "11px", fontWeight: "600", color: "#CDB49E", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "8px" }}>Written By</div>
+                <h3 style={{ fontSize: "24px", fontWeight: "700", color: "#fff", marginBottom: "4px" }}>{data.name}</h3>
+                <div style={{ fontSize: "14px", color: "#888", marginBottom: "16px" }}>{data.role}</div>
+                <p style={{ fontSize: "14px", color: "#888", lineHeight: "1.6", marginBottom: "20px" }}>{data.bio}</p>
+                <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                  <div style={{ fontSize: "13px" }}>
+                    <span style={{ color: "#fff", fontWeight: "600" }}>{data.articleCount}</span>
+                    <span style={{ color: "#666" }}> articles</span>
+                  </div>
+                  <div style={{ fontSize: "13px" }}>
+                    <span style={{ color: "#fff", fontWeight: "600" }}>{data.followers}</span>
+                    <span style={{ color: "#666" }}> followers</span>
+                  </div>
+                  {data.social && (
+                    <div style={{ display: "flex", gap: "12px", marginLeft: "auto" }}>
+                      {data.social.twitter && <span style={{ color: "#888", cursor: "pointer" }}>𝕏</span>}
+                      {data.social.github && <span style={{ color: "#888", cursor: "pointer" }}>⌘</span>}
+                      {data.social.linkedin && <span style={{ color: "#888", cursor: "pointer" }}>in</span>}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      case "relatedPosts": {
+        const data = parseData();
+        const posts = data.posts || [];
+        return (
+          <div style={baseStyles}>
+            <h3 style={{ fontSize: "28px", fontWeight: "700", color: "#fff", marginBottom: "32px" }}>{data.title}</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
+              {posts.map((post: any, i: number) => (
+                <div key={i} style={{ backgroundColor: "#111", borderRadius: "12px", overflow: "hidden", border: "1px solid #222", cursor: "pointer" }}>
+                  <div style={{ position: "relative", paddingTop: "56.25%", backgroundColor: "#0a0a0a" }}>
+                    <img src={post.image} alt={post.title} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+                  </div>
+                  <div style={{ padding: "20px" }}>
+                    <span style={{ fontSize: "11px", fontWeight: "600", color: "#CDB49E", textTransform: "uppercase" }}>{post.category}</span>
+                    <h4 style={{ fontSize: "16px", fontWeight: "600", color: "#fff", marginTop: "8px", lineHeight: "1.4" }}>{post.title}</h4>
+                    <span style={{ fontSize: "12px", color: "#666", marginTop: "12px", display: "block" }}>{post.readTime}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      case "blogHero": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+              <h1 style={{ fontSize: "48px", fontWeight: "700", color: "#fff", marginBottom: "16px" }}>{data.title}</h1>
+              <p style={{ fontSize: "18px", color: "#888" }}>{data.subtitle}</p>
+            </div>
+            {data.categories && (
+              <div style={{ display: "flex", justifyContent: "center", gap: "12px", marginBottom: "48px" }}>
+                {data.categories.map((cat: string, i: number) => (
+                  <button key={i} style={{ padding: "10px 24px", backgroundColor: i === 0 ? "#CDB49E" : "#222", color: i === 0 ? "#111" : "#888", borderRadius: "20px", border: "none", fontWeight: "500", cursor: "pointer" }}>{cat}</button>
+                ))}
+              </div>
+            )}
+            {data.featuredPost && (
+              <div style={{ position: "relative", borderRadius: "20px", overflow: "hidden", minHeight: "400px" }}>
+                <img src={data.featuredPost.image} alt={data.featuredPost.title} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(transparent 40%, rgba(0,0,0,0.9))" }} />
+                <div style={{ position: "absolute", bottom: "40px", left: "40px", right: "40px" }}>
+                  <h2 style={{ fontSize: "32px", fontWeight: "700", color: "#fff", marginBottom: "16px", maxWidth: "600px" }}>{data.featuredPost.title}</h2>
+                  <p style={{ fontSize: "16px", color: "#ccc", marginBottom: "16px", maxWidth: "500px" }}>{data.featuredPost.excerpt}</p>
+                  <div style={{ fontSize: "14px", color: "#888" }}>{data.featuredPost.author} · {data.featuredPost.date}</div>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      case "categoryTags": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            {(data.tags || []).map((tag: string, i: number) => (
+              <span key={i} style={{ 
+                display: "inline-block", 
+                padding: data.style === "pills" ? "8px 20px" : "6px 16px", 
+                backgroundColor: "#222", 
+                color: "#888", 
+                borderRadius: data.style === "pills" ? "20px" : "6px", 
+                fontSize: "13px", 
+                fontWeight: "500",
+                cursor: "pointer",
+                marginRight: "8px",
+                marginBottom: "8px"
+              }}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        );
+      }
+
+      case "readingProgress": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <div style={{ 
+              width: "35%", 
+              height: `${data.height || 3}px`, 
+              backgroundColor: data.color || "#CDB49E",
+              borderRadius: "2px"
+            }} />
+            {data.showPercentage && (
+              <span style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", fontSize: "12px", color: "#888", fontWeight: "500" }}>35%</span>
+            )}
+          </div>
+        );
+      }
+
+      case "tableOfContents": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <h4 style={{ fontSize: "14px", fontWeight: "600", color: "#fff", marginBottom: "16px", textTransform: "uppercase", letterSpacing: "1px" }}>{data.title}</h4>
+            <nav>
+              {(data.items || []).map((item: any, i: number) => (
+                <a key={i} href={`#${item.id}`} style={{ 
+                  display: "block", 
+                  padding: "8px 0",
+                  paddingLeft: item.level === 2 ? "16px" : "0",
+                  fontSize: item.level === 1 ? "14px" : "13px",
+                  fontWeight: item.level === 1 ? "500" : "400",
+                  color: i === 0 && data.highlightActive ? "#CDB49E" : "#888",
+                  textDecoration: "none",
+                  borderLeft: i === 0 && data.highlightActive ? "2px solid #CDB49E" : item.level === 2 ? "1px solid #333" : "none",
+                  marginLeft: item.level === 2 ? "8px" : "0"
+                }}>
+                  {item.text}
+                </a>
+              ))}
+            </nav>
+          </div>
+        );
+      }
+
+      // === PARALLAX & SCROLL ANIMATION COMPONENTS ===
+      case "parallaxSection": {
+        const data = parseData();
+        return (
+          <div style={{ ...baseStyles, position: "relative", overflow: "hidden" }}>
+            <div style={{ 
+              position: "absolute", 
+              top: "-50%", 
+              left: 0, 
+              right: 0, 
+              bottom: "-50%",
+              backgroundImage: `url(${data.backgroundImage})`, 
+              backgroundSize: "cover", 
+              backgroundPosition: "center",
+              transform: `translateY(${(data.parallaxSpeed || 0.5) * 50}px)`,
+              transition: "transform 0.1s linear"
+            }} />
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: data.overlay || "rgba(0,0,0,0.6)" }} />
+            <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "120px 48px" }}>
+              <h2 style={{ fontSize: "56px", fontWeight: "700", color: "#fff", marginBottom: "20px" }}>{data.heading}</h2>
+              <p style={{ fontSize: "20px", color: "#ccc" }}>{data.subheading}</p>
+            </div>
+          </div>
+        );
+      }
+
+      case "parallaxImage": {
+        const data = parseData();
+        return (
+          <div style={{ ...baseStyles, overflow: "hidden" }}>
+            <img 
+              src={data.image} 
+              alt="" 
+              style={{ 
+                width: "100%", 
+                height: "100%", 
+                objectFit: "cover",
+                transform: `scale(${data.scale || 1.2}) translateY(0px)`,
+                transition: "transform 0.1s linear"
+              }} 
+            />
+          </div>
+        );
+      }
+
+      case "scrollReveal":
+      case "fadeOnScroll":
+      case "slideOnScroll":
+      case "scaleOnScroll": {
+        const data = parseData();
+        return (
+          <div style={{ ...baseStyles, padding: "40px" }}>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "12px", fontWeight: "600", color: "#CDB49E", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "16px" }}>
+                {element.type === "scrollReveal" && "Scroll Reveal"}
+                {element.type === "fadeOnScroll" && "Fade on Scroll"}
+                {element.type === "slideOnScroll" && "Slide on Scroll"}
+                {element.type === "scaleOnScroll" && "Scale on Scroll"}
+              </div>
+              <p style={{ fontSize: "18px", color: "#888" }}>{data.children}</p>
+              <div style={{ marginTop: "16px", fontSize: "12px", color: "#555" }}>
+                (Animation plays on scroll in preview)
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      case "counterOnScroll": {
+        const data = parseData();
+        const items = data.items || [];
+        return (
+          <div style={baseStyles}>
+            <div style={{ display: "grid", gridTemplateColumns: `repeat(${items.length}, 1fr)`, gap: "40px", textAlign: "center" }}>
+              {items.map((item: any, i: number) => (
+                <div key={i}>
+                  <div style={{ fontSize: "56px", fontWeight: "700", color: "#CDB49E" }}>
+                    {item.prefix}{item.target}{item.suffix}
+                  </div>
+                  <div style={{ fontSize: "14px", color: "#888", marginTop: "8px" }}>{item.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
       default:
         return <div style={baseStyles}>{element.content}</div>;
     }
@@ -4428,6 +5371,63 @@ export default function WebsitePage() {
     spacing: "normal",
   });
 
+  // ===== NEW: Theme Mode (Light/Dark) =====
+  const [themeMode, setThemeMode] = useState<"dark" | "light">("dark");
+  
+  // ===== NEW: Import/Export Modal =====
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [importJSON, setImportJSON] = useState("");
+  const [importError, setImportError] = useState<string | null>(null);
+  
+  // ===== NEW: Collaboration Comments =====
+  const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState<{
+    id: string;
+    elementId: string;
+    author: { name: string; avatar: string };
+    text: string;
+    createdAt: string;
+    resolved: boolean;
+    replies: { id: string; author: { name: string; avatar: string }; text: string; createdAt: string }[];
+  }[]>([
+    {
+      id: "c1",
+      elementId: "el-hero",
+      author: { name: "Sarah Chen", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" },
+      text: "Can we make this headline more impactful? Maybe add a stronger call-to-action.",
+      createdAt: new Date(Date.now() - 3600000).toISOString(),
+      resolved: false,
+      replies: [
+        {
+          id: "r1",
+          author: { name: "Mike Johnson", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" },
+          text: "Good idea! I'll work on some alternatives.",
+          createdAt: new Date(Date.now() - 1800000).toISOString(),
+        }
+      ]
+    }
+  ]);
+  const [newComment, setNewComment] = useState("");
+  
+  // Theme-specific colors
+  const themeColors = themeMode === "dark" ? {
+    bg: "#0a0a0a",
+    surface: "#111111",
+    surfaceHover: "#1a1a1a",
+    border: "#222222",
+    text: "#ffffff",
+    textMuted: "#888888",
+    textSubtle: "#555555",
+  } : {
+    bg: "#ffffff",
+    surface: "#f8f9fa",
+    surfaceHover: "#f0f0f0",
+    border: "#e0e0e0",
+    text: "#111111",
+    textMuted: "#666666",
+    textSubtle: "#999999",
+  };
+
   const selectedElement = elements.find(el => el.id === selectedElementId) || null;
 
   useEffect(() => {
@@ -4554,6 +5554,76 @@ export default function WebsitePage() {
     setHistory(h => ({ past: [...h.past, elements], future: h.future.slice(1) }));
     setElements(next);
   }, [history, elements, setElements]);
+
+  // ===== NEW: Import JSON Handler =====
+  const handleImportJSON = useCallback(() => {
+    try {
+      setImportError(null);
+      const data = JSON.parse(importJSON);
+      
+      if (data.elements && Array.isArray(data.elements)) {
+        // Import single page elements
+        saveHistory();
+        setElements(data.elements);
+        setShowImportModal(false);
+        setImportJSON("");
+      } else if (data.pages && Array.isArray(data.pages)) {
+        // Import full project
+        setPages(data.pages);
+        if (data.currentPageId) setCurrentPageId(data.currentPageId);
+        if (data.seoSettings) setSeoSettings(data.seoSettings);
+        if (data.stylePreset) setCurrentStylePreset(data.stylePreset);
+        setShowImportModal(false);
+        setImportJSON("");
+        setView("editor");
+      } else {
+        setImportError("Invalid JSON format. Expected { elements: [...] } or { pages: [...] }");
+      }
+    } catch (e) {
+      setImportError("Invalid JSON. Please check your input.");
+    }
+  }, [importJSON, saveHistory, setElements]);
+
+  // ===== NEW: Export Full Project JSON =====
+  const handleExportJSON = useCallback(() => {
+    const exportData = {
+      version: "3.0",
+      exportedAt: new Date().toISOString(),
+      pages,
+      currentPageId,
+      seoSettings,
+      stylePreset: currentStylePreset,
+      themeMode,
+    };
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `atlas-website-${new Date().toISOString().split("T")[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [pages, currentPageId, seoSettings, currentStylePreset, themeMode]);
+
+  // ===== NEW: Add Comment =====
+  const handleAddComment = useCallback(() => {
+    if (!newComment.trim() || !selectedElementId) return;
+    const comment = {
+      id: `c-${Date.now()}`,
+      elementId: selectedElementId,
+      author: { name: "You", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100" },
+      text: newComment.trim(),
+      createdAt: new Date().toISOString(),
+      resolved: false,
+      replies: [],
+    };
+    setComments(prev => [...prev, comment]);
+    setNewComment("");
+  }, [newComment, selectedElementId]);
+
+  // ===== NEW: Resolve Comment =====
+  const handleResolveComment = useCallback((commentId: string) => {
+    setComments(prev => prev.map(c => c.id === commentId ? { ...c, resolved: !c.resolved } : c));
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -4878,6 +5948,44 @@ export default function WebsitePage() {
               <Globe className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
+          
+          {/* NEW: Theme, Import, Comments */}
+          <div className="flex items-center gap-1 p-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
+            <button 
+              onClick={() => setThemeMode(t => t === "dark" ? "light" : "dark")} 
+              className={cn("p-1.5 rounded hover:bg-[#222]", themeMode === "light" ? "text-amber-400" : "text-[#666] hover:text-[#CDB49E]")}
+              title={`Switch to ${themeMode === "dark" ? "light" : "dark"} mode`}
+            >
+              {themeMode === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+            <button 
+              onClick={() => setShowImportModal(true)} 
+              className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
+              title="Import JSON"
+            >
+              <Upload className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={handleExportJSON} 
+              className="p-1.5 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#222]"
+              title="Export JSON"
+            >
+              <Download className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => setShowComments(c => !c)} 
+              className={cn("p-1.5 rounded hover:bg-[#222] relative", showComments ? "text-[#CDB49E]" : "text-[#666] hover:text-[#CDB49E]")}
+              title="Comments"
+            >
+              <MessageSquare className="w-4 h-4" />
+              {comments.filter(c => !c.resolved).length > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] text-white flex items-center justify-center">
+                  {comments.filter(c => !c.resolved).length}
+                </span>
+              )}
+            </button>
+          </div>
+          
           <div className="h-5 w-px bg-[#333]" />
           <button 
             onClick={() => setShowPanels(p => ({ ...p, left: !p.left }))} 
@@ -5328,6 +6436,180 @@ ${bodyContent}
           }}
           onClose={() => setShowTemplatePreview(null)}
         />
+      )}
+
+      {/* ===== NEW: Import JSON Modal ===== */}
+      {showImportModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-[#111] rounded-2xl border border-[#333] w-[600px] max-h-[80vh] overflow-hidden shadow-2xl">
+            <div className="flex items-center justify-between p-4 border-b border-[#222]">
+              <div>
+                <h2 className="text-lg font-semibold text-white">Import from JSON</h2>
+                <p className="text-xs text-[#666] mt-1">Paste your exported Atlas JSON or elements array</p>
+              </div>
+              <button onClick={() => setShowImportModal(false)} className="p-2 text-[#666] hover:text-white rounded-lg hover:bg-[#222]">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-4">
+              <textarea
+                value={importJSON}
+                onChange={(e) => { setImportJSON(e.target.value); setImportError(null); }}
+                placeholder='{"elements": [...]} or {"pages": [...]}'
+                className="w-full h-64 p-4 bg-[#0a0a0a] border border-[#333] rounded-lg text-white font-mono text-sm resize-none focus:outline-none focus:border-[#CDB49E]"
+              />
+              {importError && (
+                <div className="mt-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
+                  {importError}
+                </div>
+              )}
+              <div className="flex items-center gap-3 mt-4">
+                <label className="flex-1">
+                  <input
+                    type="file"
+                    accept=".json"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (ev) => {
+                          setImportJSON(ev.target?.result as string || "");
+                        };
+                        reader.readAsText(file);
+                      }
+                    }}
+                  />
+                  <div className="px-4 py-2.5 border border-[#333] rounded-lg text-[#888] text-sm cursor-pointer hover:border-[#CDB49E] hover:text-white transition-colors text-center">
+                    Upload .json file
+                  </div>
+                </label>
+                <button
+                  onClick={handleImportJSON}
+                  disabled={!importJSON.trim()}
+                  className="px-6 py-2.5 bg-[#CDB49E] text-[#111] rounded-lg font-semibold text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Import
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===== NEW: Comments Panel (Slide-out) ===== */}
+      {showComments && (
+        <div className="fixed top-12 right-0 bottom-0 w-80 bg-[#111] border-l border-[#222] shadow-2xl z-40 flex flex-col">
+          <div className="flex items-center justify-between p-4 border-b border-[#222]">
+            <div className="flex items-center gap-2">
+              <MessageSquare className="w-5 h-5 text-[#CDB49E]" />
+              <h3 className="font-semibold text-white">Comments</h3>
+              <span className="px-2 py-0.5 bg-[#CDB49E]/10 text-[#CDB49E] text-xs rounded-full">
+                {comments.filter(c => !c.resolved).length}
+              </span>
+            </div>
+            <button onClick={() => setShowComments(false)} className="p-1.5 text-[#666] hover:text-white rounded">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+          
+          <div className="flex-1 overflow-auto p-4 space-y-4">
+            {comments.length === 0 ? (
+              <div className="text-center py-12">
+                <MessageSquare className="w-12 h-12 text-[#333] mx-auto mb-3" />
+                <p className="text-sm text-[#666]">No comments yet</p>
+                <p className="text-xs text-[#555] mt-1">Select an element and add a comment</p>
+              </div>
+            ) : (
+              comments.map((comment) => (
+                <div 
+                  key={comment.id} 
+                  className={cn(
+                    "p-3 rounded-lg border transition-colors",
+                    comment.resolved 
+                      ? "bg-[#0a0a0a] border-[#1a1a1a] opacity-60" 
+                      : "bg-[#1a1a1a] border-[#222]",
+                    selectedElementId === comment.elementId && "ring-2 ring-[#CDB49E]/30"
+                  )}
+                >
+                  <div className="flex items-start gap-3">
+                    <img 
+                      src={comment.author.avatar} 
+                      alt={comment.author.name} 
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-white">{comment.author.name}</span>
+                        <span className="text-[10px] text-[#555]">
+                          {new Date(comment.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        </span>
+                      </div>
+                      <p className="text-sm text-[#888] mt-1">{comment.text}</p>
+                      
+                      {/* Replies */}
+                      {comment.replies.length > 0 && (
+                        <div className="mt-3 pl-3 border-l border-[#333] space-y-2">
+                          {comment.replies.map((reply) => (
+                            <div key={reply.id} className="flex items-start gap-2">
+                              <img src={reply.author.avatar} alt="" className="w-6 h-6 rounded-full" />
+                              <div>
+                                <span className="text-xs font-medium text-white">{reply.author.name}</span>
+                                <p className="text-xs text-[#888]">{reply.text}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      
+                      {/* Actions */}
+                      <div className="flex items-center gap-3 mt-2">
+                        <button 
+                          onClick={() => handleResolveComment(comment.id)}
+                          className={cn(
+                            "text-xs flex items-center gap-1 transition-colors",
+                            comment.resolved ? "text-emerald-500" : "text-[#666] hover:text-emerald-400"
+                          )}
+                        >
+                          <CheckCircle className="w-3 h-3" />
+                          {comment.resolved ? "Resolved" : "Resolve"}
+                        </button>
+                        <button className="text-xs text-[#666] hover:text-white">Reply</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+          
+          {/* Add Comment */}
+          {selectedElementId && (
+            <div className="p-4 border-t border-[#222]">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xs text-[#666]">Commenting on:</span>
+                <span className="text-xs text-[#CDB49E] font-medium">{selectedElement?.type}</span>
+              </div>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Add a comment..."
+                  className="flex-1 px-3 py-2 bg-[#0a0a0a] border border-[#333] rounded-lg text-white text-sm focus:outline-none focus:border-[#CDB49E]"
+                  onKeyDown={(e) => e.key === "Enter" && handleAddComment()}
+                />
+                <button
+                  onClick={handleAddComment}
+                  disabled={!newComment.trim()}
+                  className="px-4 py-2 bg-[#CDB49E] text-[#111] rounded-lg font-medium text-sm disabled:opacity-50"
+                >
+                  Post
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
