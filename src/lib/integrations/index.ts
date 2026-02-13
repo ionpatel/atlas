@@ -71,6 +71,18 @@ export {
 
 export { usePayrollAccounting } from "./use-payroll-accounting";
 
+// ===== Purchase → Inventory Integration =====
+export {
+  processPurchaseOrderReceipt,
+  createVendorPaymentEntry,
+  getPendingPayables,
+  getRecoverableHST,
+  ensureReceivingAccounts,
+  type PurchaseInventoryResult,
+} from "./purchase-inventory";
+
+export { usePurchaseInventory } from "./use-purchase-inventory";
+
 // ===== Types for integration events (future event bus) =====
 export type IntegrationEvent =
   | { type: "invoice.paid"; invoiceId: string; journalEntryId: string }
