@@ -16,8 +16,12 @@ import {
   User,
   Building2,
   Tag,
+  Upload,
+  Download,
 } from "lucide-react";
 import { useEmployeesStore } from "@/stores/employees-store";
+import { ImportWizard } from "@/components/import";
+import { useToastStore } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 import type { Employee } from "@/types";
 
@@ -503,6 +507,9 @@ export default function EmployeesPage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [modalOpen, setModalOpen] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
+  const [showImport, setShowImport] = useState(false);
+  
+  const addToast = useToastStore((s) => s.addToast);
   
   const filtered = filteredEmployees();
 
@@ -523,6 +530,34 @@ export default function EmployeesPage() {
     });
     return map;
   }, [employees]);
+
+  // Existing emails for duplicate detection during import
+  const existingEmails = useMemo(
+    () => new Set(employees.filter((e) => e.email).map((e) => e.email.toLowerCase())),
+    [employees]
+  );
+
+  const handleImportComplete = async (data: Record<string, any>[]) => {
+    let successCount = 0;
+    for (const item of data) {
+      const employeeData: Omit<Employee, "id" | "created_at"> = {
+        org_id: DEMO_ORG_ID,
+        name: item.name || "",
+        email: item.email || "",
+        phone: item.phone || "",
+        department: item.department || "General",
+        job_title: item.job_title || "",
+        start_date: item.start_date || new Date().toISOString().split("T")[0],
+        status: item.status || "active",
+        tags: [],
+        avatar_color: AVATAR_COLORS[Math.floor(Math.random() * AVATAR_COLORS.length)],
+      };
+      await addEmployee(employeeData);
+      successCount++;
+    }
+    setShowImport(false);
+    addToast(`Successfully imported ${successCount} employee(s)`);
+  };
 
   const handleOpenAdd = () => {
     setEditingEmployee(null);

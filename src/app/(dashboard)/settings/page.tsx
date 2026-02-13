@@ -32,7 +32,9 @@ import {
   Moon,
   Monitor,
   Copy,
+  History,
 } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────── tab definitions ─────────────────────── */
@@ -47,6 +49,7 @@ const tabs = [
   { id: "modules", label: "Modules", icon: Puzzle },
   { id: "integrations", label: "Integrations", icon: Link2 },
   { id: "tax", label: "Tax Settings", icon: Receipt },
+  { id: "audit-logs", label: "Audit Logs", icon: History, href: "/settings/audit-logs" },
 ] as const;
 
 type TabId = (typeof tabs)[number]["id"];
@@ -1080,211 +1083,90 @@ function BrandingSection() {
 /* ─────────────────────── Notifications Section ─────────────────────── */
 
 function NotificationsSection() {
-  const [notifications, setNotifications] = useState({
-    // Email notifications
-    emailInvoicePaid: true,
-    emailInvoiceOverdue: true,
-    emailNewOrder: true,
-    emailLowStock: true,
-    emailWeeklyReport: false,
-
-    // In-app notifications
-    inAppInvoicePaid: true,
-    inAppInvoiceOverdue: true,
-    inAppNewOrder: true,
-    inAppLowStock: true,
-
-    // Push notifications
-    pushEnabled: false,
-    pushInvoicePaid: false,
-    pushNewOrder: false,
-  });
-
-  const toggleNotification = (key: keyof typeof notifications) => {
-    setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  const NotificationRow = ({
-    label,
-    description,
-    emailKey,
-    inAppKey,
-    pushKey,
-  }: {
-    label: string;
-    description: string;
-    emailKey?: keyof typeof notifications;
-    inAppKey?: keyof typeof notifications;
-    pushKey?: keyof typeof notifications;
-  }) => (
-    <div className="flex items-center justify-between py-4 border-b border-[#2a2a2a]/50 last:border-0">
-      <div>
-        <p className="text-sm font-medium text-[#f5f0eb]">{label}</p>
-        <p className="text-xs text-[#888888] mt-0.5">{description}</p>
-      </div>
-      <div className="flex items-center gap-4">
-        {emailKey && (
-          <button
-            onClick={() => toggleNotification(emailKey)}
-            className={cn(
-              "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all",
-              notifications[emailKey]
-                ? "bg-blue-500/10 text-blue-400 border border-blue-500/20"
-                : "bg-[#222222] text-[#555555] border border-[#2a2a2a]"
-            )}
-          >
-            <Mail className="w-3 h-3" />
-            Email
-          </button>
-        )}
-        {inAppKey && (
-          <button
-            onClick={() => toggleNotification(inAppKey)}
-            className={cn(
-              "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all",
-              notifications[inAppKey]
-                ? "bg-violet-500/10 text-violet-400 border border-violet-500/20"
-                : "bg-[#222222] text-[#555555] border border-[#2a2a2a]"
-            )}
-          >
-            <Bell className="w-3 h-3" />
-            In-App
-          </button>
-        )}
-        {pushKey && (
-          <button
-            onClick={() => toggleNotification(pushKey)}
-            disabled={!notifications.pushEnabled}
-            className={cn(
-              "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all",
-              notifications[pushKey]
-                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                : "bg-[#222222] text-[#555555] border border-[#2a2a2a]",
-              !notifications.pushEnabled && "opacity-50 cursor-not-allowed"
-            )}
-          >
-            <Smartphone className="w-3 h-3" />
-            Push
-          </button>
-        )}
-      </div>
-    </div>
-  );
-
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-lg font-semibold text-[#f5f0eb]">Notifications</h2>
+        <h2 className="text-lg font-semibold text-[#f5f0eb]">Email Notifications</h2>
         <p className="text-sm text-[#888888] mt-1">
-          Manage how and when you receive notifications.
+          Configure email alerts for important business events.
         </p>
       </div>
 
-      {/* Push Notifications Toggle */}
-      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-emerald-500/10">
-              <Smartphone className="w-5 h-5 text-emerald-400" />
-            </div>
+      {/* Quick Overview */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {[
+          { label: "Low Stock Alerts", icon: "📦", enabled: true },
+          { label: "Invoice Reminders", icon: "📄", enabled: true },
+          { label: "New Orders", icon: "🛒", enabled: true },
+        ].map((item) => (
+          <div
+            key={item.label}
+            className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 flex items-center gap-3"
+          >
+            <span className="text-2xl">{item.icon}</span>
             <div>
-              <h3 className="text-sm font-semibold text-[#f5f0eb]">
-                Push Notifications
-              </h3>
-              <p className="text-xs text-[#888888] mt-0.5">
-                Receive notifications on your mobile device
-              </p>
+              <p className="text-sm font-medium text-[#f5f0eb]">{item.label}</p>
+              <p className="text-xs text-emerald-400">Enabled</p>
             </div>
           </div>
-          <ToggleSwitch
-            enabled={notifications.pushEnabled}
-            onToggle={() => toggleNotification("pushEnabled")}
-          />
-        </div>
+        ))}
       </div>
 
-      {/* Notification Categories */}
-      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
-        <div className="px-6 py-4 border-b border-[#2a2a2a]">
-          <h3 className="text-sm font-semibold text-[#f5f0eb]">
-            Billing & Payments
-          </h3>
-        </div>
-        <div className="px-6">
-          <NotificationRow
-            label="Invoice Paid"
-            description="When a customer pays an invoice"
-            emailKey="emailInvoicePaid"
-            inAppKey="inAppInvoicePaid"
-            pushKey="pushInvoicePaid"
-          />
-          <NotificationRow
-            label="Invoice Overdue"
-            description="When an invoice becomes overdue"
-            emailKey="emailInvoiceOverdue"
-            inAppKey="inAppInvoiceOverdue"
-          />
-        </div>
+      {/* Features list */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#f5f0eb] mb-4">
+          Email Notification Features
+        </h3>
+        <ul className="space-y-3">
+          {[
+            "Low stock alerts when products fall below minimum quantity",
+            "Invoice reminders at 7 days, 3 days before due, and when overdue",
+            "Instant notifications when new orders are placed",
+            "Daily or weekly digest summaries of business activity",
+            "Test email functionality to verify your setup",
+          ].map((feature, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-[#888888]">
+              <Check className="w-4 h-4 text-[#CDB49E] mt-0.5 flex-shrink-0" />
+              {feature}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
-        <div className="px-6 py-4 border-b border-[#2a2a2a]">
-          <h3 className="text-sm font-semibold text-[#f5f0eb]">
-            Orders & Sales
-          </h3>
+      {/* CTA to full page */}
+      <Link
+        href="/settings/notifications"
+        className="flex items-center justify-between p-6 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl hover:border-[#CDB49E]/30 transition-all group"
+      >
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-lg bg-[#3a3028]">
+            <Bell className="w-6 h-6 text-[#CDB49E]" />
+          </div>
+          <div>
+            <h3 className="text-base font-semibold text-[#f5f0eb]">
+              Configure Notification Preferences
+            </h3>
+            <p className="text-sm text-[#888888] mt-0.5">
+              Manage alerts, set digest frequency, and test email delivery
+            </p>
+          </div>
         </div>
-        <div className="px-6">
-          <NotificationRow
-            label="New Order"
-            description="When a new order is placed"
-            emailKey="emailNewOrder"
-            inAppKey="inAppNewOrder"
-            pushKey="pushNewOrder"
-          />
-        </div>
-      </div>
-
-      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
-        <div className="px-6 py-4 border-b border-[#2a2a2a]">
-          <h3 className="text-sm font-semibold text-[#f5f0eb]">
-            Inventory
-          </h3>
-        </div>
-        <div className="px-6">
-          <NotificationRow
-            label="Low Stock Alert"
-            description="When a product falls below minimum stock"
-            emailKey="emailLowStock"
-            inAppKey="inAppLowStock"
-          />
-        </div>
-      </div>
-
-      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
-        <div className="px-6 py-4 border-b border-[#2a2a2a]">
-          <h3 className="text-sm font-semibold text-[#f5f0eb]">
-            Reports & Summaries
-          </h3>
-        </div>
-        <div className="px-6">
-          <NotificationRow
-            label="Weekly Report"
-            description="Summary of your weekly business performance"
-            emailKey="emailWeeklyReport"
-          />
-        </div>
-      </div>
-
-      <div className="pt-4 border-t border-[#2a2a2a]">
-        <button className="px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200">
-          Save Notification Preferences
-        </button>
-      </div>
+        <ChevronRight className="w-5 h-5 text-[#555555] group-hover:text-[#CDB49E] transition-colors" />
+      </Link>
     </div>
   );
 }
 
 /* ─────────────────────── section map ─────────────────────── */
+
+// Placeholder for tabs with separate pages
+function AuditLogsRedirect() {
+  return (
+    <div className="flex flex-col items-center justify-center py-12">
+      <p className="text-[#888888] text-sm">Redirecting to Audit Logs...</p>
+    </div>
+  );
+}
 
 const sectionComponents: Record<TabId, React.ComponentType> = {
   general: GeneralSection,
@@ -1296,6 +1178,7 @@ const sectionComponents: Record<TabId, React.ComponentType> = {
   modules: ModulesSection,
   integrations: IntegrationsSection,
   tax: TaxSection,
+  "audit-logs": AuditLogsRedirect,
 };
 
 /* ════════════════════════ SETTINGS PAGE ════════════════════════ */
@@ -1323,6 +1206,21 @@ export default function SettingsPage() {
         <nav className="w-56 flex-shrink-0 space-y-1">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
+            const hasHref = "href" in tab && tab.href;
+
+            if (hasHref) {
+              return (
+                <Link
+                  key={tab.id}
+                  href={tab.href as string}
+                  className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 text-left text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a]"
+                >
+                  <tab.icon className="w-[18px] h-[18px] flex-shrink-0" />
+                  {tab.label}
+                </Link>
+              );
+            }
+
             return (
               <button
                 key={tab.id}

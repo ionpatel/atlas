@@ -288,3 +288,97 @@ export interface Project {
   assigned_to: string[];
   created_at: string;
 }
+
+// =============================================================
+// ROLES & PERMISSIONS
+// =============================================================
+
+export type RoleName = 'admin' | 'manager' | 'employee' | 'viewer';
+
+export type ModuleName = 
+  | 'inventory' 
+  | 'invoices' 
+  | 'contacts' 
+  | 'accounting' 
+  | 'sales' 
+  | 'purchase' 
+  | 'crm' 
+  | 'employees' 
+  | 'payroll' 
+  | 'projects' 
+  | 'reports' 
+  | 'settings' 
+  | 'website' 
+  | 'pos'
+  | 'dashboard'
+  | 'apps';
+
+export type PermissionAction = 'view' | 'create' | 'edit' | 'delete';
+
+export interface Role {
+  id: string;
+  org_id: string | null;
+  name: string;
+  description: string;
+  is_system: boolean;
+  created_at: string;
+}
+
+export interface Permission {
+  id: string;
+  role_id: string;
+  module: ModuleName;
+  can_view: boolean;
+  can_create: boolean;
+  can_edit: boolean;
+  can_delete: boolean;
+  created_at: string;
+}
+
+export interface UserRole {
+  id: string;
+  user_id: string;
+  org_id: string;
+  role_id: string;
+  assigned_by: string | null;
+  assigned_at: string;
+}
+
+export interface UserPermissions {
+  module: ModuleName;
+  can_view: boolean;
+  can_create: boolean;
+  can_edit: boolean;
+  can_delete: boolean;
+}
+
+// Extended role with permissions populated
+export interface RoleWithPermissions extends Role {
+  permissions: Permission[];
+}
+
+// User with roles populated
+export interface UserWithRoles extends User {
+  roles: Role[];
+}
+
+// =============================================================
+// AUDIT LOGS
+// =============================================================
+
+export type AuditAction = 'create' | 'update' | 'delete';
+
+export interface AuditLog {
+  id: string;
+  org_id: string;
+  user_id: string | null;
+  user_email: string | null;
+  action: AuditAction;
+  table_name: string;
+  record_id: string;
+  old_values: Record<string, unknown> | null;
+  new_values: Record<string, unknown> | null;
+  ip_address: string | null;
+  user_agent: string | null;
+  created_at: string;
+}

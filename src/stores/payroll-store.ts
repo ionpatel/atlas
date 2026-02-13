@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { createClient } from "@/lib/supabase/client";
+import { logAuditEvent } from "@/lib/audit";
 
 // 2026 Canadian Tax Constants
 const TAX_CONSTANTS_2026 = {
@@ -489,6 +490,22 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
         
         const { error: stubsError } = await supabase.from("pay_stubs").insert(stubInserts);
         if (stubsError) console.error("Error saving pay stubs:", stubsError);
+
+        // Log audit event
+        logAuditEvent({
+          orgId: newPayRun.orgId,
+          action: "create",
+          tableName: "pay_runs",
+          recordId: newPayRun.id,
+          newValues: {
+            name: newPayRun.name,
+            status: newPayRun.status,
+            pay_period: newPayRun.payPeriod,
+            total_gross: newPayRun.totalGross,
+            total_net: newPayRun.totalNet,
+            employee_count: newPayRun.employeeCount,
+          },
+        });
       } catch (err) {
         console.error("createPayRun save error:", err);
       }
@@ -498,6 +515,8 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
   },
 
   approvePayRun: async (payRunId: string) => {
+    const { payRuns } = get();
+    const payRun = payRuns.find((pr) => pr.id === payRunId);
     const approvedAt = new Date().toISOString();
     
     set((state) => ({
@@ -510,6 +529,18 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
       try {
         const supabase = createClient();
         await supabase.from("pay_runs").update({ status: "approved", approved_at: approvedAt }).eq("id", payRunId);
+
+        // Log audit event
+        if (payRun) {
+          logAuditEvent({
+            orgId: payRun.orgId,
+            action: "update",
+            tableName: "pay_runs",
+            recordId: payRunId,
+            oldValues: { status: payRun.status },
+            newValues: { status: "approved", approved_at: approvedAt },
+          });
+        }
       } catch (err) {
         console.error("approvePayRun error:", err);
       }
@@ -517,6 +548,8 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
   },
 
   markAsPaid: async (payRunId: string) => {
+    const { payRuns } = get();
+    const payRun = payRuns.find((pr) => pr.id === payRunId);
     const paidAt = new Date().toISOString();
     
     set((state) => ({
@@ -529,6 +562,18 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
       try {
         const supabase = createClient();
         await supabase.from("pay_runs").update({ status: "paid", paid_at: paidAt }).eq("id", payRunId);
+
+        // Log audit event
+        if (payRun) {
+          logAuditEvent({
+            orgId: payRun.orgId,
+            action: "update",
+            tableName: "pay_runs",
+            recordId: payRunId,
+            oldValues: { status: payRun.status },
+            newValues: { status: "paid", paid_at: paidAt },
+          });
+        }
       } catch (err) {
         console.error("markAsPaid error:", err);
       }

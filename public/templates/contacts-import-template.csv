@@ -1,0 +1,6 @@
+Contact Name,Email,Phone,Company,Type,Address,Notes
+John Smith,john.smith@example.com,(416) 555-0101,Acme Corp,customer,123 Main St Toronto ON,Key account
+Jane Doe,jane.doe@supplier.com,(416) 555-0102,Supplier Inc,vendor,456 Oak Ave Vancouver BC,Primary supplier for electronics
+Bob Wilson,bob.wilson@techco.com,(416) 555-0103,TechCo,both,789 Pine Rd Montreal QC,Both customer and vendor
+Sarah Johnson,sarah.j@startup.io,(416) 555-0104,StartupIO,customer,321 Elm St Calgary AB,New customer - Q1 2024
+Mike Brown,mike.b@wholesale.com,(416) 555-0105,Wholesale Direct,vendor,654 Cedar Ln Ottawa ON,Bulk orders only

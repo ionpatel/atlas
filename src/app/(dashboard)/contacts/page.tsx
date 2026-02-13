@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback, useRef } from "react";
+import { useState, useMemo } from "react";
 import {
   Plus, Search, Filter, Mail, Phone, Pencil, Trash2, Users, X,
   List, LayoutGrid, Download, Upload, FileText, Clock,
@@ -10,6 +10,7 @@ import { useContactsStore } from "@/stores/contacts-store";
 import { useInvoicesStore } from "@/stores/invoices-store";
 import { Modal } from "@/components/ui/modal";
 import { ContactForm } from "@/components/modules/contact-form";
+import { ImportWizard } from "@/components/import";
 import { useToastStore } from "@/components/ui/toast";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Contact } from "@/types";
@@ -262,70 +263,6 @@ function ContactDetailPanel({
   );
 }
 
-function ImportModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [dragOver, setDragOver] = useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
-  const addToast = useToastStore((s) => s.addToast);
-
-  const handleDrop = useCallback(
-    (e: React.DragEvent) => {
-      e.preventDefault();
-      setDragOver(false);
-      addToast("CSV import is a placeholder — no file was processed", "info");
-      onClose();
-    },
-    [addToast, onClose]
-  );
-
-  const handleFileSelect = useCallback(() => {
-    addToast("CSV import is a placeholder — no file was processed", "info");
-    onClose();
-  }, [addToast, onClose]);
-
-  return (
-    <Modal open={open} onClose={onClose} title="Import Contacts">
-      <div className="space-y-4">
-        <p className="text-sm text-[#888888]">Upload a CSV file to import contacts. The file should have columns: Name, Email, Phone, Company, Type.</p>
-        <div
-          className={`border-2 border-dashed rounded-xl p-10 text-center transition-all duration-200 cursor-pointer ${
-            dragOver
-              ? "border-[#CDB49E] bg-[#3a3028]/30"
-              : "border-[#2a2a2a] hover:border-[#CDB49E]/40"
-          }`}
-          onDragOver={(e) => {
-            e.preventDefault();
-            setDragOver(true);
-          }}
-          onDragLeave={() => setDragOver(false)}
-          onDrop={handleDrop}
-          onClick={() => fileRef.current?.click()}
-        >
-          <Upload className="w-10 h-10 mx-auto mb-3 text-[#888888]/60" />
-          <p className="text-sm text-[#f5f0eb] font-medium">
-            Drop your CSV here or click to browse
-          </p>
-          <p className="text-xs text-[#888888] mt-1">Supports .csv files up to 5MB</p>
-          <input
-            ref={fileRef}
-            type="file"
-            accept=".csv"
-            className="hidden"
-            onChange={handleFileSelect}
-          />
-        </div>
-        <div className="flex justify-end">
-          <button
-            onClick={onClose}
-            className="px-5 py-2.5 text-sm font-medium text-[#888888] hover:text-[#f5f0eb] bg-[#222222] border border-[#2a2a2a] rounded-lg hover:bg-[#2a2a2a] transition-all duration-200"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </Modal>
-  );
-}
-
 export default function ContactsPage() {
   const {
     contacts,
@@ -362,6 +299,34 @@ export default function ContactsPage() {
       recent: contacts.filter((c) => new Date(c.created_at) >= weekAgo).length,
     };
   }, [contacts]);
+
+  // Existing emails for duplicate detection during import
+  const existingEmails = useMemo(
+    () => new Set(contacts.filter((c) => c.email).map((c) => c.email!.toLowerCase())),
+    [contacts]
+  );
+
+  const handleImportComplete = async (data: Record<string, any>[]) => {
+    let successCount = 0;
+    for (const item of data) {
+      const newContact: Contact = {
+        id: crypto.randomUUID(),
+        org_id: "org1",
+        name: item.name || "",
+        email: item.email || undefined,
+        phone: item.phone || undefined,
+        company: item.company || undefined,
+        type: item.type || "customer",
+        address: item.address || undefined,
+        notes: item.notes || undefined,
+        created_at: new Date().toISOString(),
+      };
+      addContact(newContact);
+      successCount++;
+    }
+    setImportOpen(false);
+    addToast(`Successfully imported ${successCount} contact(s)`);
+  };
 
   const handleAdd = (data: Omit<Contact, "id" | "org_id" | "created_at">) => {
     const newContact: Contact = {
@@ -752,8 +717,15 @@ export default function ContactsPage() {
         />
       </Modal>
 
-      {/* Import Modal */}
-      <ImportModal open={importOpen} onClose={() => setImportOpen(false)} />
+      {/* Import Wizard */}
+      {importOpen && (
+        <ImportWizard
+          target="contacts"
+          onClose={() => setImportOpen(false)}
+          onComplete={handleImportComplete}
+          existingKeys={existingEmails}
+        />
+      )}
     </div>
   );
 }

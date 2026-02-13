@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { createClient } from "@/lib/supabase/client";
+import { logAuditEvent } from "@/lib/audit";
 import type { Product } from "@/types";
 
 interface InventoryFilters {
@@ -125,6 +126,15 @@ export const useInventoryStore = create<InventoryState>((set, get) => ({
         loading: false,
       }));
 
+      // Log audit event
+      logAuditEvent({
+        orgId: data.org_id,
+        action: "create",
+        tableName: "products",
+        recordId: data.id,
+        newValues: data,
+      });
+
       return data;
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to add product";
@@ -147,6 +157,14 @@ export const useInventoryStore = create<InventoryState>((set, get) => ({
 
     try {
       const supabase = createClient();
+      
+      // Get current values for audit log
+      const { data: oldProduct } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", id)
+        .single();
+
       const { error } = await supabase
         .from("products")
         .update(data)
@@ -163,6 +181,18 @@ export const useInventoryStore = create<InventoryState>((set, get) => ({
         ),
         loading: false,
       }));
+
+      // Log audit event
+      if (oldProduct) {
+        logAuditEvent({
+          orgId: oldProduct.org_id,
+          action: "update",
+          tableName: "products",
+          recordId: id,
+          oldValues: oldProduct,
+          newValues: { ...oldProduct, ...data },
+        });
+      }
 
       return true;
     } catch (err) {
@@ -184,6 +214,14 @@ export const useInventoryStore = create<InventoryState>((set, get) => ({
 
     try {
       const supabase = createClient();
+      
+      // Get current values for audit log
+      const { data: oldProduct } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", id)
+        .single();
+
       const { error } = await supabase
         .from("products")
         .delete()
@@ -198,6 +236,17 @@ export const useInventoryStore = create<InventoryState>((set, get) => ({
         products: state.products.filter((p) => p.id !== id),
         loading: false,
       }));
+
+      // Log audit event
+      if (oldProduct) {
+        logAuditEvent({
+          orgId: oldProduct.org_id,
+          action: "delete",
+          tableName: "products",
+          recordId: id,
+          oldValues: oldProduct,
+        });
+      }
 
       return true;
     } catch (err) {

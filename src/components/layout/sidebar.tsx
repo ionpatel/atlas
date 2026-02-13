@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { usePermissions, hasPermission } from "@/stores/auth-store";
+import type { ModuleName } from "@/types";
 import {
   LayoutDashboard,
   LayoutGrid,
@@ -23,31 +25,56 @@ import {
   Globe,
   BarChart3,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
-const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/apps", label: "Apps", icon: LayoutGrid },
-  { href: "/pos", label: "Point of Sale", icon: Store },
-  { href: "/inventory", label: "Inventory", icon: Package },
-  { href: "/invoices", label: "Invoices", icon: FileText },
-  { href: "/sales", label: "Sales", icon: ShoppingCart },
-  { href: "/purchase", label: "Purchase", icon: Truck },
-  { href: "/accounting", label: "Accounting", icon: Calculator },
-  { href: "/contacts", label: "Contacts", icon: Users },
-  { href: "/crm", label: "CRM", icon: Target },
-  { href: "/employees", label: "Employees", icon: UserCircle },
-  { href: "/payroll", label: "Payroll", icon: Wallet },
-  { href: "/projects", label: "Projects", icon: FolderKanban },
-  { href: "/website", label: "Website", icon: Globe },
-  { href: "/reports", label: "Reports", icon: BarChart3 },
-  { href: "/ai", label: "AI Assistant", icon: Bot },
-  { href: "/settings", label: "Settings", icon: Settings },
+interface NavItem {
+  href: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  module?: ModuleName; // If undefined, always visible
+}
+
+const navItems: NavItem[] = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, module: "dashboard" },
+  { href: "/apps", label: "Apps", icon: LayoutGrid, module: "apps" },
+  { href: "/pos", label: "Point of Sale", icon: Store, module: "pos" },
+  { href: "/inventory", label: "Inventory", icon: Package, module: "inventory" },
+  { href: "/invoices", label: "Invoices", icon: FileText, module: "invoices" },
+  { href: "/sales", label: "Sales", icon: ShoppingCart, module: "sales" },
+  { href: "/purchase", label: "Purchase", icon: Truck, module: "purchase" },
+  { href: "/accounting", label: "Accounting", icon: Calculator, module: "accounting" },
+  { href: "/contacts", label: "Contacts", icon: Users, module: "contacts" },
+  { href: "/crm", label: "CRM", icon: Target, module: "crm" },
+  { href: "/employees", label: "Employees", icon: UserCircle, module: "employees" },
+  { href: "/payroll", label: "Payroll", icon: Wallet, module: "payroll" },
+  { href: "/projects", label: "Projects", icon: FolderKanban, module: "projects" },
+  { href: "/website", label: "Website", icon: Globe, module: "website" },
+  { href: "/reports", label: "Reports", icon: BarChart3, module: "reports" },
+  { href: "/ai", label: "AI Assistant", icon: Bot }, // Always visible
+  { href: "/settings", label: "Settings", icon: Settings, module: "settings" },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const permissions = usePermissions();
+
+  // Filter nav items based on permissions
+  const visibleNavItems = useMemo(() => {
+    // If no permissions loaded yet (loading state), show all items
+    // This prevents flash of hidden content
+    if (permissions.length === 0) {
+      return navItems;
+    }
+
+    return navItems.filter((item) => {
+      // Items without module restriction are always visible
+      if (!item.module) return true;
+      
+      // Check if user has view permission for this module
+      return hasPermission(permissions, item.module, "view");
+    });
+  }, [permissions]);
 
   return (
     <aside
@@ -71,8 +98,8 @@ export function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 py-6 px-3 space-y-1">
-        {navItems.map((item) => {
+      <nav className="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
+        {visibleNavItems.map((item) => {
           const isActive =
             pathname === item.href ||
             (item.href !== "/dashboard" && pathname.startsWith(item.href));

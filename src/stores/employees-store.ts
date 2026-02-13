@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { createClient } from "@/lib/supabase/client";
+import { logAuditEvent } from "@/lib/audit";
 import type { Employee } from "@/types";
 
 interface EmployeesFilters {
@@ -134,6 +135,15 @@ export const useEmployeesStore = create<EmployeesState>((set, get) => ({
           set((state) => ({ employees: state.employees.filter((e) => e.id !== id) }));
           return null;
         }
+
+        // Log audit event
+        logAuditEvent({
+          orgId: newEmployee.org_id,
+          action: "create",
+          tableName: "employees",
+          recordId: newEmployee.id,
+          newValues: newEmployee as unknown as Record<string, unknown>,
+        });
       } catch (err) {
         console.error("addEmployee error:", err);
         return null;
@@ -144,6 +154,9 @@ export const useEmployeesStore = create<EmployeesState>((set, get) => ({
   },
 
   updateEmployee: async (id, data) => {
+    const { employees } = get();
+    const oldEmployee = employees.find((e) => e.id === id);
+
     // Update local state immediately
     set((state) => ({
       employees: state.employees.map((e) => (e.id === id ? { ...e, ...data } : e)),
@@ -161,6 +174,18 @@ export const useEmployeesStore = create<EmployeesState>((set, get) => ({
         if (error) {
           console.error("Error updating employee:", error);
           return false;
+        }
+
+        // Log audit event
+        if (oldEmployee) {
+          logAuditEvent({
+            orgId: oldEmployee.org_id,
+            action: "update",
+            tableName: "employees",
+            recordId: id,
+            oldValues: oldEmployee as unknown as Record<string, unknown>,
+            newValues: { ...oldEmployee, ...data } as unknown as Record<string, unknown>,
+          });
         }
       } catch (err) {
         console.error("updateEmployee error:", err);
@@ -190,6 +215,17 @@ export const useEmployeesStore = create<EmployeesState>((set, get) => ({
             set((state) => ({ employees: [...state.employees, employee] }));
           }
           return false;
+        }
+
+        // Log audit event
+        if (employee) {
+          logAuditEvent({
+            orgId: employee.org_id,
+            action: "delete",
+            tableName: "employees",
+            recordId: id,
+            oldValues: employee as unknown as Record<string, unknown>,
+          });
         }
       } catch (err) {
         console.error("deleteEmployee error:", err);

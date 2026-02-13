@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { createClient } from "@/lib/supabase/client";
+import { logAuditEvent } from "@/lib/audit";
 import type { Invoice, InvoiceItem } from "@/types";
 
 interface InvoicesFilters {
@@ -156,6 +157,15 @@ export const useInvoicesStore = create<InvoicesState>((set, get) => ({
         loading: false,
       }));
 
+      // Log audit event
+      logAuditEvent({
+        orgId: invoiceData.org_id,
+        action: "create",
+        tableName: "invoices",
+        recordId: invoiceData.id,
+        newValues: invoiceData,
+      });
+
       return invoiceData;
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to add invoice";
@@ -178,6 +188,14 @@ export const useInvoicesStore = create<InvoicesState>((set, get) => ({
 
     try {
       const supabase = createClient();
+      
+      // Get current values for audit log
+      const { data: oldInvoice } = await supabase
+        .from("invoices")
+        .select("*")
+        .eq("id", id)
+        .single();
+
       const { error } = await supabase
         .from("invoices")
         .update(data)
@@ -194,6 +212,18 @@ export const useInvoicesStore = create<InvoicesState>((set, get) => ({
         ),
         loading: false,
       }));
+
+      // Log audit event
+      if (oldInvoice) {
+        logAuditEvent({
+          orgId: oldInvoice.org_id,
+          action: "update",
+          tableName: "invoices",
+          recordId: id,
+          oldValues: oldInvoice,
+          newValues: { ...oldInvoice, ...data },
+        });
+      }
 
       return true;
     } catch (err) {
@@ -220,6 +250,14 @@ export const useInvoicesStore = create<InvoicesState>((set, get) => ({
 
     try {
       const supabase = createClient();
+      
+      // Get current values for audit log
+      const { data: oldInvoice } = await supabase
+        .from("invoices")
+        .select("*")
+        .eq("id", id)
+        .single();
+
       const { error } = await supabase
         .from("invoices")
         .delete()
@@ -239,6 +277,17 @@ export const useInvoicesStore = create<InvoicesState>((set, get) => ({
           loading: false,
         };
       });
+
+      // Log audit event
+      if (oldInvoice) {
+        logAuditEvent({
+          orgId: oldInvoice.org_id,
+          action: "delete",
+          tableName: "invoices",
+          recordId: id,
+          oldValues: oldInvoice,
+        });
+      }
 
       return true;
     } catch (err) {

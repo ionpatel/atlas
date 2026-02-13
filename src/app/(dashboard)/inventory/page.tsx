@@ -7,6 +7,7 @@ import {
   Search,
   Filter,
   Download,
+  Upload,
   Pencil,
   Trash2,
   X,
@@ -33,6 +34,8 @@ import { useToastStore } from "@/components/ui/toast";
 import { formatCurrency } from "@/lib/utils";
 import { BarcodeScanner } from "@/components/inventory/barcode-scanner";
 import { LowStockAlerts, StockBadge, AlertCountBadge, CriticalAlertPulse } from "@/components/inventory/low-stock-alerts";
+import { ImportWizard } from "@/components/import";
+import { CanCreate, CanEdit, CanDelete } from "@/components/auth";
 import type { Product } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -424,6 +427,7 @@ export default function InventoryPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [showScanner, setShowScanner] = useState(false);
   const [showAlerts, setShowAlerts] = useState(false);
+  const [showImport, setShowImport] = useState(false);
   
   // Enhanced filter states
   const [stockLevelFilter, setStockLevelFilter] = useState<string>("");
@@ -570,6 +574,38 @@ export default function InventoryPage() {
     setSort({ field: "name", direction: "asc" });
   };
 
+  // Existing SKUs for duplicate detection during import
+  const existingSkus = useMemo(
+    () => new Set(products.map((p) => p.sku.toLowerCase())),
+    [products]
+  );
+
+  const handleImportComplete = async (data: Record<string, any>[]) => {
+    let successCount = 0;
+    for (const item of data) {
+      const newProduct: Product = {
+        id: crypto.randomUUID(),
+        org_id: "org1",
+        name: item.name || "",
+        sku: item.sku || "",
+        barcode: item.barcode || undefined,
+        category: item.category || undefined,
+        description: item.description || undefined,
+        cost_price: item.cost_price || 0,
+        sell_price: item.sell_price || 0,
+        unit: item.unit || "each",
+        is_active: true,
+        stock_quantity: item.stock_quantity || 0,
+        min_quantity: item.min_quantity || 10,
+        created_at: new Date().toISOString(),
+      };
+      addProduct(newProduct);
+      successCount++;
+    }
+    setShowImport(false);
+    addToast(`Successfully imported ${successCount} product(s)`);
+  };
+
   const activeFilterCount = [
     filters.category,
     filters.status,
@@ -621,13 +657,15 @@ export default function InventoryPage() {
             Scan
           </button>
 
-          <button
-            onClick={() => setModalOpen(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
-          >
-            <Plus className="w-4 h-4" />
-            Add Product
-          </button>
+          <CanCreate module="inventory">
+            <button
+              onClick={() => setModalOpen(true)}
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
+            >
+              <Plus className="w-4 h-4" />
+              Add Product
+            </button>
+          </CanCreate>
         </div>
       </div>
 
@@ -727,10 +765,23 @@ export default function InventoryPage() {
             </span>
           )}
         </button>
-        <button className="flex items-center gap-2 px-4 py-2.5 border border-[#2a2a2a] rounded-lg text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200">
-          <Download className="w-4 h-4" />
-          Export
-        </button>
+        {/* Import/Export buttons */}
+        <div className="flex items-center border border-[#2a2a2a] rounded-lg overflow-hidden">
+          <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200">
+            <Download className="w-4 h-4" />
+            Export
+          </button>
+          <div className="w-px h-6 bg-[#2a2a2a]" />
+          <CanCreate module="inventory">
+            <button
+              onClick={() => setShowImport(true)}
+              className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+            >
+              <Upload className="w-4 h-4" />
+              Import
+            </button>
+          </CanCreate>
+        </div>
 
         {/* View toggle */}
         <div className="flex items-center border border-[#2a2a2a] rounded-lg overflow-hidden ml-auto">
@@ -901,21 +952,25 @@ export default function InventoryPage() {
                       </td>
                       <td className="px-4 py-4 text-right">
                         <div className="flex items-center justify-end gap-1">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setEditingProduct(p);
-                            }}
-                            className="p-2 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
-                          >
-                            <Pencil className="w-3.5 h-3.5" />
-                          </button>
-                          <button
-                            onClick={(e) => handleDelete(e, p.id)}
-                            className="p-2 rounded-lg text-[#888888] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
+                          <CanEdit module="inventory">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setEditingProduct(p);
+                              }}
+                              className="p-2 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
+                            >
+                              <Pencil className="w-3.5 h-3.5" />
+                            </button>
+                          </CanEdit>
+                          <CanDelete module="inventory">
+                            <button
+                              onClick={(e) => handleDelete(e, p.id)}
+                              className="p-2 rounded-lg text-[#888888] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </CanDelete>
                         </div>
                       </td>
                     </tr>
@@ -956,13 +1011,15 @@ export default function InventoryPage() {
             {selectedIds.size} selected
           </span>
           <div className="w-px h-5 bg-[#2a2a2a]" />
-          <button
-            onClick={handleBulkDelete}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200"
-          >
-            <Trash2 className="w-3.5 h-3.5" />
-            Delete
-          </button>
+          <CanDelete module="inventory">
+            <button
+              onClick={handleBulkDelete}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              Delete
+            </button>
+          </CanDelete>
           <button
             onClick={handleBulkExport}
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#CDB49E] hover:bg-[#3a3028] rounded-lg transition-all duration-200"
@@ -1035,6 +1092,16 @@ export default function InventoryPage() {
             setShowAlerts(false);
             setEditingProduct(product);
           }}
+        />
+      )}
+
+      {/* Import Wizard */}
+      {showImport && (
+        <ImportWizard
+          target="products"
+          onClose={() => setShowImport(false)}
+          onComplete={handleImportComplete}
+          existingKeys={existingSkus}
         />
       )}
     </div>

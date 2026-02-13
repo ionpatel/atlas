@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { createClient } from "@/lib/supabase/client";
+import { logAuditEvent } from "@/lib/audit";
 import type { Contact } from "@/types";
 
 interface ContactsFilters {
@@ -124,6 +125,15 @@ export const useContactsStore = create<ContactsState>((set, get) => ({
         loading: false,
       }));
 
+      // Log audit event
+      logAuditEvent({
+        orgId: data.org_id,
+        action: "create",
+        tableName: "contacts",
+        recordId: data.id,
+        newValues: data,
+      });
+
       return data;
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to add contact";
@@ -148,6 +158,14 @@ export const useContactsStore = create<ContactsState>((set, get) => ({
 
     try {
       const supabase = createClient();
+      
+      // Get current values for audit log
+      const { data: oldContact } = await supabase
+        .from("contacts")
+        .select("*")
+        .eq("id", id)
+        .single();
+
       const { error } = await supabase
         .from("contacts")
         .update(data)
@@ -166,6 +184,18 @@ export const useContactsStore = create<ContactsState>((set, get) => ({
         ),
         loading: false,
       }));
+
+      // Log audit event
+      if (oldContact) {
+        logAuditEvent({
+          orgId: oldContact.org_id,
+          action: "update",
+          tableName: "contacts",
+          recordId: id,
+          oldValues: oldContact,
+          newValues: { ...oldContact, ...data },
+        });
+      }
 
       return true;
     } catch (err) {
@@ -189,6 +219,14 @@ export const useContactsStore = create<ContactsState>((set, get) => ({
 
     try {
       const supabase = createClient();
+      
+      // Get current values for audit log
+      const { data: oldContact } = await supabase
+        .from("contacts")
+        .select("*")
+        .eq("id", id)
+        .single();
+
       const { error } = await supabase
         .from("contacts")
         .delete()
@@ -205,6 +243,17 @@ export const useContactsStore = create<ContactsState>((set, get) => ({
         contacts: state.contacts.filter((c) => c.id !== id),
         loading: false,
       }));
+
+      // Log audit event
+      if (oldContact) {
+        logAuditEvent({
+          orgId: oldContact.org_id,
+          action: "delete",
+          tableName: "contacts",
+          recordId: id,
+          oldValues: oldContact,
+        });
+      }
 
       return true;
     } catch (err) {
