@@ -1,633 +1,731 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { useWebsiteStore } from "@/stores/website-store";
 import {
-  Globe, Plus, Eye, EyeOff, Trash2, Copy, GripVertical, Layout, Type, Image as ImageIcon, Users, DollarSign,
-  MessageSquare, Mail, Grid, Star, Zap, ExternalLink, Palette, FileText, Home, Monitor, Smartphone,
-  Tablet, Check, ChevronRight, ChevronDown, ChevronUp, Sparkles, Settings2, Paintbrush, LayoutTemplate, X, Rocket, Link2,
-  Shield, BarChart3, Search, Layers, RefreshCw, Upload, CheckCircle, ArrowRight, Move, MousePointer,
-  Building2, Briefcase, ShoppingBag, Camera, Utensils, GraduationCap, Dumbbell, Phone, MapPin,
-  Clock, Facebook, Twitter, Instagram, Linkedin, Youtube, AlignLeft, AlignCenter, AlignRight, AlignJustify,
-  Bold, Italic, Underline, Square, Circle, Triangle, Play, Pause, Video, Music, Code,
-  Maximize2, Minimize2, RotateCw, FlipHorizontal, FlipVertical, Lock, Unlock, Droplet, Sun, Moon,
-  Sliders, Box, Columns, Rows, ArrowUp, ArrowDown, CornerUpLeft, CornerUpRight, Minus,
+  Globe, Plus, Eye, EyeOff, Trash2, Copy, GripVertical, Type, Image as ImageIcon, 
+  DollarSign, MessageSquare, Mail, Grid, Star, Zap, Palette, FileText, Home, Monitor, Smartphone,
+  Tablet, Check, ChevronRight, ChevronDown, ChevronUp, Sparkles, Settings2, Paintbrush, X, Rocket,
+  BarChart3, Layers, Upload, CheckCircle, ArrowRight, ArrowLeft, MousePointer,
+  Building2, Briefcase, ShoppingBag, Camera, Utensils, Dumbbell,
+  AlignLeft, AlignCenter, AlignRight, Bold, Italic, Underline, Square, Play, 
+  Box, Minus, Link, ExternalLink, LayoutGrid, Columns, SlidersHorizontal,
+  CircleDot, ChevronLeftIcon, ChevronRightIcon, Maximize2, Video, Music,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/* ═══════════════════════ STYLE SYSTEM ═══════════════════════ */
+/* ═══════════════════════ TYPES ═══════════════════════ */
 
-interface ElementStyles {
-  // Typography
-  fontFamily: string;
-  fontSize: string;
-  fontWeight: string;
-  lineHeight: string;
-  letterSpacing: string;
-  textAlign: string;
-  textTransform: string;
-  textDecoration: string;
-  color: string;
-  // Spacing
-  marginTop: string;
-  marginRight: string;
-  marginBottom: string;
-  marginLeft: string;
-  paddingTop: string;
-  paddingRight: string;
-  paddingBottom: string;
-  paddingLeft: string;
-  // Background
-  backgroundColor: string;
-  backgroundImage: string;
-  backgroundSize: string;
-  backgroundPosition: string;
-  backgroundOverlay: string;
-  // Border
-  borderWidth: string;
-  borderStyle: string;
-  borderColor: string;
-  borderRadius: string;
-  borderTopLeftRadius: string;
-  borderTopRightRadius: string;
-  borderBottomRightRadius: string;
-  borderBottomLeftRadius: string;
-  // Shadow
-  boxShadow: string;
-  shadowX: string;
-  shadowY: string;
-  shadowBlur: string;
-  shadowSpread: string;
-  shadowColor: string;
-  // Effects
-  opacity: string;
-  filter: string;
-  backdropFilter: string;
-  // Animation
-  transition: string;
-  hoverScale: string;
-  hoverOpacity: string;
-  hoverBackground: string;
-  hoverColor: string;
-  hoverShadow: string;
-  hoverBorderColor: string;
-  // Layout
-  display: string;
-  flexDirection: string;
-  justifyContent: string;
-  alignItems: string;
-  gap: string;
-  width: string;
-  height: string;
-  minWidth: string;
-  maxWidth: string;
+interface ElementData {
+  id: string;
+  type: "heading" | "text" | "button" | "image" | "video" | "carousel" | "modal" | "container" | "nav" | "footer";
+  content: string;
+  styles: Record<string, string>;
+  children?: ElementData[];
+  props?: Record<string, any>;
 }
 
-const defaultStyles: ElementStyles = {
-  fontFamily: "Inter",
-  fontSize: "16px",
-  fontWeight: "400",
-  lineHeight: "1.5",
-  letterSpacing: "0",
-  textAlign: "left",
-  textTransform: "none",
-  textDecoration: "none",
-  color: "#ffffff",
-  marginTop: "0",
-  marginRight: "0",
-  marginBottom: "0",
-  marginLeft: "0",
-  paddingTop: "16px",
-  paddingRight: "16px",
-  paddingBottom: "16px",
-  paddingLeft: "16px",
-  backgroundColor: "transparent",
-  backgroundImage: "",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundOverlay: "",
-  borderWidth: "0",
-  borderStyle: "solid",
-  borderColor: "#333333",
-  borderRadius: "12px",
-  borderTopLeftRadius: "12px",
-  borderTopRightRadius: "12px",
-  borderBottomRightRadius: "12px",
-  borderBottomLeftRadius: "12px",
-  boxShadow: "none",
-  shadowX: "0",
-  shadowY: "4",
-  shadowBlur: "16",
-  shadowSpread: "0",
-  shadowColor: "rgba(0,0,0,0.25)",
-  opacity: "1",
-  filter: "none",
-  backdropFilter: "none",
-  transition: "all 0.3s ease",
-  hoverScale: "1",
-  hoverOpacity: "1",
-  hoverBackground: "",
-  hoverColor: "",
-  hoverShadow: "",
-  hoverBorderColor: "",
-  display: "block",
-  flexDirection: "row",
-  justifyContent: "flex-start",
-  alignItems: "stretch",
-  gap: "16px",
-  width: "auto",
-  height: "auto",
-  minWidth: "0",
-  maxWidth: "none",
-};
-
-const FONT_FAMILIES = [
-  "Inter", "Plus Jakarta Sans", "Manrope", "Space Grotesk", "DM Sans", "Poppins",
-  "Outfit", "Lato", "Playfair Display", "Montserrat", "Roboto", "Open Sans",
-  "Raleway", "Oswald", "Merriweather", "Source Sans Pro", "Nunito", "Ubuntu"
-];
-
-const FONT_WEIGHTS = ["100", "200", "300", "400", "500", "600", "700", "800", "900"];
-const FONT_SIZES = ["10px", "12px", "14px", "16px", "18px", "20px", "24px", "28px", "32px", "36px", "40px", "48px", "56px", "64px", "72px", "80px", "96px"];
-const LINE_HEIGHTS = ["1", "1.2", "1.4", "1.5", "1.6", "1.75", "2"];
-const LETTER_SPACINGS = ["-0.05em", "-0.025em", "0", "0.025em", "0.05em", "0.1em", "0.2em"];
-
-const EASING_OPTIONS = [
-  { label: "Linear", value: "linear" },
-  { label: "Ease", value: "ease" },
-  { label: "Ease In", value: "ease-in" },
-  { label: "Ease Out", value: "ease-out" },
-  { label: "Ease In Out", value: "ease-in-out" },
-  { label: "Spring", value: "cubic-bezier(0.68, -0.55, 0.265, 1.55)" },
-  { label: "Bounce", value: "cubic-bezier(0.34, 1.56, 0.64, 1)" },
-];
-
-const SCROLL_ANIMATIONS = [
-  { label: "None", value: "none" },
-  { label: "Fade In", value: "fade-in" },
-  { label: "Fade Up", value: "fade-up" },
-  { label: "Fade Down", value: "fade-down" },
-  { label: "Slide Left", value: "slide-left" },
-  { label: "Slide Right", value: "slide-right" },
-  { label: "Zoom In", value: "zoom-in" },
-  { label: "Zoom Out", value: "zoom-out" },
-  { label: "Flip", value: "flip" },
-  { label: "Rotate", value: "rotate" },
-];
-
-/* ═══════════════════════ STYLE PANEL COMPONENTS ═══════════════════════ */
-
-function StyleSection({ title, icon: Icon, children, defaultOpen = false }: { title: string; icon: any; children: React.ReactNode; defaultOpen?: boolean }) {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
-  return (
-    <div className="border-b border-[#222]">
-      <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between px-4 py-3 hover:bg-[#1a1a1a] transition-colors">
-        <div className="flex items-center gap-2">
-          <Icon className="w-4 h-4 text-[#CDB49E]" />
-          <span className="text-sm font-medium text-white">{title}</span>
-        </div>
-        {isOpen ? <ChevronUp className="w-4 h-4 text-[#555]" /> : <ChevronDown className="w-4 h-4 text-[#555]" />}
-      </button>
-      {isOpen && <div className="px-4 pb-4 space-y-3">{children}</div>}
-    </div>
-  );
+interface SectionData {
+  id: string;
+  type: string;
+  elements: ElementData[];
+  styles: Record<string, string>;
 }
 
-function StyleInput({ label, value, onChange, type = "text", suffix, options }: { label: string; value: string; onChange: (v: string) => void; type?: string; suffix?: string; options?: string[] }) {
-  return (
-    <div className="flex items-center justify-between gap-2">
-      <span className="text-xs text-[#888] flex-shrink-0">{label}</span>
-      <div className="flex items-center gap-1">
-        {options ? (
-          <select value={value} onChange={(e) => onChange(e.target.value)} className="w-24 px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-            {options.map(o => <option key={o} value={o}>{o}</option>)}
-          </select>
-        ) : type === "color" ? (
-          <div className="flex items-center gap-1">
-            <input type="color" value={value} onChange={(e) => onChange(e.target.value)} className="w-8 h-8 rounded border border-[#333] bg-transparent cursor-pointer" />
-            <input type="text" value={value} onChange={(e) => onChange(e.target.value)} className="w-20 px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white font-mono" />
-          </div>
-        ) : (
-          <div className="flex items-center">
-            <input type={type} value={value.replace(/[^\d.-]/g, '')} onChange={(e) => onChange(e.target.value + (suffix || ''))} className="w-16 px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white text-right" />
-            {suffix && <span className="text-[10px] text-[#555] ml-1">{suffix}</span>}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function SpacingBox({ label, values, onChange }: { label: string; values: { top: string; right: string; bottom: string; left: string }; onChange: (side: string, value: string) => void }) {
-  return (
-    <div>
-      <span className="text-xs text-[#888] block mb-2">{label}</span>
-      <div className="relative w-full aspect-[2/1] bg-[#1a1a1a] rounded-lg border border-[#333] flex items-center justify-center">
-        {/* Top */}
-        <input type="text" value={values.top.replace(/[^\d]/g, '')} onChange={(e) => onChange('top', e.target.value + 'px')} className="absolute top-1 left-1/2 -translate-x-1/2 w-12 text-center text-xs bg-transparent text-[#CDB49E] border-b border-[#333] focus:outline-none" />
-        {/* Right */}
-        <input type="text" value={values.right.replace(/[^\d]/g, '')} onChange={(e) => onChange('right', e.target.value + 'px')} className="absolute right-1 top-1/2 -translate-y-1/2 w-12 text-center text-xs bg-transparent text-[#CDB49E] border-b border-[#333] focus:outline-none" />
-        {/* Bottom */}
-        <input type="text" value={values.bottom.replace(/[^\d]/g, '')} onChange={(e) => onChange('bottom', e.target.value + 'px')} className="absolute bottom-1 left-1/2 -translate-x-1/2 w-12 text-center text-xs bg-transparent text-[#CDB49E] border-b border-[#333] focus:outline-none" />
-        {/* Left */}
-        <input type="text" value={values.left.replace(/[^\d]/g, '')} onChange={(e) => onChange('left', e.target.value + 'px')} className="absolute left-1 top-1/2 -translate-y-1/2 w-12 text-center text-xs bg-transparent text-[#CDB49E] border-b border-[#333] focus:outline-none" />
-        {/* Center */}
-        <div className="w-12 h-6 rounded bg-[#333] flex items-center justify-center">
-          <span className="text-[10px] text-[#666]">{label}</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function BorderRadiusControl({ values, onChange }: { values: { tl: string; tr: string; br: string; bl: string }; onChange: (corner: string, value: string) => void }) {
-  const [linked, setLinked] = useState(true);
-  const allSame = values.tl === values.tr && values.tr === values.br && values.br === values.bl;
-
-  const handleChange = (corner: string, value: string) => {
-    if (linked) {
-      onChange('tl', value);
-      onChange('tr', value);
-      onChange('br', value);
-      onChange('bl', value);
-    } else {
-      onChange(corner, value);
-    }
-  };
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-xs text-[#888]">Border Radius</span>
-        <button onClick={() => setLinked(!linked)} className={cn("p-1 rounded", linked ? "text-[#CDB49E]" : "text-[#555]")}>
-          {linked ? <Lock className="w-3 h-3" /> : <Unlock className="w-3 h-3" />}
-        </button>
-      </div>
-      {linked ? (
-        <input type="range" min="0" max="50" value={parseInt(values.tl) || 0} onChange={(e) => handleChange('tl', e.target.value + 'px')} className="w-full accent-[#CDB49E]" />
-      ) : (
-        <div className="grid grid-cols-2 gap-2">
-          <input type="text" value={values.tl} onChange={(e) => handleChange('tl', e.target.value)} placeholder="TL" className="px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white text-center" />
-          <input type="text" value={values.tr} onChange={(e) => handleChange('tr', e.target.value)} placeholder="TR" className="px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white text-center" />
-          <input type="text" value={values.bl} onChange={(e) => handleChange('bl', e.target.value)} placeholder="BL" className="px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white text-center" />
-          <input type="text" value={values.br} onChange={(e) => handleChange('br', e.target.value)} placeholder="BR" className="px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white text-center" />
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ═══════════════════════ FULL STYLE PANEL ═══════════════════════ */
-
-function FullStylePanel({ styles, setStyles, elementType }: { styles: ElementStyles; setStyles: (s: ElementStyles) => void; elementType: string }) {
-  const updateStyle = (key: keyof ElementStyles, value: string) => {
-    setStyles({ ...styles, [key]: value });
-  };
-
-  return (
-    <div className="h-full overflow-auto">
-      {/* Element Type Badge */}
-      <div className="px-4 py-3 border-b border-[#222] flex items-center justify-between">
-        <span className="text-xs px-2 py-1 rounded-full bg-[#CDB49E]/10 text-[#CDB49E] font-medium">{elementType}</span>
-        <button className="text-xs text-[#555] hover:text-white">Reset All</button>
-      </div>
-
-      {/* Typography */}
-      <StyleSection title="Typography" icon={Type} defaultOpen>
-        <div className="space-y-3">
-          <div>
-            <span className="text-xs text-[#888] block mb-1.5">Font Family</span>
-            <select value={styles.fontFamily} onChange={(e) => updateStyle('fontFamily', e.target.value)} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-              {FONT_FAMILIES.map(f => <option key={f} value={f}>{f}</option>)}
-            </select>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <span className="text-xs text-[#888] block mb-1">Size</span>
-              <select value={styles.fontSize} onChange={(e) => updateStyle('fontSize', e.target.value)} className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-                {FONT_SIZES.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
-            <div>
-              <span className="text-xs text-[#888] block mb-1">Weight</span>
-              <select value={styles.fontWeight} onChange={(e) => updateStyle('fontWeight', e.target.value)} className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-                {FONT_WEIGHTS.map(w => <option key={w} value={w}>{w}</option>)}
-              </select>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <span className="text-xs text-[#888] block mb-1">Line Height</span>
-              <select value={styles.lineHeight} onChange={(e) => updateStyle('lineHeight', e.target.value)} className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-                {LINE_HEIGHTS.map(l => <option key={l} value={l}>{l}</option>)}
-              </select>
-            </div>
-            <div>
-              <span className="text-xs text-[#888] block mb-1">Letter Spacing</span>
-              <select value={styles.letterSpacing} onChange={(e) => updateStyle('letterSpacing', e.target.value)} className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-                {LETTER_SPACINGS.map(l => <option key={l} value={l}>{l}</option>)}
-              </select>
-            </div>
-          </div>
-          <div>
-            <span className="text-xs text-[#888] block mb-1.5">Text Align</span>
-            <div className="flex gap-1">
-              {[{ icon: AlignLeft, value: 'left' }, { icon: AlignCenter, value: 'center' }, { icon: AlignRight, value: 'right' }, { icon: AlignJustify, value: 'justify' }].map(({ icon: Icon, value }) => (
-                <button key={value} onClick={() => updateStyle('textAlign', value)} className={cn("flex-1 p-2 rounded-lg border transition-colors", styles.textAlign === value ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
-                  <Icon className="w-4 h-4 mx-auto" />
-                </button>
-              ))}
-            </div>
-          </div>
-          <div>
-            <span className="text-xs text-[#888] block mb-1.5">Text Style</span>
-            <div className="flex gap-1">
-              {[{ icon: Bold, value: 'bold', key: 'fontWeight', activeValue: '700' }, { icon: Italic, style: 'italic' }, { icon: Underline, value: 'underline', key: 'textDecoration' }].map(({ icon: Icon, value, key, activeValue, style }, i) => (
-                <button key={i} onClick={() => key && updateStyle(key as keyof ElementStyles, styles[key as keyof ElementStyles] === (activeValue || value) ? 'normal' : (activeValue || value!))} className={cn("p-2 rounded-lg border transition-colors", "border-[#333] text-[#666] hover:text-white")}>
-                  <Icon className="w-4 h-4" />
-                </button>
-              ))}
-            </div>
-          </div>
-          <StyleInput label="Color" value={styles.color} onChange={(v) => updateStyle('color', v)} type="color" />
-        </div>
-      </StyleSection>
-
-      {/* Spacing */}
-      <StyleSection title="Spacing" icon={Box}>
-        <SpacingBox label="Margin" values={{ top: styles.marginTop, right: styles.marginRight, bottom: styles.marginBottom, left: styles.marginLeft }} onChange={(side, value) => updateStyle(`margin${side.charAt(0).toUpperCase() + side.slice(1)}` as keyof ElementStyles, value)} />
-        <SpacingBox label="Padding" values={{ top: styles.paddingTop, right: styles.paddingRight, bottom: styles.paddingBottom, left: styles.paddingLeft }} onChange={(side, value) => updateStyle(`padding${side.charAt(0).toUpperCase() + side.slice(1)}` as keyof ElementStyles, value)} />
-      </StyleSection>
-
-      {/* Size & Layout */}
-      <StyleSection title="Size & Layout" icon={Maximize2}>
-        <div className="grid grid-cols-2 gap-2">
-          <StyleInput label="Width" value={styles.width} onChange={(v) => updateStyle('width', v)} suffix="px" />
-          <StyleInput label="Height" value={styles.height} onChange={(v) => updateStyle('height', v)} suffix="px" />
-          <StyleInput label="Min W" value={styles.minWidth} onChange={(v) => updateStyle('minWidth', v)} suffix="px" />
-          <StyleInput label="Max W" value={styles.maxWidth} onChange={(v) => updateStyle('maxWidth', v)} suffix="px" />
-        </div>
-        <div>
-          <span className="text-xs text-[#888] block mb-1.5">Display</span>
-          <div className="flex gap-1">
-            {['block', 'flex', 'grid', 'inline'].map(d => (
-              <button key={d} onClick={() => updateStyle('display', d)} className={cn("flex-1 px-2 py-1.5 text-xs rounded-lg border transition-colors capitalize", styles.display === d ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
-                {d}
-              </button>
-            ))}
-          </div>
-        </div>
-        {styles.display === 'flex' && (
-          <>
-            <div>
-              <span className="text-xs text-[#888] block mb-1.5">Direction</span>
-              <div className="flex gap-1">
-                {[{ icon: Rows, value: 'row' }, { icon: Columns, value: 'column' }].map(({ icon: Icon, value }) => (
-                  <button key={value} onClick={() => updateStyle('flexDirection', value)} className={cn("flex-1 p-2 rounded-lg border transition-colors", styles.flexDirection === value ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
-                    <Icon className="w-4 h-4 mx-auto" />
-                  </button>
-                ))}
-              </div>
-            </div>
-            <StyleInput label="Gap" value={styles.gap} onChange={(v) => updateStyle('gap', v)} suffix="px" />
-          </>
-        )}
-      </StyleSection>
-
-      {/* Background */}
-      <StyleSection title="Background" icon={Droplet}>
-        <StyleInput label="Color" value={styles.backgroundColor} onChange={(v) => updateStyle('backgroundColor', v)} type="color" />
-        <div>
-          <span className="text-xs text-[#888] block mb-1.5">Image/Video</span>
-          <div className="h-24 rounded-lg border-2 border-dashed border-[#333] flex flex-col items-center justify-center cursor-pointer hover:border-[#CDB49E]/50 transition-colors">
-            <Upload className="w-6 h-6 text-[#555] mb-1" />
-            <span className="text-xs text-[#555]">Drop image or video</span>
-          </div>
-        </div>
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <span className="text-xs text-[#888] block mb-1">Size</span>
-            <select value={styles.backgroundSize} onChange={(e) => updateStyle('backgroundSize', e.target.value)} className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-              <option value="cover">Cover</option>
-              <option value="contain">Contain</option>
-              <option value="auto">Auto</option>
-            </select>
-          </div>
-          <div>
-            <span className="text-xs text-[#888] block mb-1">Position</span>
-            <select value={styles.backgroundPosition} onChange={(e) => updateStyle('backgroundPosition', e.target.value)} className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-              <option value="center">Center</option>
-              <option value="top">Top</option>
-              <option value="bottom">Bottom</option>
-              <option value="left">Left</option>
-              <option value="right">Right</option>
-            </select>
-          </div>
-        </div>
-        <StyleInput label="Overlay" value={styles.backgroundOverlay} onChange={(v) => updateStyle('backgroundOverlay', v)} type="color" />
-      </StyleSection>
-
-      {/* Border */}
-      <StyleSection title="Border" icon={Square}>
-        <div className="grid grid-cols-3 gap-2">
-          <div>
-            <span className="text-xs text-[#888] block mb-1">Width</span>
-            <input type="number" min="0" max="20" value={parseInt(styles.borderWidth) || 0} onChange={(e) => updateStyle('borderWidth', e.target.value + 'px')} className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white text-center" />
-          </div>
-          <div>
-            <span className="text-xs text-[#888] block mb-1">Style</span>
-            <select value={styles.borderStyle} onChange={(e) => updateStyle('borderStyle', e.target.value)} className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-              <option value="solid">Solid</option>
-              <option value="dashed">Dashed</option>
-              <option value="dotted">Dotted</option>
-              <option value="double">Double</option>
-            </select>
-          </div>
-          <div>
-            <span className="text-xs text-[#888] block mb-1">Color</span>
-            <input type="color" value={styles.borderColor} onChange={(e) => updateStyle('borderColor', e.target.value)} className="w-full h-8 rounded border border-[#333] bg-transparent cursor-pointer" />
-          </div>
-        </div>
-        <BorderRadiusControl 
-          values={{ tl: styles.borderTopLeftRadius, tr: styles.borderTopRightRadius, br: styles.borderBottomRightRadius, bl: styles.borderBottomLeftRadius }}
-          onChange={(corner, value) => updateStyle(`border${corner === 'tl' ? 'TopLeft' : corner === 'tr' ? 'TopRight' : corner === 'br' ? 'BottomRight' : 'BottomLeft'}Radius` as keyof ElementStyles, value)}
-        />
-      </StyleSection>
-
-      {/* Shadow */}
-      <StyleSection title="Shadow" icon={Layers}>
-        <div className="space-y-2">
-          <div className="grid grid-cols-2 gap-2">
-            <StyleInput label="X Offset" value={styles.shadowX} onChange={(v) => updateStyle('shadowX', v)} suffix="px" />
-            <StyleInput label="Y Offset" value={styles.shadowY} onChange={(v) => updateStyle('shadowY', v)} suffix="px" />
-            <StyleInput label="Blur" value={styles.shadowBlur} onChange={(v) => updateStyle('shadowBlur', v)} suffix="px" />
-            <StyleInput label="Spread" value={styles.shadowSpread} onChange={(v) => updateStyle('shadowSpread', v)} suffix="px" />
-          </div>
-          <StyleInput label="Color" value={styles.shadowColor} onChange={(v) => updateStyle('shadowColor', v)} type="color" />
-          {/* Preview */}
-          <div className="h-16 rounded-lg bg-[#1a1a1a] flex items-center justify-center">
-            <div className="w-12 h-12 rounded-lg bg-[#333]" style={{ boxShadow: `${styles.shadowX}px ${styles.shadowY}px ${styles.shadowBlur}px ${styles.shadowSpread}px ${styles.shadowColor}` }} />
-          </div>
-        </div>
-      </StyleSection>
-
-      {/* Effects */}
-      <StyleSection title="Effects" icon={Sparkles}>
-        <div>
-          <span className="text-xs text-[#888] block mb-1">Opacity: {Math.round(parseFloat(styles.opacity) * 100)}%</span>
-          <input type="range" min="0" max="1" step="0.01" value={styles.opacity} onChange={(e) => updateStyle('opacity', e.target.value)} className="w-full accent-[#CDB49E]" />
-        </div>
-        <div>
-          <span className="text-xs text-[#888] block mb-1.5">Blur</span>
-          <input type="range" min="0" max="20" value={parseInt(styles.filter.replace(/[^\d]/g, '')) || 0} onChange={(e) => updateStyle('filter', `blur(${e.target.value}px)`)} className="w-full accent-[#CDB49E]" />
-        </div>
-        <div>
-          <span className="text-xs text-[#888] block mb-1.5">Backdrop Blur</span>
-          <input type="range" min="0" max="20" value={parseInt(styles.backdropFilter.replace(/[^\d]/g, '')) || 0} onChange={(e) => updateStyle('backdropFilter', `blur(${e.target.value}px)`)} className="w-full accent-[#CDB49E]" />
-        </div>
-      </StyleSection>
-
-      {/* Hover Effects */}
-      <StyleSection title="Hover Effects" icon={MousePointer}>
-        <div>
-          <span className="text-xs text-[#888] block mb-1">Scale: {styles.hoverScale}x</span>
-          <input type="range" min="0.9" max="1.2" step="0.01" value={styles.hoverScale} onChange={(e) => updateStyle('hoverScale', e.target.value)} className="w-full accent-[#CDB49E]" />
-        </div>
-        <div>
-          <span className="text-xs text-[#888] block mb-1">Opacity: {Math.round(parseFloat(styles.hoverOpacity) * 100)}%</span>
-          <input type="range" min="0" max="1" step="0.01" value={styles.hoverOpacity} onChange={(e) => updateStyle('hoverOpacity', e.target.value)} className="w-full accent-[#CDB49E]" />
-        </div>
-        <StyleInput label="Background" value={styles.hoverBackground} onChange={(v) => updateStyle('hoverBackground', v)} type="color" />
-        <StyleInput label="Text Color" value={styles.hoverColor} onChange={(v) => updateStyle('hoverColor', v)} type="color" />
-        <StyleInput label="Border" value={styles.hoverBorderColor} onChange={(v) => updateStyle('hoverBorderColor', v)} type="color" />
-      </StyleSection>
-
-      {/* Animations */}
-      <StyleSection title="Animations" icon={Play}>
-        <div>
-          <span className="text-xs text-[#888] block mb-1.5">Scroll Animation</span>
-          <select className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-            {SCROLL_ANIMATIONS.map(a => <option key={a.value} value={a.value}>{a.label}</option>)}
-          </select>
-        </div>
-        <div>
-          <span className="text-xs text-[#888] block mb-1.5">Transition</span>
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <span className="text-[10px] text-[#555] block mb-1">Duration</span>
-              <select className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-                <option value="0.1s">100ms</option>
-                <option value="0.2s">200ms</option>
-                <option value="0.3s">300ms</option>
-                <option value="0.5s">500ms</option>
-                <option value="1s">1s</option>
-              </select>
-            </div>
-            <div>
-              <span className="text-[10px] text-[#555] block mb-1">Easing</span>
-              <select className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
-                {EASING_OPTIONS.map(e => <option key={e.value} value={e.value}>{e.label}</option>)}
-              </select>
-            </div>
-          </div>
-        </div>
-        <div>
-          <span className="text-xs text-[#888] block mb-1.5">Click Animation</span>
-          <div className="flex gap-1">
-            {['none', 'scale', 'bounce', 'shake', 'pulse'].map(a => (
-              <button key={a} className="flex-1 px-2 py-1.5 text-xs border border-[#333] rounded-lg text-[#666] hover:text-white capitalize">{a}</button>
-            ))}
-          </div>
-        </div>
-      </StyleSection>
-    </div>
-  );
+interface PageData {
+  id: string;
+  name: string;
+  slug: string;
+  sections: SectionData[];
 }
 
 /* ═══════════════════════ TEMPLATES ═══════════════════════ */
 
 const TEMPLATES = [
-  { id: "saas", name: "SaaS Platform", icon: BarChart3, preview: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)", popular: true },
-  { id: "agency", name: "Creative Agency", icon: Briefcase, preview: "linear-gradient(135deg, #f43f5e 0%, #ec4899 100%)", popular: true },
-  { id: "ecommerce", name: "E-Commerce", icon: ShoppingBag, preview: "linear-gradient(135deg, #10b981 0%, #14b8a6 100%)" },
-  { id: "restaurant", name: "Restaurant", icon: Utensils, preview: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)" },
-  { id: "fitness", name: "Fitness & Gym", icon: Dumbbell, preview: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)" },
-  { id: "portfolio", name: "Portfolio", icon: Camera, preview: "linear-gradient(135deg, #fafafa 0%, #e5e5e5 100%)" },
+  {
+    id: "saas-starter",
+    name: "SaaS Platform",
+    category: "SaaS",
+    icon: BarChart3,
+    preview: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
+    popular: true,
+    description: "Analytics dashboard with pricing & features",
+  },
+  {
+    id: "agency-creative",
+    name: "Creative Agency",
+    category: "Agency",
+    icon: Briefcase,
+    preview: "linear-gradient(135deg, #f43f5e 0%, #ec4899 100%)",
+    popular: true,
+    description: "Portfolio showcase with services",
+  },
+  {
+    id: "ecommerce",
+    name: "E-Commerce Store",
+    category: "Shop",
+    icon: ShoppingBag,
+    preview: "linear-gradient(135deg, #10b981 0%, #14b8a6 100%)",
+    description: "Product catalog with cart",
+  },
+  {
+    id: "restaurant",
+    name: "Restaurant",
+    category: "Food",
+    icon: Utensils,
+    preview: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+    description: "Menu & reservations",
+  },
+  {
+    id: "fitness",
+    name: "Fitness & Gym",
+    category: "Health",
+    icon: Dumbbell,
+    preview: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
+    description: "Classes & membership",
+  },
+  {
+    id: "portfolio",
+    name: "Portfolio",
+    category: "Personal",
+    icon: Camera,
+    preview: "linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%)",
+    description: "Showcase your work",
+  },
 ];
+
+/* ═══════════════════════ PREBUILT COMPONENTS ═══════════════════════ */
+
+const COMPONENTS = [
+  { id: "heading", name: "Heading", icon: Type, category: "Text" },
+  { id: "text", name: "Paragraph", icon: FileText, category: "Text" },
+  { id: "button", name: "Button", icon: Square, category: "Interactive" },
+  { id: "image", name: "Image", icon: ImageIcon, category: "Media" },
+  { id: "video", name: "Video", icon: Video, category: "Media" },
+  { id: "carousel", name: "Carousel", icon: Columns, category: "Gallery" },
+  { id: "slider", name: "Slider", icon: SlidersHorizontal, category: "Gallery" },
+  { id: "modal", name: "Modal/Popup", icon: Maximize2, category: "Interactive" },
+  { id: "nav", name: "Navigation", icon: LayoutGrid, category: "Layout" },
+  { id: "grid", name: "Grid", icon: Grid, category: "Layout" },
+  { id: "testimonial", name: "Testimonial", icon: MessageSquare, category: "Content" },
+  { id: "pricing", name: "Pricing Card", icon: DollarSign, category: "Content" },
+  { id: "cta", name: "CTA Section", icon: Zap, category: "Content" },
+  { id: "footer", name: "Footer", icon: Mail, category: "Layout" },
+];
+
+const BUTTON_STYLES = [
+  { id: "solid", name: "Solid", style: { backgroundColor: "#CDB49E", color: "#111", border: "none" } },
+  { id: "outline", name: "Outline", style: { backgroundColor: "transparent", color: "#CDB49E", border: "2px solid #CDB49E" } },
+  { id: "ghost", name: "Ghost", style: { backgroundColor: "transparent", color: "#CDB49E", border: "none" } },
+  { id: "gradient", name: "Gradient", style: { background: "linear-gradient(135deg, #CDB49E 0%, #d4c0ad 100%)", color: "#111", border: "none" } },
+  { id: "glow", name: "Glow", style: { backgroundColor: "#CDB49E", color: "#111", border: "none", boxShadow: "0 0 20px rgba(205,180,158,0.5)" } },
+];
+
+const CAROUSEL_PRESETS = [
+  { id: "hero", name: "Hero Carousel", slides: 3, autoplay: true, arrows: true },
+  { id: "testimonials", name: "Testimonials", slides: 1, autoplay: true, dots: true },
+  { id: "gallery", name: "Image Gallery", slides: 4, arrows: true },
+  { id: "products", name: "Product Slider", slides: 3, arrows: true, dots: true },
+];
+
+/* ═══════════════════════ INLINE EDITOR ═══════════════════════ */
+
+function InlineEditor({ 
+  value, 
+  onChange, 
+  type = "text",
+  placeholder = "Click to edit...",
+  style = {},
+  className = "",
+}: { 
+  value: string; 
+  onChange: (v: string) => void;
+  type?: "heading" | "text" | "button";
+  placeholder?: string;
+  style?: React.CSSProperties;
+  className?: string;
+}) {
+  const [editing, setEditing] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (editing && ref.current) {
+      ref.current.focus();
+      // Select all text
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(ref.current);
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+    }
+  }, [editing]);
+
+  return (
+    <div
+      ref={ref}
+      contentEditable={editing}
+      suppressContentEditableWarning
+      onClick={() => setEditing(true)}
+      onBlur={(e) => {
+        setEditing(false);
+        onChange(e.currentTarget.textContent || "");
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          e.currentTarget.blur();
+        }
+        if (e.key === "Escape") {
+          e.currentTarget.blur();
+        }
+      }}
+      className={cn(
+        "outline-none cursor-text transition-all",
+        editing && "ring-2 ring-[#CDB49E] ring-offset-2 ring-offset-[#0a0a0a] rounded",
+        !value && "opacity-50",
+        className
+      )}
+      style={style}
+    >
+      {value || placeholder}
+    </div>
+  );
+}
+
+/* ═══════════════════════ CAROUSEL COMPONENT ═══════════════════════ */
+
+function CarouselPreview({ slides = 3, currentSlide = 0 }: { slides?: number; currentSlide?: number }) {
+  const [current, setCurrent] = useState(currentSlide);
+  
+  return (
+    <div className="relative w-full h-64 bg-[#1a1a1a] rounded-xl overflow-hidden">
+      {/* Slides */}
+      <div className="absolute inset-0 flex transition-transform duration-500" style={{ transform: `translateX(-${current * 100}%)` }}>
+        {Array.from({ length: slides }).map((_, i) => (
+          <div key={i} className="w-full h-full flex-shrink-0 flex items-center justify-center" style={{ background: `linear-gradient(135deg, hsl(${i * 60}, 70%, 50%) 0%, hsl(${i * 60 + 30}, 70%, 40%) 100%)` }}>
+            <span className="text-white text-2xl font-bold">Slide {i + 1}</span>
+          </div>
+        ))}
+      </div>
+      {/* Arrows */}
+      <button onClick={() => setCurrent((c) => Math.max(0, c - 1))} className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white hover:bg-black/70">
+        <ArrowLeft className="w-5 h-5" />
+      </button>
+      <button onClick={() => setCurrent((c) => Math.min(slides - 1, c + 1))} className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white hover:bg-black/70">
+        <ArrowRight className="w-5 h-5" />
+      </button>
+      {/* Dots */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        {Array.from({ length: slides }).map((_, i) => (
+          <button key={i} onClick={() => setCurrent(i)} className={cn("w-2 h-2 rounded-full transition-colors", current === i ? "bg-white" : "bg-white/40")} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════ MODAL COMPONENT ═══════════════════════ */
+
+function ModalPreview({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  if (!isOpen) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative bg-[#111] border border-[#333] rounded-2xl p-8 max-w-md w-full shadow-2xl">
+        <button onClick={onClose} className="absolute top-4 right-4 text-[#666] hover:text-white">
+          <X className="w-5 h-5" />
+        </button>
+        <h3 className="text-xl font-bold text-white mb-4">Modal Title</h3>
+        <p className="text-[#888] mb-6">This is a customizable modal popup. Edit the content and styling as needed.</p>
+        <button className="w-full py-3 bg-[#CDB49E] text-black rounded-xl font-semibold">Take Action</button>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════ STYLE PANEL ═══════════════════════ */
+
+function StylePanel({ 
+  element, 
+  styles, 
+  onStyleChange,
+  onDelete,
+  onDuplicate,
+}: { 
+  element: ElementData | null;
+  styles: Record<string, string>;
+  onStyleChange: (key: string, value: string) => void;
+  onDelete: () => void;
+  onDuplicate: () => void;
+}) {
+  const [activeTab, setActiveTab] = useState<"style" | "animation" | "link">("style");
+
+  if (!element) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-8 text-center">
+        <div>
+          <MousePointer className="w-12 h-12 text-[#333] mx-auto mb-4" />
+          <p className="text-sm text-[#666]">Click an element to edit</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col h-full">
+      {/* Element Info */}
+      <div className="p-4 border-b border-[#222] flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="text-xs px-2 py-1 rounded-full bg-[#CDB49E]/10 text-[#CDB49E] font-medium capitalize">{element.type}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <button onClick={onDuplicate} className="p-1.5 text-[#666] hover:text-white rounded"><Copy className="w-4 h-4" /></button>
+          <button onClick={onDelete} className="p-1.5 text-[#666] hover:text-red-400 rounded"><Trash2 className="w-4 h-4" /></button>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex border-b border-[#222]">
+        {[
+          { id: "style" as const, label: "Style" },
+          { id: "animation" as const, label: "Animation" },
+          { id: "link" as const, label: "Link" },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={cn("flex-1 py-2.5 text-xs font-medium transition-colors", activeTab === tab.id ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666] hover:text-white")}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 overflow-auto p-4 space-y-4">
+        {activeTab === "style" && (
+          <>
+            {/* Typography (for text elements) */}
+            {(element.type === "heading" || element.type === "text" || element.type === "button") && (
+              <div className="space-y-3">
+                <h4 className="text-xs font-semibold text-[#555] uppercase">Typography</h4>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Font Size</label>
+                  <div className="flex items-center gap-2">
+                    <input type="range" min="12" max="96" value={parseInt(styles.fontSize) || 16} onChange={(e) => onStyleChange("fontSize", e.target.value + "px")} className="flex-1 accent-[#CDB49E]" />
+                    <span className="text-xs text-white w-12">{styles.fontSize || "16px"}</span>
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Font Weight</label>
+                  <select value={styles.fontWeight || "400"} onChange={(e) => onStyleChange("fontWeight", e.target.value)} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                    {["300", "400", "500", "600", "700", "800"].map(w => <option key={w} value={w}>{w}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1.5 block">Text Align</label>
+                  <div className="flex gap-1">
+                    {[{ icon: AlignLeft, value: "left" }, { icon: AlignCenter, value: "center" }, { icon: AlignRight, value: "right" }].map(({ icon: Icon, value }) => (
+                      <button key={value} onClick={() => onStyleChange("textAlign", value)} className={cn("flex-1 p-2 rounded-lg border transition-colors", styles.textAlign === value ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                        <Icon className="w-4 h-4 mx-auto" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Text Color</label>
+                  <div className="flex items-center gap-2">
+                    <input type="color" value={styles.color || "#ffffff"} onChange={(e) => onStyleChange("color", e.target.value)} className="w-10 h-10 rounded border border-[#333] bg-transparent cursor-pointer" />
+                    <input type="text" value={styles.color || "#ffffff"} onChange={(e) => onStyleChange("color", e.target.value)} className="flex-1 px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white font-mono" />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Button Styles */}
+            {element.type === "button" && (
+              <div className="space-y-3">
+                <h4 className="text-xs font-semibold text-[#555] uppercase">Button Style</h4>
+                <div className="grid grid-cols-3 gap-2">
+                  {BUTTON_STYLES.map((btn) => (
+                    <button
+                      key={btn.id}
+                      onClick={() => {
+                        Object.entries(btn.style).forEach(([k, v]) => onStyleChange(k, v));
+                      }}
+                      className="p-3 rounded-lg border border-[#333] hover:border-[#CDB49E] transition-colors"
+                    >
+                      <div className="px-2 py-1 rounded text-xs" style={btn.style as React.CSSProperties}>{btn.name}</div>
+                    </button>
+                  ))}
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Border Radius</label>
+                  <input type="range" min="0" max="50" value={parseInt(styles.borderRadius) || 12} onChange={(e) => onStyleChange("borderRadius", e.target.value + "px")} className="w-full accent-[#CDB49E]" />
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Padding</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <input type="number" placeholder="H" value={parseInt(styles.paddingLeft) || 24} onChange={(e) => { onStyleChange("paddingLeft", e.target.value + "px"); onStyleChange("paddingRight", e.target.value + "px"); }} className="px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                    <input type="number" placeholder="V" value={parseInt(styles.paddingTop) || 12} onChange={(e) => { onStyleChange("paddingTop", e.target.value + "px"); onStyleChange("paddingBottom", e.target.value + "px"); }} className="px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Background */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Background</h4>
+              <div>
+                <label className="text-xs text-[#888] mb-1 block">Color</label>
+                <div className="flex items-center gap-2">
+                  <input type="color" value={styles.backgroundColor || "#111111"} onChange={(e) => onStyleChange("backgroundColor", e.target.value)} className="w-10 h-10 rounded border border-[#333] bg-transparent cursor-pointer" />
+                  <input type="text" value={styles.backgroundColor || "#111111"} onChange={(e) => onStyleChange("backgroundColor", e.target.value)} className="flex-1 px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white font-mono" />
+                </div>
+              </div>
+              {element.type === "image" && (
+                <div>
+                  <label className="text-xs text-[#888] mb-1.5 block">Image</label>
+                  <div className="h-24 rounded-lg border-2 border-dashed border-[#333] flex flex-col items-center justify-center cursor-pointer hover:border-[#CDB49E]/50 transition-colors">
+                    <Upload className="w-6 h-6 text-[#555] mb-1" />
+                    <span className="text-xs text-[#555]">Click or drop image</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Spacing */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Spacing</h4>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-xs text-[#666] mb-1 block">Margin Top</label>
+                  <input type="number" value={parseInt(styles.marginTop) || 0} onChange={(e) => onStyleChange("marginTop", e.target.value + "px")} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                </div>
+                <div>
+                  <label className="text-xs text-[#666] mb-1 block">Margin Bottom</label>
+                  <input type="number" value={parseInt(styles.marginBottom) || 0} onChange={(e) => onStyleChange("marginBottom", e.target.value + "px")} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                </div>
+              </div>
+            </div>
+
+            {/* Shadow */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Shadow</h4>
+              <div className="flex gap-2">
+                {[
+                  { label: "None", value: "none" },
+                  { label: "SM", value: "0 1px 2px rgba(0,0,0,0.3)" },
+                  { label: "MD", value: "0 4px 12px rgba(0,0,0,0.3)" },
+                  { label: "LG", value: "0 10px 40px rgba(0,0,0,0.4)" },
+                ].map((s) => (
+                  <button key={s.label} onClick={() => onStyleChange("boxShadow", s.value)} className={cn("flex-1 py-2 text-xs rounded-lg border transition-colors", styles.boxShadow === s.value ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        {activeTab === "animation" && (
+          <div className="space-y-4">
+            <div>
+              <label className="text-xs text-[#888] mb-1.5 block">Hover Effect</label>
+              <select className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                <option value="none">None</option>
+                <option value="scale">Scale Up</option>
+                <option value="scale-down">Scale Down</option>
+                <option value="lift">Lift (Shadow)</option>
+                <option value="glow">Glow</option>
+                <option value="color-shift">Color Shift</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-xs text-[#888] mb-1.5 block">Click Effect</label>
+              <select className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                <option value="none">None</option>
+                <option value="pulse">Pulse</option>
+                <option value="bounce">Bounce</option>
+                <option value="shake">Shake</option>
+                <option value="ripple">Ripple</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-xs text-[#888] mb-1.5 block">Scroll Animation</label>
+              <select className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                <option value="none">None</option>
+                <option value="fade-in">Fade In</option>
+                <option value="slide-up">Slide Up</option>
+                <option value="slide-left">Slide from Left</option>
+                <option value="slide-right">Slide from Right</option>
+                <option value="zoom-in">Zoom In</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-xs text-[#888] mb-1.5 block">Transition Duration</label>
+              <div className="flex items-center gap-2">
+                <input type="range" min="100" max="1000" step="100" defaultValue="300" className="flex-1 accent-[#CDB49E]" />
+                <span className="text-xs text-white w-12">300ms</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "link" && (
+          <div className="space-y-4">
+            <div>
+              <label className="text-xs text-[#888] mb-1.5 block">Link Type</label>
+              <div className="grid grid-cols-2 gap-2">
+                <button className="p-3 rounded-lg border border-[#CDB49E] bg-[#CDB49E]/10 text-[#CDB49E] text-xs font-medium">
+                  <Link className="w-4 h-4 mx-auto mb-1" />
+                  Page Link
+                </button>
+                <button className="p-3 rounded-lg border border-[#333] text-[#666] text-xs font-medium hover:border-[#444]">
+                  <ExternalLink className="w-4 h-4 mx-auto mb-1" />
+                  External URL
+                </button>
+              </div>
+            </div>
+            <div>
+              <label className="text-xs text-[#888] mb-1.5 block">Navigate To</label>
+              <select className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                <option value="">Select page...</option>
+                <option value="/">Home</option>
+                <option value="/about">About</option>
+                <option value="/services">Services</option>
+                <option value="/pricing">Pricing</option>
+                <option value="/contact">Contact</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-xs text-[#888] mb-1.5 block">Or External URL</label>
+              <input type="url" placeholder="https://example.com" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+            </div>
+            <div className="flex items-center gap-2">
+              <input type="checkbox" id="newTab" className="rounded border-[#333]" />
+              <label htmlFor="newTab" className="text-xs text-[#888]">Open in new tab</label>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════ SETTINGS PANEL ═══════════════════════ */
+
+function SettingsPanel() {
+  return (
+    <div className="p-4 space-y-6">
+      <div className="space-y-3">
+        <h4 className="text-xs font-semibold text-[#555] uppercase">Site Info</h4>
+        <div>
+          <label className="text-xs text-[#888] mb-1 block">Site Name</label>
+          <input type="text" defaultValue="My Website" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+        </div>
+        <div>
+          <label className="text-xs text-[#888] mb-1 block">Tagline</label>
+          <input type="text" placeholder="A short description" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <h4 className="text-xs font-semibold text-[#555] uppercase">Branding</h4>
+        <div>
+          <label className="text-xs text-[#888] mb-1.5 block">Logo</label>
+          <div className="h-20 rounded-lg border-2 border-dashed border-[#333] flex items-center justify-center cursor-pointer hover:border-[#CDB49E]/50">
+            <div className="text-center">
+              <Upload className="w-5 h-5 text-[#555] mx-auto mb-1" />
+              <span className="text-xs text-[#555]">Upload logo</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label className="text-xs text-[#888] mb-1.5 block">Favicon</label>
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-lg bg-[#1a1a1a] border border-[#333] flex items-center justify-center">
+              <Globe className="w-6 h-6 text-[#555]" />
+            </div>
+            <button className="text-xs text-[#CDB49E] hover:underline">Upload</button>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <h4 className="text-xs font-semibold text-[#555] uppercase">Colors</h4>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="text-xs text-[#666] mb-1 block">Primary</label>
+            <input type="color" defaultValue="#CDB49E" className="w-full h-10 rounded border border-[#333] bg-transparent cursor-pointer" />
+          </div>
+          <div>
+            <label className="text-xs text-[#666] mb-1 block">Secondary</label>
+            <input type="color" defaultValue="#111111" className="w-full h-10 rounded border border-[#333] bg-transparent cursor-pointer" />
+          </div>
+          <div>
+            <label className="text-xs text-[#666] mb-1 block">Accent</label>
+            <input type="color" defaultValue="#8b5cf6" className="w-full h-10 rounded border border-[#333] bg-transparent cursor-pointer" />
+          </div>
+          <div>
+            <label className="text-xs text-[#666] mb-1 block">Background</label>
+            <input type="color" defaultValue="#0a0a0a" className="w-full h-10 rounded border border-[#333] bg-transparent cursor-pointer" />
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <h4 className="text-xs font-semibold text-[#555] uppercase">Typography</h4>
+        <div>
+          <label className="text-xs text-[#888] mb-1 block">Heading Font</label>
+          <select className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+            <option>Inter</option>
+            <option>Poppins</option>
+            <option>Playfair Display</option>
+            <option>Montserrat</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-xs text-[#888] mb-1 block">Body Font</label>
+          <select className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+            <option>Inter</option>
+            <option>Lato</option>
+            <option>Open Sans</option>
+            <option>Roboto</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <h4 className="text-xs font-semibold text-[#555] uppercase">SEO</h4>
+        <div>
+          <label className="text-xs text-[#888] mb-1 block">Meta Title</label>
+          <input type="text" placeholder="Page title for search engines" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+        </div>
+        <div>
+          <label className="text-xs text-[#888] mb-1 block">Meta Description</label>
+          <textarea placeholder="Brief description for search results" rows={2} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white resize-none" />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 /* ═══════════════════════ MAIN PAGE ═══════════════════════ */
 
 export default function WebsitePage() {
-  const { fetchPages } = useWebsiteStore();
-  const [selectedElement, setSelectedElement] = useState<string | null>("hero-heading");
-  const [elementStyles, setElementStyles] = useState<ElementStyles>(defaultStyles);
+  const [view, setView] = useState<"templates" | "editor">("templates");
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const [selectedElement, setSelectedElement] = useState<ElementData | null>(null);
+  const [elementStyles, setElementStyles] = useState<Record<string, string>>({});
   const [devicePreview, setDevicePreview] = useState<"desktop" | "tablet" | "mobile">("desktop");
-  const [activePanel, setActivePanel] = useState<"style" | "layers" | "settings">("style");
+  const [rightPanel, setRightPanel] = useState<"style" | "components" | "settings">("style");
+  const [showModal, setShowModal] = useState(false);
   const [zoom, setZoom] = useState(100);
-
-  useEffect(() => {
-    fetchPages("org1");
-  }, [fetchPages]);
-
-  // Generate CSS from styles
-  const getElementCSS = (styles: ElementStyles) => ({
-    fontFamily: styles.fontFamily,
-    fontSize: styles.fontSize,
-    fontWeight: styles.fontWeight,
-    lineHeight: styles.lineHeight,
-    letterSpacing: styles.letterSpacing,
-    textAlign: styles.textAlign as any,
-    textTransform: styles.textTransform as any,
-    textDecoration: styles.textDecoration,
-    color: styles.color,
-    marginTop: styles.marginTop,
-    marginRight: styles.marginRight,
-    marginBottom: styles.marginBottom,
-    marginLeft: styles.marginLeft,
-    paddingTop: styles.paddingTop,
-    paddingRight: styles.paddingRight,
-    paddingBottom: styles.paddingBottom,
-    paddingLeft: styles.paddingLeft,
-    backgroundColor: styles.backgroundColor,
-    backgroundImage: styles.backgroundImage ? `url(${styles.backgroundImage})` : undefined,
-    backgroundSize: styles.backgroundSize,
-    backgroundPosition: styles.backgroundPosition,
-    borderWidth: styles.borderWidth,
-    borderStyle: styles.borderStyle,
-    borderColor: styles.borderColor,
-    borderRadius: styles.borderRadius,
-    boxShadow: styles.boxShadow !== 'none' ? `${styles.shadowX}px ${styles.shadowY}px ${styles.shadowBlur}px ${styles.shadowSpread}px ${styles.shadowColor}` : 'none',
-    opacity: styles.opacity,
-    filter: styles.filter,
-    backdropFilter: styles.backdropFilter,
-    transition: styles.transition,
+  
+  // Editable content state
+  const [content, setContent] = useState({
+    heroHeading: "Build Amazing Websites",
+    heroSubheading: "Create stunning, responsive websites with our powerful visual editor. No coding required.",
+    heroButton: "Start Building Free",
+    heroButton2: "Watch Demo",
+    feature1Title: "Visual Editor",
+    feature1Desc: "Drag and drop interface",
+    feature2Title: "Responsive",
+    feature2Desc: "Works on all devices",
+    feature3Title: "Fast",
+    feature3Desc: "Optimized performance",
   });
 
+  const updateContent = (key: string, value: string) => {
+    setContent(prev => ({ ...prev, [key]: value }));
+  };
+
+  const handleStyleChange = (key: string, value: string) => {
+    setElementStyles(prev => ({ ...prev, [key]: value }));
+  };
+
+  // Template Gallery View
+  if (view === "templates") {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] p-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#CDB49E]/10 text-[#CDB49E] text-sm font-medium mb-4">
+              <Sparkles className="w-4 h-4" />
+              Ready-to-Use Templates
+            </div>
+            <h1 className="text-4xl font-bold text-white mb-4">Choose Your Template</h1>
+            <p className="text-lg text-[#888]">Start with a professional design and customize everything</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {TEMPLATES.map((template) => {
+              const Icon = template.icon;
+              return (
+                <div key={template.id} className="group relative bg-[#111] border border-[#2a2a2a] rounded-2xl overflow-hidden hover:border-[#CDB49E]/50 transition-all">
+                  <div className="relative h-40" style={{ background: template.preview }}>
+                    {template.popular && (
+                      <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-amber-500 text-[10px] font-bold text-black">POPULAR</div>
+                    )}
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
+                      <button
+                        onClick={() => { setSelectedTemplate(template.id); setView("editor"); }}
+                        className="px-5 py-2.5 rounded-xl bg-[#CDB49E] text-black text-sm font-semibold hover:bg-[#d4c0ad]"
+                      >
+                        Use Template
+                      </button>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-8 h-8 rounded-lg bg-[#CDB49E]/10 flex items-center justify-center">
+                        <Icon className="w-4 h-4 text-[#CDB49E]" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-semibold text-white">{template.name}</h3>
+                        <span className="text-[10px] text-[#666]">{template.category}</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-[#888]">{template.description}</p>
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Blank Template */}
+            <div
+              onClick={() => { setSelectedTemplate("blank"); setView("editor"); }}
+              className="group bg-[#111] border-2 border-dashed border-[#333] rounded-2xl overflow-hidden hover:border-[#CDB49E]/50 transition-all cursor-pointer flex flex-col items-center justify-center min-h-[240px]"
+            >
+              <Plus className="w-12 h-12 text-[#444] mb-3" />
+              <span className="text-sm font-medium text-[#666]">Start from Scratch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Editor View
   return (
     <div className="min-h-screen bg-[#0a0a0a] flex flex-col">
-      {/* Top Toolbar */}
+      {/* Toolbar */}
       <div className="h-12 bg-[#111] border-b border-[#222] flex items-center justify-between px-4">
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Globe className="w-5 h-5 text-[#CDB49E]" />
-            <span className="text-sm font-semibold text-white">Website Builder</span>
-          </div>
-          <div className="h-6 w-px bg-[#333]" />
-          <div className="flex items-center gap-1">
-            <button className="px-3 py-1.5 text-xs text-[#888] hover:text-white hover:bg-[#1a1a1a] rounded-lg transition-colors">Undo</button>
-            <button className="px-3 py-1.5 text-xs text-[#888] hover:text-white hover:bg-[#1a1a1a] rounded-lg transition-colors">Redo</button>
-          </div>
+          <button onClick={() => setView("templates")} className="flex items-center gap-2 text-sm text-[#888] hover:text-white">
+            <ChevronRight className="w-4 h-4 rotate-180" /> Templates
+          </button>
+          <div className="h-5 w-px bg-[#333]" />
+          <span className="text-sm font-medium text-white">My Website</span>
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Zoom */}
           <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
-            <button onClick={() => setZoom(Math.max(25, zoom - 25))} className="text-[#888] hover:text-white"><Minus className="w-3 h-3" /></button>
+            <button onClick={() => setZoom(Math.max(50, zoom - 25))} className="text-[#888] hover:text-white"><Minus className="w-3 h-3" /></button>
             <span className="text-xs text-white w-10 text-center">{zoom}%</span>
-            <button onClick={() => setZoom(Math.min(200, zoom + 25))} className="text-[#888] hover:text-white"><Plus className="w-3 h-3" /></button>
+            <button onClick={() => setZoom(Math.min(150, zoom + 25))} className="text-[#888] hover:text-white"><Plus className="w-3 h-3" /></button>
           </div>
 
-          {/* Device Preview */}
           <div className="flex items-center gap-1 p-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
             {[{ id: "desktop" as const, icon: Monitor }, { id: "tablet" as const, icon: Tablet }, { id: "mobile" as const, icon: Smartphone }].map(({ id, icon: Icon }) => (
               <button key={id} onClick={() => setDevicePreview(id)} className={cn("p-1.5 rounded-md transition-colors", devicePreview === id ? "bg-[#CDB49E]/10 text-[#CDB49E]" : "text-[#555] hover:text-white")}>
@@ -636,51 +734,56 @@ export default function WebsitePage() {
             ))}
           </div>
 
-          <div className="h-6 w-px bg-[#333]" />
-
-          <button className="flex items-center gap-2 px-3 py-1.5 text-sm text-[#888] hover:text-white hover:bg-[#1a1a1a] rounded-lg transition-colors">
-            <Eye className="w-4 h-4" /> Preview
+          <button onClick={() => setShowModal(true)} className="px-3 py-1.5 text-xs text-[#888] hover:text-white border border-[#333] rounded-lg">
+            Test Modal
           </button>
-          <button className="flex items-center gap-2 px-4 py-1.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+
+          <button className="flex items-center gap-2 px-4 py-1.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">
             <Rocket className="w-4 h-4" /> Publish
           </button>
         </div>
       </div>
 
       <div className="flex-1 flex">
-        {/* Left Panel - Layers */}
+        {/* Left: Components Panel */}
         <div className="w-64 bg-[#111] border-r border-[#222] flex flex-col">
           <div className="p-3 border-b border-[#222]">
-            <h3 className="text-xs font-semibold text-[#555] uppercase tracking-wider">Layers</h3>
+            <h3 className="text-xs font-semibold text-[#555] uppercase">Add Elements</h3>
           </div>
-          <div className="flex-1 overflow-auto p-2">
-            {/* Layer tree */}
-            {['Page', '  └ Header', '    └ Logo', '    └ Nav', '  └ Hero Section', '    └ Heading', '    └ Subheading', '    └ CTA Button', '  └ Features', '  └ Pricing', '  └ Footer'].map((layer, i) => (
-              <button
-                key={i}
-                onClick={() => setSelectedElement(layer.trim().toLowerCase().replace(/[^a-z]/g, '-'))}
-                className={cn(
-                  "w-full text-left px-2 py-1.5 text-xs rounded transition-colors",
-                  selectedElement === layer.trim().toLowerCase().replace(/[^a-z]/g, '-')
-                    ? "bg-[#CDB49E]/10 text-[#CDB49E]"
-                    : "text-[#888] hover:text-white hover:bg-[#1a1a1a]"
-                )}
-                style={{ paddingLeft: `${(layer.length - layer.trimStart().length) * 6 + 8}px` }}
-              >
-                {layer.trim().replace(/[└─]/g, '').trim()}
-              </button>
+          <div className="flex-1 overflow-auto p-3 space-y-4">
+            {["Text", "Interactive", "Media", "Gallery", "Content", "Layout"].map((category) => (
+              <div key={category}>
+                <h4 className="text-[10px] font-semibold text-[#444] uppercase mb-2">{category}</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {COMPONENTS.filter(c => c.category === category).map((comp) => {
+                    const Icon = comp.icon;
+                    return (
+                      <button key={comp.id} className="p-3 rounded-lg border border-[#2a2a2a] hover:border-[#CDB49E]/50 transition-colors text-center group">
+                        <Icon className="w-5 h-5 text-[#666] group-hover:text-[#CDB49E] mx-auto mb-1 transition-colors" />
+                        <span className="text-[10px] text-[#888]">{comp.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             ))}
-          </div>
 
-          {/* Add Element */}
-          <div className="p-3 border-t border-[#222]">
-            <button className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg text-sm text-[#888] hover:text-white hover:border-[#CDB49E]/50 transition-colors">
-              <Plus className="w-4 h-4" /> Add Element
-            </button>
+            {/* Carousel Presets */}
+            <div>
+              <h4 className="text-[10px] font-semibold text-[#444] uppercase mb-2">Carousel Presets</h4>
+              <div className="space-y-2">
+                {CAROUSEL_PRESETS.map((preset) => (
+                  <button key={preset.id} className="w-full p-3 rounded-lg border border-[#2a2a2a] hover:border-[#CDB49E]/50 text-left">
+                    <span className="text-xs text-white">{preset.name}</span>
+                    <span className="text-[10px] text-[#666] block">{preset.slides} slides</span>
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Canvas */}
+        {/* Center: Canvas */}
         <div className="flex-1 bg-[#1a1a1a] overflow-auto p-8 flex items-start justify-center">
           <div
             className={cn(
@@ -691,68 +794,100 @@ export default function WebsitePage() {
             )}
             style={{ transform: `scale(${zoom / 100})`, transformOrigin: 'top center' }}
           >
-            {/* Live Preview */}
-            <div className="min-h-[800px]">
-              {/* Nav */}
-              <nav className="flex items-center justify-between px-8 py-4 border-b border-[#222]">
-                <span className="text-xl font-bold text-[#CDB49E]">Brand</span>
-                <div className="flex items-center gap-6 text-sm text-[#888]">
-                  <span>Home</span><span>Features</span><span>Pricing</span><span>Contact</span>
-                </div>
-                <button className="px-4 py-2 text-sm font-medium bg-[#CDB49E] text-black rounded-lg">Get Started</button>
-              </nav>
+            {/* Nav */}
+            <nav className="flex items-center justify-between px-8 py-4 border-b border-[#222]">
+              <InlineEditor value="Brand" onChange={(v) => {}} style={{ fontSize: '20px', fontWeight: '700', color: '#CDB49E' }} />
+              <div className="flex items-center gap-6 text-sm text-[#888]">
+                {["Home", "Features", "Pricing", "Contact"].map((item) => (
+                  <InlineEditor key={item} value={item} onChange={(v) => {}} style={{ fontSize: '14px', color: '#888' }} />
+                ))}
+              </div>
+              <button
+                onClick={() => setSelectedElement({ id: "nav-cta", type: "button", content: "Get Started", styles: {} })}
+                className={cn("px-4 py-2 text-sm font-medium bg-[#CDB49E] text-black rounded-lg transition-all", selectedElement?.id === "nav-cta" && "ring-2 ring-[#CDB49E] ring-offset-2 ring-offset-[#0a0a0a]")}
+              >
+                <InlineEditor value="Get Started" onChange={(v) => {}} style={{ display: 'inline' }} />
+              </button>
+            </nav>
 
-              {/* Hero */}
-              <section className="px-8 py-24 text-center">
-                <h1
-                  className={cn("cursor-pointer rounded-lg transition-all", selectedElement === "hero-heading" && "ring-2 ring-[#CDB49E] ring-offset-2 ring-offset-[#0a0a0a]")}
-                  style={selectedElement === "hero-heading" ? getElementCSS(elementStyles) : { fontSize: '48px', fontWeight: '700', color: '#fff', marginBottom: '24px' }}
-                  onClick={() => setSelectedElement("hero-heading")}
-                >
-                  Build Amazing Websites
-                </h1>
-                <p
-                  className={cn("cursor-pointer rounded-lg transition-all max-w-2xl mx-auto", selectedElement === "hero-subheading" && "ring-2 ring-[#CDB49E] ring-offset-2 ring-offset-[#0a0a0a]")}
-                  style={selectedElement === "hero-subheading" ? getElementCSS(elementStyles) : { fontSize: '18px', color: '#888', marginBottom: '32px' }}
-                  onClick={() => setSelectedElement("hero-subheading")}
-                >
-                  Create stunning, responsive websites with our powerful visual editor. No coding required.
-                </p>
-                <div className="flex justify-center gap-4">
-                  <button
-                    className={cn("cursor-pointer transition-all", selectedElement === "cta-button" && "ring-2 ring-[#CDB49E] ring-offset-2 ring-offset-[#0a0a0a]")}
-                    style={selectedElement === "cta-button" ? getElementCSS(elementStyles) : { padding: '16px 32px', fontSize: '14px', fontWeight: '600', backgroundColor: '#CDB49E', color: '#111', borderRadius: '12px' }}
-                    onClick={() => setSelectedElement("cta-button")}
-                  >
-                    Start Building Free
-                  </button>
-                  <button className="px-8 py-4 text-sm font-semibold border border-[#CDB49E] text-[#CDB49E] rounded-xl">Watch Demo</button>
-                </div>
-              </section>
+            {/* Hero */}
+            <section className="px-8 py-24 text-center">
+              <div
+                onClick={() => { setSelectedElement({ id: "hero-heading", type: "heading", content: content.heroHeading, styles: {} }); setElementStyles({ fontSize: '48px', fontWeight: '700', color: '#ffffff' }); }}
+                className={cn("mb-6 cursor-pointer", selectedElement?.id === "hero-heading" && "ring-2 ring-[#CDB49E] ring-offset-4 ring-offset-[#0a0a0a] rounded")}
+              >
+                <InlineEditor
+                  value={content.heroHeading}
+                  onChange={(v) => updateContent("heroHeading", v)}
+                  style={{ ...elementStyles, ...(selectedElement?.id === "hero-heading" ? elementStyles : { fontSize: '48px', fontWeight: '700', color: '#ffffff' }) }}
+                />
+              </div>
 
-              {/* Features */}
-              <section className="px-8 py-20 bg-[#111]">
-                <h2 className="text-3xl font-bold text-center text-white mb-4">Powerful Features</h2>
-                <p className="text-center text-[#888] mb-12">Everything you need to build professional websites</p>
-                <div className="grid grid-cols-3 gap-8">
-                  {[
-                    { icon: "🎨", title: "Visual Editor", desc: "Drag and drop interface" },
-                    { icon: "📱", title: "Responsive", desc: "Works on all devices" },
-                    { icon: "⚡", title: "Fast", desc: "Optimized performance" },
-                  ].map((f, i) => (
-                    <div key={i} className="p-6 rounded-xl bg-[#0a0a0a] text-center">
-                      <div className="text-4xl mb-4">{f.icon}</div>
-                      <h3 className="font-semibold text-white mb-2">{f.title}</h3>
-                      <p className="text-sm text-[#888]">{f.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </div>
+              <div
+                onClick={() => { setSelectedElement({ id: "hero-sub", type: "text", content: content.heroSubheading, styles: {} }); setElementStyles({ fontSize: '18px', color: '#888888' }); }}
+                className={cn("max-w-2xl mx-auto mb-8 cursor-pointer", selectedElement?.id === "hero-sub" && "ring-2 ring-[#CDB49E] ring-offset-4 ring-offset-[#0a0a0a] rounded")}
+              >
+                <InlineEditor
+                  value={content.heroSubheading}
+                  onChange={(v) => updateContent("heroSubheading", v)}
+                  style={selectedElement?.id === "hero-sub" ? elementStyles : { fontSize: '18px', color: '#888888' }}
+                />
+              </div>
+
+              <div className="flex justify-center gap-4">
+                <button
+                  onClick={() => { setSelectedElement({ id: "hero-btn1", type: "button", content: content.heroButton, styles: {} }); setElementStyles({ backgroundColor: '#CDB49E', color: '#111111', padding: '16px 32px', borderRadius: '12px' }); }}
+                  className={cn("transition-all", selectedElement?.id === "hero-btn1" && "ring-2 ring-[#CDB49E] ring-offset-2 ring-offset-[#0a0a0a]")}
+                  style={selectedElement?.id === "hero-btn1" ? { ...elementStyles } : { padding: '16px 32px', fontSize: '14px', fontWeight: '600', backgroundColor: '#CDB49E', color: '#111', borderRadius: '12px' }}
+                >
+                  <InlineEditor value={content.heroButton} onChange={(v) => updateContent("heroButton", v)} style={{ display: 'inline' }} />
+                </button>
+                <button
+                  onClick={() => { setSelectedElement({ id: "hero-btn2", type: "button", content: content.heroButton2, styles: {} }); setElementStyles({ backgroundColor: 'transparent', color: '#CDB49E', border: '2px solid #CDB49E', padding: '16px 32px', borderRadius: '12px' }); }}
+                  className={cn("transition-all", selectedElement?.id === "hero-btn2" && "ring-2 ring-[#CDB49E] ring-offset-2 ring-offset-[#0a0a0a]")}
+                  style={selectedElement?.id === "hero-btn2" ? { ...elementStyles } : { padding: '16px 32px', fontSize: '14px', fontWeight: '600', backgroundColor: 'transparent', color: '#CDB49E', border: '2px solid #CDB49E', borderRadius: '12px' }}
+                >
+                  <InlineEditor value={content.heroButton2} onChange={(v) => updateContent("heroButton2", v)} style={{ display: 'inline' }} />
+                </button>
+              </div>
+            </section>
+
+            {/* Carousel Demo */}
+            <section className="px-8 py-12">
+              <h2 className="text-2xl font-bold text-white text-center mb-8">Featured Carousel</h2>
+              <CarouselPreview slides={3} />
+            </section>
+
+            {/* Features */}
+            <section className="px-8 py-20 bg-[#111]">
+              <h2 className="text-3xl font-bold text-center text-white mb-4">
+                <InlineEditor value="Powerful Features" onChange={() => {}} />
+              </h2>
+              <p className="text-center text-[#888] mb-12">
+                <InlineEditor value="Everything you need to build professional websites" onChange={() => {}} />
+              </p>
+              <div className="grid grid-cols-3 gap-8">
+                {[
+                  { key: "feature1", icon: "🎨" },
+                  { key: "feature2", icon: "📱" },
+                  { key: "feature3", icon: "⚡" },
+                ].map((f, i) => (
+                  <div key={i} className="p-6 rounded-xl bg-[#0a0a0a] text-center">
+                    <div className="text-4xl mb-4">{f.icon}</div>
+                    <h3 className="font-semibold text-white mb-2">
+                      <InlineEditor value={content[`${f.key}Title` as keyof typeof content]} onChange={(v) => updateContent(`${f.key}Title`, v)} />
+                    </h3>
+                    <p className="text-sm text-[#888]">
+                      <InlineEditor value={content[`${f.key}Desc` as keyof typeof content]} onChange={(v) => updateContent(`${f.key}Desc`, v)} />
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         </div>
 
-        {/* Right Panel - Style Editor */}
+        {/* Right: Style Panel */}
         <div className="w-80 bg-[#111] border-l border-[#222] flex flex-col">
           {/* Panel Tabs */}
           <div className="flex border-b border-[#222]">
@@ -762,11 +897,8 @@ export default function WebsitePage() {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActivePanel(tab.id)}
-                className={cn(
-                  "flex-1 flex items-center justify-center gap-2 py-3 text-xs transition-colors",
-                  activePanel === tab.id ? "text-[#CDB49E] border-b-2 border-[#CDB49E] -mb-[1px]" : "text-[#666] hover:text-white"
-                )}
+                onClick={() => setRightPanel(tab.id)}
+                className={cn("flex-1 flex items-center justify-center gap-2 py-3 text-xs transition-colors", rightPanel === tab.id ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666] hover:text-white")}
               >
                 <tab.icon className="w-4 h-4" />
                 {tab.label}
@@ -775,24 +907,24 @@ export default function WebsitePage() {
           </div>
 
           {/* Panel Content */}
-          {activePanel === "style" && selectedElement && (
-            <FullStylePanel
+          {rightPanel === "style" ? (
+            <StylePanel
+              element={selectedElement}
               styles={elementStyles}
-              setStyles={setElementStyles}
-              elementType={selectedElement.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+              onStyleChange={handleStyleChange}
+              onDelete={() => setSelectedElement(null)}
+              onDuplicate={() => {}}
             />
-          )}
-
-          {!selectedElement && (
-            <div className="flex-1 flex items-center justify-center p-8 text-center">
-              <div>
-                <MousePointer className="w-12 h-12 text-[#333] mx-auto mb-4" />
-                <p className="text-sm text-[#666]">Click an element on the canvas to edit its styles</p>
-              </div>
+          ) : (
+            <div className="flex-1 overflow-auto">
+              <SettingsPanel />
             </div>
           )}
         </div>
       </div>
+
+      {/* Modal Preview */}
+      <ModalPreview isOpen={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 }
