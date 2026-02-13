@@ -30,3 +30,19 @@ export type { DomainConfig, DNSRecord } from "./domain-settings";
 
 export { TemplatePreviewModal, TemplateCard, TEMPLATE_THUMBNAILS, TEMPLATE_FEATURES } from "./template-preview";
 export type { TemplateInfo } from "./template-preview";
+
+// New v3.1 Components - AI & Advanced Features
+export { AIPanel } from "./ai-panel";
+export type { default as AIPanelType } from "./ai-panel";
+
+export { VariantsPanel, getVariantsForType, BUILT_IN_VARIANTS } from "./variants-panel";
+export type { ComponentVariant, VariantCategory } from "./variants-panel";
+
+export { ResponsiveEditor, ResponsivePreview, mergeResponsiveStyles, generateResponsiveCSS } from "./responsive-editor";
+export type { Breakpoint, BreakpointStyles, ResponsiveConfig } from "./responsive-editor";
+
+export { TemplateMarketplace } from "./template-marketplace";
+export type { MarketplaceTemplate } from "./template-marketplace";
+
+export { UndoStackPanel, useUndoStack, createInitialUndoState } from "./undo-stack";
+export type { HistoryEntry, Branch, UndoStackState } from "./undo-stack";

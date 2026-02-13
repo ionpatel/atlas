@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "analyze": "ANALYZE=true next build",
+    "build:analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",
@@ -25,6 +27,7 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^16.1.6",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^20.19.33",
     "@types/react": "^19.2.14",
