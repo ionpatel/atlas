@@ -18,6 +18,149 @@ import {
 import { usePayrollStore, type PayRun, type PayPeriod, type PayStub } from "@/stores/payroll-store";
 import { cn } from "@/lib/utils";
 
+/* ─────────── T4 Generator ─────────── */
+
+function generateT4(employeeName: string, ytdData: {
+  gross: number;
+  federalTax: number;
+  provincialTax: number;
+  cpp: number;
+  ei: number;
+}, year: number = 2026) {
+  const totalTax = ytdData.federalTax + ytdData.provincialTax;
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>T4 - ${employeeName} - ${year}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+    .t4 { max-width: 800px; margin: 0 auto; background: white; border: 2px solid #000; }
+    .header { background: #1a1a1a; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 24px; }
+    .header .year { font-size: 28px; font-weight: bold; }
+    .subheader { background: #333; color: white; padding: 8px 20px; font-size: 12px; }
+    .content { padding: 20px; }
+    .section { margin-bottom: 20px; }
+    .section-title { font-size: 11px; font-weight: bold; text-transform: uppercase; color: #666; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .box { border: 1px solid #ccc; padding: 10px; }
+    .box-number { font-size: 10px; color: #666; margin-bottom: 3px; }
+    .box-label { font-size: 11px; color: #333; margin-bottom: 5px; }
+    .box-value { font-size: 16px; font-weight: bold; color: #000; }
+    .employer-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .employer-info, .employee-info { border: 1px solid #ccc; padding: 15px; }
+    .info-title { font-size: 10px; color: #666; text-transform: uppercase; margin-bottom: 10px; }
+    .info-line { font-size: 12px; margin-bottom: 5px; }
+    .totals { background: #f9f9f9; padding: 15px; margin-top: 20px; }
+    .totals-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+    .total-box { text-align: center; }
+    .total-label { font-size: 10px; color: #666; }
+    .total-value { font-size: 18px; font-weight: bold; }
+    .footer { background: #f0f0f0; padding: 15px 20px; font-size: 10px; color: #666; text-align: center; }
+    @media print { body { padding: 0; background: white; } .t4 { border: none; } }
+  </style>
+</head>
+<body>
+  <div class="t4">
+    <div class="header">
+      <h1>T4</h1>
+      <div class="year">${year}</div>
+    </div>
+    <div class="subheader">STATEMENT OF REMUNERATION PAID</div>
+    
+    <div class="content">
+      <div class="employer-section">
+        <div class="employer-info">
+          <div class="info-title">Employer Information</div>
+          <div class="info-line"><strong>Atlas ERP Inc.</strong></div>
+          <div class="info-line">123 Business Street</div>
+          <div class="info-line">Toronto, ON M5V 1A1</div>
+          <div class="info-line">Business Number: 123456789RP0001</div>
+        </div>
+        <div class="employee-info">
+          <div class="info-title">Employee Information</div>
+          <div class="info-line"><strong>${employeeName}</strong></div>
+          <div class="info-line">SIN: XXX-XXX-XXX</div>
+          <div class="info-line">Province of Employment: ON</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Income & Deductions</div>
+        <div class="grid">
+          <div class="box">
+            <div class="box-number">Box 14</div>
+            <div class="box-label">Employment Income</div>
+            <div class="box-value">$${ytdData.gross.toLocaleString('en-CA', { minimumFractionDigits: 2 })}</div>
+          </div>
+          <div class="box">
+            <div class="box-number">Box 16</div>
+            <div class="box-label">Employee's CPP Contributions</div>
+            <div class="box-value">$${ytdData.cpp.toLocaleString('en-CA', { minimumFractionDigits: 2 })}</div>
+          </div>
+          <div class="box">
+            <div class="box-number">Box 18</div>
+            <div class="box-label">Employee's EI Premiums</div>
+            <div class="box-value">$${ytdData.ei.toLocaleString('en-CA', { minimumFractionDigits: 2 })}</div>
+          </div>
+          <div class="box">
+            <div class="box-number">Box 22</div>
+            <div class="box-label">Income Tax Deducted</div>
+            <div class="box-value">$${totalTax.toLocaleString('en-CA', { minimumFractionDigits: 2 })}</div>
+          </div>
+          <div class="box">
+            <div class="box-number">Box 24</div>
+            <div class="box-label">EI Insurable Earnings</div>
+            <div class="box-value">$${Math.min(ytdData.gross, 65700).toLocaleString('en-CA', { minimumFractionDigits: 2 })}</div>
+          </div>
+          <div class="box">
+            <div class="box-number">Box 26</div>
+            <div class="box-label">CPP/QPP Pensionable Earnings</div>
+            <div class="box-value">$${Math.min(ytdData.gross, 71300).toLocaleString('en-CA', { minimumFractionDigits: 2 })}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="totals">
+        <div class="totals-grid">
+          <div class="total-box">
+            <div class="total-label">Total Income</div>
+            <div class="total-value">$${ytdData.gross.toLocaleString('en-CA', { minimumFractionDigits: 2 })}</div>
+          </div>
+          <div class="total-box">
+            <div class="total-label">Total Tax</div>
+            <div class="total-value">$${totalTax.toLocaleString('en-CA', { minimumFractionDigits: 2 })}</div>
+          </div>
+          <div class="total-box">
+            <div class="total-label">Total CPP</div>
+            <div class="total-value">$${ytdData.cpp.toLocaleString('en-CA', { minimumFractionDigits: 2 })}</div>
+          </div>
+          <div class="total-box">
+            <div class="total-label">Total EI</div>
+            <div class="total-value">$${ytdData.ei.toLocaleString('en-CA', { minimumFractionDigits: 2 })}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      This is a computer-generated T4 slip. For official tax filing, please verify with CRA requirements.<br>
+      Generated by Atlas ERP
+    </div>
+  </div>
+  <script>window.onload = function() { window.print(); }</script>
+</body>
+</html>`;
+
+  const printWindow = window.open('', '_blank');
+  if (printWindow) {
+    printWindow.document.write(html);
+    printWindow.document.close();
+  }
+}
+
 /* ─────────── helpers ─────────── */
 
 function formatCurrency(amount: number): string {
@@ -568,14 +711,29 @@ function PayStubDetail({
                   <td className="px-6 py-4 text-right text-sm text-[#888888]">{formatCurrency(stub.ei)}</td>
                   <td className="px-6 py-4 text-right text-sm font-medium text-emerald-400">{formatCurrency(stub.netPay)}</td>
                   <td className="px-6 py-4 text-center">
-                    <button
-                      onClick={() => generatePayStubPDF(stub, payRun.name)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#CDB49E] bg-[#CDB49E]/10 border border-[#CDB49E]/20 rounded-lg hover:bg-[#CDB49E]/20 transition-all"
-                      title="Download Pay Stub"
-                    >
-                      <FileText className="w-3.5 h-3.5" />
-                      View
-                    </button>
+                    <div className="flex items-center justify-center gap-2">
+                      <button
+                        onClick={() => generatePayStubPDF(stub, payRun.name)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#CDB49E] bg-[#CDB49E]/10 border border-[#CDB49E]/20 rounded-lg hover:bg-[#CDB49E]/20 transition-all"
+                        title="View Pay Stub"
+                      >
+                        <FileText className="w-3.5 h-3.5" />
+                        Stub
+                      </button>
+                      <button
+                        onClick={() => generateT4(stub.employeeName, {
+                          gross: stub.ytdGross,
+                          federalTax: stub.ytdFederalTax,
+                          provincialTax: stub.ytdProvincialTax,
+                          cpp: stub.ytdCpp,
+                          ei: stub.ytdEi,
+                        })}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-lg hover:bg-emerald-500/20 transition-all"
+                        title="Generate T4"
+                      >
+                        T4
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
