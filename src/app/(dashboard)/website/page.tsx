@@ -16,7 +16,7 @@ import {
   AlignEndVertical, GalleryHorizontal, Expand, ZoomIn, ZoomOut, Target,
   Droplets, Sparkle, Move3D, SquareDashed, PaletteIcon,
   AlignHorizontalJustifyStart, AlignHorizontalJustifyCenter, AlignHorizontalJustifyEnd,
-  AlignHorizontalSpaceBetween, Trophy, Users, Clock, Award, MapPin, Phone,
+  AlignHorizontalSpaceBetween, Trophy, Users, Clock, Award, MapPin, Phone, Download,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -187,6 +187,10 @@ const COMPONENTS = {
     { id: "socialProof", name: "Social Proof", icon: Users },
     { id: "accordion", name: "Accordion", icon: ChevronDown },
     { id: "tabs", name: "Tab Panels", icon: LayoutGrid },
+    { id: "modal", name: "Modal/Popup", icon: Square },
+    { id: "carousel", name: "Image Carousel", icon: GalleryHorizontal },
+    { id: "slider", name: "Content Slider", icon: SlidersHorizontal },
+    { id: "progressBar", name: "Progress Bar", icon: BarChart3 },
   ],
 };
 
@@ -912,6 +916,73 @@ const getDefaultElement = (type: string): Partial<ElementData> => {
       }),
       styles: { padding: "60px 32px", backgroundColor: "#111" },
     },
+    modal: {
+      content: JSON.stringify({
+        trigger: "Open Modal",
+        title: "Modal Title",
+        content: "This is the modal content. Add any text, images, or components here.",
+        closeText: "Close",
+        actionText: "Confirm",
+        size: "medium", // "small" | "medium" | "large"
+      }),
+      styles: { display: "inline-block" },
+    },
+    carousel: {
+      content: JSON.stringify({
+        images: [
+          { src: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80", caption: "Fitness Training" },
+          { src: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80", caption: "Premium Equipment" },
+          { src: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&q=80", caption: "Modern Facility" },
+          { src: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800&q=80", caption: "Expert Trainers" },
+        ],
+        autoPlay: true,
+        interval: 5000,
+        showDots: true,
+        showArrows: true,
+      }),
+      styles: { padding: "40px 0", backgroundColor: "#0a0a0a" },
+    },
+    slider: {
+      content: JSON.stringify({
+        slides: [
+          { 
+            title: "First Slide", 
+            subtitle: "This is the first slide content",
+            buttonText: "Learn More",
+            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+          },
+          { 
+            title: "Second Slide", 
+            subtitle: "This is the second slide content",
+            buttonText: "Get Started",
+            background: "linear-gradient(135deg, #f43f5e 0%, #ec4899 100%)"
+          },
+          { 
+            title: "Third Slide", 
+            subtitle: "This is the third slide content",
+            buttonText: "Contact Us",
+            background: "linear-gradient(135deg, #10b981 0%, #14b8a6 100%)"
+          },
+        ],
+        autoPlay: true,
+        interval: 6000,
+      }),
+      styles: { minHeight: "400px" },
+    },
+    progressBar: {
+      content: JSON.stringify({
+        items: [
+          { label: "Web Design", value: 95 },
+          { label: "Development", value: 90 },
+          { label: "SEO", value: 85 },
+          { label: "Marketing", value: 80 },
+        ],
+        animated: true,
+        showValue: true,
+        color: "#CDB49E",
+      }),
+      styles: { padding: "60px 32px", backgroundColor: "#111", maxWidth: "600px", margin: "0 auto" },
+    },
   };
   return defaults[type] || { content: "", styles: {} };
 };
@@ -1596,6 +1667,406 @@ const getTemplateWebsite = (templateId: string): ElementData[] => {
         content: JSON.stringify({ 
           copyright: "© 2026 Sarah Chen",
           links: ["Dribbble", "LinkedIn", "Twitter"],
+        }),
+        styles: { padding: "40px 48px", backgroundColor: "#0a0a0a", textAlign: "center" },
+      },
+    ],
+    lawfirm: [
+      {
+        id: "el-nav",
+        type: "navbarDark",
+        content: JSON.stringify({ 
+          logo: "STERLING & ASSOCIATES", 
+          links: ["Practice Areas", "Our Team", "Case Results", "Contact"],
+          buttonText: "Free Consultation",
+        }),
+        styles: { padding: "20px 48px", backgroundColor: "#0f0f0f", borderBottom: "1px solid #222" },
+      },
+      {
+        id: "el-hero",
+        type: "heroSplit",
+        content: JSON.stringify({
+          heading: "Justice. Integrity. Results.",
+          subheading: "For over 30 years, Sterling & Associates has been fighting for the rights of our clients. Our experienced trial attorneys have recovered over $500 million in verdicts and settlements.",
+          buttonText: "Schedule Free Consultation",
+          buttonSecondary: "Call (555) 123-4567",
+          image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80",
+          stats: [
+            { value: "$500M+", label: "Recovered" },
+            { value: "5,000+", label: "Cases Won" },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#0a0a0a" },
+      },
+      {
+        id: "el-features",
+        type: "services",
+        content: JSON.stringify({
+          title: "Practice Areas",
+          subtitle: "Comprehensive legal expertise across multiple disciplines",
+          items: [
+            { icon: "⚖️", title: "Personal Injury", description: "Auto accidents, slip & fall, medical malpractice", price: "Free Consultation" },
+            { icon: "💼", title: "Business Law", description: "Contracts, disputes, corporate formation", price: "Hourly & Flat Fee" },
+            { icon: "🏠", title: "Real Estate", description: "Transactions, disputes, zoning issues", price: "Starting at $2,500" },
+            { icon: "👨‍👩‍👧", title: "Family Law", description: "Divorce, custody, prenuptial agreements", price: "Starting at $5,000" },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#111" },
+      },
+      {
+        id: "el-stats",
+        type: "stats",
+        content: JSON.stringify({
+          title: "Our Track Record Speaks for Itself",
+          items: [
+            { value: "30+", label: "Years Experience" },
+            { value: "98%", label: "Success Rate" },
+            { value: "5,000+", label: "Cases Won" },
+            { value: "24/7", label: "Available" },
+          ],
+        }),
+        styles: { padding: "80px 48px", backgroundColor: "#CDB49E", color: "#111" },
+      },
+      {
+        id: "el-team",
+        type: "team",
+        content: JSON.stringify({
+          title: "Meet Our Attorneys",
+          subtitle: "Dedicated legal professionals fighting for your rights",
+          members: [
+            { name: "James Sterling", role: "Founding Partner", image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&q=80" },
+            { name: "Sarah Mitchell", role: "Senior Partner", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&q=80" },
+            { name: "Michael Chen", role: "Trial Attorney", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80" },
+            { name: "Emily Rodriguez", role: "Associate Attorney", image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&q=80" },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#0a0a0a" },
+      },
+      {
+        id: "el-testimonial",
+        type: "testimonialSingle",
+        content: JSON.stringify({
+          quote: "Sterling & Associates fought tirelessly for my case. When the insurance company offered a lowball settlement, they took it to trial and won me 10x more than initially offered. I can't recommend them highly enough.",
+          author: "Robert Thompson",
+          role: "Personal Injury Client",
+          image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80",
+          rating: 5,
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#111" },
+      },
+      {
+        id: "el-faq",
+        type: "faqAccordion",
+        content: JSON.stringify({
+          title: "Frequently Asked Questions",
+          items: [
+            { question: "How much does a consultation cost?", answer: "Initial consultations are always free. We believe everyone deserves access to quality legal advice." },
+            { question: "How do you charge for your services?", answer: "For personal injury cases, we work on contingency - you pay nothing unless we win. Other cases may be billed hourly or at a flat fee." },
+            { question: "How long will my case take?", answer: "Every case is unique. Simple matters may resolve in weeks, while complex litigation can take months or years." },
+            { question: "Do I have a case?", answer: "The best way to find out is to schedule a free consultation. We'll review your situation and give you honest advice." },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#0a0a0a" },
+      },
+      {
+        id: "el-cta",
+        type: "cta",
+        content: JSON.stringify({
+          heading: "Get the Justice You Deserve",
+          subheading: "Don't face legal challenges alone. Our team is ready to fight for you.",
+          buttonText: "Schedule Free Consultation",
+          buttonSecondary: "(555) 123-4567",
+        }),
+        styles: { padding: "100px 48px", textAlign: "center", backgroundColor: "#111" },
+      },
+      {
+        id: "el-footer",
+        type: "footer",
+        content: JSON.stringify({ 
+          logo: "STERLING & ASSOCIATES",
+          description: "Trusted legal counsel for over 30 years.",
+          columns: [
+            { title: "Practice Areas", links: ["Personal Injury", "Business Law", "Real Estate", "Family Law"] },
+            { title: "Resources", links: ["Blog", "FAQs", "Case Results", "Client Portal"] },
+            { title: "Contact", links: ["Office Locations", "Schedule Consultation", "Send Message"] },
+          ],
+          copyright: "© 2026 Sterling & Associates Law Firm. All rights reserved.",
+        }),
+        styles: { padding: "80px 48px 40px", backgroundColor: "#0a0a0a", borderTop: "1px solid #222" },
+      },
+    ],
+    realestate: [
+      {
+        id: "el-nav",
+        type: "navbarTransparent",
+        content: JSON.stringify({ 
+          logo: "PRESTIGE REALTY", 
+          links: ["Buy", "Sell", "Rentals", "About", "Contact"],
+          buttonText: "List Your Property",
+        }),
+        styles: { padding: "20px 48px", backgroundColor: "rgba(0,0,0,0.5)", position: "absolute", top: "0", left: "0", right: "0", zIndex: "100" },
+      },
+      {
+        id: "el-hero",
+        type: "heroVideo",
+        content: JSON.stringify({
+          videoUrl: "https://player.vimeo.com/external/434045526.sd.mp4?s=c27eecc69a27dbc4ff2b87d38afc35f1a9e7c02d",
+          heading: "Find Your Dream Home",
+          subheading: "Luxury real estate in Toronto's most prestigious neighborhoods",
+          buttonText: "Browse Properties",
+          overlay: "rgba(0,0,0,0.55)",
+        }),
+        styles: { padding: "180px 48px", textAlign: "center", position: "relative", minHeight: "90vh" },
+      },
+      {
+        id: "el-features",
+        type: "features3",
+        content: JSON.stringify({
+          title: "Why Choose Prestige Realty",
+          subtitle: "Your trusted partner in luxury real estate",
+          items: [
+            { icon: "🏆", title: "#1 in Toronto", description: "Top-rated real estate agency with over $2B in annual sales" },
+            { icon: "🤝", title: "White Glove Service", description: "Dedicated agents available 24/7 for your convenience" },
+            { icon: "🔑", title: "Exclusive Listings", description: "Access to off-market properties and pre-construction deals" },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#111" },
+      },
+      {
+        id: "el-gallery",
+        type: "gallery4",
+        content: JSON.stringify({
+          title: "Featured Properties",
+          images: [
+            "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80",
+            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80",
+            "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80",
+            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80",
+          ],
+        }),
+        styles: { padding: "80px 48px", backgroundColor: "#0a0a0a" },
+      },
+      {
+        id: "el-stats",
+        type: "statsAnimated",
+        content: JSON.stringify({
+          items: [
+            { value: "$2B+", label: "Annual Sales", icon: "💰" },
+            { value: "500+", label: "Properties Sold", icon: "🏠" },
+            { value: "98%", label: "Client Satisfaction", icon: "⭐" },
+            { value: "15+", label: "Years Experience", icon: "📅" },
+          ],
+          style: "animated",
+        }),
+        styles: { padding: "80px 48px", backgroundColor: "#111" },
+      },
+      {
+        id: "el-process",
+        type: "process",
+        content: JSON.stringify({
+          title: "How It Works",
+          subtitle: "Your journey to homeownership made simple",
+          steps: [
+            { number: "01", title: "Consultation", description: "Tell us your needs, budget, and dream home vision" },
+            { number: "02", title: "Property Search", description: "We curate perfect matches from our exclusive listings" },
+            { number: "03", title: "Tours & Offers", description: "Visit properties and we'll negotiate the best deal" },
+            { number: "04", title: "Close & Celebrate", description: "We handle the paperwork, you get the keys" },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#0a0a0a" },
+      },
+      {
+        id: "el-testimonials",
+        type: "testimonials",
+        content: JSON.stringify({
+          title: "What Our Clients Say",
+          subtitle: "Real stories from satisfied homeowners",
+          items: [
+            { quote: "Prestige Realty found us our dream home in just 2 weeks. The process was seamless and stress-free.", author: "David & Sarah Chen", role: "Homebuyers, Yorkville", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" },
+            { quote: "They sold our condo for 15% above asking price. Incredible marketing and negotiation skills.", author: "Jennifer Wong", role: "Seller, King West", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" },
+            { quote: "As first-time buyers, we felt supported every step of the way. Highly recommend!", author: "Michael Torres", role: "First-Time Buyer", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#111" },
+      },
+      {
+        id: "el-team",
+        type: "teamGrid",
+        content: JSON.stringify({
+          title: "Meet Our Agents",
+          subtitle: "Toronto's top-performing real estate professionals",
+          members: [
+            { name: "Victoria Sterling", role: "Founder & Lead Agent", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&q=80", achievement: "$500M+ Career Sales" },
+            { name: "James Morrison", role: "Luxury Specialist", image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&q=80", achievement: "Top 1% Worldwide" },
+            { name: "Emily Park", role: "Condo Expert", image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&q=80", achievement: "200+ Units Sold" },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#0a0a0a" },
+      },
+      {
+        id: "el-contact",
+        type: "contactSplit",
+        content: JSON.stringify({
+          title: "Ready to Make a Move?",
+          subtitle: "Let's find your perfect property together",
+          email: "hello@prestigerealty.com",
+          phone: "+1 (416) 555-0123",
+          hours: "Open 7 days a week, 9am-9pm",
+          socials: ["instagram", "facebook", "linkedin"],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#111" },
+      },
+      {
+        id: "el-footer",
+        type: "footerDark",
+        content: JSON.stringify({
+          logo: "PRESTIGE REALTY",
+          tagline: "Luxury Real Estate Since 2009",
+          columns: [
+            { title: "Services", links: ["Buy a Home", "Sell a Home", "Rentals", "Pre-Construction"] },
+            { title: "Areas", links: ["Yorkville", "King West", "Rosedale", "Forest Hill"] },
+            { title: "Company", links: ["About Us", "Our Team", "Careers", "Contact"] },
+          ],
+          newsletter: true,
+          copyright: "© 2026 Prestige Realty. Licensed in Ontario.",
+        }),
+        styles: { padding: "80px 48px 40px", backgroundColor: "#0a0a0a" },
+      },
+    ],
+    photography: [
+      {
+        id: "el-nav",
+        type: "navbarTransparent",
+        content: JSON.stringify({ 
+          logo: "LENS & LIGHT", 
+          links: ["Portfolio", "Services", "About", "Blog"],
+          buttonText: "Book Session",
+        }),
+        styles: { padding: "24px 48px", backgroundColor: "transparent", position: "absolute", top: "0", left: "0", right: "0", zIndex: "100" },
+      },
+      {
+        id: "el-hero",
+        type: "heroAthletic",
+        content: JSON.stringify({
+          badge: "AWARD-WINNING PHOTOGRAPHER",
+          heading: "Capturing Life's Most Beautiful Moments",
+          subheading: "Fine art photography for weddings, portraits, and commercial projects. Based in Toronto, available worldwide.",
+          buttonText: "View Portfolio",
+          buttonSecondary: "Book a Session",
+          backgroundImage: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1600&q=80",
+          stats: [
+            { value: "500+", label: "Sessions" },
+            { value: "12", label: "Years Experience" },
+            { value: "50+", label: "Awards" },
+          ],
+        }),
+        styles: { padding: "160px 48px", position: "relative", minHeight: "100vh" },
+      },
+      {
+        id: "el-gallery1",
+        type: "gallery3",
+        content: JSON.stringify({
+          title: "Recent Work",
+          images: [
+            "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80",
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80",
+            "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80",
+          ],
+        }),
+        styles: { padding: "80px 48px", backgroundColor: "#0a0a0a" },
+      },
+      {
+        id: "el-philosophy",
+        type: "philosophy",
+        content: JSON.stringify({
+          badge: "My Approach",
+          heading: "Stories Told Through Light",
+          description: "I believe every photograph should tell a story. My approach combines documentary-style authenticity with fine art aesthetics, creating images that are both timeless and deeply personal.\n\nWith over 12 years of experience, I've had the privilege of capturing moments for hundreds of couples and families, each session as unique as the people in front of my lens.",
+          buttonText: "About Me →",
+          image: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&q=80",
+          stats: [
+            { value: "500+", label: "Sessions" },
+            { value: "98%", label: "5-Star Reviews" },
+            { value: "12", label: "Countries" },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#111" },
+      },
+      {
+        id: "el-services",
+        type: "services",
+        content: JSON.stringify({
+          title: "Services",
+          subtitle: "Professional photography for every occasion",
+          items: [
+            { icon: "💍", title: "Weddings", description: "Full day coverage, engagement sessions, albums", price: "From $4,500" },
+            { icon: "👨‍👩‍👧", title: "Portraits", description: "Family, headshots, maternity, newborn", price: "From $500" },
+            { icon: "🏢", title: "Commercial", description: "Product, architecture, corporate events", price: "From $1,500" },
+            { icon: "✈️", title: "Destination", description: "Elopements and destination weddings worldwide", price: "Custom Quote" },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#0a0a0a" },
+      },
+      {
+        id: "el-gallery2",
+        type: "gallery4",
+        content: JSON.stringify({
+          title: "Portfolio Highlights",
+          images: [
+            "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80",
+            "https://images.unsplash.com/photo-1460978812857-470ed1c77af0?w=400&q=80",
+            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=400&q=80",
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+          ],
+        }),
+        styles: { padding: "60px 48px", backgroundColor: "#111" },
+      },
+      {
+        id: "el-testimonials",
+        type: "testimonials",
+        content: JSON.stringify({
+          title: "Kind Words",
+          subtitle: "From couples and clients I've had the joy of working with",
+          items: [
+            { quote: "Our wedding photos are absolutely stunning. Sarah captured moments we didn't even know happened. We'll treasure these forever.", author: "Emma & James", role: "Wedding, Muskoka", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" },
+            { quote: "Professional, creative, and so easy to work with. Our family portraits exceeded all expectations.", author: "The Chen Family", role: "Family Portrait", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" },
+            { quote: "Sarah's product photography helped us increase our online sales by 40%. Worth every penny.", author: "Luxe Home Co.", role: "Commercial Client", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#0a0a0a" },
+      },
+      {
+        id: "el-process",
+        type: "process",
+        content: JSON.stringify({
+          title: "The Experience",
+          subtitle: "What to expect when you book with me",
+          steps: [
+            { number: "01", title: "Consultation", description: "Let's chat about your vision, style, and the moments that matter most to you" },
+            { number: "02", title: "Planning", description: "I'll create a custom timeline and shot list tailored to your needs" },
+            { number: "03", title: "The Session", description: "Relaxed, fun shooting with expert direction and authentic moments" },
+            { number: "04", title: "Delivery", description: "Professionally edited images delivered in a beautiful online gallery" },
+          ],
+        }),
+        styles: { padding: "100px 48px", backgroundColor: "#111" },
+      },
+      {
+        id: "el-cta",
+        type: "ctaGradient",
+        content: JSON.stringify({
+          heading: "Let's Create Something Beautiful",
+          subheading: "I'd love to hear about your project. Get in touch for availability and pricing.",
+          buttonText: "Book Your Session",
+          placeholder: "Enter your email",
+        }),
+        styles: { padding: "100px 48px", textAlign: "center", background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)" },
+      },
+      {
+        id: "el-footer",
+        type: "footerSimple",
+        content: JSON.stringify({ 
+          copyright: "© 2026 Lens & Light Photography. Based in Toronto, available worldwide.",
+          links: ["Instagram", "Pinterest", "YouTube"],
         }),
         styles: { padding: "40px 48px", backgroundColor: "#0a0a0a", textAlign: "center" },
       },
@@ -2749,6 +3220,239 @@ function ElementRenderer({
             <div style={{ fontSize: "15px", color: "#ccc", lineHeight: "1.7" }}>
               {tabs[activeTab]?.content || "Tab content goes here."}
             </div>
+          </div>
+        );
+      }
+
+      case "modal": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <div 
+              style={{ 
+                padding: "14px 28px", 
+                backgroundColor: "#CDB49E", 
+                color: "#111", 
+                borderRadius: "8px", 
+                fontWeight: "600", 
+                cursor: "pointer",
+                display: "inline-block",
+              }}
+            >
+              {data.trigger || "Open Modal"}
+            </div>
+            {/* Modal Preview Overlay */}
+            {isSelected && (
+              <div style={{ 
+                position: "fixed", 
+                inset: 0, 
+                backgroundColor: "rgba(0,0,0,0.7)", 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center",
+                zIndex: 1000,
+                pointerEvents: "none",
+              }}>
+                <div style={{ 
+                  backgroundColor: "#111", 
+                  borderRadius: "16px", 
+                  padding: "32px", 
+                  maxWidth: data.size === "large" ? "600px" : data.size === "small" ? "320px" : "480px",
+                  width: "90%",
+                  border: "1px solid #333",
+                  pointerEvents: "auto",
+                }}>
+                  <div style={{ fontSize: "24px", fontWeight: "600", color: "#fff", marginBottom: "16px" }}>{data.title}</div>
+                  <div style={{ fontSize: "15px", color: "#888", lineHeight: "1.6", marginBottom: "24px" }}>{data.content}</div>
+                  <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end" }}>
+                    <div style={{ padding: "10px 20px", border: "1px solid #333", borderRadius: "8px", color: "#888", cursor: "pointer" }}>{data.closeText}</div>
+                    <div style={{ padding: "10px 20px", backgroundColor: "#CDB49E", borderRadius: "8px", color: "#111", fontWeight: "600", cursor: "pointer" }}>{data.actionText}</div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      case "carousel": {
+        const data = parseData();
+        const images = data.images || [];
+        return (
+          <div style={{ ...baseStyles, position: "relative" }}>
+            <div style={{ display: "flex", overflow: "hidden", borderRadius: "16px" }}>
+              <div style={{ display: "flex", transition: "transform 0.5s ease" }}>
+                {images.length > 0 && (
+                  <div style={{ minWidth: "100%", position: "relative" }}>
+                    <img 
+                      src={images[0]?.src || images[0]} 
+                      alt="" 
+                      style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover" }} 
+                    />
+                    {images[0]?.caption && (
+                      <div style={{ 
+                        position: "absolute", 
+                        bottom: "24px", 
+                        left: "24px", 
+                        backgroundColor: "rgba(0,0,0,0.7)", 
+                        padding: "12px 20px", 
+                        borderRadius: "8px",
+                        color: "#fff",
+                        fontSize: "16px",
+                        fontWeight: "500",
+                      }}>
+                        {images[0].caption}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* Navigation Arrows */}
+            {data.showArrows !== false && (
+              <>
+                <div style={{ 
+                  position: "absolute", 
+                  left: "16px", 
+                  top: "50%", 
+                  transform: "translateY(-50%)",
+                  width: "48px",
+                  height: "48px",
+                  backgroundColor: "rgba(0,0,0,0.6)",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  color: "#fff",
+                  fontSize: "20px",
+                }}>
+                  ←
+                </div>
+                <div style={{ 
+                  position: "absolute", 
+                  right: "16px", 
+                  top: "50%", 
+                  transform: "translateY(-50%)",
+                  width: "48px",
+                  height: "48px",
+                  backgroundColor: "rgba(0,0,0,0.6)",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  color: "#fff",
+                  fontSize: "20px",
+                }}>
+                  →
+                </div>
+              </>
+            )}
+            {/* Dots Navigation */}
+            {data.showDots !== false && (
+              <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "16px" }}>
+                {images.map((_: any, i: number) => (
+                  <div 
+                    key={i} 
+                    style={{ 
+                      width: i === 0 ? "24px" : "8px", 
+                      height: "8px", 
+                      borderRadius: "4px",
+                      backgroundColor: i === 0 ? "#CDB49E" : "#333",
+                      cursor: "pointer",
+                      transition: "all 0.3s",
+                    }} 
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      case "slider": {
+        const data = parseData();
+        const slides = data.slides || [];
+        const activeSlide = slides[0] || { title: "Slide Title", subtitle: "Slide content", buttonText: "Learn More", background: "#111" };
+        return (
+          <div style={{ ...baseStyles, position: "relative", overflow: "hidden" }}>
+            <div style={{ 
+              padding: "80px 48px", 
+              background: activeSlide.background || "#111",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              minHeight: "400px",
+            }}>
+              <div style={{ fontSize: "48px", fontWeight: "700", color: "#fff", marginBottom: "16px" }}>
+                {activeSlide.title}
+              </div>
+              <div style={{ fontSize: "18px", color: "rgba(255,255,255,0.8)", marginBottom: "32px", maxWidth: "600px" }}>
+                {activeSlide.subtitle}
+              </div>
+              <div style={{ padding: "14px 32px", backgroundColor: "#fff", color: "#111", borderRadius: "8px", fontWeight: "600", cursor: "pointer" }}>
+                {activeSlide.buttonText}
+              </div>
+            </div>
+            {/* Slide Indicators */}
+            <div style={{ 
+              position: "absolute", 
+              bottom: "24px", 
+              left: "50%", 
+              transform: "translateX(-50%)",
+              display: "flex",
+              gap: "8px",
+            }}>
+              {slides.map((_: any, i: number) => (
+                <div 
+                  key={i} 
+                  style={{ 
+                    width: i === 0 ? "32px" : "8px", 
+                    height: "8px", 
+                    borderRadius: "4px",
+                    backgroundColor: i === 0 ? "#fff" : "rgba(255,255,255,0.4)",
+                    cursor: "pointer",
+                    transition: "all 0.3s",
+                  }} 
+                />
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      case "progressBar": {
+        const data = parseData();
+        const items = data.items || [];
+        return (
+          <div style={baseStyles}>
+            {items.map((item: any, i: number) => (
+              <div key={i} style={{ marginBottom: "24px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+                  <span style={{ fontSize: "14px", color: "#fff", fontWeight: "500" }}>{item.label}</span>
+                  {data.showValue !== false && (
+                    <span style={{ fontSize: "14px", color: "#CDB49E", fontWeight: "600" }}>{item.value}%</span>
+                  )}
+                </div>
+                <div style={{ 
+                  height: "8px", 
+                  backgroundColor: "#222", 
+                  borderRadius: "4px", 
+                  overflow: "hidden",
+                }}>
+                  <div style={{ 
+                    height: "100%", 
+                    width: `${item.value}%`, 
+                    backgroundColor: data.color || "#CDB49E",
+                    borderRadius: "4px",
+                    transition: data.animated ? "width 1s ease-out" : "none",
+                  }} />
+                </div>
+              </div>
+            ))}
           </div>
         );
       }
@@ -3948,27 +4652,42 @@ export default function WebsitePage() {
           </button>
           <button 
             onClick={() => {
-              // Generate and download HTML
+              // Generate HTML from elements
+              const generateElementHtml = (el: ElementData): string => {
+                const styleString = Object.entries(el.styles || {})
+                  .map(([key, value]) => {
+                    const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+                    return `${cssKey}: ${value}`;
+                  })
+                  .join('; ');
+                return `<div style="${styleString}">${el.content}</div>`;
+              };
+              
+              const bodyContent = elements
+                .filter(el => !el.hidden)
+                .map(generateElementHtml)
+                .join('\n');
+              
               const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atlas Website</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"><\/script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: #0a0a0a; }
-    ${document.querySelector('style[data-atlas-animations]')?.textContent || ''}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
-${elements.map(el => {
-  const styles = Object.entries(el.styles || {}).map(([k, v]) => \`\${k.replace(/([A-Z])/g, '-$1').toLowerCase()}: \${v}\`).join('; ');
-  return \`<div style="\${styles}">\${el.content}</div>\`;
-}).join('\\n')}
+${bodyContent}
 </body>
 </html>`;
+              
               const blob = new Blob([html], { type: 'text/html' });
               const url = URL.createObjectURL(blob);
               const a = document.createElement('a');

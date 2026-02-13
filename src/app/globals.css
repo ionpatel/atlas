@@ -185,3 +185,225 @@
 .hover-scale:hover {
   transform: scale(1.05);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE DESIGN UTILITIES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Responsive Grid Columns */
+@media (max-width: 1024px) {
+  .website-grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .website-grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .website-grid-4,
+  .website-grid-3,
+  .website-grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Hero sections responsive */
+  .website-hero-split {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    text-align: center !important;
+  }
+  
+  .website-hero-split img {
+    order: -1;
+  }
+  
+  /* Navbar responsive */
+  .website-nav-links {
+    display: none !important;
+  }
+  
+  .website-nav-mobile-toggle {
+    display: block !important;
+  }
+  
+  /* Stats responsive */
+  .website-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px !important;
+  }
+  
+  /* Footer columns */
+  .website-footer-grid {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    gap: 32px !important;
+  }
+  
+  /* Padding adjustments */
+  .website-section {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  
+  /* Font size adjustments */
+  .website-hero-heading {
+    font-size: 36px !important;
+    line-height: 1.2 !important;
+  }
+  
+  .website-section-title {
+    font-size: 28px !important;
+  }
+  
+  /* Testimonial single */
+  .website-testimonial-single {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+  }
+  
+  .website-testimonial-single img {
+    margin: 0 auto 24px;
+  }
+  
+  /* Timeline responsive */
+  .website-timeline-item {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  
+  .website-timeline-year {
+    text-align: left !important;
+    width: auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .website-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .website-hero-heading {
+    font-size: 28px !important;
+  }
+  
+  .website-section-title {
+    font-size: 24px !important;
+  }
+  
+  /* Button stack on mobile */
+  .website-button-group {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  
+  .website-button-group > * {
+    width: 100% !important;
+    text-align: center !important;
+  }
+}
+
+/* Carousel responsive */
+@media (max-width: 640px) {
+  .website-carousel-arrow {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 16px !important;
+  }
+}
+
+/* Team grid responsive */
+@media (max-width: 1024px) {
+  .website-team-grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .website-team-grid-4,
+  .website-team-grid-3 {
+    grid-template-columns: 1fr !important;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}
+
+/* Pricing cards responsive */
+@media (max-width: 1024px) {
+  .website-pricing-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+/* Modal responsive */
+@media (max-width: 640px) {
+  .website-modal {
+    width: 95% !important;
+    padding: 24px !important;
+  }
+}
+
+/* Progress bar smooth animation */
+@keyframes progressGrow {
+  from {
+    width: 0%;
+  }
+}
+
+.website-progress-bar {
+  animation: progressGrow 1s ease-out forwards;
+}
+
+/* Carousel/Slider animations */
+@keyframes carouselSlide {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.website-carousel-active {
+  animation: carouselSlide 0.5s ease-out;
+}
+
+/* Scroll reveal animation */
+@keyframes scrollReveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.website-scroll-reveal {
+  animation: scrollReveal 0.6s ease-out forwards;
+}
+
+/* Gradient text effect */
+.website-gradient-text {
+  background: linear-gradient(135deg, #CDB49E 0%, #f5f0eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass effect */
+.website-glass {
+  background: rgba(17, 17, 17, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Image lazy loading placeholder */
+.website-image-placeholder {
+  background: linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
