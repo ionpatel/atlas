@@ -4,6 +4,62 @@ All notable changes to Atlas ERP will be documented in this file.
 
 ## [Unreleased]
 
+## [3.2.0] - 2026-02-13
+
+### Added
+- **Inventory Module Enhancements**
+  - Barcode Scanner UI with camera and manual entry modes
+  - QR/barcode camera scanning with visual overlay
+  - Manual entry with USB scanner support
+  - Low Stock Alerts panel with severity filtering
+  - Quick reorder functionality from alerts
+  - Alert dismissal and reset capabilities
+
+- **CRM Module Enhancements**
+  - Activity Timeline sidebar panel
+  - Filter activities by type (calls, emails, meetings, notes, tasks)
+  - Activity grouping by date
+  - Toggle activity panel visibility
+  - Mock activity data for demo
+
+- **Reports Module (New)**
+  - Sales Summary report with monthly breakdown
+  - Inventory Valuation report by category
+  - Accounts Receivable aging report
+  - Top Products by revenue and margin
+  - Customer Analysis report
+  - Profit & Loss statement
+  - Export to PDF (html2pdf integration)
+  - Export to Excel/CSV
+  - Category filtering for reports
+
+- **Settings Enhancements**
+  - Company Profile section
+    - Legal information (name, registration, tax ID)
+    - Contact information (website, email, phone)
+    - Business address management
+  - Branding section
+    - Logo and favicon upload
+    - Theme selection (dark/light/system)
+    - Brand color customization with presets
+    - Live preview of brand colors
+  - Notifications section
+    - Email notification preferences
+    - In-app notification toggles
+    - Push notification settings
+    - Per-category notification controls
+
+- **Dashboard Enhancements**
+  - Customizable widget grid component
+  - Drag-and-drop widget reordering
+  - Widget size options (small/medium/large/full)
+  - Hide/show widgets
+  - Reset layout functionality
+
+### Changed
+- Sidebar navigation updated with Reports link
+- CRM page layout adjusted for activity panel
+
 ## [3.1.0] - 2026-02-13
 
 ### Added
