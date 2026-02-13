@@ -182,6 +182,12 @@ const COMPONENTS = {
     { id: "spacer", name: "Spacer", icon: Expand },
     { id: "spacerLarge", name: "Large Spacer", icon: Expand },
   ],
+  Interactive: [
+    { id: "countdown", name: "Countdown", icon: Clock },
+    { id: "socialProof", name: "Social Proof", icon: Users },
+    { id: "accordion", name: "Accordion", icon: ChevronDown },
+    { id: "tabs", name: "Tab Panels", icon: LayoutGrid },
+  ],
 };
 
 /* ─────────────────────────── DEFAULT ELEMENT CONTENT ─────────────────────────── */
@@ -856,6 +862,55 @@ const getDefaultElement = (type: string): Partial<ElementData> => {
     spacerLarge: {
       content: "",
       styles: { height: "96px" },
+    },
+
+    // === INTERACTIVE ===
+    countdown: {
+      content: JSON.stringify({
+        title: "Launch Countdown",
+        targetDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days from now
+        labels: { days: "Days", hours: "Hours", minutes: "Minutes", seconds: "Seconds" },
+        completedText: "We're Live!",
+      }),
+      styles: { padding: "60px 32px", textAlign: "center", backgroundColor: "#111" },
+    },
+    socialProof: {
+      content: JSON.stringify({
+        notifications: [
+          { name: "John D.", action: "just purchased", item: "Premium Plan", time: "2 mins ago", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" },
+          { name: "Sarah M.", action: "signed up for", item: "Free Trial", time: "5 mins ago", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" },
+          { name: "Mike R.", action: "upgraded to", item: "Pro Plan", time: "8 mins ago", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" },
+        ],
+        position: "bottom-left",
+        autoRotate: true,
+        interval: 5000,
+      }),
+      styles: { position: "fixed", bottom: "24px", left: "24px", zIndex: "50" },
+    },
+    accordion: {
+      content: JSON.stringify({
+        items: [
+          { title: "What is your return policy?", content: "We offer a 30-day money-back guarantee on all purchases." },
+          { title: "How long does shipping take?", content: "Standard shipping takes 5-7 business days. Express shipping is available." },
+          { title: "Do you offer international shipping?", content: "Yes, we ship to over 50 countries worldwide." },
+          { title: "How can I contact support?", content: "You can reach our support team via email or live chat 24/7." },
+        ],
+        allowMultiple: false,
+        defaultOpen: 0,
+      }),
+      styles: { padding: "60px 32px", backgroundColor: "#0a0a0a", maxWidth: "800px", margin: "0 auto" },
+    },
+    tabs: {
+      content: JSON.stringify({
+        tabs: [
+          { label: "Features", content: "Explore our powerful features that help you build faster." },
+          { label: "Pricing", content: "Simple, transparent pricing for teams of all sizes." },
+          { label: "FAQ", content: "Frequently asked questions about our product." },
+        ],
+        defaultTab: 0,
+        style: "pills", // "pills" | "underline" | "boxed"
+      }),
+      styles: { padding: "60px 32px", backgroundColor: "#111" },
     },
   };
   return defaults[type] || { content: "", styles: {} };
@@ -2593,6 +2648,108 @@ function ElementRenderer({
       case "columns3":
       case "columns4":
         return <div style={baseStyles}>{element.content}</div>;
+
+      // === INTERACTIVE ===
+      case "countdown": {
+        const data = parseData();
+        const targetDate = new Date(data.targetDate || Date.now() + 7 * 24 * 60 * 60 * 1000);
+        const now = new Date();
+        const diff = targetDate.getTime() - now.getTime();
+        const days = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
+        const hours = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+        const minutes = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
+        const seconds = Math.max(0, Math.floor((diff % (1000 * 60)) / 1000));
+
+        return (
+          <div style={baseStyles}>
+            {data.title && <div style={{ fontSize: "28px", fontWeight: "600", color: "#fff", marginBottom: "32px" }}>{data.title}</div>}
+            <div style={{ display: "flex", justifyContent: "center", gap: "24px" }}>
+              {[
+                { value: days, label: data.labels?.days || "Days" },
+                { value: hours, label: data.labels?.hours || "Hours" },
+                { value: minutes, label: data.labels?.minutes || "Minutes" },
+                { value: seconds, label: data.labels?.seconds || "Seconds" },
+              ].map((item, i) => (
+                <div key={i} style={{ textAlign: "center", minWidth: "80px" }}>
+                  <div style={{ fontSize: "48px", fontWeight: "700", color: "#CDB49E", padding: "20px", backgroundColor: "#0a0a0a", borderRadius: "12px", marginBottom: "8px" }}>
+                    {String(item.value).padStart(2, "0")}
+                  </div>
+                  <div style={{ fontSize: "12px", color: "#888", textTransform: "uppercase", letterSpacing: "2px" }}>{item.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      case "socialProof": {
+        const data = parseData();
+        const notification = data.notifications?.[0] || { name: "Someone", action: "just joined", item: "", time: "now" };
+        return (
+          <div style={{ ...baseStyles, padding: "16px 20px", backgroundColor: "#111", borderRadius: "12px", border: "1px solid #222", boxShadow: "0 10px 40px rgba(0,0,0,0.3)", maxWidth: "320px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              {notification.avatar && <img src={notification.avatar} alt="" style={{ width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover" }} />}
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: "14px", color: "#fff" }}>
+                  <strong>{notification.name}</strong> {notification.action} {notification.item && <span style={{ color: "#CDB49E" }}>{notification.item}</span>}
+                </div>
+                <div style={{ fontSize: "11px", color: "#888", marginTop: "4px" }}>{notification.time}</div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      case "accordion": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            {(data.items || []).map((item: any, i: number) => (
+              <div key={i} style={{ borderBottom: "1px solid #222", marginBottom: "0" }}>
+                <div style={{ padding: "20px 0", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: "16px", fontWeight: "500", color: "#fff" }}>{item.title}</span>
+                  <ChevronDown className="w-5 h-5" style={{ color: "#888" }} />
+                </div>
+                {data.defaultOpen === i && (
+                  <div style={{ paddingBottom: "20px", fontSize: "14px", color: "#888", lineHeight: "1.6" }}>{item.content}</div>
+                )}
+              </div>
+            ))}
+          </div>
+        );
+      }
+
+      case "tabs": {
+        const data = parseData();
+        const tabs = data.tabs || [];
+        const activeTab = data.defaultTab || 0;
+        return (
+          <div style={baseStyles}>
+            <div style={{ display: "flex", gap: "8px", marginBottom: "24px", borderBottom: data.style === "underline" ? "1px solid #222" : "none" }}>
+              {tabs.map((tab: any, i: number) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: data.style === "pills" ? "10px 24px" : "12px 20px",
+                    backgroundColor: i === activeTab ? (data.style === "pills" ? "#CDB49E" : "transparent") : "transparent",
+                    color: i === activeTab ? (data.style === "pills" ? "#111" : "#CDB49E") : "#888",
+                    borderRadius: data.style === "pills" ? "8px" : "0",
+                    borderBottom: data.style === "underline" && i === activeTab ? "2px solid #CDB49E" : "none",
+                    fontSize: "14px",
+                    fontWeight: i === activeTab ? "600" : "400",
+                    cursor: "pointer",
+                  }}
+                >
+                  {tab.label}
+                </div>
+              ))}
+            </div>
+            <div style={{ fontSize: "15px", color: "#ccc", lineHeight: "1.7" }}>
+              {tabs[activeTab]?.content || "Tab content goes here."}
+            </div>
+          </div>
+        );
+      }
 
       default:
         return <div style={baseStyles}>{element.content}</div>;
