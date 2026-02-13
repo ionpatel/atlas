@@ -21,6 +21,7 @@ import {
   Wallet,
   Store,
   Globe,
+  BarChart3,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -39,6 +40,7 @@ const navItems = [
   { href: "/payroll", label: "Payroll", icon: Wallet },
   { href: "/projects", label: "Projects", icon: FolderKanban },
   { href: "/website", label: "Website", icon: Globe },
+  { href: "/reports", label: "Reports", icon: BarChart3 },
   { href: "/ai", label: "AI Assistant", icon: Bot },
   { href: "/settings", label: "Settings", icon: Settings },
 ];

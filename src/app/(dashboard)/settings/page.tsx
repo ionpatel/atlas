@@ -20,6 +20,18 @@ import {
   ExternalLink,
   ToggleLeft,
   ToggleRight,
+  Palette,
+  Bell,
+  Mail,
+  Smartphone,
+  Globe,
+  MapPin,
+  Phone,
+  FileText,
+  Sun,
+  Moon,
+  Monitor,
+  Copy,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +39,9 @@ import { cn } from "@/lib/utils";
 
 const tabs = [
   { id: "general", label: "General", icon: Building2 },
+  { id: "company", label: "Company Profile", icon: Building2 },
+  { id: "branding", label: "Branding", icon: Palette },
+  { id: "notifications", label: "Notifications", icon: Bell },
   { id: "users", label: "Users & Roles", icon: Users },
   { id: "billing", label: "Billing", icon: CreditCard },
   { id: "modules", label: "Modules", icon: Puzzle },
@@ -630,10 +645,652 @@ function TaxSection() {
   );
 }
 
+/* ─────────────────────── Company Profile Section ─────────────────────── */
+
+function CompanySection() {
+  const [formData, setFormData] = useState({
+    legalName: "Atlas Demo Inc.",
+    tradingName: "Atlas ERP",
+    registrationNumber: "BC1234567",
+    taxId: "123-456-789",
+    industry: "technology",
+    companySize: "11-50",
+    founded: "2024",
+    website: "https://atlas-erp.com",
+    email: "contact@atlas-erp.com",
+    phone: "+1 (416) 555-0123",
+    address: "123 Business Street",
+    city: "Toronto",
+    province: "Ontario",
+    postalCode: "M5V 1A1",
+    country: "Canada",
+  });
+
+  const updateField = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  return (
+    <div className="space-y-8">
+      <div>
+        <h2 className="text-lg font-semibold text-[#f5f0eb]">Company Profile</h2>
+        <p className="text-sm text-[#888888] mt-1">
+          Legal and business information about your company.
+        </p>
+      </div>
+
+      {/* Legal Information */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#f5f0eb] mb-4 flex items-center gap-2">
+          <FileText className="w-4 h-4 text-[#CDB49E]" />
+          Legal Information
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Legal Name
+            </label>
+            <input
+              type="text"
+              value={formData.legalName}
+              onChange={(e) => updateField("legalName", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Trading Name / DBA
+            </label>
+            <input
+              type="text"
+              value={formData.tradingName}
+              onChange={(e) => updateField("tradingName", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Registration Number
+            </label>
+            <input
+              type="text"
+              value={formData.registrationNumber}
+              onChange={(e) => updateField("registrationNumber", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Tax ID / EIN
+            </label>
+            <input
+              type="text"
+              value={formData.taxId}
+              onChange={(e) => updateField("taxId", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Industry
+            </label>
+            <select
+              value={formData.industry}
+              onChange={(e) => updateField("industry", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            >
+              <option value="technology">Technology</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="retail">Retail</option>
+              <option value="manufacturing">Manufacturing</option>
+              <option value="professional_services">Professional Services</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Company Size
+            </label>
+            <select
+              value={formData.companySize}
+              onChange={(e) => updateField("companySize", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            >
+              <option value="1-10">1-10 employees</option>
+              <option value="11-50">11-50 employees</option>
+              <option value="51-200">51-200 employees</option>
+              <option value="201-500">201-500 employees</option>
+              <option value="500+">500+ employees</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {/* Contact Information */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#f5f0eb] mb-4 flex items-center gap-2">
+          <Globe className="w-4 h-4 text-[#CDB49E]" />
+          Contact Information
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Website
+            </label>
+            <input
+              type="url"
+              value={formData.website}
+              onChange={(e) => updateField("website", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={(e) => updateField("email", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+          <div className="sm:col-span-2">
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Phone
+            </label>
+            <input
+              type="tel"
+              value={formData.phone}
+              onChange={(e) => updateField("phone", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Address */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#f5f0eb] mb-4 flex items-center gap-2">
+          <MapPin className="w-4 h-4 text-[#CDB49E]" />
+          Business Address
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="sm:col-span-2">
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Street Address
+            </label>
+            <input
+              type="text"
+              value={formData.address}
+              onChange={(e) => updateField("address", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              City
+            </label>
+            <input
+              type="text"
+              value={formData.city}
+              onChange={(e) => updateField("city", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Province / State
+            </label>
+            <input
+              type="text"
+              value={formData.province}
+              onChange={(e) => updateField("province", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Postal Code
+            </label>
+            <input
+              type="text"
+              value={formData.postalCode}
+              onChange={(e) => updateField("postalCode", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-2">
+              Country
+            </label>
+            <select
+              value={formData.country}
+              onChange={(e) => updateField("country", e.target.value)}
+              className="w-full px-4 py-2.5 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            >
+              <option value="Canada">Canada</option>
+              <option value="United States">United States</option>
+              <option value="United Kingdom">United Kingdom</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div className="pt-4 border-t border-[#2a2a2a]">
+        <button className="px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200">
+          Save Company Profile
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────── Branding Section ─────────────────────── */
+
+function BrandingSection() {
+  const [primaryColor, setPrimaryColor] = useState("#CDB49E");
+  const [theme, setTheme] = useState<"dark" | "light" | "system">("dark");
+  const [logoUrl, setLogoUrl] = useState("");
+  const [faviconUrl, setFaviconUrl] = useState("");
+
+  const presetColors = [
+    "#CDB49E", // Atlas default (warm gold)
+    "#60a5fa", // Blue
+    "#34d399", // Emerald
+    "#a78bfa", // Violet
+    "#f472b6", // Pink
+    "#fbbf24", // Amber
+    "#f87171", // Red
+    "#2dd4bf", // Teal
+  ];
+
+  return (
+    <div className="space-y-8">
+      <div>
+        <h2 className="text-lg font-semibold text-[#f5f0eb]">Branding</h2>
+        <p className="text-sm text-[#888888] mt-1">
+          Customize the look and feel of your workspace.
+        </p>
+      </div>
+
+      {/* Logo & Favicon */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#f5f0eb] mb-4">
+          Logo & Favicon
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-3">
+              Company Logo
+            </label>
+            <div className="flex items-center gap-4">
+              <div className="w-24 h-24 rounded-xl bg-[#222222] border-2 border-dashed border-[#2a2a2a] flex items-center justify-center">
+                {logoUrl ? (
+                  <img src={logoUrl} alt="Logo" className="w-full h-full object-contain rounded-xl" />
+                ) : (
+                  <span className="text-3xl font-bold text-[#CDB49E]">A</span>
+                )}
+              </div>
+              <div className="flex flex-col gap-2">
+                <button className="flex items-center gap-2 px-4 py-2 border border-[#2a2a2a] rounded-lg text-xs text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] transition-all">
+                  <Upload className="w-3.5 h-3.5" />
+                  Upload Logo
+                </button>
+                <p className="text-[10px] text-[#555555]">
+                  PNG, JPG up to 2MB. 200x200px recommended.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#888888] uppercase tracking-wider mb-3">
+              Favicon
+            </label>
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-lg bg-[#222222] border-2 border-dashed border-[#2a2a2a] flex items-center justify-center">
+                {faviconUrl ? (
+                  <img src={faviconUrl} alt="Favicon" className="w-full h-full object-contain rounded-lg" />
+                ) : (
+                  <span className="text-lg font-bold text-[#CDB49E]">A</span>
+                )}
+              </div>
+              <div className="flex flex-col gap-2">
+                <button className="flex items-center gap-2 px-4 py-2 border border-[#2a2a2a] rounded-lg text-xs text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] transition-all">
+                  <Upload className="w-3.5 h-3.5" />
+                  Upload Favicon
+                </button>
+                <p className="text-[10px] text-[#555555]">
+                  32x32px or 64x64px. ICO, PNG, or SVG.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Theme */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#f5f0eb] mb-4">
+          Theme
+        </h3>
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            { id: "dark" as const, icon: Moon, label: "Dark" },
+            { id: "light" as const, icon: Sun, label: "Light" },
+            { id: "system" as const, icon: Monitor, label: "System" },
+          ].map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTheme(t.id)}
+              className={cn(
+                "flex flex-col items-center gap-2 p-4 rounded-xl border transition-all",
+                theme === t.id
+                  ? "bg-[#3a3028] border-[#CDB49E]/30 text-[#CDB49E]"
+                  : "bg-[#111111] border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] hover:border-[#2a2a2a]"
+              )}
+            >
+              <t.icon className="w-5 h-5" />
+              <span className="text-xs font-medium">{t.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Brand Color */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#f5f0eb] mb-4">
+          Brand Color
+        </h3>
+        <div className="space-y-4">
+          {/* Preset Colors */}
+          <div className="flex items-center gap-2">
+            {presetColors.map((color) => (
+              <button
+                key={color}
+                onClick={() => setPrimaryColor(color)}
+                className={cn(
+                  "w-8 h-8 rounded-lg transition-all",
+                  primaryColor === color && "ring-2 ring-offset-2 ring-offset-[#1a1a1a] ring-white/30"
+                )}
+                style={{ backgroundColor: color }}
+              />
+            ))}
+          </div>
+
+          {/* Custom Color Input */}
+          <div className="flex items-center gap-3">
+            <div
+              className="w-12 h-12 rounded-lg border border-[#2a2a2a]"
+              style={{ backgroundColor: primaryColor }}
+            />
+            <div className="flex-1">
+              <label className="block text-xs font-medium text-[#888888] mb-1.5">
+                Custom Color
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={primaryColor}
+                  onChange={(e) => setPrimaryColor(e.target.value)}
+                  className="flex-1 px-3 py-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] font-mono focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+                />
+                <button className="p-2 border border-[#2a2a2a] rounded-lg text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] transition-all">
+                  <Copy className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Preview */}
+          <div className="mt-4 p-4 bg-[#111111] rounded-lg">
+            <p className="text-xs text-[#888888] mb-3">Preview</p>
+            <div className="flex items-center gap-3">
+              <button
+                className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                style={{ backgroundColor: primaryColor, color: "#111111" }}
+              >
+                Primary Button
+              </button>
+              <span
+                className="px-3 py-1 rounded-full text-xs font-medium border"
+                style={{
+                  backgroundColor: `${primaryColor}20`,
+                  color: primaryColor,
+                  borderColor: `${primaryColor}30`,
+                }}
+              >
+                Badge
+              </span>
+              <span style={{ color: primaryColor }}>Link text</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="pt-4 border-t border-[#2a2a2a]">
+        <button className="px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200">
+          Save Branding
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────── Notifications Section ─────────────────────── */
+
+function NotificationsSection() {
+  const [notifications, setNotifications] = useState({
+    // Email notifications
+    emailInvoicePaid: true,
+    emailInvoiceOverdue: true,
+    emailNewOrder: true,
+    emailLowStock: true,
+    emailWeeklyReport: false,
+
+    // In-app notifications
+    inAppInvoicePaid: true,
+    inAppInvoiceOverdue: true,
+    inAppNewOrder: true,
+    inAppLowStock: true,
+
+    // Push notifications
+    pushEnabled: false,
+    pushInvoicePaid: false,
+    pushNewOrder: false,
+  });
+
+  const toggleNotification = (key: keyof typeof notifications) => {
+    setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const NotificationRow = ({
+    label,
+    description,
+    emailKey,
+    inAppKey,
+    pushKey,
+  }: {
+    label: string;
+    description: string;
+    emailKey?: keyof typeof notifications;
+    inAppKey?: keyof typeof notifications;
+    pushKey?: keyof typeof notifications;
+  }) => (
+    <div className="flex items-center justify-between py-4 border-b border-[#2a2a2a]/50 last:border-0">
+      <div>
+        <p className="text-sm font-medium text-[#f5f0eb]">{label}</p>
+        <p className="text-xs text-[#888888] mt-0.5">{description}</p>
+      </div>
+      <div className="flex items-center gap-4">
+        {emailKey && (
+          <button
+            onClick={() => toggleNotification(emailKey)}
+            className={cn(
+              "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all",
+              notifications[emailKey]
+                ? "bg-blue-500/10 text-blue-400 border border-blue-500/20"
+                : "bg-[#222222] text-[#555555] border border-[#2a2a2a]"
+            )}
+          >
+            <Mail className="w-3 h-3" />
+            Email
+          </button>
+        )}
+        {inAppKey && (
+          <button
+            onClick={() => toggleNotification(inAppKey)}
+            className={cn(
+              "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all",
+              notifications[inAppKey]
+                ? "bg-violet-500/10 text-violet-400 border border-violet-500/20"
+                : "bg-[#222222] text-[#555555] border border-[#2a2a2a]"
+            )}
+          >
+            <Bell className="w-3 h-3" />
+            In-App
+          </button>
+        )}
+        {pushKey && (
+          <button
+            onClick={() => toggleNotification(pushKey)}
+            disabled={!notifications.pushEnabled}
+            className={cn(
+              "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all",
+              notifications[pushKey]
+                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                : "bg-[#222222] text-[#555555] border border-[#2a2a2a]",
+              !notifications.pushEnabled && "opacity-50 cursor-not-allowed"
+            )}
+          >
+            <Smartphone className="w-3 h-3" />
+            Push
+          </button>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="space-y-8">
+      <div>
+        <h2 className="text-lg font-semibold text-[#f5f0eb]">Notifications</h2>
+        <p className="text-sm text-[#888888] mt-1">
+          Manage how and when you receive notifications.
+        </p>
+      </div>
+
+      {/* Push Notifications Toggle */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-emerald-500/10">
+              <Smartphone className="w-5 h-5 text-emerald-400" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-[#f5f0eb]">
+                Push Notifications
+              </h3>
+              <p className="text-xs text-[#888888] mt-0.5">
+                Receive notifications on your mobile device
+              </p>
+            </div>
+          </div>
+          <ToggleSwitch
+            enabled={notifications.pushEnabled}
+            onToggle={() => toggleNotification("pushEnabled")}
+          />
+        </div>
+      </div>
+
+      {/* Notification Categories */}
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
+        <div className="px-6 py-4 border-b border-[#2a2a2a]">
+          <h3 className="text-sm font-semibold text-[#f5f0eb]">
+            Billing & Payments
+          </h3>
+        </div>
+        <div className="px-6">
+          <NotificationRow
+            label="Invoice Paid"
+            description="When a customer pays an invoice"
+            emailKey="emailInvoicePaid"
+            inAppKey="inAppInvoicePaid"
+            pushKey="pushInvoicePaid"
+          />
+          <NotificationRow
+            label="Invoice Overdue"
+            description="When an invoice becomes overdue"
+            emailKey="emailInvoiceOverdue"
+            inAppKey="inAppInvoiceOverdue"
+          />
+        </div>
+      </div>
+
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
+        <div className="px-6 py-4 border-b border-[#2a2a2a]">
+          <h3 className="text-sm font-semibold text-[#f5f0eb]">
+            Orders & Sales
+          </h3>
+        </div>
+        <div className="px-6">
+          <NotificationRow
+            label="New Order"
+            description="When a new order is placed"
+            emailKey="emailNewOrder"
+            inAppKey="inAppNewOrder"
+            pushKey="pushNewOrder"
+          />
+        </div>
+      </div>
+
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
+        <div className="px-6 py-4 border-b border-[#2a2a2a]">
+          <h3 className="text-sm font-semibold text-[#f5f0eb]">
+            Inventory
+          </h3>
+        </div>
+        <div className="px-6">
+          <NotificationRow
+            label="Low Stock Alert"
+            description="When a product falls below minimum stock"
+            emailKey="emailLowStock"
+            inAppKey="inAppLowStock"
+          />
+        </div>
+      </div>
+
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
+        <div className="px-6 py-4 border-b border-[#2a2a2a]">
+          <h3 className="text-sm font-semibold text-[#f5f0eb]">
+            Reports & Summaries
+          </h3>
+        </div>
+        <div className="px-6">
+          <NotificationRow
+            label="Weekly Report"
+            description="Summary of your weekly business performance"
+            emailKey="emailWeeklyReport"
+          />
+        </div>
+      </div>
+
+      <div className="pt-4 border-t border-[#2a2a2a]">
+        <button className="px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200">
+          Save Notification Preferences
+        </button>
+      </div>
+    </div>
+  );
+}
+
 /* ─────────────────────── section map ─────────────────────── */
 
 const sectionComponents: Record<TabId, React.ComponentType> = {
   general: GeneralSection,
+  company: CompanySection,
+  branding: BrandingSection,
+  notifications: NotificationsSection,
   users: UsersSection,
   billing: BillingSection,
   modules: ModulesSection,

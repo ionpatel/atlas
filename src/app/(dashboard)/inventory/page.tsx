@@ -18,12 +18,16 @@ import {
   PackageX,
   Barcode,
   Tags,
+  Scan,
+  Bell,
 } from "lucide-react";
 import { useInventoryStore, getCategories } from "@/stores/inventory-store";
 import { Modal } from "@/components/ui/modal";
 import { ProductForm } from "@/components/modules/product-form";
 import { useToastStore } from "@/components/ui/toast";
 import { formatCurrency } from "@/lib/utils";
+import { BarcodeScanner } from "@/components/inventory/barcode-scanner";
+import { LowStockAlerts } from "@/components/inventory/low-stock-alerts";
 import type { Product } from "@/types";
 
 /* ─── Category color map ─── */
@@ -215,6 +219,8 @@ export default function InventoryPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [showScanner, setShowScanner] = useState(false);
+  const [showAlerts, setShowAlerts] = useState(false);
 
   const categories = getCategories(products);
   const filtered = filteredProducts();
@@ -285,6 +291,17 @@ export default function InventoryPage() {
     addToast("Product deleted", "info");
   };
 
+  const handleBarcodeScan = (barcode: string) => {
+    const product = products.find((p) => p.barcode === barcode || p.sku === barcode);
+    if (product) {
+      setEditingProduct(product);
+      setShowScanner(false);
+      addToast(`Found: ${product.name}`);
+    } else {
+      addToast(`No product found for: ${barcode}`, "error");
+    }
+  };
+
   return (
     <div className="space-y-6 max-w-[1400px]">
       {/* Header */}
@@ -297,13 +314,42 @@ export default function InventoryPage() {
             {filtered.length} of {products.length} products
           </p>
         </div>
-        <button
-          onClick={() => setModalOpen(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
-        >
-          <Plus className="w-4 h-4" />
-          Add Product
-        </button>
+        <div className="flex items-center gap-2">
+          {/* Low Stock Alerts Button */}
+          <button
+            onClick={() => setShowAlerts(true)}
+            className={`relative flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
+              summary.lowStock + summary.outOfStock > 0
+                ? "border-amber-500/30 text-amber-400 bg-amber-500/5 hover:bg-amber-500/10"
+                : "border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a]"
+            }`}
+          >
+            <Bell className="w-4 h-4" />
+            Alerts
+            {summary.lowStock + summary.outOfStock > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-amber-400 text-[10px] font-bold text-[#111111] flex items-center justify-center">
+                {summary.lowStock + summary.outOfStock}
+              </span>
+            )}
+          </button>
+
+          {/* Barcode Scanner Button */}
+          <button
+            onClick={() => setShowScanner(true)}
+            className="flex items-center gap-2 px-4 py-2.5 border border-[#2a2a2a] rounded-lg text-sm font-medium text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+          >
+            <Scan className="w-4 h-4" />
+            Scan
+          </button>
+
+          <button
+            onClick={() => setModalOpen(true)}
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
+          >
+            <Plus className="w-4 h-4" />
+            Add Product
+          </button>
+        </div>
       </div>
 
       {/* Summary Cards */}
@@ -634,6 +680,25 @@ export default function InventoryPage() {
           onCancel={() => setEditingProduct(null)}
         />
       </Modal>
+
+      {/* Barcode Scanner */}
+      {showScanner && (
+        <BarcodeScanner
+          onScan={handleBarcodeScan}
+          onClose={() => setShowScanner(false)}
+        />
+      )}
+
+      {/* Low Stock Alerts */}
+      {showAlerts && (
+        <LowStockAlerts
+          onClose={() => setShowAlerts(false)}
+          onReorder={(product) => {
+            addToast(`Creating purchase order for ${product.name}...`, "info");
+            setShowAlerts(false);
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useCRMStore } from "@/stores/crm-store";
 import { cn } from "@/lib/utils";
+import { ActivityTimeline, mockActivities } from "@/components/crm/activity-timeline";
 
 /* ─────────── helpers ─────────── */
 
@@ -244,9 +245,10 @@ function KanbanColumn({
 export default function CRMPage() {
   const { searchQuery, setSearchQuery, getLeadsByStage } = useCRMStore();
   const [showGenerateMenu, setShowGenerateMenu] = useState(false);
+  const [showActivityPanel, setShowActivityPanel] = useState(true);
 
   return (
-    <div className="space-y-6 max-w-[1600px]">
+    <div className="space-y-6 max-w-[1800px]">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -258,6 +260,20 @@ export default function CRMPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          {/* Activity Panel Toggle */}
+          <button
+            onClick={() => setShowActivityPanel(!showActivityPanel)}
+            className={cn(
+              "flex items-center gap-2 px-4 py-2.5 text-sm font-medium border rounded-lg transition-all duration-200",
+              showActivityPanel
+                ? "border-[#CDB49E]/30 text-[#CDB49E] bg-[#3a3028]/50"
+                : "border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a]"
+            )}
+          >
+            <Clock className="w-4 h-4" />
+            Activity
+          </button>
+
           {/* Generate Leads Dropdown */}
           <div className="relative">
             <button
@@ -321,15 +337,33 @@ export default function CRMPage() {
         </div>
       </div>
 
-      {/* Kanban Board */}
-      <div className="flex gap-4 overflow-x-auto pb-4">
-        {STAGES.map((stage) => (
-          <KanbanColumn
-            key={stage}
-            stage={stage}
-            leads={getLeadsByStage(stage)}
-          />
-        ))}
+      {/* Main Content: Kanban + Activity Panel */}
+      <div className="flex gap-6">
+        {/* Kanban Board */}
+        <div className={cn(
+          "flex gap-4 overflow-x-auto pb-4 transition-all duration-300",
+          showActivityPanel ? "flex-1" : "w-full"
+        )}>
+          {STAGES.map((stage) => (
+            <KanbanColumn
+              key={stage}
+              stage={stage}
+              leads={getLeadsByStage(stage)}
+            />
+          ))}
+        </div>
+
+        {/* Activity Timeline Panel */}
+        {showActivityPanel && (
+          <div className="w-80 flex-shrink-0 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 h-[calc(100vh-280px)] sticky top-4">
+            <ActivityTimeline
+              activities={mockActivities}
+              onAddActivity={() => {
+                // TODO: Open activity form
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
