@@ -65,26 +65,62 @@ const COMPONENTS = {
   Layout: [
     { id: "section", name: "Section", icon: Frame },
     { id: "container", name: "Container", icon: Container },
-    { id: "columns", name: "2 Columns", icon: Columns },
-    { id: "grid", name: "Grid", icon: Grid },
+    { id: "columns2", name: "2 Columns", icon: Columns },
+    { id: "columns3", name: "3 Columns", icon: Grid },
+    { id: "columns4", name: "4 Columns", icon: LayoutGrid },
   ],
-  Content: [
+  Basic: [
     { id: "heading", name: "Heading", icon: Type },
-    { id: "text", name: "Text", icon: FileText },
+    { id: "subheading", name: "Subheading", icon: Type },
+    { id: "text", name: "Paragraph", icon: FileText },
     { id: "button", name: "Button", icon: Square },
+    { id: "buttonOutline", name: "Outline Button", icon: Square },
+    { id: "link", name: "Text Link", icon: Link },
+    { id: "list", name: "Bullet List", icon: AlignLeft },
+    { id: "quote", name: "Quote", icon: MessageSquare },
+    { id: "badge", name: "Badge", icon: Star },
+  ],
+  Media: [
     { id: "image", name: "Image", icon: ImageIcon },
-    { id: "video", name: "Video", icon: Video },
+    { id: "imageRounded", name: "Rounded Image", icon: ImageIcon },
+    { id: "video", name: "Video Embed", icon: Video },
+    { id: "icon", name: "Icon", icon: Star },
+    { id: "avatar", name: "Avatar", icon: CircleDot },
+    { id: "gallery", name: "Image Gallery", icon: GalleryHorizontal },
+  ],
+  Cards: [
+    { id: "card", name: "Basic Card", icon: Square },
+    { id: "featureCard", name: "Feature Card", icon: Zap },
+    { id: "profileCard", name: "Profile Card", icon: CircleDot },
+    { id: "pricingCard", name: "Pricing Card", icon: DollarSign },
+    { id: "testimonialCard", name: "Testimonial Card", icon: MessageSquare },
+    { id: "statCard", name: "Stat Card", icon: BarChart3 },
+  ],
+  Navigation: [
+    { id: "navbar", name: "Navbar", icon: LayoutGrid },
+    { id: "navbarDark", name: "Dark Navbar", icon: LayoutGrid },
+    { id: "footer", name: "Footer", icon: Rows },
+    { id: "footerSimple", name: "Simple Footer", icon: Minus },
+  ],
+  Sections: [
+    { id: "hero", name: "Hero", icon: Zap },
+    { id: "heroWithImage", name: "Hero + Image", icon: Zap },
+    { id: "features3", name: "3 Features", icon: Grid },
+    { id: "features4", name: "4 Features", icon: LayoutGrid },
+    { id: "testimonials", name: "Testimonials", icon: MessageSquare },
+    { id: "pricing3", name: "Pricing Table", icon: DollarSign },
+    { id: "team", name: "Team Section", icon: Building2 },
+    { id: "stats", name: "Stats Section", icon: BarChart3 },
+    { id: "faq", name: "FAQ Section", icon: CircleDot },
+    { id: "cta", name: "Call to Action", icon: Rocket },
+    { id: "ctaBanner", name: "CTA Banner", icon: Rocket },
+    { id: "contact", name: "Contact Section", icon: Mail },
+    { id: "logoCloud", name: "Logo Cloud", icon: Building2 },
+  ],
+  Utility: [
     { id: "divider", name: "Divider", icon: Minus },
     { id: "spacer", name: "Spacer", icon: Expand },
-  ],
-  Blocks: [
-    { id: "hero", name: "Hero Section", icon: Zap },
-    { id: "features", name: "Features", icon: Grid },
-    { id: "testimonial", name: "Testimonial", icon: MessageSquare },
-    { id: "pricing", name: "Pricing", icon: DollarSign },
-    { id: "cta", name: "Call to Action", icon: Rocket },
-    { id: "contact", name: "Contact Form", icon: Mail },
-    { id: "footer", name: "Footer", icon: Rows },
+    { id: "spacerLarge", name: "Large Spacer", icon: Expand },
   ],
 };
 
@@ -92,26 +128,336 @@ const COMPONENTS = {
 
 const getDefaultElement = (type: string): Partial<ElementData> => {
   const defaults: Record<string, Partial<ElementData>> = {
+    // === BASIC TEXT ===
     heading: {
       content: "Your Heading Here",
-      styles: { fontSize: "36px", fontWeight: "700", color: "#ffffff", marginBottom: "16px" },
+      styles: { fontSize: "42px", fontWeight: "700", color: "#ffffff", marginBottom: "16px", lineHeight: "1.2" },
+    },
+    subheading: {
+      content: "Your Subheading Text",
+      styles: { fontSize: "24px", fontWeight: "500", color: "#cccccc", marginBottom: "12px", lineHeight: "1.4" },
     },
     text: {
-      content: "Add your text content here. Click to edit and customize this paragraph.",
-      styles: { fontSize: "16px", color: "#888888", lineHeight: "1.6", marginBottom: "16px" },
+      content: "Add your text content here. Click to edit and customize this paragraph. You can write as much as you need.",
+      styles: { fontSize: "16px", color: "#888888", lineHeight: "1.7", marginBottom: "16px" },
     },
     button: {
-      content: "Click Me",
+      content: "Get Started",
       styles: { 
-        backgroundColor: "#CDB49E", color: "#111111", padding: "12px 24px", 
-        borderRadius: "8px", fontSize: "14px", fontWeight: "600", display: "inline-block",
+        backgroundColor: "#CDB49E", color: "#111111", padding: "14px 28px", 
+        borderRadius: "8px", fontSize: "15px", fontWeight: "600", display: "inline-block",
         cursor: "pointer",
       },
     },
+    buttonOutline: {
+      content: "Learn More",
+      styles: { 
+        backgroundColor: "transparent", color: "#CDB49E", padding: "12px 26px", 
+        borderRadius: "8px", fontSize: "15px", fontWeight: "600", display: "inline-block",
+        border: "2px solid #CDB49E", cursor: "pointer",
+      },
+    },
+    link: {
+      content: "Click here to learn more →",
+      styles: { fontSize: "15px", color: "#CDB49E", textDecoration: "none", cursor: "pointer" },
+    },
+    list: {
+      content: JSON.stringify(["First item in your list", "Second item goes here", "Third item with details", "Fourth item example"]),
+      styles: { fontSize: "16px", color: "#888888", lineHeight: "1.8", marginBottom: "16px", paddingLeft: "20px" },
+    },
+    quote: {
+      content: JSON.stringify({ text: "This is a beautiful quote that will inspire your visitors. Make it memorable.", author: "John Doe, CEO" }),
+      styles: { padding: "24px 32px", borderLeft: "4px solid #CDB49E", backgroundColor: "#111", marginBottom: "24px" },
+    },
+    badge: {
+      content: "NEW",
+      styles: { 
+        backgroundColor: "#CDB49E", color: "#111", padding: "4px 12px", 
+        borderRadius: "20px", fontSize: "12px", fontWeight: "700", display: "inline-block", letterSpacing: "0.5px",
+      },
+    },
+
+    // === MEDIA ===
     image: {
-      content: "https://placehold.co/800x400/1a1a1a/666?text=Your+Image",
+      content: "https://placehold.co/800x450/1a1a1a/666?text=Your+Image+Here",
       styles: { width: "100%", borderRadius: "12px", marginBottom: "16px" },
     },
+    imageRounded: {
+      content: "https://placehold.co/400x400/1a1a1a/666?text=Photo",
+      styles: { width: "200px", height: "200px", borderRadius: "50%", objectFit: "cover" },
+    },
+    video: {
+      content: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      styles: { width: "100%", aspectRatio: "16/9", borderRadius: "12px", marginBottom: "16px" },
+    },
+    icon: {
+      content: "⚡",
+      styles: { fontSize: "48px", marginBottom: "16px" },
+    },
+    avatar: {
+      content: "https://placehold.co/100x100/CDB49E/111?text=JD",
+      styles: { width: "64px", height: "64px", borderRadius: "50%", objectFit: "cover" },
+    },
+    gallery: {
+      content: JSON.stringify([
+        "https://placehold.co/400x300/1a1a1a/666?text=1",
+        "https://placehold.co/400x300/1a1a1a/666?text=2",
+        "https://placehold.co/400x300/1a1a1a/666?text=3",
+        "https://placehold.co/400x300/1a1a1a/666?text=4",
+      ]),
+      styles: { display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "16px", marginBottom: "24px" },
+    },
+
+    // === CARDS ===
+    card: {
+      content: JSON.stringify({ title: "Card Title", description: "This is a basic card component. Add your content here." }),
+      styles: { padding: "24px", backgroundColor: "#111", borderRadius: "16px", border: "1px solid #222" },
+    },
+    featureCard: {
+      content: JSON.stringify({ icon: "🚀", title: "Feature Name", description: "Describe this amazing feature in a few words." }),
+      styles: { padding: "32px", backgroundColor: "#111", borderRadius: "16px", textAlign: "center" },
+    },
+    profileCard: {
+      content: JSON.stringify({ 
+        image: "https://placehold.co/150x150/CDB49E/111?text=JD", 
+        name: "John Doe", 
+        role: "CEO & Founder",
+        bio: "Passionate about building great products."
+      }),
+      styles: { padding: "32px", backgroundColor: "#111", borderRadius: "16px", textAlign: "center" },
+    },
+    pricingCard: {
+      content: JSON.stringify({ 
+        name: "Professional", 
+        price: "$49", 
+        period: "/month",
+        features: ["Unlimited projects", "Priority support", "Advanced analytics", "Custom domain"],
+        buttonText: "Get Started",
+        popular: true,
+      }),
+      styles: { padding: "32px", backgroundColor: "#111", borderRadius: "16px", textAlign: "center", border: "2px solid #CDB49E" },
+    },
+    testimonialCard: {
+      content: JSON.stringify({ 
+        quote: "This product completely transformed our business. Highly recommended!", 
+        author: "Sarah Johnson",
+        role: "Marketing Director",
+        image: "https://placehold.co/60x60/CDB49E/111?text=SJ",
+        rating: 5,
+      }),
+      styles: { padding: "32px", backgroundColor: "#111", borderRadius: "16px" },
+    },
+    statCard: {
+      content: JSON.stringify({ value: "10,000+", label: "Happy Customers" }),
+      styles: { padding: "32px", backgroundColor: "#111", borderRadius: "16px", textAlign: "center" },
+    },
+
+    // === NAVIGATION ===
+    navbar: {
+      content: JSON.stringify({ 
+        logo: "YourBrand", 
+        links: ["Home", "Features", "Pricing", "Contact"],
+        buttonText: "Get Started",
+      }),
+      styles: { padding: "16px 32px", backgroundColor: "#0a0a0a", borderBottom: "1px solid #222" },
+    },
+    navbarDark: {
+      content: JSON.stringify({ 
+        logo: "YourBrand", 
+        links: ["Home", "About", "Services", "Contact"],
+        buttonText: "Sign Up",
+      }),
+      styles: { padding: "16px 32px", backgroundColor: "#111", borderBottom: "1px solid #333" },
+    },
+    footer: {
+      content: JSON.stringify({ 
+        logo: "YourBrand",
+        description: "Building amazing products since 2024.",
+        columns: [
+          { title: "Product", links: ["Features", "Pricing", "Demo"] },
+          { title: "Company", links: ["About", "Careers", "Contact"] },
+          { title: "Legal", links: ["Privacy", "Terms", "Security"] },
+        ],
+        copyright: "© 2026 YourBrand. All rights reserved.",
+        socials: ["twitter", "linkedin", "github"],
+      }),
+      styles: { padding: "64px 32px", backgroundColor: "#0a0a0a", borderTop: "1px solid #222" },
+    },
+    footerSimple: {
+      content: JSON.stringify({ 
+        copyright: "© 2026 YourBrand. All rights reserved.",
+        links: ["Privacy", "Terms", "Contact"],
+      }),
+      styles: { padding: "24px 32px", backgroundColor: "#0a0a0a", borderTop: "1px solid #222", textAlign: "center" },
+    },
+
+    // === SECTIONS ===
+    hero: {
+      content: JSON.stringify({
+        badge: "✨ Now Available",
+        heading: "Build Something Amazing Today",
+        subheading: "Create stunning websites with our powerful visual editor. No coding skills required — just drag, drop, and publish.",
+        buttonText: "Start Free Trial",
+        buttonSecondary: "Watch Demo",
+      }),
+      styles: { padding: "100px 32px", textAlign: "center", backgroundColor: "#0a0a0a" },
+    },
+    heroWithImage: {
+      content: JSON.stringify({
+        heading: "The Modern Way to Build Websites",
+        subheading: "Powerful tools for designers and developers. Ship faster with beautiful components.",
+        buttonText: "Get Started Free",
+        image: "https://placehold.co/600x400/1a1a1a/666?text=Product+Screenshot",
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#0a0a0a" },
+    },
+    features3: {
+      content: JSON.stringify({
+        title: "Everything You Need",
+        subtitle: "Powerful features to help you build faster",
+        items: [
+          { icon: "⚡", title: "Lightning Fast", description: "Optimized for speed and performance out of the box." },
+          { icon: "🎨", title: "Beautiful Design", description: "Stunning components crafted with attention to detail." },
+          { icon: "🔒", title: "Secure & Reliable", description: "Enterprise-grade security you can trust." },
+        ],
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#111111" },
+    },
+    features4: {
+      content: JSON.stringify({
+        title: "Packed with Features",
+        subtitle: "Everything you need to succeed",
+        items: [
+          { icon: "📊", title: "Analytics", description: "Track your growth with detailed insights." },
+          { icon: "🔗", title: "Integrations", description: "Connect with your favorite tools." },
+          { icon: "📱", title: "Mobile Ready", description: "Looks great on every device." },
+          { icon: "🎯", title: "SEO Optimized", description: "Rank higher in search results." },
+        ],
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#0a0a0a" },
+    },
+    testimonials: {
+      content: JSON.stringify({
+        title: "Loved by Thousands",
+        subtitle: "See what our customers are saying",
+        items: [
+          { quote: "Absolutely game-changing! Our productivity increased by 300%.", author: "Sarah Chen", role: "CEO, TechStart", image: "https://placehold.co/60x60/CDB49E/111?text=SC" },
+          { quote: "The best investment we've made for our business this year.", author: "Mike Johnson", role: "Founder, DesignCo", image: "https://placehold.co/60x60/CDB49E/111?text=MJ" },
+          { quote: "Simple, powerful, and beautiful. Everything we needed.", author: "Emma Wilson", role: "CTO, Innovate", image: "https://placehold.co/60x60/CDB49E/111?text=EW" },
+        ],
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#111111" },
+    },
+    pricing3: {
+      content: JSON.stringify({
+        title: "Simple, Transparent Pricing",
+        subtitle: "No hidden fees. Cancel anytime.",
+        plans: [
+          { name: "Starter", price: "$19", period: "/month", features: ["5 Projects", "Basic Analytics", "Email Support"], buttonText: "Start Free" },
+          { name: "Professional", price: "$49", period: "/month", features: ["Unlimited Projects", "Advanced Analytics", "Priority Support", "Custom Domain"], buttonText: "Get Started", popular: true },
+          { name: "Enterprise", price: "$99", period: "/month", features: ["Everything in Pro", "Dedicated Support", "SLA", "Custom Integrations"], buttonText: "Contact Sales" },
+        ],
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#0a0a0a" },
+    },
+    team: {
+      content: JSON.stringify({
+        title: "Meet Our Team",
+        subtitle: "The people behind the product",
+        members: [
+          { name: "John Doe", role: "CEO & Founder", image: "https://placehold.co/200x200/CDB49E/111?text=JD" },
+          { name: "Sarah Smith", role: "CTO", image: "https://placehold.co/200x200/CDB49E/111?text=SS" },
+          { name: "Mike Johnson", role: "Head of Design", image: "https://placehold.co/200x200/CDB49E/111?text=MJ" },
+          { name: "Emily Chen", role: "Lead Developer", image: "https://placehold.co/200x200/CDB49E/111?text=EC" },
+        ],
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#111111" },
+    },
+    stats: {
+      content: JSON.stringify({
+        title: "Trusted by Industry Leaders",
+        items: [
+          { value: "10K+", label: "Active Users" },
+          { value: "99.9%", label: "Uptime" },
+          { value: "150+", label: "Countries" },
+          { value: "24/7", label: "Support" },
+        ],
+      }),
+      styles: { padding: "64px 32px", backgroundColor: "#0a0a0a" },
+    },
+    faq: {
+      content: JSON.stringify({
+        title: "Frequently Asked Questions",
+        subtitle: "Got questions? We've got answers.",
+        items: [
+          { question: "How do I get started?", answer: "Simply sign up for a free account and you can start building right away. No credit card required." },
+          { question: "Can I cancel anytime?", answer: "Yes! You can cancel your subscription at any time with no questions asked." },
+          { question: "Do you offer refunds?", answer: "We offer a 30-day money-back guarantee if you're not satisfied." },
+          { question: "Is there a free plan?", answer: "Yes, we offer a generous free tier that lets you try out all the features." },
+        ],
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#111111" },
+    },
+    cta: {
+      content: JSON.stringify({
+        heading: "Ready to Get Started?",
+        subheading: "Join thousands of happy customers and start building today.",
+        buttonText: "Start Free Trial",
+        buttonSecondary: "Contact Sales",
+      }),
+      styles: { padding: "80px 32px", textAlign: "center", backgroundColor: "#0a0a0a" },
+    },
+    ctaBanner: {
+      content: JSON.stringify({
+        heading: "Special Offer: 50% Off",
+        subheading: "Limited time only. Don't miss out!",
+        buttonText: "Claim Offer",
+      }),
+      styles: { padding: "32px", textAlign: "center", background: "linear-gradient(135deg, #CDB49E 0%, #d4c0ad 100%)" },
+    },
+    contact: {
+      content: JSON.stringify({
+        title: "Get in Touch",
+        subtitle: "We'd love to hear from you",
+        email: "hello@yourbrand.com",
+        phone: "+1 (555) 123-4567",
+        address: "123 Business Ave, Toronto, ON",
+        formFields: ["Name", "Email", "Message"],
+        buttonText: "Send Message",
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#111111" },
+    },
+    logoCloud: {
+      content: JSON.stringify({
+        title: "Trusted by Leading Companies",
+        logos: ["Google", "Microsoft", "Apple", "Amazon", "Meta"],
+      }),
+      styles: { padding: "48px 32px", backgroundColor: "#0a0a0a", textAlign: "center" },
+    },
+
+    // === LAYOUT ===
+    section: {
+      content: "",
+      styles: { padding: "64px 32px" },
+    },
+    container: {
+      content: "",
+      styles: { maxWidth: "1200px", margin: "0 auto", padding: "0 24px" },
+    },
+    columns2: {
+      content: JSON.stringify({ cols: 2 }),
+      styles: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px", padding: "32px" },
+    },
+    columns3: {
+      content: JSON.stringify({ cols: 3 }),
+      styles: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px", padding: "32px" },
+    },
+    columns4: {
+      content: JSON.stringify({ cols: 4 }),
+      styles: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px", padding: "32px" },
+    },
+
+    // === UTILITY ===
     divider: {
       content: "",
       styles: { height: "1px", backgroundColor: "#333", margin: "32px 0" },
@@ -120,45 +466,9 @@ const getDefaultElement = (type: string): Partial<ElementData> => {
       content: "",
       styles: { height: "48px" },
     },
-    hero: {
-      content: JSON.stringify({
-        heading: "Build Something Amazing",
-        subheading: "Create stunning websites with our visual editor. No coding required.",
-        buttonText: "Get Started",
-        buttonLink: "#",
-      }),
-      styles: { padding: "80px 32px", textAlign: "center", backgroundColor: "#0a0a0a" },
-    },
-    features: {
-      content: JSON.stringify({
-        title: "Why Choose Us",
-        items: [
-          { icon: "⚡", title: "Fast", description: "Lightning quick performance" },
-          { icon: "🎨", title: "Beautiful", description: "Stunning visual design" },
-          { icon: "🔒", title: "Secure", description: "Enterprise-grade security" },
-        ],
-      }),
-      styles: { padding: "64px 32px", backgroundColor: "#111111" },
-    },
-    cta: {
-      content: JSON.stringify({
-        heading: "Ready to Get Started?",
-        subheading: "Join thousands of happy customers today.",
-        buttonText: "Start Free Trial",
-      }),
-      styles: { padding: "64px 32px", textAlign: "center", backgroundColor: "#0a0a0a" },
-    },
-    section: {
+    spacerLarge: {
       content: "",
-      styles: { padding: "48px 32px" },
-    },
-    container: {
-      content: "",
-      styles: { maxWidth: "1200px", margin: "0 auto", padding: "0 24px" },
-    },
-    columns: {
-      content: "",
-      styles: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px" },
+      styles: { height: "96px" },
     },
   };
   return defaults[type] || { content: "", styles: {} };
@@ -240,98 +550,357 @@ function ElementRenderer({
 }) {
   const baseStyles = element.styles as React.CSSProperties;
 
+  // Helper to parse JSON safely
+  const parseData = () => {
+    try { return JSON.parse(element.content || "{}"); } catch { return {}; }
+  };
+
   // Render based on type
   const renderContent = () => {
     switch (element.type) {
+      // === BASIC TEXT ===
       case "heading":
-        return (
-          <InlineEditor
-            value={element.content}
-            onChange={(v) => onUpdate({ content: v })}
-            style={baseStyles}
-          />
-        );
-
+      case "subheading":
       case "text":
-        return (
-          <InlineEditor
-            value={element.content}
-            onChange={(v) => onUpdate({ content: v })}
-            style={baseStyles}
-          />
-        );
+        return <InlineEditor value={element.content} onChange={(v) => onUpdate({ content: v })} style={baseStyles} />;
 
       case "button":
+      case "buttonOutline":
         return (
           <div style={baseStyles}>
-            <InlineEditor
-              value={element.content}
-              onChange={(v) => onUpdate({ content: v })}
-              style={{ display: "inline" }}
-            />
+            <InlineEditor value={element.content} onChange={(v) => onUpdate({ content: v })} style={{ display: "inline" }} />
           </div>
         );
 
-      case "image":
+      case "link":
+        return <InlineEditor value={element.content} onChange={(v) => onUpdate({ content: v })} style={baseStyles} />;
+
+      case "list": {
+        const items = parseData();
         return (
-          <img
-            src={element.content}
-            alt="Content"
-            style={baseStyles}
-            className="max-w-full"
-          />
+          <ul style={baseStyles}>
+            {(Array.isArray(items) ? items : []).map((item: string, i: number) => (
+              <li key={i} style={{ marginBottom: "8px" }}>{item}</li>
+            ))}
+          </ul>
         );
+      }
 
-      case "divider":
-        return <div style={baseStyles} />;
+      case "quote": {
+        const data = parseData();
+        return (
+          <blockquote style={baseStyles}>
+            <div style={{ fontSize: "18px", fontStyle: "italic", color: "#ccc", marginBottom: "12px" }}>"{data.text}"</div>
+            <div style={{ fontSize: "14px", color: "#888" }}>— {data.author}</div>
+          </blockquote>
+        );
+      }
 
-      case "spacer":
-        return <div style={baseStyles} />;
+      case "badge":
+        return <span style={baseStyles}>{element.content}</span>;
 
-      case "hero": {
-        const data = JSON.parse(element.content || "{}");
+      case "icon":
+        return <div style={baseStyles}>{element.content}</div>;
+
+      // === MEDIA ===
+      case "image":
+      case "imageRounded":
+        return <img src={element.content} alt="Content" style={baseStyles} className="max-w-full" />;
+
+      case "avatar":
+        return <img src={element.content} alt="Avatar" style={baseStyles} />;
+
+      case "video":
+        return <iframe src={element.content} style={baseStyles} allowFullScreen className="border-0" />;
+
+      case "gallery": {
+        const images = parseData();
         return (
           <div style={baseStyles}>
-            <InlineEditor
-              value={data.heading || ""}
-              onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, heading: v }) })}
-              style={{ fontSize: "48px", fontWeight: "700", color: "#fff", marginBottom: "16px" }}
-            />
-            <InlineEditor
-              value={data.subheading || ""}
-              onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, subheading: v }) })}
-              style={{ fontSize: "18px", color: "#888", marginBottom: "32px", maxWidth: "600px", margin: "0 auto 32px" }}
-            />
-            <div 
-              style={{ 
-                backgroundColor: "#CDB49E", color: "#111", padding: "16px 32px", 
-                borderRadius: "12px", display: "inline-block", fontWeight: "600" 
-              }}
-            >
-              <InlineEditor
-                value={data.buttonText || "Get Started"}
-                onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, buttonText: v }) })}
-              />
+            {(Array.isArray(images) ? images : []).map((src: string, i: number) => (
+              <img key={i} src={src} alt="" style={{ width: "100%", borderRadius: "8px" }} />
+            ))}
+          </div>
+        );
+      }
+
+      // === CARDS ===
+      case "card": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <div style={{ fontSize: "20px", fontWeight: "600", color: "#fff", marginBottom: "8px" }}>{data.title}</div>
+            <div style={{ fontSize: "14px", color: "#888" }}>{data.description}</div>
+          </div>
+        );
+      }
+
+      case "featureCard": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <div style={{ fontSize: "40px", marginBottom: "16px" }}>{data.icon}</div>
+            <div style={{ fontSize: "18px", fontWeight: "600", color: "#fff", marginBottom: "8px" }}>{data.title}</div>
+            <div style={{ fontSize: "14px", color: "#888" }}>{data.description}</div>
+          </div>
+        );
+      }
+
+      case "profileCard": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <img src={data.image} alt="" style={{ width: "100px", height: "100px", borderRadius: "50%", margin: "0 auto 16px" }} />
+            <div style={{ fontSize: "18px", fontWeight: "600", color: "#fff" }}>{data.name}</div>
+            <div style={{ fontSize: "14px", color: "#CDB49E", marginBottom: "8px" }}>{data.role}</div>
+            <div style={{ fontSize: "13px", color: "#888" }}>{data.bio}</div>
+          </div>
+        );
+      }
+
+      case "pricingCard": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            {data.popular && <span style={{ display: "inline-block", padding: "4px 12px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "20px", fontSize: "11px", fontWeight: "700", marginBottom: "16px" }}>MOST POPULAR</span>}
+            <div style={{ fontSize: "20px", fontWeight: "600", color: "#fff", marginBottom: "8px" }}>{data.name}</div>
+            <div style={{ fontSize: "42px", fontWeight: "700", color: "#fff" }}>{data.price}<span style={{ fontSize: "16px", color: "#888" }}>{data.period}</span></div>
+            <ul style={{ margin: "24px 0", padding: "0", listStyle: "none" }}>
+              {(data.features || []).map((f: string, i: number) => (
+                <li key={i} style={{ padding: "8px 0", color: "#888", borderBottom: "1px solid #222" }}>✓ {f}</li>
+              ))}
+            </ul>
+            <div style={{ padding: "14px 24px", backgroundColor: data.popular ? "#CDB49E" : "transparent", color: data.popular ? "#111" : "#CDB49E", border: data.popular ? "none" : "2px solid #CDB49E", borderRadius: "8px", fontWeight: "600", cursor: "pointer" }}>{data.buttonText}</div>
+          </div>
+        );
+      }
+
+      case "testimonialCard": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <div style={{ display: "flex", marginBottom: "12px" }}>{"★".repeat(data.rating || 5)}</div>
+            <div style={{ fontSize: "16px", color: "#ccc", fontStyle: "italic", marginBottom: "16px" }}>"{data.quote}"</div>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <img src={data.image} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%" }} />
+              <div>
+                <div style={{ fontSize: "14px", fontWeight: "600", color: "#fff" }}>{data.author}</div>
+                <div style={{ fontSize: "12px", color: "#888" }}>{data.role}</div>
+              </div>
             </div>
           </div>
         );
       }
 
-      case "features": {
-        const data = JSON.parse(element.content || "{}");
+      case "statCard": {
+        const data = parseData();
         return (
           <div style={baseStyles}>
-            <InlineEditor
-              value={data.title || "Features"}
-              onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, title: v }) })}
-              style={{ fontSize: "32px", fontWeight: "700", color: "#fff", textAlign: "center", marginBottom: "48px" }}
-            />
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "32px" }}>
+            <div style={{ fontSize: "42px", fontWeight: "700", color: "#CDB49E" }}>{data.value}</div>
+            <div style={{ fontSize: "14px", color: "#888" }}>{data.label}</div>
+          </div>
+        );
+      }
+
+      // === NAVIGATION ===
+      case "navbar":
+      case "navbarDark": {
+        const data = parseData();
+        return (
+          <nav style={{ ...baseStyles, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ fontSize: "20px", fontWeight: "700", color: "#CDB49E" }}>{data.logo}</div>
+            <div style={{ display: "flex", gap: "32px" }}>
+              {(data.links || []).map((link: string, i: number) => (
+                <span key={i} style={{ fontSize: "14px", color: "#888", cursor: "pointer" }}>{link}</span>
+              ))}
+            </div>
+            <div style={{ padding: "10px 20px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "8px", fontWeight: "600", fontSize: "14px" }}>{data.buttonText}</div>
+          </nav>
+        );
+      }
+
+      case "footer": {
+        const data = parseData();
+        return (
+          <footer style={baseStyles}>
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: "48px", marginBottom: "48px" }}>
+              <div>
+                <div style={{ fontSize: "20px", fontWeight: "700", color: "#CDB49E", marginBottom: "16px" }}>{data.logo}</div>
+                <div style={{ fontSize: "14px", color: "#888" }}>{data.description}</div>
+              </div>
+              {(data.columns || []).map((col: any, i: number) => (
+                <div key={i}>
+                  <div style={{ fontSize: "14px", fontWeight: "600", color: "#fff", marginBottom: "16px" }}>{col.title}</div>
+                  {(col.links || []).map((link: string, j: number) => (
+                    <div key={j} style={{ fontSize: "13px", color: "#888", marginBottom: "8px", cursor: "pointer" }}>{link}</div>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div style={{ borderTop: "1px solid #222", paddingTop: "24px", textAlign: "center", fontSize: "13px", color: "#666" }}>{data.copyright}</div>
+          </footer>
+        );
+      }
+
+      case "footerSimple": {
+        const data = parseData();
+        return (
+          <footer style={baseStyles}>
+            <div style={{ display: "flex", justifyContent: "center", gap: "24px", marginBottom: "16px" }}>
+              {(data.links || []).map((link: string, i: number) => (
+                <span key={i} style={{ fontSize: "13px", color: "#888", cursor: "pointer" }}>{link}</span>
+              ))}
+            </div>
+            <div style={{ fontSize: "13px", color: "#666" }}>{data.copyright}</div>
+          </footer>
+        );
+      }
+
+      // === SECTIONS ===
+      case "hero": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            {data.badge && <span style={{ display: "inline-block", padding: "6px 16px", backgroundColor: "#CDB49E20", color: "#CDB49E", borderRadius: "20px", fontSize: "13px", marginBottom: "24px" }}>{data.badge}</span>}
+            <InlineEditor value={data.heading || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, heading: v }) })} style={{ fontSize: "52px", fontWeight: "700", color: "#fff", marginBottom: "20px", lineHeight: "1.1" }} />
+            <InlineEditor value={data.subheading || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, subheading: v }) })} style={{ fontSize: "18px", color: "#888", marginBottom: "36px", maxWidth: "600px", margin: "0 auto 36px", lineHeight: "1.6" }} />
+            <div style={{ display: "flex", gap: "16px", justifyContent: "center" }}>
+              <div style={{ padding: "16px 32px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "10px", fontWeight: "600", cursor: "pointer" }}>{data.buttonText}</div>
+              {data.buttonSecondary && <div style={{ padding: "16px 32px", border: "2px solid #333", color: "#fff", borderRadius: "10px", fontWeight: "600", cursor: "pointer" }}>{data.buttonSecondary}</div>}
+            </div>
+          </div>
+        );
+      }
+
+      case "heroWithImage": {
+        const data = parseData();
+        return (
+          <div style={{ ...baseStyles, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "center" }}>
+            <div>
+              <InlineEditor value={data.heading || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, heading: v }) })} style={{ fontSize: "44px", fontWeight: "700", color: "#fff", marginBottom: "20px", lineHeight: "1.1" }} />
+              <InlineEditor value={data.subheading || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, subheading: v }) })} style={{ fontSize: "17px", color: "#888", marginBottom: "32px", lineHeight: "1.6" }} />
+              <div style={{ padding: "16px 32px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "10px", fontWeight: "600", display: "inline-block", cursor: "pointer" }}>{data.buttonText}</div>
+            </div>
+            <img src={data.image} alt="" style={{ width: "100%", borderRadius: "16px" }} />
+          </div>
+        );
+      }
+
+      case "features3":
+      case "features4": {
+        const data = parseData();
+        const cols = element.type === "features4" ? 4 : 3;
+        return (
+          <div style={baseStyles}>
+            <InlineEditor value={data.title || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, title: v }) })} style={{ fontSize: "36px", fontWeight: "700", color: "#fff", textAlign: "center", marginBottom: "16px" }} />
+            <div style={{ fontSize: "16px", color: "#888", textAlign: "center", marginBottom: "48px" }}>{data.subtitle}</div>
+            <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: "24px" }}>
               {(data.items || []).map((item: any, i: number) => (
-                <div key={i} style={{ textAlign: "center", padding: "24px", backgroundColor: "#0a0a0a", borderRadius: "12px" }}>
-                  <div style={{ fontSize: "36px", marginBottom: "16px" }}>{item.icon}</div>
+                <div key={i} style={{ padding: "32px", backgroundColor: "#0a0a0a", borderRadius: "16px", textAlign: "center" }}>
+                  <div style={{ fontSize: "40px", marginBottom: "16px" }}>{item.icon}</div>
                   <div style={{ fontSize: "18px", fontWeight: "600", color: "#fff", marginBottom: "8px" }}>{item.title}</div>
-                  <div style={{ fontSize: "14px", color: "#888" }}>{item.description}</div>
+                  <div style={{ fontSize: "14px", color: "#888", lineHeight: "1.5" }}>{item.description}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      case "testimonials": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <InlineEditor value={data.title || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, title: v }) })} style={{ fontSize: "36px", fontWeight: "700", color: "#fff", textAlign: "center", marginBottom: "16px" }} />
+            <div style={{ fontSize: "16px", color: "#888", textAlign: "center", marginBottom: "48px" }}>{data.subtitle}</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
+              {(data.items || []).map((item: any, i: number) => (
+                <div key={i} style={{ padding: "32px", backgroundColor: "#0a0a0a", borderRadius: "16px" }}>
+                  <div style={{ fontSize: "15px", color: "#ccc", fontStyle: "italic", marginBottom: "24px", lineHeight: "1.6" }}>"{item.quote}"</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <img src={item.image} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%" }} />
+                    <div>
+                      <div style={{ fontSize: "14px", fontWeight: "600", color: "#fff" }}>{item.author}</div>
+                      <div style={{ fontSize: "12px", color: "#888" }}>{item.role}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      case "pricing3": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <InlineEditor value={data.title || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, title: v }) })} style={{ fontSize: "36px", fontWeight: "700", color: "#fff", textAlign: "center", marginBottom: "16px" }} />
+            <div style={{ fontSize: "16px", color: "#888", textAlign: "center", marginBottom: "48px" }}>{data.subtitle}</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
+              {(data.plans || []).map((plan: any, i: number) => (
+                <div key={i} style={{ padding: "32px", backgroundColor: "#111", borderRadius: "16px", textAlign: "center", border: plan.popular ? "2px solid #CDB49E" : "1px solid #222" }}>
+                  {plan.popular && <span style={{ display: "inline-block", padding: "4px 12px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "20px", fontSize: "11px", fontWeight: "700", marginBottom: "16px" }}>POPULAR</span>}
+                  <div style={{ fontSize: "20px", fontWeight: "600", color: "#fff", marginBottom: "8px" }}>{plan.name}</div>
+                  <div style={{ fontSize: "42px", fontWeight: "700", color: "#fff" }}>{plan.price}<span style={{ fontSize: "14px", color: "#888" }}>{plan.period}</span></div>
+                  <ul style={{ margin: "24px 0", padding: "0", listStyle: "none", textAlign: "left" }}>
+                    {(plan.features || []).map((f: string, j: number) => <li key={j} style={{ padding: "10px 0", color: "#888", borderBottom: "1px solid #222" }}>✓ {f}</li>)}
+                  </ul>
+                  <div style={{ padding: "14px", backgroundColor: plan.popular ? "#CDB49E" : "transparent", color: plan.popular ? "#111" : "#CDB49E", border: plan.popular ? "none" : "2px solid #CDB49E", borderRadius: "8px", fontWeight: "600", cursor: "pointer" }}>{plan.buttonText}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      case "team": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <InlineEditor value={data.title || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, title: v }) })} style={{ fontSize: "36px", fontWeight: "700", color: "#fff", textAlign: "center", marginBottom: "16px" }} />
+            <div style={{ fontSize: "16px", color: "#888", textAlign: "center", marginBottom: "48px" }}>{data.subtitle}</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "24px" }}>
+              {(data.members || []).map((member: any, i: number) => (
+                <div key={i} style={{ textAlign: "center" }}>
+                  <img src={member.image} alt="" style={{ width: "150px", height: "150px", borderRadius: "50%", margin: "0 auto 16px", objectFit: "cover" }} />
+                  <div style={{ fontSize: "16px", fontWeight: "600", color: "#fff" }}>{member.name}</div>
+                  <div style={{ fontSize: "13px", color: "#CDB49E" }}>{member.role}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      case "stats": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            {data.title && <div style={{ fontSize: "14px", color: "#888", textAlign: "center", marginBottom: "32px", textTransform: "uppercase", letterSpacing: "2px" }}>{data.title}</div>}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "32px", textAlign: "center" }}>
+              {(data.items || []).map((item: any, i: number) => (
+                <div key={i}>
+                  <div style={{ fontSize: "48px", fontWeight: "700", color: "#CDB49E" }}>{item.value}</div>
+                  <div style={{ fontSize: "14px", color: "#888" }}>{item.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      case "faq": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <InlineEditor value={data.title || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, title: v }) })} style={{ fontSize: "36px", fontWeight: "700", color: "#fff", textAlign: "center", marginBottom: "16px" }} />
+            <div style={{ fontSize: "16px", color: "#888", textAlign: "center", marginBottom: "48px" }}>{data.subtitle}</div>
+            <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+              {(data.items || []).map((item: any, i: number) => (
+                <div key={i} style={{ padding: "24px 0", borderBottom: "1px solid #222" }}>
+                  <div style={{ fontSize: "18px", fontWeight: "600", color: "#fff", marginBottom: "12px" }}>{item.question}</div>
+                  <div style={{ fontSize: "15px", color: "#888", lineHeight: "1.6" }}>{item.answer}</div>
                 </div>
               ))}
             </div>
@@ -340,33 +909,78 @@ function ElementRenderer({
       }
 
       case "cta": {
-        const data = JSON.parse(element.content || "{}");
+        const data = parseData();
         return (
           <div style={baseStyles}>
-            <InlineEditor
-              value={data.heading || ""}
-              onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, heading: v }) })}
-              style={{ fontSize: "36px", fontWeight: "700", color: "#fff", marginBottom: "16px" }}
-            />
-            <InlineEditor
-              value={data.subheading || ""}
-              onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, subheading: v }) })}
-              style={{ fontSize: "16px", color: "#888", marginBottom: "32px" }}
-            />
-            <div 
-              style={{ 
-                backgroundColor: "#CDB49E", color: "#111", padding: "16px 32px", 
-                borderRadius: "12px", display: "inline-block", fontWeight: "600" 
-              }}
-            >
-              <InlineEditor
-                value={data.buttonText || "Get Started"}
-                onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, buttonText: v }) })}
-              />
+            <InlineEditor value={data.heading || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, heading: v }) })} style={{ fontSize: "40px", fontWeight: "700", color: "#fff", marginBottom: "16px" }} />
+            <InlineEditor value={data.subheading || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, subheading: v }) })} style={{ fontSize: "17px", color: "#888", marginBottom: "36px", maxWidth: "500px", margin: "0 auto 36px" }} />
+            <div style={{ display: "flex", gap: "16px", justifyContent: "center" }}>
+              <div style={{ padding: "16px 32px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "10px", fontWeight: "600", cursor: "pointer" }}>{data.buttonText}</div>
+              {data.buttonSecondary && <div style={{ padding: "16px 32px", border: "2px solid #333", color: "#fff", borderRadius: "10px", fontWeight: "600", cursor: "pointer" }}>{data.buttonSecondary}</div>}
             </div>
           </div>
         );
       }
+
+      case "ctaBanner": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <InlineEditor value={data.heading || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, heading: v }) })} style={{ fontSize: "28px", fontWeight: "700", color: "#111", marginBottom: "8px" }} />
+            <div style={{ fontSize: "15px", color: "#333", marginBottom: "20px" }}>{data.subheading}</div>
+            <div style={{ padding: "12px 28px", backgroundColor: "#111", color: "#fff", borderRadius: "8px", fontWeight: "600", display: "inline-block", cursor: "pointer" }}>{data.buttonText}</div>
+          </div>
+        );
+      }
+
+      case "contact": {
+        const data = parseData();
+        return (
+          <div style={{ ...baseStyles, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px" }}>
+            <div>
+              <InlineEditor value={data.title || ""} onChange={(v) => onUpdate({ content: JSON.stringify({ ...data, title: v }) })} style={{ fontSize: "36px", fontWeight: "700", color: "#fff", marginBottom: "16px" }} />
+              <div style={{ fontSize: "16px", color: "#888", marginBottom: "32px" }}>{data.subtitle}</div>
+              <div style={{ fontSize: "14px", color: "#888", marginBottom: "12px" }}>📧 {data.email}</div>
+              <div style={{ fontSize: "14px", color: "#888", marginBottom: "12px" }}>📞 {data.phone}</div>
+              <div style={{ fontSize: "14px", color: "#888" }}>📍 {data.address}</div>
+            </div>
+            <div style={{ backgroundColor: "#0a0a0a", padding: "32px", borderRadius: "16px" }}>
+              {(data.formFields || []).map((field: string, i: number) => (
+                <div key={i} style={{ marginBottom: "16px" }}>
+                  <label style={{ fontSize: "13px", color: "#888", marginBottom: "6px", display: "block" }}>{field}</label>
+                  <input type={field === "Email" ? "email" : "text"} placeholder={field} style={{ width: "100%", padding: "12px 16px", backgroundColor: "#111", border: "1px solid #333", borderRadius: "8px", color: "#fff", fontSize: "14px" }} />
+                </div>
+              ))}
+              <div style={{ padding: "14px", backgroundColor: "#CDB49E", color: "#111", borderRadius: "8px", fontWeight: "600", textAlign: "center", cursor: "pointer", marginTop: "8px" }}>{data.buttonText}</div>
+            </div>
+          </div>
+        );
+      }
+
+      case "logoCloud": {
+        const data = parseData();
+        return (
+          <div style={baseStyles}>
+            <div style={{ fontSize: "13px", color: "#666", marginBottom: "24px", textTransform: "uppercase", letterSpacing: "2px" }}>{data.title}</div>
+            <div style={{ display: "flex", justifyContent: "center", gap: "48px", flexWrap: "wrap" }}>
+              {(data.logos || []).map((logo: string, i: number) => (
+                <span key={i} style={{ fontSize: "18px", color: "#555", fontWeight: "600" }}>{logo}</span>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      // === LAYOUT / UTILITY ===
+      case "divider":
+      case "spacer":
+      case "spacerLarge":
+      case "section":
+      case "container":
+      case "columns2":
+      case "columns3":
+      case "columns4":
+        return <div style={baseStyles}>{element.content}</div>;
 
       default:
         return <div style={baseStyles}>{element.content}</div>;
