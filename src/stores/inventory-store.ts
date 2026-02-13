@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createClient } from "@/lib/supabase/client";
 import type { Product } from "@/types";
 
 interface InventoryFilters {
@@ -17,10 +18,13 @@ interface InventoryState {
   setSearchQuery: (query: string) => void;
   setFilter: (key: keyof InventoryFilters, value: string) => void;
   resetFilters: () => void;
-  addProduct: (product: Product) => void;
-  updateProduct: (id: string, data: Partial<Product>) => void;
-  deleteProduct: (id: string) => void;
-  deleteProducts: (ids: string[]) => void;
+
+  // Async CRUD
+  fetchProducts: (orgId: string) => Promise<void>;
+  addProduct: (product: Omit<Product, "id" | "created_at">) => Promise<Product | null>;
+  updateProduct: (id: string, data: Partial<Product>) => Promise<boolean>;
+  deleteProduct: (id: string) => Promise<boolean>;
+  deleteProducts: (ids: string[]) => Promise<boolean>;
 
   // Computed
   filteredProducts: () => Product[];
@@ -28,6 +32,7 @@ interface InventoryState {
 
 const defaultFilters: InventoryFilters = { category: "", status: "" };
 
+// Mock data for demo mode
 const mockProducts: Product[] = [
   { id: "p1", org_id: "org1", name: "Amoxicillin 500mg", sku: "AMX-500", barcode: "8901234560001", category: "Antibiotics", description: "Broad-spectrum antibiotic", cost_price: 8.50, sell_price: 12.99, unit: "box", is_active: true, stock_quantity: 150, min_quantity: 50, weight: 0.3, dimensions: "10x5x3 cm", created_at: "2026-01-15T10:00:00Z" },
   { id: "p2", org_id: "org1", name: "Vitamin D3 1000IU", sku: "VTD-1000", barcode: "8901234560002", category: "Vitamins", description: "Essential vitamin supplement", cost_price: 5.00, sell_price: 9.49, unit: "bottle", is_active: true, stock_quantity: 320, min_quantity: 100, weight: 0.15, dimensions: "6x6x12 cm", created_at: "2026-01-16T10:00:00Z" },
@@ -39,8 +44,15 @@ const mockProducts: Product[] = [
   { id: "p8", org_id: "org1", name: "Acetaminophen 500mg", sku: "ACT-500", barcode: "8901234560008", category: "Pain Relief", description: "Pain and fever reducer", cost_price: 3.00, sell_price: 5.99, unit: "bottle", is_active: true, stock_quantity: 0, min_quantity: 50, weight: 0.35, dimensions: "6x6x14 cm", created_at: "2026-01-22T10:00:00Z" },
 ];
 
+const isSupabaseConfigured = () => {
+  return !!(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+};
+
 export const useInventoryStore = create<InventoryState>((set, get) => ({
-  products: mockProducts,
+  products: [],
   searchQuery: "",
   filters: { ...defaultFilters },
   loading: false,
@@ -53,25 +65,182 @@ export const useInventoryStore = create<InventoryState>((set, get) => ({
 
   resetFilters: () => set({ filters: { ...defaultFilters }, searchQuery: "" }),
 
-  addProduct: (product) =>
-    set((state) => ({ products: [product, ...state.products] })),
+  fetchProducts: async (orgId: string) => {
+    if (!isSupabaseConfigured()) {
+      set({ products: mockProducts, loading: false, error: null });
+      return;
+    }
 
-  updateProduct: (id, data) =>
-    set((state) => ({
-      products: state.products.map((p) =>
-        p.id === id ? { ...p, ...data } : p
-      ),
-    })),
+    set({ loading: true, error: null });
 
-  deleteProduct: (id) =>
-    set((state) => ({
-      products: state.products.filter((p) => p.id !== id),
-    })),
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("org_id", orgId)
+        .order("created_at", { ascending: false });
 
-  deleteProducts: (ids) =>
-    set((state) => ({
-      products: state.products.filter((p) => !ids.includes(p.id)),
-    })),
+      if (error) {
+        console.error("Error fetching products:", error);
+        set({ error: error.message, loading: false });
+        return;
+      }
+
+      set({ products: data || [], loading: false });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to fetch products";
+      set({ error: message, loading: false });
+    }
+  },
+
+  addProduct: async (product) => {
+    if (!isSupabaseConfigured()) {
+      const newProduct: Product = {
+        ...product,
+        id: `p${Date.now()}`,
+        created_at: new Date().toISOString(),
+      };
+      set((state) => ({ products: [newProduct, ...state.products] }));
+      return newProduct;
+    }
+
+    set({ loading: true, error: null });
+
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("products")
+        .insert(product)
+        .select()
+        .single();
+
+      if (error) {
+        set({ error: error.message, loading: false });
+        return null;
+      }
+
+      set((state) => ({
+        products: [data, ...state.products],
+        loading: false,
+      }));
+
+      return data;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to add product";
+      set({ error: message, loading: false });
+      return null;
+    }
+  },
+
+  updateProduct: async (id, data) => {
+    if (!isSupabaseConfigured()) {
+      set((state) => ({
+        products: state.products.map((p) =>
+          p.id === id ? { ...p, ...data } : p
+        ),
+      }));
+      return true;
+    }
+
+    set({ loading: true, error: null });
+
+    try {
+      const supabase = createClient();
+      const { error } = await supabase
+        .from("products")
+        .update(data)
+        .eq("id", id);
+
+      if (error) {
+        set({ error: error.message, loading: false });
+        return false;
+      }
+
+      set((state) => ({
+        products: state.products.map((p) =>
+          p.id === id ? { ...p, ...data } : p
+        ),
+        loading: false,
+      }));
+
+      return true;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to update product";
+      set({ error: message, loading: false });
+      return false;
+    }
+  },
+
+  deleteProduct: async (id) => {
+    if (!isSupabaseConfigured()) {
+      set((state) => ({
+        products: state.products.filter((p) => p.id !== id),
+      }));
+      return true;
+    }
+
+    set({ loading: true, error: null });
+
+    try {
+      const supabase = createClient();
+      const { error } = await supabase
+        .from("products")
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        set({ error: error.message, loading: false });
+        return false;
+      }
+
+      set((state) => ({
+        products: state.products.filter((p) => p.id !== id),
+        loading: false,
+      }));
+
+      return true;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to delete product";
+      set({ error: message, loading: false });
+      return false;
+    }
+  },
+
+  deleteProducts: async (ids) => {
+    if (!isSupabaseConfigured()) {
+      set((state) => ({
+        products: state.products.filter((p) => !ids.includes(p.id)),
+      }));
+      return true;
+    }
+
+    set({ loading: true, error: null });
+
+    try {
+      const supabase = createClient();
+      const { error } = await supabase
+        .from("products")
+        .delete()
+        .in("id", ids);
+
+      if (error) {
+        set({ error: error.message, loading: false });
+        return false;
+      }
+
+      set((state) => ({
+        products: state.products.filter((p) => !ids.includes(p.id)),
+        loading: false,
+      }));
+
+      return true;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to delete products";
+      set({ error: message, loading: false });
+      return false;
+    }
+  },
 
   filteredProducts: () => {
     const { products, searchQuery, filters } = get();

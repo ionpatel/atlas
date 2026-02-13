@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createClient } from "@/lib/supabase/client";
 import type { Account, JournalEntry, JournalLine, TaxConfig } from "@/types";
 
 interface AccountingFilters {
@@ -19,12 +20,16 @@ interface AccountingState {
   setSearchQuery: (query: string) => void;
   setFilter: (key: keyof AccountingFilters, value: string) => void;
   resetFilters: () => void;
-  addAccount: (account: Account) => void;
-  updateAccount: (id: string, data: Partial<Account>) => void;
-  deleteAccount: (id: string) => void;
-  addJournalEntry: (entry: JournalEntry) => void;
-  updateJournalEntry: (id: string, data: Partial<JournalEntry>) => void;
-  deleteJournalEntry: (id: string) => void;
+
+  // Async CRUD
+  fetchAccounts: (orgId: string) => Promise<void>;
+  fetchJournalEntries: (orgId: string) => Promise<void>;
+  addAccount: (account: Omit<Account, "id" | "created_at"> | Account) => Promise<Account | null>;
+  updateAccount: (id: string, data: Partial<Account>) => Promise<boolean>;
+  deleteAccount: (id: string) => Promise<boolean>;
+  addJournalEntry: (entry: JournalEntry) => Promise<JournalEntry | null>;
+  updateJournalEntry: (id: string, data: Partial<JournalEntry>) => Promise<boolean>;
+  deleteJournalEntry: (id: string) => Promise<boolean>;
 
   // Computed
   filteredAccounts: () => Account[];
@@ -56,21 +61,16 @@ interface AccountingState {
 const defaultFilters: AccountingFilters = { accountType: "", entryStatus: "" };
 
 const mockAccounts: Account[] = [
-  // Assets
   { id: "acc-1000", org_id: "org1", code: "1000", name: "Cash", type: "asset", balance: 45250.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
   { id: "acc-1100", org_id: "org1", code: "1100", name: "Accounts Receivable", type: "asset", balance: 12800.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
   { id: "acc-1200", org_id: "org1", code: "1200", name: "Inventory", type: "asset", balance: 8400.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
-  // Liabilities
   { id: "acc-2000", org_id: "org1", code: "2000", name: "Accounts Payable", type: "liability", balance: 6200.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
   { id: "acc-2100", org_id: "org1", code: "2100", name: "GST/HST Payable", type: "liability", balance: 3150.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
   { id: "acc-2200", org_id: "org1", code: "2200", name: "Income Tax Payable", type: "liability", balance: 4500.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
-  // Equity
   { id: "acc-3000", org_id: "org1", code: "3000", name: "Owner's Equity", type: "equity", balance: 30000.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
   { id: "acc-3100", org_id: "org1", code: "3100", name: "Retained Earnings", type: "equity", balance: 8750.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
-  // Revenue
   { id: "acc-4000", org_id: "org1", code: "4000", name: "Sales Revenue", type: "revenue", balance: 42000.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
   { id: "acc-4100", org_id: "org1", code: "4100", name: "Service Revenue", type: "revenue", balance: 15500.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
-  // Expenses
   { id: "acc-5000", org_id: "org1", code: "5000", name: "Cost of Goods Sold", type: "expense", balance: 18200.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
   { id: "acc-5100", org_id: "org1", code: "5100", name: "Salaries", type: "expense", balance: 12000.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
   { id: "acc-5200", org_id: "org1", code: "5200", name: "Rent", type: "expense", balance: 4500.00, is_active: true, created_at: "2026-01-01T00:00:00Z" },
@@ -81,8 +81,7 @@ const mockAccounts: Account[] = [
 const mockJournalEntries: JournalEntry[] = [
   {
     id: "je-1", org_id: "org1", entry_number: "JE-2026-001", date: "2026-01-05",
-    description: "Record monthly sales revenue",
-    status: "posted",
+    description: "Record monthly sales revenue", status: "posted",
     lines: [
       { id: "jl-1a", entry_id: "je-1", account_id: "acc-1100", account_name: "Accounts Receivable", description: "Sales on account", debit: 8500.00, credit: 0 },
       { id: "jl-1b", entry_id: "je-1", account_id: "acc-4000", account_name: "Sales Revenue", description: "Sales on account", debit: 0, credit: 7522.12 },
@@ -92,54 +91,12 @@ const mockJournalEntries: JournalEntry[] = [
   },
   {
     id: "je-2", org_id: "org1", entry_number: "JE-2026-002", date: "2026-01-10",
-    description: "Pay monthly rent",
-    status: "posted",
+    description: "Pay monthly rent", status: "posted",
     lines: [
       { id: "jl-2a", entry_id: "je-2", account_id: "acc-5200", account_name: "Rent", description: "January rent", debit: 4500.00, credit: 0 },
       { id: "jl-2b", entry_id: "je-2", account_id: "acc-1000", account_name: "Cash", description: "January rent", debit: 0, credit: 4500.00 },
     ],
     created_at: "2026-01-10T09:00:00Z",
-  },
-  {
-    id: "je-3", org_id: "org1", entry_number: "JE-2026-003", date: "2026-01-15",
-    description: "Purchase inventory from supplier",
-    status: "posted",
-    lines: [
-      { id: "jl-3a", entry_id: "je-3", account_id: "acc-1200", account_name: "Inventory", description: "Inventory purchase", debit: 3200.00, credit: 0 },
-      { id: "jl-3b", entry_id: "je-3", account_id: "acc-2000", account_name: "Accounts Payable", description: "Inventory purchase", debit: 0, credit: 3200.00 },
-    ],
-    created_at: "2026-01-15T09:00:00Z",
-  },
-  {
-    id: "je-4", org_id: "org1", entry_number: "JE-2026-004", date: "2026-01-20",
-    description: "Record salary payments",
-    status: "posted",
-    lines: [
-      { id: "jl-4a", entry_id: "je-4", account_id: "acc-5100", account_name: "Salaries", description: "January salaries", debit: 12000.00, credit: 0 },
-      { id: "jl-4b", entry_id: "je-4", account_id: "acc-1000", account_name: "Cash", description: "January salaries", debit: 0, credit: 12000.00 },
-    ],
-    created_at: "2026-01-20T09:00:00Z",
-  },
-  {
-    id: "je-5", org_id: "org1", entry_number: "JE-2026-005", date: "2026-01-25",
-    description: "Record service revenue collection",
-    status: "posted",
-    lines: [
-      { id: "jl-5a", entry_id: "je-5", account_id: "acc-1000", account_name: "Cash", description: "Service payment received", debit: 5650.00, credit: 0 },
-      { id: "jl-5b", entry_id: "je-5", account_id: "acc-4100", account_name: "Service Revenue", description: "Service payment received", debit: 0, credit: 5000.00 },
-      { id: "jl-5c", entry_id: "je-5", account_id: "acc-2100", account_name: "GST/HST Payable", description: "GST on service", debit: 0, credit: 650.00 },
-    ],
-    created_at: "2026-01-25T09:00:00Z",
-  },
-  {
-    id: "je-6", org_id: "org1", entry_number: "JE-2026-006", date: "2026-02-01",
-    description: "Utility bill accrual",
-    status: "draft",
-    lines: [
-      { id: "jl-6a", entry_id: "je-6", account_id: "acc-5300", account_name: "Utilities", description: "February utilities", debit: 1350.00, credit: 0 },
-      { id: "jl-6b", entry_id: "je-6", account_id: "acc-2000", account_name: "Accounts Payable", description: "February utilities", debit: 0, credit: 1350.00 },
-    ],
-    created_at: "2026-02-01T09:00:00Z",
   },
 ];
 
@@ -149,8 +106,15 @@ const mockTaxConfig: TaxConfig[] = [
   { id: "tax-3", org_id: "org1", name: "PST", rate: 0.07, is_active: true },
 ];
 
+const isSupabaseConfigured = () => {
+  return !!(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+};
+
 export const useAccountingStore = create<AccountingState>((set, get) => ({
-  accounts: mockAccounts,
+  accounts: mockAccounts, // Start with mock for integrations to work
   journalEntries: mockJournalEntries,
   taxConfig: mockTaxConfig,
   searchQuery: "",
@@ -165,35 +129,277 @@ export const useAccountingStore = create<AccountingState>((set, get) => ({
 
   resetFilters: () => set({ filters: { ...defaultFilters }, searchQuery: "" }),
 
-  addAccount: (account) =>
-    set((state) => ({ accounts: [account, ...state.accounts] })),
+  fetchAccounts: async (orgId: string) => {
+    if (!isSupabaseConfigured()) {
+      set({ accounts: mockAccounts, loading: false });
+      return;
+    }
 
-  updateAccount: (id, data) =>
+    set({ loading: true, error: null });
+
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("accounts")
+        .select("*")
+        .eq("org_id", orgId)
+        .order("code", { ascending: true });
+
+      if (error) {
+        set({ error: error.message, loading: false });
+        return;
+      }
+
+      set({ accounts: data || [], loading: false });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to fetch accounts";
+      set({ error: message, loading: false });
+    }
+  },
+
+  fetchJournalEntries: async (orgId: string) => {
+    if (!isSupabaseConfigured()) {
+      set({ journalEntries: mockJournalEntries, loading: false });
+      return;
+    }
+
+    set({ loading: true, error: null });
+
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("journal_entries")
+        .select("*")
+        .eq("org_id", orgId)
+        .order("date", { ascending: false });
+
+      if (error) {
+        set({ error: error.message, loading: false });
+        return;
+      }
+
+      // Fetch lines for each entry
+      const entriesWithLines: JournalEntry[] = [];
+      for (const entry of data || []) {
+        const { data: lines } = await supabase
+          .from("journal_lines")
+          .select("*")
+          .eq("entry_id", entry.id);
+        entriesWithLines.push({ ...entry, lines: lines || [] });
+      }
+
+      set({ journalEntries: entriesWithLines, loading: false });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to fetch journal entries";
+      set({ error: message, loading: false });
+    }
+  },
+
+  addAccount: async (account) => {
+    // Handle both formats (with or without id)
+    const hasId = "id" in account && account.id;
+    
+    if (!isSupabaseConfigured()) {
+      const newAccount: Account = hasId
+        ? (account as Account)
+        : {
+            ...account,
+            id: `acc-${Date.now()}`,
+            created_at: new Date().toISOString(),
+          } as Account;
+      set((state) => ({ accounts: [newAccount, ...state.accounts] }));
+      return newAccount;
+    }
+
+    set({ loading: true, error: null });
+
+    try {
+      const supabase = createClient();
+      const insertData = hasId
+        ? account
+        : { ...account, created_at: new Date().toISOString() };
+
+      const { data, error } = await supabase
+        .from("accounts")
+        .insert(insertData)
+        .select()
+        .single();
+
+      if (error) {
+        set({ error: error.message, loading: false });
+        return null;
+      }
+
+      set((state) => ({
+        accounts: [data, ...state.accounts],
+        loading: false,
+      }));
+
+      return data;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to add account";
+      set({ error: message, loading: false });
+      return null;
+    }
+  },
+
+  updateAccount: async (id, data) => {
+    // Always update local state first for integrations
     set((state) => ({
       accounts: state.accounts.map((a) =>
         a.id === id ? { ...a, ...data } : a
       ),
-    })),
+    }));
 
-  deleteAccount: (id) =>
-    set((state) => ({
-      accounts: state.accounts.filter((a) => a.id !== id),
-    })),
+    if (!isSupabaseConfigured()) {
+      return true;
+    }
 
-  addJournalEntry: (entry) =>
-    set((state) => ({ journalEntries: [entry, ...state.journalEntries] })),
+    try {
+      const supabase = createClient();
+      const { error } = await supabase
+        .from("accounts")
+        .update(data)
+        .eq("id", id);
 
-  updateJournalEntry: (id, data) =>
+      if (error) {
+        console.error("Error updating account:", error);
+        return false;
+      }
+
+      return true;
+    } catch (err) {
+      console.error("Error updating account:", err);
+      return false;
+    }
+  },
+
+  deleteAccount: async (id) => {
+    if (!isSupabaseConfigured()) {
+      set((state) => ({
+        accounts: state.accounts.filter((a) => a.id !== id),
+      }));
+      return true;
+    }
+
+    try {
+      const supabase = createClient();
+      const { error } = await supabase
+        .from("accounts")
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        set({ error: error.message });
+        return false;
+      }
+
+      set((state) => ({
+        accounts: state.accounts.filter((a) => a.id !== id),
+      }));
+
+      return true;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to delete account";
+      set({ error: message });
+      return false;
+    }
+  },
+
+  addJournalEntry: async (entry) => {
+    // Always add to local state first for integrations
+    set((state) => ({ journalEntries: [entry, ...state.journalEntries] }));
+
+    if (!isSupabaseConfigured()) {
+      return entry;
+    }
+
+    try {
+      const supabase = createClient();
+      const { lines, ...entryData } = entry;
+
+      const { data, error } = await supabase
+        .from("journal_entries")
+        .insert(entryData)
+        .select()
+        .single();
+
+      if (error) {
+        console.error("Error adding journal entry:", error);
+        return entry; // Return original for local state
+      }
+
+      // Insert lines
+      if (lines && lines.length > 0) {
+        const linesWithEntryId = lines.map((line) => ({
+          ...line,
+          entry_id: data.id,
+        }));
+
+        await supabase.from("journal_lines").insert(linesWithEntryId);
+      }
+
+      return { ...data, lines };
+    } catch (err) {
+      console.error("Error adding journal entry:", err);
+      return entry;
+    }
+  },
+
+  updateJournalEntry: async (id, data) => {
     set((state) => ({
       journalEntries: state.journalEntries.map((e) =>
         e.id === id ? { ...e, ...data } : e
       ),
-    })),
+    }));
 
-  deleteJournalEntry: (id) =>
-    set((state) => ({
-      journalEntries: state.journalEntries.filter((e) => e.id !== id),
-    })),
+    if (!isSupabaseConfigured()) {
+      return true;
+    }
+
+    try {
+      const supabase = createClient();
+      const { error } = await supabase
+        .from("journal_entries")
+        .update(data)
+        .eq("id", id);
+
+      return !error;
+    } catch (err) {
+      console.error("Error updating journal entry:", err);
+      return false;
+    }
+  },
+
+  deleteJournalEntry: async (id) => {
+    if (!isSupabaseConfigured()) {
+      set((state) => ({
+        journalEntries: state.journalEntries.filter((e) => e.id !== id),
+      }));
+      return true;
+    }
+
+    try {
+      const supabase = createClient();
+      const { error } = await supabase
+        .from("journal_entries")
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        return false;
+      }
+
+      set((state) => ({
+        journalEntries: state.journalEntries.filter((e) => e.id !== id),
+      }));
+
+      return true;
+    } catch (err) {
+      console.error("Error deleting journal entry:", err);
+      return false;
+    }
+  },
 
   filteredAccounts: () => {
     const { accounts, searchQuery, filters } = get();
@@ -287,7 +493,6 @@ export const useAccountingStore = create<AccountingState>((set, get) => ({
     const { accounts } = get();
     const gstPayable = accounts.find((a) => a.code === "2100");
     const collected = gstPayable?.balance ?? 0;
-    // Approximate tax paid on expenses (simplified)
     const paid = 850.00;
     return {
       collected,

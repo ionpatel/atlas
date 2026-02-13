@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createClient } from "@/lib/supabase/client";
 import type { SalesOrder, SalesOrderLine } from "@/types";
 
 interface SalesFilters {
@@ -16,9 +17,14 @@ interface SalesState {
   setSearchQuery: (query: string) => void;
   setFilter: (key: keyof SalesFilters, value: string) => void;
   resetFilters: () => void;
-  addOrder: (order: SalesOrder, lines: SalesOrderLine[]) => void;
-  updateOrder: (id: string, data: Partial<SalesOrder>) => void;
-  deleteOrder: (id: string) => void;
+
+  // Async CRUD
+  fetchOrders: (orgId: string) => Promise<void>;
+  addOrder: (order: Omit<SalesOrder, "id" | "created_at">, lines: Omit<SalesOrderLine, "id" | "order_id">[]) => Promise<SalesOrder | null>;
+  updateOrder: (id: string, data: Partial<SalesOrder>) => Promise<boolean>;
+  deleteOrder: (id: string) => Promise<boolean>;
+  fetchOrderLines: (orderId: string) => Promise<SalesOrderLine[]>;
+
   filteredOrders: () => SalesOrder[];
   getContactName: (contactId: string) => string;
 }
@@ -40,8 +46,15 @@ const mockOrders: SalesOrder[] = [
   { id: "so5", org_id: "org1", contact_id: "c_pharmaplus", order_number: "SO-2026-005", status: "confirmed", order_date: "2026-02-03", delivery_date: "2026-02-12", subtotal: 2750.00, tax: 357.50, total: 3107.50, notes: "", created_at: "2026-02-03T10:00:00Z" },
 ];
 
+const isSupabaseConfigured = () => {
+  return !!(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+};
+
 export const useSalesStore = create<SalesState>((set, get) => ({
-  orders: mockOrders,
+  orders: [],
   orderLines: {},
   searchQuery: "",
   filters: { status: "" },
@@ -55,28 +68,202 @@ export const useSalesStore = create<SalesState>((set, get) => ({
 
   resetFilters: () => set({ filters: { status: "" }, searchQuery: "" }),
 
-  addOrder: (order, lines) =>
-    set((state) => ({
-      orders: [order, ...state.orders],
-      orderLines: { ...state.orderLines, [order.id]: lines },
-    })),
+  fetchOrders: async (orgId: string) => {
+    if (!isSupabaseConfigured()) {
+      set({ orders: mockOrders, loading: false, error: null });
+      return;
+    }
 
-  updateOrder: (id, data) =>
-    set((state) => ({
-      orders: state.orders.map((o) =>
-        o.id === id ? { ...o, ...data } : o
-      ),
-    })),
+    set({ loading: true, error: null });
 
-  deleteOrder: (id) =>
-    set((state) => {
-      const newLines = { ...state.orderLines };
-      delete newLines[id];
-      return {
-        orders: state.orders.filter((o) => o.id !== id),
-        orderLines: newLines,
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("sales_orders")
+        .select("*")
+        .eq("org_id", orgId)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        set({ error: error.message, loading: false });
+        return;
+      }
+
+      set({ orders: data || [], loading: false });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to fetch orders";
+      set({ error: message, loading: false });
+    }
+  },
+
+  addOrder: async (order, lines) => {
+    if (!isSupabaseConfigured()) {
+      const newOrder: SalesOrder = {
+        ...order,
+        id: `so${Date.now()}`,
+        created_at: new Date().toISOString(),
       };
-    }),
+      const newLines = lines.map((line, idx) => ({
+        ...line,
+        id: `sol${Date.now()}-${idx}`,
+        order_id: newOrder.id,
+      }));
+      set((state) => ({
+        orders: [newOrder, ...state.orders],
+        orderLines: { ...state.orderLines, [newOrder.id]: newLines },
+      }));
+      return newOrder;
+    }
+
+    set({ loading: true, error: null });
+
+    try {
+      const supabase = createClient();
+
+      const { data: orderData, error: orderError } = await supabase
+        .from("sales_orders")
+        .insert(order)
+        .select()
+        .single();
+
+      if (orderError) {
+        set({ error: orderError.message, loading: false });
+        return null;
+      }
+
+      if (lines.length > 0) {
+        const linesWithOrderId = lines.map((line) => ({
+          ...line,
+          order_id: orderData.id,
+        }));
+
+        await supabase.from("sales_order_lines").insert(linesWithOrderId);
+      }
+
+      set((state) => ({
+        orders: [orderData, ...state.orders],
+        loading: false,
+      }));
+
+      return orderData;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to add order";
+      set({ error: message, loading: false });
+      return null;
+    }
+  },
+
+  updateOrder: async (id, data) => {
+    if (!isSupabaseConfigured()) {
+      set((state) => ({
+        orders: state.orders.map((o) =>
+          o.id === id ? { ...o, ...data } : o
+        ),
+      }));
+      return true;
+    }
+
+    set({ loading: true, error: null });
+
+    try {
+      const supabase = createClient();
+      const { error } = await supabase
+        .from("sales_orders")
+        .update(data)
+        .eq("id", id);
+
+      if (error) {
+        set({ error: error.message, loading: false });
+        return false;
+      }
+
+      set((state) => ({
+        orders: state.orders.map((o) =>
+          o.id === id ? { ...o, ...data } : o
+        ),
+        loading: false,
+      }));
+
+      return true;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to update order";
+      set({ error: message, loading: false });
+      return false;
+    }
+  },
+
+  deleteOrder: async (id) => {
+    if (!isSupabaseConfigured()) {
+      set((state) => {
+        const newLines = { ...state.orderLines };
+        delete newLines[id];
+        return {
+          orders: state.orders.filter((o) => o.id !== id),
+          orderLines: newLines,
+        };
+      });
+      return true;
+    }
+
+    set({ loading: true, error: null });
+
+    try {
+      const supabase = createClient();
+      const { error } = await supabase
+        .from("sales_orders")
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        set({ error: error.message, loading: false });
+        return false;
+      }
+
+      set((state) => {
+        const newLines = { ...state.orderLines };
+        delete newLines[id];
+        return {
+          orders: state.orders.filter((o) => o.id !== id),
+          orderLines: newLines,
+          loading: false,
+        };
+      });
+
+      return true;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to delete order";
+      set({ error: message, loading: false });
+      return false;
+    }
+  },
+
+  fetchOrderLines: async (orderId: string) => {
+    if (!isSupabaseConfigured()) {
+      return get().orderLines[orderId] || [];
+    }
+
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("sales_order_lines")
+        .select("*")
+        .eq("order_id", orderId);
+
+      if (error) {
+        console.error("Error fetching order lines:", error);
+        return [];
+      }
+
+      set((state) => ({
+        orderLines: { ...state.orderLines, [orderId]: data || [] },
+      }));
+
+      return data || [];
+    } catch (err) {
+      console.error("Error fetching order lines:", err);
+      return [];
+    }
+  },
 
   filteredOrders: () => {
     const { orders, searchQuery, filters } = get();
