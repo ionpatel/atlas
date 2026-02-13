@@ -187,7 +187,7 @@ const mockCompensations: EmployeeCompensation[] = [
   { employeeId: "e10", employeeName: "Karen Webb", department: "Management", payType: "salary", annualSalary: 115000, hoursPerWeek: 40, province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0 },
 ];
 
-function generateMockPayStubs(payRun: Omit<PayRun, "payStubs">, compensations: EmployeeCompensation[]): PayStub[] {
+function generateMockPayStubs(payRun: Pick<PayRun, "id" | "payPeriod" | "periodStart" | "periodEnd" | "payDate">, compensations: EmployeeCompensation[]): PayStub[] {
   return compensations.map((comp, idx) => {
     const annualSalary = comp.payType === "salary" ? comp.annualSalary! : comp.hourlyRate! * comp.hoursPerWeek * 52;
     const periodsPerYear = payRun.payPeriod === "monthly" ? 12 : payRun.payPeriod === "semi-monthly" ? 24 : payRun.payPeriod === "bi-weekly" ? 26 : 52;
@@ -220,11 +220,12 @@ function generateMockPayStubs(payRun: Omit<PayRun, "payStubs">, compensations: E
   });
 }
 
-const mockPayRuns: PayRun[] = [
-  { id: "pr1", orgId: "org1", name: "January 2026 - Period 1", payPeriod: "semi-monthly", periodStart: "2026-01-01", periodEnd: "2026-01-15", payDate: "2026-01-20", status: "paid", employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [], createdAt: "2026-01-16T10:00:00Z", approvedAt: "2026-01-17T14:00:00Z", paidAt: "2026-01-20T09:00:00Z" },
-  { id: "pr2", orgId: "org1", name: "January 2026 - Period 2", payPeriod: "semi-monthly", periodStart: "2026-01-16", periodEnd: "2026-01-31", payDate: "2026-02-05", status: "paid", employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [], createdAt: "2026-02-01T10:00:00Z", approvedAt: "2026-02-02T14:00:00Z", paidAt: "2026-02-05T09:00:00Z" },
-  { id: "pr3", orgId: "org1", name: "February 2026 - Period 1", payPeriod: "semi-monthly", periodStart: "2026-02-01", periodEnd: "2026-02-15", payDate: "2026-02-20", status: "approved", employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [], createdAt: "2026-02-16T10:00:00Z", approvedAt: "2026-02-17T14:00:00Z" },
-].map(pr => ({ ...pr, payStubs: generateMockPayStubs(pr, mockCompensations) }));
+const mockPayRunsData = [
+  { id: "pr1", orgId: "org1", name: "January 2026 - Period 1", payPeriod: "semi-monthly" as PayPeriod, periodStart: "2026-01-01", periodEnd: "2026-01-15", payDate: "2026-01-20", status: "paid" as PayRunStatus, employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [] as PayStub[], createdAt: "2026-01-16T10:00:00Z", approvedAt: "2026-01-17T14:00:00Z", paidAt: "2026-01-20T09:00:00Z" },
+  { id: "pr2", orgId: "org1", name: "January 2026 - Period 2", payPeriod: "semi-monthly" as PayPeriod, periodStart: "2026-01-16", periodEnd: "2026-01-31", payDate: "2026-02-05", status: "paid" as PayRunStatus, employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [] as PayStub[], createdAt: "2026-02-01T10:00:00Z", approvedAt: "2026-02-02T14:00:00Z", paidAt: "2026-02-05T09:00:00Z" },
+  { id: "pr3", orgId: "org1", name: "February 2026 - Period 1", payPeriod: "semi-monthly" as PayPeriod, periodStart: "2026-02-01", periodEnd: "2026-02-15", payDate: "2026-02-20", status: "approved" as PayRunStatus, employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [] as PayStub[], createdAt: "2026-02-16T10:00:00Z", approvedAt: "2026-02-17T14:00:00Z" },
+];
+const mockPayRuns: PayRun[] = mockPayRunsData.map(pr => ({ ...pr, payStubs: generateMockPayStubs(pr, mockCompensations) }));
 
 const isSupabaseConfigured = () => !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
@@ -317,7 +318,7 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
       }
 
       // Fetch all pay stubs for these runs
-      const runIds = runsData.map(r => r.id);
+      const runIds = runsData.map((r: { id: string }) => r.id);
       const { data: stubsData, error: stubsError } = await supabase
         .from("pay_stubs")
         .select("*, employees(name)")
@@ -338,7 +339,7 @@ export const usePayrollStore = create<PayrollState>((set, get) => ({
         stubsByRun[runId].push(mapped);
       });
 
-      const payRuns = runsData.map((row) => mapPayRunFromDb(row, stubsByRun[row.id] || []));
+      const payRuns = runsData.map((row: Record<string, unknown>) => mapPayRunFromDb(row, stubsByRun[row.id as string] || []));
       set({ payRuns, loading: false });
     } catch (err) {
       console.error("fetchPayRuns error:", err);

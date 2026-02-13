@@ -29,6 +29,7 @@ interface InvoicesState {
   // Computed
   filteredInvoices: () => Invoice[];
   getContactName: (contactId: string) => string;
+  getInvoicesForContact: (contactId: string) => Invoice[];
 }
 
 // Mock data for demo mode
@@ -292,5 +293,10 @@ export const useInvoicesStore = create<InvoicesState>((set, get) => ({
 
   getContactName: (contactId) => {
     return contactNameMap[contactId] || contactId;
+  },
+
+  getInvoicesForContact: (contactId) => {
+    const { invoices } = get();
+    return invoices.filter((inv) => inv.contact_id === contactId);
   },
 }));
