@@ -1795,11 +1795,44 @@ function ElementRenderer({
 
       // === MEDIA ===
       case "image":
-      case "imageRounded":
-        return <img src={element.content} alt="Content" style={baseStyles} className="max-w-full" />;
+      case "imageRounded": {
+        const isPlaceholder = !element.content || element.content.includes("placeholder") || element.content.includes("unsplash");
+        return (
+          <div className="relative group/img">
+            <img src={element.content || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80"} alt="Content" style={baseStyles} className="max-w-full" />
+            {isSelected && (
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
+                <div className="text-center text-white">
+                  <Upload className="w-8 h-8 mx-auto mb-2 opacity-70" />
+                  <p className="text-xs opacity-70">Click to change image</p>
+                  <input 
+                    type="text" 
+                    value={element.content} 
+                    onChange={(e) => onUpdate({ content: e.target.value })}
+                    placeholder="Enter image URL"
+                    className="mt-2 px-3 py-2 text-xs bg-white/10 border border-white/20 rounded text-white w-48"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      }
 
-      case "avatar":
-        return <img src={element.content} alt="Avatar" style={baseStyles} />;
+      case "avatar": {
+        const isPlaceholder = !element.content || element.content.includes("unsplash");
+        return (
+          <div className="relative group/img inline-block">
+            <img src={element.content || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80"} alt="Avatar" style={baseStyles} />
+            {isSelected && (
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity rounded-full">
+                <Upload className="w-5 h-5 text-white opacity-70" />
+              </div>
+            )}
+          </div>
+        );
+      }
 
       case "video":
         return <iframe src={element.content} style={baseStyles} allowFullScreen className="border-0" />;
@@ -2710,17 +2743,52 @@ function StylePanel({
                 <label className="text-xs text-[#888] mb-1 block">Gradient</label>
                 <input type="text" value={styles.background || ""} onChange={(e) => onStyleChange("background", e.target.value)} placeholder="linear-gradient(135deg, #6366f1, #8b5cf6)" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white font-mono text-[11px]" />
               </div>
-              <div className="grid grid-cols-4 gap-2">
-                {[
-                  { c: "#0a0a0a", l: "Dark" },
-                  { c: "#111111", l: "Gray" },
-                  { c: "#CDB49E", l: "Gold" },
-                  { c: "linear-gradient(135deg, #667eea, #764ba2)", l: "Purple" },
-                ].map((preset) => (
-                  <button key={preset.l} onClick={() => onStyleChange(preset.c.includes("gradient") ? "background" : "backgroundColor", preset.c)} className="p-2 rounded border border-[#333] hover:border-[#CDB49E] text-[10px] text-[#888]" style={{ background: preset.c }}>
-                    {preset.l}
-                  </button>
-                ))}
+              <div className="space-y-2">
+                <span className="text-[10px] text-[#555]">Solid Colors</span>
+                <div className="grid grid-cols-4 gap-2">
+                  {[
+                    { c: "#0a0a0a", l: "Dark" },
+                    { c: "#111111", l: "Gray" },
+                    { c: "#1a1a2e", l: "Navy" },
+                    { c: "#CDB49E", l: "Gold" },
+                  ].map((preset) => (
+                    <button key={preset.l} onClick={() => onStyleChange("backgroundColor", preset.c)} className={cn("p-2 rounded border hover:border-[#CDB49E] text-[10px] text-[#888]", styles.backgroundColor === preset.c ? "border-[#CDB49E]" : "border-[#333]")} style={{ background: preset.c }}>
+                      {preset.l}
+                    </button>
+                  ))}
+                </div>
+                <span className="text-[10px] text-[#555]">Gradient Presets</span>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { c: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", l: "Purple" },
+                    { c: "linear-gradient(135deg, #f43f5e 0%, #ec4899 100%)", l: "Pink" },
+                    { c: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)", l: "Indigo" },
+                    { c: "linear-gradient(135deg, #10b981 0%, #14b8a6 100%)", l: "Emerald" },
+                    { c: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)", l: "Orange" },
+                    { c: "linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)", l: "Cyan" },
+                    { c: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)", l: "Dark Blue" },
+                    { c: "linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%)", l: "Dark Fade" },
+                    { c: "linear-gradient(135deg, #CDB49E 0%, #d4c0ad 100%)", l: "Gold" },
+                    { c: "linear-gradient(135deg, #dc2626 0%, #ea580c 100%)", l: "Fire" },
+                    { c: "linear-gradient(135deg, #84cc16 0%, #22c55e 100%)", l: "Lime" },
+                    { c: "linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)", l: "Violet" },
+                  ].map((preset) => (
+                    <button key={preset.l} onClick={() => onStyleChange("background", preset.c)} className={cn("p-2 rounded border hover:border-[#CDB49E] text-[10px] text-white font-medium", styles.background === preset.c ? "border-[#CDB49E]" : "border-[#333]")} style={{ background: preset.c }}>
+                      {preset.l}
+                    </button>
+                  ))}
+                </div>
+                <span className="text-[10px] text-[#555]">Mesh Gradients</span>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { c: "radial-gradient(at 40% 20%, #CDB49E 0px, transparent 50%), radial-gradient(at 80% 0%, #764ba2 0px, transparent 50%), radial-gradient(at 0% 50%, #667eea 0px, transparent 50%), #0a0a0a", l: "Aurora" },
+                    { c: "radial-gradient(at 0% 0%, #1a1a2e 0px, transparent 50%), radial-gradient(at 100% 0%, #16213e 0px, transparent 50%), radial-gradient(at 50% 100%, #0f172a 0px, transparent 50%), #0a0a0a", l: "Night Sky" },
+                  ].map((preset) => (
+                    <button key={preset.l} onClick={() => onStyleChange("background", preset.c)} className={cn("p-3 rounded border hover:border-[#CDB49E] text-[10px] text-white font-medium", styles.background === preset.c ? "border-[#CDB49E]" : "border-[#333]")} style={{ background: preset.c }}>
+                      {preset.l}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -2767,6 +2835,16 @@ function StylePanel({
                   <input type="text" value={styles.paddingTop || ""} onChange={(e) => onStyleChange("paddingTop", e.target.value)} placeholder="0" className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white" />
                 </div>
               </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-[10px] text-[#666] mb-1 block">Left / Right</label>
+                  <input type="text" value={styles.paddingLeft || ""} onChange={(e) => { onStyleChange("paddingLeft", e.target.value); onStyleChange("paddingRight", e.target.value); }} placeholder="0" className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white" />
+                </div>
+                <div>
+                  <label className="text-[10px] text-[#666] mb-1 block">Bottom</label>
+                  <input type="text" value={styles.paddingBottom || ""} onChange={(e) => onStyleChange("paddingBottom", e.target.value)} placeholder="0" className="w-full px-2 py-1.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white" />
+                </div>
+              </div>
             </div>
 
             <div className="space-y-3">
@@ -2795,12 +2873,166 @@ function StylePanel({
                   <input type="text" value={styles.maxWidth || ""} onChange={(e) => onStyleChange("maxWidth", e.target.value)} placeholder="none" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
                 </div>
               </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Height</label>
+                  <input type="text" value={styles.height || ""} onChange={(e) => onStyleChange("height", e.target.value)} placeholder="auto" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Min Height</label>
+                  <input type="text" value={styles.minHeight || ""} onChange={(e) => onStyleChange("minHeight", e.target.value)} placeholder="none" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Display</h4>
+              <div className="grid grid-cols-4 gap-2">
+                {["block", "flex", "grid", "none"].map((d) => (
+                  <button key={d} onClick={() => onStyleChange("display", d)} className={cn("py-2 text-xs rounded-lg border transition-colors capitalize", styles.display === d ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                    {d}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {styles.display === "flex" && (
+              <div className="space-y-3">
+                <h4 className="text-xs font-semibold text-[#555] uppercase">Flex Properties</h4>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Direction</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {["row", "column"].map((dir) => (
+                      <button key={dir} onClick={() => onStyleChange("flexDirection", dir)} className={cn("py-2 text-xs rounded-lg border transition-colors capitalize", styles.flexDirection === dir ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                        {dir}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Justify</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {["start", "center", "end", "between", "around", "evenly"].map((j) => (
+                      <button key={j} onClick={() => onStyleChange("justifyContent", j === "between" ? "space-between" : j === "around" ? "space-around" : j === "evenly" ? "space-evenly" : j)} className={cn("py-1.5 text-[10px] rounded-lg border transition-colors capitalize", styles.justifyContent?.includes(j) ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                        {j}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Align Items</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {["start", "center", "end", "stretch"].map((a) => (
+                      <button key={a} onClick={() => onStyleChange("alignItems", a === "start" ? "flex-start" : a === "end" ? "flex-end" : a)} className={cn("py-1.5 text-[10px] rounded-lg border transition-colors capitalize", styles.alignItems?.includes(a) ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                        {a}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] mb-1 block">Gap</label>
+                  <input type="text" value={styles.gap || ""} onChange={(e) => onStyleChange("gap", e.target.value)} placeholder="16px" className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white" />
+                </div>
+              </div>
+            )}
+
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Responsive Visibility</h4>
+              <p className="text-[10px] text-[#555]">Control visibility on different screen sizes</p>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between p-2 bg-[#1a1a1a] rounded-lg border border-[#333]">
+                  <div className="flex items-center gap-2">
+                    <Monitor className="w-4 h-4 text-[#888]" />
+                    <span className="text-xs text-[#888]">Desktop</span>
+                  </div>
+                  <button onClick={() => onStyleChange("--hide-desktop", styles["--hide-desktop"] === "true" ? "false" : "true")} className={cn("p-1.5 rounded", styles["--hide-desktop"] === "true" ? "bg-red-500/20 text-red-400" : "bg-emerald-500/20 text-emerald-400")}>
+                    {styles["--hide-desktop"] === "true" ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                  </button>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-[#1a1a1a] rounded-lg border border-[#333]">
+                  <div className="flex items-center gap-2">
+                    <Tablet className="w-4 h-4 text-[#888]" />
+                    <span className="text-xs text-[#888]">Tablet</span>
+                  </div>
+                  <button onClick={() => onStyleChange("--hide-tablet", styles["--hide-tablet"] === "true" ? "false" : "true")} className={cn("p-1.5 rounded", styles["--hide-tablet"] === "true" ? "bg-red-500/20 text-red-400" : "bg-emerald-500/20 text-emerald-400")}>
+                    {styles["--hide-tablet"] === "true" ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                  </button>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-[#1a1a1a] rounded-lg border border-[#333]">
+                  <div className="flex items-center gap-2">
+                    <Smartphone className="w-4 h-4 text-[#888]" />
+                    <span className="text-xs text-[#888]">Mobile</span>
+                  </div>
+                  <button onClick={() => onStyleChange("--hide-mobile", styles["--hide-mobile"] === "true" ? "false" : "true")} className={cn("p-1.5 rounded", styles["--hide-mobile"] === "true" ? "bg-red-500/20 text-red-400" : "bg-emerald-500/20 text-emerald-400")}>
+                    {styles["--hide-mobile"] === "true" ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Position</h4>
+              <div className="grid grid-cols-3 gap-2">
+                {["relative", "absolute", "fixed"].map((p) => (
+                  <button key={p} onClick={() => onStyleChange("position", p)} className={cn("py-2 text-xs rounded-lg border transition-colors capitalize", styles.position === p ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                    {p}
+                  </button>
+                ))}
+              </div>
             </div>
           </>
         )}
 
         {activeTab === "effects" && (
           <>
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Animation</h4>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { label: "None", value: "none" },
+                  { label: "Fade In", value: "fadeIn 0.6s ease-out forwards" },
+                  { label: "Slide Up", value: "slideUp 0.6s ease-out forwards" },
+                  { label: "Slide Down", value: "slideDown 0.6s ease-out forwards" },
+                  { label: "Slide Left", value: "slideLeft 0.6s ease-out forwards" },
+                  { label: "Slide Right", value: "slideRight 0.6s ease-out forwards" },
+                  { label: "Scale In", value: "scaleIn 0.5s ease-out forwards" },
+                  { label: "Bounce", value: "bounce 0.8s ease-out forwards" },
+                ].map((anim) => (
+                  <button key={anim.label} onClick={() => onStyleChange("animation", anim.value)} className={cn("py-2 px-3 text-xs rounded-lg border transition-colors text-left", styles.animation === anim.value ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                    {anim.label}
+                  </button>
+                ))}
+              </div>
+              <div>
+                <label className="text-xs text-[#888] mb-1 block">Animation Delay</label>
+                <select value={styles.animationDelay || "0s"} onChange={(e) => onStyleChange("animationDelay", e.target.value)} className="w-full px-3 py-2 text-sm bg-[#1a1a1a] border border-[#333] rounded-lg text-white">
+                  <option value="0s">No delay</option>
+                  <option value="0.1s">0.1s</option>
+                  <option value="0.2s">0.2s</option>
+                  <option value="0.3s">0.3s</option>
+                  <option value="0.5s">0.5s</option>
+                  <option value="0.8s">0.8s</option>
+                  <option value="1s">1s</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Hover Effects</h4>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { label: "None", value: "none" },
+                  { label: "Lift", value: "hover-lift" },
+                  { label: "Glow", value: "hover-glow" },
+                  { label: "Scale", value: "hover-scale" },
+                ].map((effect) => (
+                  <button key={effect.label} onClick={() => onStyleChange("--hover-effect", effect.value)} className={cn("py-2 text-xs rounded-lg border transition-colors", styles["--hover-effect"] === effect.value ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                    {effect.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="space-y-3">
               <h4 className="text-xs font-semibold text-[#555] uppercase">Shadow</h4>
               <div className="grid grid-cols-4 gap-2">
@@ -2815,6 +3047,18 @@ function StylePanel({
                   </button>
                 ))}
               </div>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { label: "Gold Glow", value: "0 0 40px rgba(205,180,158,0.3)" },
+                  { label: "Neon Blue", value: "0 0 30px rgba(99,102,241,0.4)" },
+                  { label: "Neon Pink", value: "0 0 30px rgba(236,72,153,0.4)" },
+                  { label: "Soft", value: "0 20px 60px rgba(0,0,0,0.3)" },
+                ].map((s) => (
+                  <button key={s.label} onClick={() => onStyleChange("boxShadow", s.value)} className={cn("py-2 text-xs rounded-lg border transition-colors", styles.boxShadow === s.value ? "bg-[#CDB49E]/10 border-[#CDB49E] text-[#CDB49E]" : "border-[#333] text-[#666] hover:text-white")}>
+                    {s.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="space-y-3">
@@ -2822,6 +3066,24 @@ function StylePanel({
               <div className="flex items-center gap-2">
                 <input type="range" min="0" max="100" value={parseFloat(styles.opacity || "1") * 100} onChange={(e) => onStyleChange("opacity", String(Number(e.target.value) / 100))} className="flex-1 accent-[#CDB49E]" />
                 <span className="text-xs text-white w-12">{Math.round(parseFloat(styles.opacity || "1") * 100)}%</span>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Transform</h4>
+              <div>
+                <label className="text-xs text-[#888] mb-1 block">Rotate</label>
+                <div className="flex items-center gap-2">
+                  <input type="range" min="-180" max="180" value={parseInt(styles.transform?.match(/rotate\((-?\d+)deg\)/)?.[1] || "0")} onChange={(e) => onStyleChange("transform", `rotate(${e.target.value}deg)`)} className="flex-1 accent-[#CDB49E]" />
+                  <span className="text-xs text-white w-12">{parseInt(styles.transform?.match(/rotate\((-?\d+)deg\)/)?.[1] || "0")}°</span>
+                </div>
+              </div>
+              <div>
+                <label className="text-xs text-[#888] mb-1 block">Scale</label>
+                <div className="flex items-center gap-2">
+                  <input type="range" min="50" max="150" value={parseFloat(styles.transform?.match(/scale\(([0-9.]+)\)/)?.[1] || "1") * 100} onChange={(e) => onStyleChange("transform", `scale(${Number(e.target.value) / 100})`)} className="flex-1 accent-[#CDB49E]" />
+                  <span className="text-xs text-white w-12">{Math.round(parseFloat(styles.transform?.match(/scale\(([0-9.]+)\)/)?.[1] || "1") * 100)}%</span>
+                </div>
               </div>
             </div>
           </>
