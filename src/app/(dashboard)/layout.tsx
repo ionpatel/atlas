@@ -5,6 +5,7 @@ import { AuthHeader } from "@/components/layout/auth-header";
 import { KeyboardProvider } from "@/components/layout/keyboard-provider";
 import { ToastProvider } from "@/components/ui/toast-provider";
 import { ErrorBoundaryWrapper } from "./error-wrapper";
+import { InstallPrompt } from "@/components/pwa/install-prompt";
 
 export const dynamic = "force-dynamic";
 
@@ -81,6 +82,7 @@ export default async function DashboardLayout({
           </main>
         </div>
         <ToastProvider />
+        <InstallPrompt />
       </div>
     </KeyboardProvider>
   );

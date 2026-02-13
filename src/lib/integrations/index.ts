@@ -1,194 +1,211 @@
 /**
- * Atlas ERP Integration Layer
- * 
- * This module provides cross-module integrations that make Atlas
- * work as a unified ERP system rather than isolated modules.
- * 
- * Available Integrations:
- * 
- * 1. Invoice → Accounting
- *    - Auto-creates journal entries when invoices are paid
- *    - Updates Cash, Accounts Receivable, and HST Payable
- * 
- * 2. Sales → Inventory
- *    - Auto-reduces stock when sales orders are confirmed
- *    - Creates stock movements for audit trail
- *    - Creates COGS (Cost of Goods Sold) journal entries
- * 
- * 3. Payroll → Accounting
- *    - Auto-creates journal entries when pay runs are paid
- *    - Records salary expense, employer taxes (CPP, EI)
- *    - Tracks source deduction liabilities (CRA remittance)
- *    - Canadian-compliant (CPP, EI, federal/provincial tax)
- * 
- * Usage in React components:
- * ```tsx
- * import { 
- *   useInvoiceAccounting, 
- *   useSalesInventory,
- *   usePayrollAccounting 
- * } from '@/lib/integrations';
- * 
- * function PayrollPage() {
- *   const { processPayment, pendingRemittance } = usePayrollAccounting();
- *   const { confirmOrder, lowStockAlerts } = useSalesInventory();
- *   const { markAsPaid } = useInvoiceAccounting();
- * }
- * ```
+ * Atlas ERP Integration Framework
+ * Standardized interface for third-party integrations
  */
 
-// ===== Invoice → Accounting Integration =====
-export {
-  createInvoicePaymentEntry,
-  createInvoiceSentEntry,
-  markInvoiceAsPaidWithAccounting,
-  validateJournalEntry,
-} from "./invoice-accounting";
-
-export { useInvoiceAccounting } from "./use-invoice-accounting";
-
-// ===== Sales → Inventory Integration =====
-export {
-  processSalesOrderConfirmation,
-  reverseSalesOrder,
-  checkStockAvailability,
-  getLowStockAlerts,
-  type SalesInventoryResult,
-} from "./sales-inventory";
-
-export { useSalesInventory } from "./use-sales-inventory";
-
-// ===== Payroll → Accounting Integration =====
-export {
-  processPayrollPayment,
-  createRemittancePaymentEntry,
-  getPendingRemittance,
-  calculatePayrollSummary,
-  ensurePayrollAccounts,
-  type PayrollAccountingResult,
-  type PayrollSummary,
-} from "./payroll-accounting";
-
-export { usePayrollAccounting } from "./use-payroll-accounting";
-
-// ===== Purchase → Inventory Integration =====
-export {
-  processPurchaseOrderReceipt,
-  createVendorPaymentEntry,
-  getPendingPayables,
-  getRecoverableHST,
-  ensureReceivingAccounts,
-  type PurchaseInventoryResult,
-} from "./purchase-inventory";
-
-export { usePurchaseInventory } from "./use-purchase-inventory";
-
-// ===== Types for integration events (future event bus) =====
-export type IntegrationEvent =
-  | { type: "invoice.paid"; invoiceId: string; journalEntryId: string }
-  | { type: "invoice.sent"; invoiceId: string; journalEntryId: string }
-  | { type: "salesOrder.confirmed"; orderId: string; stockMovements: string[] }
-  | { type: "salesOrder.cancelled"; orderId: string }
-  | { type: "purchaseOrder.received"; orderId: string; stockMovements: string[] }
-  | { type: "payRun.paid"; payRunId: string; journalEntryId: string }
-  | { type: "payRun.remittance"; amount: number; period: string }
-  | { type: "inventory.lowStock"; productId: string; currentStock: number; minStock: number };
-
-// ===== Integration status tracking =====
-export interface IntegrationResult<T = unknown> {
-  success: boolean;
-  data?: T;
-  error?: string;
-  warnings?: string[];
-  eventType: IntegrationEvent["type"];
-  timestamp: string;
+export interface Integration {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  category: 'accounting' | 'ecommerce' | 'automation' | 'payments';
+  status: 'available' | 'coming_soon' | 'connected';
+  features: string[];
+  setupUrl?: string;
 }
 
-// ===== Integration utilities =====
-
-/**
- * Format currency for Canadian businesses
- */
-export function formatCAD(amount: number): string {
-  return new Intl.NumberFormat("en-CA", {
-    style: "currency",
-    currency: "CAD",
-  }).format(amount);
+export interface IntegrationConnection {
+  id: string;
+  integration_id: string;
+  org_id: string;
+  credentials: Record<string, string>;
+  settings: Record<string, any>;
+  last_sync_at: string | null;
+  status: 'active' | 'error' | 'disconnected';
+  created_at: string;
 }
 
-/**
- * Calculate HST amount (13% for Ontario)
- */
-export function calculateHST(subtotal: number, province: string = "ON"): number {
-  const rates: Record<string, number> = {
-    ON: 0.13,  // Ontario HST
-    BC: 0.12,  // BC PST + GST
-    AB: 0.05,  // Alberta GST only
-    QC: 0.14975, // Quebec QST + GST
-    NS: 0.15,  // Nova Scotia HST
-    NB: 0.15,  // New Brunswick HST
-    NL: 0.15,  // Newfoundland HST
-    PE: 0.15,  // PEI HST
-    MB: 0.12,  // Manitoba PST + GST
-    SK: 0.11,  // Saskatchewan PST + GST
-    NT: 0.05,  // NWT GST only
-    NU: 0.05,  // Nunavut GST only
-    YT: 0.05,  // Yukon GST only
-  };
-  
-  const rate = rates[province] || 0.13;
-  return Math.round(subtotal * rate * 100) / 100;
-}
-
-/**
- * Format date for Canadian business documents
- */
-export function formatDate(date: string | Date): string {
-  return new Intl.DateTimeFormat("en-CA", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(new Date(date));
-}
-
-/**
- * Calculate Canadian fiscal quarter
- */
-export function getFiscalQuarter(date: Date = new Date()): {
-  quarter: 1 | 2 | 3 | 4;
-  start: Date;
-  end: Date;
-  label: string;
-} {
-  const month = date.getMonth();
-  const year = date.getFullYear();
-  
-  let quarter: 1 | 2 | 3 | 4;
-  let start: Date;
-  let end: Date;
-  
-  if (month < 3) {
-    quarter = 1;
-    start = new Date(year, 0, 1);
-    end = new Date(year, 2, 31);
-  } else if (month < 6) {
-    quarter = 2;
-    start = new Date(year, 3, 1);
-    end = new Date(year, 5, 30);
-  } else if (month < 9) {
-    quarter = 3;
-    start = new Date(year, 6, 1);
-    end = new Date(year, 8, 30);
-  } else {
-    quarter = 4;
-    start = new Date(year, 9, 1);
-    end = new Date(year, 11, 31);
+// Available integrations
+export const INTEGRATIONS: Integration[] = [
+  {
+    id: 'quickbooks',
+    name: 'QuickBooks',
+    description: 'Sync contacts, invoices, and expenses with QuickBooks Online',
+    icon: '/integrations/quickbooks.svg',
+    category: 'accounting',
+    status: 'available',
+    features: [
+      'Two-way contact sync',
+      'Invoice sync',
+      'Expense tracking',
+      'Chart of accounts mapping'
+    ]
+  },
+  {
+    id: 'xero',
+    name: 'Xero',
+    description: 'Connect your Xero account for seamless accounting',
+    icon: '/integrations/xero.svg',
+    category: 'accounting',
+    status: 'available',
+    features: [
+      'Contact sync',
+      'Invoice sync',
+      'Bank reconciliation',
+      'Tax rate mapping'
+    ]
+  },
+  {
+    id: 'shopify',
+    name: 'Shopify',
+    description: 'Sync products, orders, and inventory with your Shopify store',
+    icon: '/integrations/shopify.svg',
+    category: 'ecommerce',
+    status: 'available',
+    features: [
+      'Product catalog sync',
+      'Order import',
+      'Inventory sync',
+      'Customer sync'
+    ]
+  },
+  {
+    id: 'woocommerce',
+    name: 'WooCommerce',
+    description: 'Connect your WordPress store with Atlas',
+    icon: '/integrations/woocommerce.svg',
+    category: 'ecommerce',
+    status: 'coming_soon',
+    features: [
+      'Product sync',
+      'Order management',
+      'Stock updates',
+      'Customer import'
+    ]
+  },
+  {
+    id: 'stripe',
+    name: 'Stripe',
+    description: 'Accept payments and manage subscriptions',
+    icon: '/integrations/stripe.svg',
+    category: 'payments',
+    status: 'available',
+    features: [
+      'Payment processing',
+      'Invoice payments',
+      'Subscription billing',
+      'Payment links'
+    ]
+  },
+  {
+    id: 'zapier',
+    name: 'Zapier',
+    description: 'Connect Atlas to 5000+ apps with Zapier',
+    icon: '/integrations/zapier.svg',
+    category: 'automation',
+    status: 'available',
+    features: [
+      'Trigger on new invoice',
+      'Trigger on new order',
+      'Trigger on low stock',
+      'Create records from other apps'
+    ]
+  },
+  {
+    id: 'make',
+    name: 'Make (Integromat)',
+    description: 'Build powerful automations with Make',
+    icon: '/integrations/make.svg',
+    category: 'automation',
+    status: 'coming_soon',
+    features: [
+      'Visual workflow builder',
+      'Multi-step automations',
+      'Data transformation',
+      'Error handling'
+    ]
+  },
+  {
+    id: 'square',
+    name: 'Square',
+    description: 'POS integration for in-person sales',
+    icon: '/integrations/square.svg',
+    category: 'payments',
+    status: 'coming_soon',
+    features: [
+      'Transaction sync',
+      'Inventory updates',
+      'Customer sync',
+      'Sales reporting'
+    ]
   }
-  
+];
+
+// Integration sync status
+export interface SyncStatus {
+  lastSync: Date | null;
+  nextSync: Date | null;
+  recordsSynced: number;
+  errors: string[];
+  status: 'idle' | 'syncing' | 'error' | 'success';
+}
+
+// Base integration class
+export abstract class BaseIntegration {
+  protected connection: IntegrationConnection;
+
+  constructor(connection: IntegrationConnection) {
+    this.connection = connection;
+  }
+
+  abstract connect(credentials: Record<string, string>): Promise<boolean>;
+  abstract disconnect(): Promise<boolean>;
+  abstract sync(): Promise<SyncStatus>;
+  abstract testConnection(): Promise<boolean>;
+}
+
+// Webhook payload for Zapier/Make
+export interface WebhookPayload {
+  event: string;
+  timestamp: string;
+  data: Record<string, any>;
+}
+
+export function createWebhookPayload(event: string, data: Record<string, any>): WebhookPayload {
   return {
-    quarter,
-    start,
-    end,
-    label: `Q${quarter} ${year}`,
+    event,
+    timestamp: new Date().toISOString(),
+    data
   };
 }
+
+// Integration events
+export const INTEGRATION_EVENTS = {
+  // Invoices
+  'invoice.created': 'New invoice created',
+  'invoice.sent': 'Invoice sent to customer',
+  'invoice.paid': 'Invoice payment received',
+  'invoice.overdue': 'Invoice became overdue',
+  
+  // Orders
+  'order.created': 'New order placed',
+  'order.fulfilled': 'Order fulfilled',
+  'order.cancelled': 'Order cancelled',
+  
+  // Inventory
+  'product.created': 'New product added',
+  'product.updated': 'Product updated',
+  'product.low_stock': 'Product low on stock',
+  'product.out_of_stock': 'Product out of stock',
+  
+  // Contacts
+  'contact.created': 'New contact added',
+  'contact.updated': 'Contact updated',
+  
+  // Payments
+  'payment.received': 'Payment received',
+  'payment.failed': 'Payment failed',
+  
+  // Sales
+  'sale.completed': 'Sale completed'
+} as const;
