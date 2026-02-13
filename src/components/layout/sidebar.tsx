@@ -19,12 +19,15 @@ import {
   UserCircle,
   FolderKanban,
   Wallet,
+  Store,
+  Globe,
 } from "lucide-react";
 import { useState } from "react";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/apps", label: "Apps", icon: LayoutGrid },
+  { href: "/pos", label: "Point of Sale", icon: Store },
   { href: "/inventory", label: "Inventory", icon: Package },
   { href: "/invoices", label: "Invoices", icon: FileText },
   { href: "/sales", label: "Sales", icon: ShoppingCart },
@@ -35,6 +38,7 @@ const navItems = [
   { href: "/employees", label: "Employees", icon: UserCircle },
   { href: "/payroll", label: "Payroll", icon: Wallet },
   { href: "/projects", label: "Projects", icon: FolderKanban },
+  { href: "/website", label: "Website", icon: Globe },
   { href: "/ai", label: "AI Assistant", icon: Bot },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
