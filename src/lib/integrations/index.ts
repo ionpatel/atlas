@@ -15,19 +15,24 @@
  *    - Creates stock movements for audit trail
  *    - Creates COGS (Cost of Goods Sold) journal entries
  * 
+ * 3. Payroll → Accounting
+ *    - Auto-creates journal entries when pay runs are paid
+ *    - Records salary expense, employer taxes (CPP, EI)
+ *    - Tracks source deduction liabilities (CRA remittance)
+ *    - Canadian-compliant (CPP, EI, federal/provincial tax)
+ * 
  * Usage in React components:
  * ```tsx
- * import { useInvoiceAccounting, useSalesInventory } from '@/lib/integrations';
+ * import { 
+ *   useInvoiceAccounting, 
+ *   useSalesInventory,
+ *   usePayrollAccounting 
+ * } from '@/lib/integrations';
  * 
- * function OrderActions({ orderId, orderLines }) {
- *   const { confirmOrder, checkStock, lowStockAlerts } = useSalesInventory();
+ * function PayrollPage() {
+ *   const { processPayment, pendingRemittance } = usePayrollAccounting();
+ *   const { confirmOrder, lowStockAlerts } = useSalesInventory();
  *   const { markAsPaid } = useInvoiceAccounting();
- * 
- *   // Check stock before confirming
- *   const stockCheck = checkStock(orderLines);
- *   if (!stockCheck.available) {
- *     // Show shortage warning
- *   }
  * }
  * ```
  */
@@ -53,6 +58,19 @@ export {
 
 export { useSalesInventory } from "./use-sales-inventory";
 
+// ===== Payroll → Accounting Integration =====
+export {
+  processPayrollPayment,
+  createRemittancePaymentEntry,
+  getPendingRemittance,
+  calculatePayrollSummary,
+  ensurePayrollAccounts,
+  type PayrollAccountingResult,
+  type PayrollSummary,
+} from "./payroll-accounting";
+
+export { usePayrollAccounting } from "./use-payroll-accounting";
+
 // ===== Types for integration events (future event bus) =====
 export type IntegrationEvent =
   | { type: "invoice.paid"; invoiceId: string; journalEntryId: string }
@@ -61,6 +79,7 @@ export type IntegrationEvent =
   | { type: "salesOrder.cancelled"; orderId: string }
   | { type: "purchaseOrder.received"; orderId: string; stockMovements: string[] }
   | { type: "payRun.paid"; payRunId: string; journalEntryId: string }
+  | { type: "payRun.remittance"; amount: number; period: string }
   | { type: "inventory.lowStock"; productId: string; currentStock: number; minStock: number };
 
 // ===== Integration status tracking =====
@@ -107,4 +126,57 @@ export function calculateHST(subtotal: number, province: string = "ON"): number 
   
   const rate = rates[province] || 0.13;
   return Math.round(subtotal * rate * 100) / 100;
+}
+
+/**
+ * Format date for Canadian business documents
+ */
+export function formatDate(date: string | Date): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(date));
+}
+
+/**
+ * Calculate Canadian fiscal quarter
+ */
+export function getFiscalQuarter(date: Date = new Date()): {
+  quarter: 1 | 2 | 3 | 4;
+  start: Date;
+  end: Date;
+  label: string;
+} {
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  
+  let quarter: 1 | 2 | 3 | 4;
+  let start: Date;
+  let end: Date;
+  
+  if (month < 3) {
+    quarter = 1;
+    start = new Date(year, 0, 1);
+    end = new Date(year, 2, 31);
+  } else if (month < 6) {
+    quarter = 2;
+    start = new Date(year, 3, 1);
+    end = new Date(year, 5, 30);
+  } else if (month < 9) {
+    quarter = 3;
+    start = new Date(year, 6, 1);
+    end = new Date(year, 8, 30);
+  } else {
+    quarter = 4;
+    start = new Date(year, 9, 1);
+    end = new Date(year, 11, 31);
+  }
+  
+  return {
+    quarter,
+    start,
+    end,
+    label: `Q${quarter} ${year}`,
+  };
 }
