@@ -631,9 +631,12 @@ export default function PayrollPage() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedPayRun, setSelectedPayRun] = useState<PayRun | null>(null);
 
+  // Demo org UUID
+  const DEMO_ORG_ID = "00000000-0000-0000-0000-000000000001";
+
   // Fetch pay runs on mount
   useEffect(() => {
-    fetchPayRuns("org1");
+    fetchPayRuns(DEMO_ORG_ID);
   }, [fetchPayRuns]);
 
   // Calculate stats
@@ -659,7 +662,7 @@ export default function PayrollPage() {
   const handleCreatePayRun = async (data: { name: string; payPeriod: PayPeriod; periodStart: string; periodEnd: string; payDate: string }) => {
     const newRun = await createPayRun({
       ...data,
-      orgId: "org1",
+      orgId: DEMO_ORG_ID,
       status: "draft",
       employeeCount: compensations.length,
       totalGross: 0,

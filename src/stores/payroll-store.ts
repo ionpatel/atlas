@@ -174,6 +174,9 @@ function calculateEi(annualIncome: number, ytdEi: number): number {
   return Math.min(annualEi / 12, maxEmployeeContribution - ytdEi);
 }
 
+// Demo org UUID - used when no real org is configured
+const DEMO_ORG_ID = "00000000-0000-0000-0000-000000000001";
+
 // Mock data for demo mode
 const mockCompensations: EmployeeCompensation[] = [
   { employeeId: "e1", employeeName: "Alexandra Mitchell", department: "Management", payType: "salary", annualSalary: 185000, hoursPerWeek: 40, province: "ON", federalTd1Claim: 15705, provincialTd1Claim: 11865, additionalTax: 0 },
@@ -221,9 +224,9 @@ function generateMockPayStubs(payRun: Pick<PayRun, "id" | "payPeriod" | "periodS
 }
 
 const mockPayRunsData = [
-  { id: "pr1", orgId: "org1", name: "January 2026 - Period 1", payPeriod: "semi-monthly" as PayPeriod, periodStart: "2026-01-01", periodEnd: "2026-01-15", payDate: "2026-01-20", status: "paid" as PayRunStatus, employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [] as PayStub[], createdAt: "2026-01-16T10:00:00Z", approvedAt: "2026-01-17T14:00:00Z", paidAt: "2026-01-20T09:00:00Z" },
-  { id: "pr2", orgId: "org1", name: "January 2026 - Period 2", payPeriod: "semi-monthly" as PayPeriod, periodStart: "2026-01-16", periodEnd: "2026-01-31", payDate: "2026-02-05", status: "paid" as PayRunStatus, employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [] as PayStub[], createdAt: "2026-02-01T10:00:00Z", approvedAt: "2026-02-02T14:00:00Z", paidAt: "2026-02-05T09:00:00Z" },
-  { id: "pr3", orgId: "org1", name: "February 2026 - Period 1", payPeriod: "semi-monthly" as PayPeriod, periodStart: "2026-02-01", periodEnd: "2026-02-15", payDate: "2026-02-20", status: "approved" as PayRunStatus, employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [] as PayStub[], createdAt: "2026-02-16T10:00:00Z", approvedAt: "2026-02-17T14:00:00Z" },
+  { id: "pr1", orgId: DEMO_ORG_ID, name: "January 2026 - Period 1", payPeriod: "semi-monthly" as PayPeriod, periodStart: "2026-01-01", periodEnd: "2026-01-15", payDate: "2026-01-20", status: "paid" as PayRunStatus, employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [] as PayStub[], createdAt: "2026-01-16T10:00:00Z", approvedAt: "2026-01-17T14:00:00Z", paidAt: "2026-01-20T09:00:00Z" },
+  { id: "pr2", orgId: DEMO_ORG_ID, name: "January 2026 - Period 2", payPeriod: "semi-monthly" as PayPeriod, periodStart: "2026-01-16", periodEnd: "2026-01-31", payDate: "2026-02-05", status: "paid" as PayRunStatus, employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [] as PayStub[], createdAt: "2026-02-01T10:00:00Z", approvedAt: "2026-02-02T14:00:00Z", paidAt: "2026-02-05T09:00:00Z" },
+  { id: "pr3", orgId: DEMO_ORG_ID, name: "February 2026 - Period 1", payPeriod: "semi-monthly" as PayPeriod, periodStart: "2026-02-01", periodEnd: "2026-02-15", payDate: "2026-02-20", status: "approved" as PayRunStatus, employeeCount: 9, totalGross: 46250, totalDeductions: 14650, totalNet: 31600, totalEmployerCost: 49875, payStubs: [] as PayStub[], createdAt: "2026-02-16T10:00:00Z", approvedAt: "2026-02-17T14:00:00Z" },
 ];
 const mockPayRuns: PayRun[] = mockPayRunsData.map(pr => ({ ...pr, payStubs: generateMockPayStubs(pr, mockCompensations) }));
 
