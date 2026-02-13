@@ -26,6 +26,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import { useState, useMemo } from "react";
+import { OrgSwitcher } from "@/components/org-switcher";
 
 interface NavItem {
   href: string;
@@ -96,6 +97,13 @@ export function Sidebar() {
           )}
         </Link>
       </div>
+
+      {/* Organization Switcher */}
+      {!collapsed && (
+        <div className="px-2 py-3 border-b border-[#1a1a1a]">
+          <OrgSwitcher />
+        </div>
+      )}
 
       {/* Navigation */}
       <nav className="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
