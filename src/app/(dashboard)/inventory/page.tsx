@@ -20,6 +20,11 @@ import {
   Tags,
   Scan,
   Bell,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
+  SlidersHorizontal,
+  RotateCcw,
 } from "lucide-react";
 import { useInventoryStore, getCategories } from "@/stores/inventory-store";
 import { Modal } from "@/components/ui/modal";
@@ -27,8 +32,9 @@ import { ProductForm } from "@/components/modules/product-form";
 import { useToastStore } from "@/components/ui/toast";
 import { formatCurrency } from "@/lib/utils";
 import { BarcodeScanner } from "@/components/inventory/barcode-scanner";
-import { LowStockAlerts } from "@/components/inventory/low-stock-alerts";
+import { LowStockAlerts, StockBadge, AlertCountBadge, CriticalAlertPulse } from "@/components/inventory/low-stock-alerts";
 import type { Product } from "@/types";
+import { cn } from "@/lib/utils";
 
 /* ─── Category color map ─── */
 const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
@@ -63,6 +69,23 @@ function getCategoryIconColor(category?: string) {
   return CATEGORY_ICON_COLORS[category] || "#888888";
 }
 
+/* ─── Sort configuration ─── */
+type SortField = "name" | "sku" | "stock" | "price" | "created";
+type SortDirection = "asc" | "desc";
+
+interface SortConfig {
+  field: SortField;
+  direction: SortDirection;
+}
+
+const SORT_OPTIONS: { field: SortField; label: string }[] = [
+  { field: "name", label: "Name" },
+  { field: "sku", label: "SKU" },
+  { field: "stock", label: "Stock Level" },
+  { field: "price", label: "Price" },
+  { field: "created", label: "Date Added" },
+];
+
 /* ─── Stock level bar + badge ─── */
 function StockBar({ stock, min }: { stock: number; min: number }) {
   let color = "bg-emerald-400";
@@ -78,7 +101,6 @@ function StockBar({ stock, min }: { stock: number; min: number }) {
     label = "Low Stock";
     pct = min > 0 ? (stock / min) * 50 : 10;
   } else if (stock <= min * 2) {
-    // between min and 2*min — amber zone (50-100% of scale)
     color = "bg-amber-400";
     pct = min > 0 ? 50 + ((stock - min) / min) * 50 : 75;
   }
@@ -95,13 +117,7 @@ function StockBar({ stock, min }: { stock: number; min: number }) {
       </div>
       <span className="text-xs text-[#888888] tabular-nums w-8 text-right">{stock}</span>
       {label && (
-        <span className={`px-1.5 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wider ${
-          label === "Out of Stock"
-            ? "bg-red-500/10 text-red-400"
-            : "bg-red-500/10 text-red-400"
-        }`}>
-          {label === "Out of Stock" ? "OOS" : "Low"}
-        </span>
+        <StockBadge stock={stock} min={min} showLabel />
       )}
     </div>
   );
@@ -144,14 +160,26 @@ function ProductGridCard({
   onClick: () => void;
 }) {
   const iconColor = getCategoryIconColor(product.category);
+  const isLowStock = product.stock_quantity > 0 && product.stock_quantity < product.min_quantity;
+  const isOutOfStock = product.stock_quantity === 0;
 
   return (
     <div
-      className={`bg-[#1a1a1a] border rounded-xl p-5 cursor-pointer hover:border-[#CDB49E]/20 transition-all duration-200 relative group ${
-        selected ? "border-[#CDB49E]/50 bg-[#3a3028]/20" : "border-[#2a2a2a]"
-      }`}
+      className={cn(
+        "bg-[#1a1a1a] border rounded-xl p-5 cursor-pointer hover:border-[#CDB49E]/20 transition-all duration-200 relative group",
+        selected ? "border-[#CDB49E]/50 bg-[#3a3028]/20" : "border-[#2a2a2a]",
+        isOutOfStock && "border-red-500/20",
+        isLowStock && !isOutOfStock && "border-amber-500/20"
+      )}
       onClick={onClick}
     >
+      {/* Stock Alert Badge */}
+      {(isLowStock || isOutOfStock) && (
+        <div className="absolute top-3 right-3">
+          <StockBadge stock={product.stock_quantity} min={product.min_quantity} size="md" />
+        </div>
+      )}
+
       {/* Checkbox */}
       <div className="absolute top-3 left-3" onClick={(e) => e.stopPropagation()}>
         <label className="cursor-pointer">
@@ -173,8 +201,11 @@ function ProductGridCard({
 
       {/* Icon */}
       <div className="flex justify-center mb-4 mt-2">
-        <div className="w-14 h-14 rounded-xl bg-[#222222] flex items-center justify-center">
-          <Package className="w-6 h-6" style={{ color: iconColor }} />
+        <div className={cn(
+          "w-14 h-14 rounded-xl flex items-center justify-center",
+          isOutOfStock ? "bg-red-500/10" : isLowStock ? "bg-amber-500/10" : "bg-[#222222]"
+        )}>
+          <Package className="w-6 h-6" style={{ color: isOutOfStock ? "#f87171" : isLowStock ? "#fbbf24" : iconColor }} />
         </div>
       </div>
 
@@ -192,6 +223,178 @@ function ProductGridCard({
 
       {/* Stock bar */}
       <StockBar stock={product.stock_quantity} min={product.min_quantity} />
+    </div>
+  );
+}
+
+/* ─── Filter Section Component ─── */
+function FilterSection({
+  categories,
+  filters,
+  priceRange,
+  sort,
+  onFilterChange,
+  onPriceRangeChange,
+  onSortChange,
+  onReset,
+}: {
+  categories: string[];
+  filters: {
+    category: string;
+    status: string;
+    stockLevel: string;
+  };
+  priceRange: { min: string; max: string };
+  sort: SortConfig;
+  onFilterChange: (key: string, value: string) => void;
+  onPriceRangeChange: (key: "min" | "max", value: string) => void;
+  onSortChange: (config: SortConfig) => void;
+  onReset: () => void;
+}) {
+  const hasFilters = filters.category || filters.status || filters.stockLevel || priceRange.min || priceRange.max;
+
+  return (
+    <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <SlidersHorizontal className="w-4 h-4 text-[#CDB49E]" />
+          <span className="text-sm font-medium text-[#f5f0eb]">Filters & Sorting</span>
+        </div>
+        {hasFilters && (
+          <button
+            onClick={onReset}
+            className="flex items-center gap-1 text-xs text-[#888888] hover:text-[#f5f0eb] transition-colors"
+          >
+            <RotateCcw className="w-3 h-3" />
+            Reset
+          </button>
+        )}
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        {/* Category Filter */}
+        <div>
+          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+            Category
+          </label>
+          <select
+            value={filters.category}
+            onChange={(e) => onFilterChange("category", e.target.value)}
+            className="w-full px-3 py-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-xs text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+          >
+            <option value="">All Categories</option>
+            {categories.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Status Filter */}
+        <div>
+          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+            Status
+          </label>
+          <select
+            value={filters.status}
+            onChange={(e) => onFilterChange("status", e.target.value)}
+            className="w-full px-3 py-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-xs text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+          >
+            <option value="">All Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        {/* Stock Level Filter */}
+        <div>
+          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+            Stock Level
+          </label>
+          <select
+            value={filters.stockLevel}
+            onChange={(e) => onFilterChange("stockLevel", e.target.value)}
+            className={cn(
+              "w-full px-3 py-2 bg-[#222222] border rounded-lg text-xs focus:outline-none focus:border-[#CDB49E]/40 transition-colors",
+              filters.stockLevel === "out" && "border-red-500/40 text-red-400",
+              filters.stockLevel === "low" && "border-amber-500/40 text-amber-400",
+              filters.stockLevel === "healthy" && "border-emerald-500/40 text-emerald-400",
+              !filters.stockLevel && "border-[#2a2a2a] text-[#f5f0eb]"
+            )}
+          >
+            <option value="">All Stock Levels</option>
+            <option value="healthy">✓ In Stock</option>
+            <option value="low">⚠ Low Stock</option>
+            <option value="out">✗ Out of Stock</option>
+          </select>
+        </div>
+
+        {/* Price Range Min */}
+        <div>
+          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+            Min Price
+          </label>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#555555]">$</span>
+            <input
+              type="number"
+              value={priceRange.min}
+              onChange={(e) => onPriceRangeChange("min", e.target.value)}
+              placeholder="0"
+              min="0"
+              step="0.01"
+              className="w-full pl-6 pr-3 py-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-xs text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+        </div>
+
+        {/* Price Range Max */}
+        <div>
+          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+            Max Price
+          </label>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#555555]">$</span>
+            <input
+              type="number"
+              value={priceRange.max}
+              onChange={(e) => onPriceRangeChange("max", e.target.value)}
+              placeholder="∞"
+              min="0"
+              step="0.01"
+              className="w-full pl-6 pr-3 py-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-xs text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            />
+          </div>
+        </div>
+
+        {/* Sort By */}
+        <div>
+          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+            Sort By
+          </label>
+          <div className="flex items-center gap-1">
+            <select
+              value={sort.field}
+              onChange={(e) => onSortChange({ ...sort, field: e.target.value as SortField })}
+              className="flex-1 px-3 py-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-xs text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            >
+              {SORT_OPTIONS.map((opt) => (
+                <option key={opt.field} value={opt.field}>{opt.label}</option>
+              ))}
+            </select>
+            <button
+              onClick={() => onSortChange({ ...sort, direction: sort.direction === "asc" ? "desc" : "asc" })}
+              className="p-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-[#888888] hover:text-[#f5f0eb] transition-colors"
+              title={sort.direction === "asc" ? "Ascending" : "Descending"}
+            >
+              {sort.direction === "asc" ? (
+                <ArrowUp className="w-3.5 h-3.5" />
+              ) : (
+                <ArrowDown className="w-3.5 h-3.5" />
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -221,9 +424,62 @@ export default function InventoryPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [showScanner, setShowScanner] = useState(false);
   const [showAlerts, setShowAlerts] = useState(false);
+  
+  // Enhanced filter states
+  const [stockLevelFilter, setStockLevelFilter] = useState<string>("");
+  const [priceRange, setPriceRange] = useState<{ min: string; max: string }>({ min: "", max: "" });
+  const [sort, setSort] = useState<SortConfig>({ field: "name", direction: "asc" });
 
   const categories = getCategories(products);
-  const filtered = filteredProducts();
+  
+  // Enhanced filtered products with stock level, price range, and sorting
+  const filtered = useMemo(() => {
+    let result = filteredProducts();
+    
+    // Stock level filter
+    if (stockLevelFilter === "out") {
+      result = result.filter((p) => p.stock_quantity === 0);
+    } else if (stockLevelFilter === "low") {
+      result = result.filter((p) => p.stock_quantity > 0 && p.stock_quantity < p.min_quantity);
+    } else if (stockLevelFilter === "healthy") {
+      result = result.filter((p) => p.stock_quantity >= p.min_quantity);
+    }
+    
+    // Price range filter
+    if (priceRange.min) {
+      const minPrice = parseFloat(priceRange.min);
+      result = result.filter((p) => p.sell_price >= minPrice);
+    }
+    if (priceRange.max) {
+      const maxPrice = parseFloat(priceRange.max);
+      result = result.filter((p) => p.sell_price <= maxPrice);
+    }
+    
+    // Sorting
+    result.sort((a, b) => {
+      let comparison = 0;
+      switch (sort.field) {
+        case "name":
+          comparison = a.name.localeCompare(b.name);
+          break;
+        case "sku":
+          comparison = a.sku.localeCompare(b.sku);
+          break;
+        case "stock":
+          comparison = a.stock_quantity - b.stock_quantity;
+          break;
+        case "price":
+          comparison = a.sell_price - b.sell_price;
+          break;
+        case "created":
+          comparison = new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+          break;
+      }
+      return sort.direction === "asc" ? comparison : -comparison;
+    });
+    
+    return result;
+  }, [filteredProducts, stockLevelFilter, priceRange, sort]);
 
   /* ── Summary stats ── */
   const summary = useMemo(() => {
@@ -294,13 +550,33 @@ export default function InventoryPage() {
   const handleBarcodeScan = (barcode: string) => {
     const product = products.find((p) => p.barcode === barcode || p.sku === barcode);
     if (product) {
-      setEditingProduct(product);
-      setShowScanner(false);
       addToast(`Found: ${product.name}`);
     } else {
       addToast(`No product found for: ${barcode}`, "error");
     }
   };
+
+  const handleStockAdjust = (product: Product, delta: number) => {
+    const newStock = Math.max(0, product.stock_quantity + delta);
+    updateProduct(product.id, { stock_quantity: newStock });
+    addToast(`Stock ${delta > 0 ? "added" : "removed"}: ${product.name} (${newStock})`);
+  };
+
+  const resetFilters = () => {
+    setFilter("category", "");
+    setFilter("status", "");
+    setStockLevelFilter("");
+    setPriceRange({ min: "", max: "" });
+    setSort({ field: "name", direction: "asc" });
+  };
+
+  const activeFilterCount = [
+    filters.category,
+    filters.status,
+    stockLevelFilter,
+    priceRange.min,
+    priceRange.max,
+  ].filter(Boolean).length;
 
   return (
     <div className="space-y-6 max-w-[1400px]">
@@ -315,22 +591,25 @@ export default function InventoryPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          {/* Low Stock Alerts Button */}
+          {/* Low Stock Alerts Button with Pulse */}
           <button
             onClick={() => setShowAlerts(true)}
-            className={`relative flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
+            className={cn(
+              "relative flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200",
               summary.lowStock + summary.outOfStock > 0
                 ? "border-amber-500/30 text-amber-400 bg-amber-500/5 hover:bg-amber-500/10"
                 : "border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a]"
-            }`}
+            )}
           >
             <Bell className="w-4 h-4" />
             Alerts
-            {summary.lowStock + summary.outOfStock > 0 && (
+            {summary.outOfStock > 0 ? (
+              <CriticalAlertPulse count={summary.outOfStock} />
+            ) : summary.lowStock > 0 ? (
               <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-amber-400 text-[10px] font-bold text-[#111111] flex items-center justify-center">
-                {summary.lowStock + summary.outOfStock}
+                {summary.lowStock}
               </span>
-            )}
+            ) : null}
           </button>
 
           {/* Barcode Scanner Button */}
@@ -372,27 +651,49 @@ export default function InventoryPage() {
           <p className="text-xl font-bold text-[#f5f0eb]">{formatCurrency(summary.totalStockValue)}</p>
           <p className="text-xs text-[#888888] uppercase tracking-wider mt-1">Stock Value</p>
         </div>
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 hover:border-[#CDB49E]/20 transition-all duration-300">
+        <button
+          onClick={() => {
+            setStockLevelFilter("low");
+            setShowFilters(true);
+          }}
+          className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 hover:border-amber-500/30 transition-all duration-300 text-left"
+        >
           <div className="flex items-center gap-3 mb-3">
             <div className="p-2 rounded-lg bg-amber-500/10">
               <AlertTriangle className="w-4 h-4 text-amber-400" />
             </div>
+            {summary.lowStock > 0 && (
+              <span className="ml-auto px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/20 text-amber-400">
+                View
+              </span>
+            )}
           </div>
           <p className="text-xl font-bold text-amber-400">{summary.lowStock}</p>
           <p className="text-xs text-[#888888] uppercase tracking-wider mt-1">Low Stock Alerts</p>
-        </div>
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 hover:border-[#CDB49E]/20 transition-all duration-300">
+        </button>
+        <button
+          onClick={() => {
+            setStockLevelFilter("out");
+            setShowFilters(true);
+          }}
+          className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 hover:border-red-500/30 transition-all duration-300 text-left"
+        >
           <div className="flex items-center gap-3 mb-3">
             <div className="p-2 rounded-lg bg-red-500/10">
               <PackageX className="w-4 h-4 text-red-400" />
             </div>
+            {summary.outOfStock > 0 && (
+              <span className="ml-auto px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-500/20 text-red-400">
+                View
+              </span>
+            )}
           </div>
           <p className="text-xl font-bold text-red-400">{summary.outOfStock}</p>
           <p className="text-xs text-[#888888] uppercase tracking-wider mt-1">Out of Stock</p>
-        </div>
+        </button>
       </div>
 
-      {/* Search & Filters & View Toggle */}
+      {/* Search & Filter Toggle & View Toggle */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#CDB49E]/40 transition-colors duration-200">
           <Search className="w-4 h-4 text-[#888888]" />
@@ -411,14 +712,20 @@ export default function InventoryPage() {
         </div>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
-            showFilters || filters.category || filters.status
+          className={cn(
+            "flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 relative",
+            showFilters || activeFilterCount > 0
               ? "border-[#CDB49E]/50 text-[#CDB49E] bg-[#3a3028]/50"
               : "border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a]"
-          }`}
+          )}
         >
           <Filter className="w-4 h-4" />
           Filter
+          {activeFilterCount > 0 && (
+            <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#CDB49E] text-[10px] font-bold text-[#111111] flex items-center justify-center">
+              {activeFilterCount}
+            </span>
+          )}
         </button>
         <button className="flex items-center gap-2 px-4 py-2.5 border border-[#2a2a2a] rounded-lg text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200">
           <Download className="w-4 h-4" />
@@ -450,31 +757,30 @@ export default function InventoryPage() {
         </div>
       </div>
 
-      {/* Filter dropdowns */}
+      {/* Enhanced Filter Section */}
       {showFilters && (
-        <div className="flex items-center gap-3">
-          <select
-            value={filters.category}
-            onChange={(e) => setFilter("category", e.target.value)}
-            className="px-4 py-2.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200"
-          >
-            <option value="">All Categories</option>
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-          <select
-            value={filters.status}
-            onChange={(e) => setFilter("status", e.target.value)}
-            className="px-4 py-2.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200"
-          >
-            <option value="">All Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </div>
+        <FilterSection
+          categories={categories}
+          filters={{
+            category: filters.category,
+            status: filters.status,
+            stockLevel: stockLevelFilter,
+          }}
+          priceRange={priceRange}
+          sort={sort}
+          onFilterChange={(key, value) => {
+            if (key === "stockLevel") {
+              setStockLevelFilter(value);
+            } else {
+              setFilter(key as "category" | "status", value);
+            }
+          }}
+          onPriceRangeChange={(key, value) => {
+            setPriceRange((prev) => ({ ...prev, [key]: value }));
+          }}
+          onSortChange={setSort}
+          onReset={resetFilters}
+        />
       )}
 
       {/* ═══ LIST VIEW ═══ */}
@@ -520,82 +826,101 @@ export default function InventoryPage() {
                   </td>
                 </tr>
               ) : (
-                filtered.map((p, i) => (
-                  <tr
-                    key={p.id}
-                    onClick={() => setEditingProduct(p)}
-                    className={`hover:bg-[#222222] transition-colors duration-150 cursor-pointer border-b border-[#2a2a2a]/50 last:border-0 ${
-                      selectedIds.has(p.id) ? "bg-[#3a3028]/20" : i % 2 === 1 ? "bg-[#111111]/40" : ""
-                    }`}
-                  >
-                    <td className="px-4 py-4" onClick={(e) => e.stopPropagation()}>
-                      <label className="cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={selectedIds.has(p.id)}
-                          onChange={() => toggleSelect(p.id)}
-                          className="sr-only peer"
-                        />
-                        <div className="w-4 h-4 rounded border border-[#2a2a2a] bg-[#111111] peer-checked:bg-[#CDB49E] peer-checked:border-[#CDB49E] flex items-center justify-center transition-all">
-                          {selectedIds.has(p.id) && (
-                            <svg className="w-2.5 h-2.5 text-[#111111]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                          )}
-                        </div>
-                      </label>
-                    </td>
-                    <td className="px-4 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-[#3a3028] flex items-center justify-center flex-shrink-0">
-                          <Package className="w-3.5 h-3.5 text-[#CDB49E]" />
-                        </div>
-                        <span className="text-sm font-medium text-[#f5f0eb]">{p.name}</span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 text-sm text-[#888888] font-mono text-[13px]">{p.sku}</td>
-                    <td className="px-4 py-4">
-                      {p.barcode ? (
-                        <div className="flex items-center gap-1.5">
-                          <Barcode className="w-3.5 h-3.5 text-[#555555]" />
-                          <span className="text-[13px] text-[#888888] font-mono tracking-wide">{p.barcode}</span>
-                        </div>
-                      ) : (
-                        <span className="text-sm text-[#555555]">—</span>
+                filtered.map((p, i) => {
+                  const isLowStock = p.stock_quantity > 0 && p.stock_quantity < p.min_quantity;
+                  const isOutOfStock = p.stock_quantity === 0;
+                  
+                  return (
+                    <tr
+                      key={p.id}
+                      onClick={() => setEditingProduct(p)}
+                      className={cn(
+                        "hover:bg-[#222222] transition-colors duration-150 cursor-pointer border-b border-[#2a2a2a]/50 last:border-0",
+                        selectedIds.has(p.id) ? "bg-[#3a3028]/20" : i % 2 === 1 ? "bg-[#111111]/40" : "",
+                        isOutOfStock && "bg-red-500/5",
+                        isLowStock && !isOutOfStock && "bg-amber-500/5"
                       )}
-                    </td>
-                    <td className="px-4 py-4">
-                      <CategoryBadge category={p.category} />
-                    </td>
-                    <td className="px-4 py-4">
-                      <StockBar stock={p.stock_quantity} min={p.min_quantity} />
-                    </td>
-                    <td className="px-4 py-4 text-sm text-right text-[#888888]">{formatCurrency(p.cost_price)}</td>
-                    <td className="px-4 py-4 text-sm text-right font-medium text-[#f5f0eb]">{formatCurrency(p.sell_price)}</td>
-                    <td className="px-4 py-4 text-right">
-                      <StatusBadge active={p.is_active} />
-                    </td>
-                    <td className="px-4 py-4 text-right">
-                      <div className="flex items-center justify-end gap-1">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setEditingProduct(p);
-                          }}
-                          className="p-2 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
-                        >
-                          <Pencil className="w-3.5 h-3.5" />
-                        </button>
-                        <button
-                          onClick={(e) => handleDelete(e, p.id)}
-                          className="p-2 rounded-lg text-[#888888] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                    >
+                      <td className="px-4 py-4" onClick={(e) => e.stopPropagation()}>
+                        <label className="cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={selectedIds.has(p.id)}
+                            onChange={() => toggleSelect(p.id)}
+                            className="sr-only peer"
+                          />
+                          <div className="w-4 h-4 rounded border border-[#2a2a2a] bg-[#111111] peer-checked:bg-[#CDB49E] peer-checked:border-[#CDB49E] flex items-center justify-center transition-all">
+                            {selectedIds.has(p.id) && (
+                              <svg className="w-2.5 h-2.5 text-[#111111]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                          </div>
+                        </label>
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className={cn(
+                            "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
+                            isOutOfStock ? "bg-red-500/10" : isLowStock ? "bg-amber-500/10" : "bg-[#3a3028]"
+                          )}>
+                            <Package className={cn(
+                              "w-3.5 h-3.5",
+                              isOutOfStock ? "text-red-400" : isLowStock ? "text-amber-400" : "text-[#CDB49E]"
+                            )} />
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-[#f5f0eb]">{p.name}</span>
+                            {(isLowStock || isOutOfStock) && (
+                              <StockBadge stock={p.stock_quantity} min={p.min_quantity} showLabel={false} />
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-sm text-[#888888] font-mono text-[13px]">{p.sku}</td>
+                      <td className="px-4 py-4">
+                        {p.barcode ? (
+                          <div className="flex items-center gap-1.5">
+                            <Barcode className="w-3.5 h-3.5 text-[#555555]" />
+                            <span className="text-[13px] text-[#888888] font-mono tracking-wide">{p.barcode}</span>
+                          </div>
+                        ) : (
+                          <span className="text-sm text-[#555555]">—</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-4">
+                        <CategoryBadge category={p.category} />
+                      </td>
+                      <td className="px-4 py-4">
+                        <StockBar stock={p.stock_quantity} min={p.min_quantity} />
+                      </td>
+                      <td className="px-4 py-4 text-sm text-right text-[#888888]">{formatCurrency(p.cost_price)}</td>
+                      <td className="px-4 py-4 text-sm text-right font-medium text-[#f5f0eb]">{formatCurrency(p.sell_price)}</td>
+                      <td className="px-4 py-4 text-right">
+                        <StatusBadge active={p.is_active} />
+                      </td>
+                      <td className="px-4 py-4 text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setEditingProduct(p);
+                            }}
+                            className="p-2 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
+                          >
+                            <Pencil className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={(e) => handleDelete(e, p.id)}
+                            className="p-2 rounded-lg text-[#888888] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>
@@ -686,6 +1011,15 @@ export default function InventoryPage() {
         <BarcodeScanner
           onScan={handleBarcodeScan}
           onClose={() => setShowScanner(false)}
+          onEditProduct={(product) => {
+            setShowScanner(false);
+            setEditingProduct(product);
+          }}
+          onViewProduct={(product) => {
+            setShowScanner(false);
+            setEditingProduct(product);
+          }}
+          onAdjustStock={handleStockAdjust}
         />
       )}
 
@@ -696,6 +1030,10 @@ export default function InventoryPage() {
           onReorder={(product) => {
             addToast(`Creating purchase order for ${product.name}...`, "info");
             setShowAlerts(false);
+          }}
+          onViewProduct={(product) => {
+            setShowAlerts(false);
+            setEditingProduct(product);
           }}
         />
       )}
