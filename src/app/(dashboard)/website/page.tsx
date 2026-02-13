@@ -2854,6 +2854,38 @@ function StylePanel({
       <div className="flex-1 overflow-auto p-4 space-y-6">
         {activeTab === "style" && (
           <>
+            {/* Quick Color Presets */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-[#555] uppercase">Quick Colors</h4>
+              <div className="grid grid-cols-6 gap-2">
+                {[
+                  { color: "#ffffff", label: "White" },
+                  { color: "#f5f0eb", label: "Off White" },
+                  { color: "#CDB49E", label: "Gold" },
+                  { color: "#888888", label: "Gray" },
+                  { color: "#111111", label: "Dark" },
+                  { color: "#000000", label: "Black" },
+                  { color: "#34d399", label: "Green" },
+                  { color: "#60a5fa", label: "Blue" },
+                  { color: "#f87171", label: "Red" },
+                  { color: "#fbbf24", label: "Yellow" },
+                  { color: "#a78bfa", label: "Purple" },
+                  { color: "#f472b6", label: "Pink" },
+                ].map(({ color, label }) => (
+                  <button
+                    key={color}
+                    onClick={() => {
+                      if (isTextElement) onStyleChange("color", color);
+                      else onStyleChange("backgroundColor", color);
+                    }}
+                    className="w-8 h-8 rounded-lg border border-[#333] hover:scale-110 transition-transform"
+                    style={{ backgroundColor: color }}
+                    title={label}
+                  />
+                ))}
+              </div>
+            </div>
+
             {isTextElement && (
               <div className="space-y-3">
                 <h4 className="text-xs font-semibold text-[#555] uppercase">Typography</h4>
