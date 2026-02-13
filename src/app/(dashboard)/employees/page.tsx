@@ -595,13 +595,30 @@ export default function EmployeesPage() {
             {filtered.length} of {employees.length} employees
           </p>
         </div>
-        <button 
-          onClick={handleOpenAdd}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
-        >
-          <Plus className="w-4 h-4" />
-          Add Employee
-        </button>
+        <div className="flex items-center gap-2">
+          {/* Import/Export buttons */}
+          <div className="flex items-center border border-[#2a2a2a] rounded-lg overflow-hidden">
+            <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200">
+              <Download className="w-4 h-4" />
+              Export
+            </button>
+            <div className="w-px h-6 bg-[#2a2a2a]" />
+            <button
+              onClick={() => setShowImport(true)}
+              className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+            >
+              <Upload className="w-4 h-4" />
+              Import
+            </button>
+          </div>
+          <button 
+            onClick={handleOpenAdd}
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
+          >
+            <Plus className="w-4 h-4" />
+            Add Employee
+          </button>
+        </div>
       </div>
 
       {/* Search + View Toggle */}
@@ -874,6 +891,16 @@ export default function EmployeesPage() {
         onSave={handleSave}
         onDelete={editingEmployee ? handleDelete : undefined}
       />
+
+      {/* Import Wizard */}
+      {showImport && (
+        <ImportWizard
+          target="employees"
+          onClose={() => setShowImport(false)}
+          onComplete={handleImportComplete}
+          existingKeys={existingEmails}
+        />
+      )}
     </div>
   );
 }
