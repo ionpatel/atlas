@@ -1,304 +1,290 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import { 
+  TrendingUp, Calendar, Package, AlertTriangle, 
+  Loader2, RefreshCw, ShoppingCart, Clock, BarChart3
+} from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import {
-  TrendingDown,
-  Calendar,
-  Package,
-  AlertTriangle,
-  ShoppingCart,
-  ChevronRight,
-  RefreshCw,
-  ArrowRight,
-  Clock,
-  Percent,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import {
-  type InventoryForecast,
-  getMockInventoryForecasts,
-} from "@/lib/ai-insights";
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { supabase } from '@/lib/supabase/client';
+import { ForecastResult, forecastInventory } from '@/lib/ai/insights';
 
-function ForecastCard({ forecast }: { forecast: InventoryForecast }) {
-  const urgency = forecast.daysUntilStockout <= 7 
-    ? "critical" 
-    : forecast.daysUntilStockout <= 14 
-    ? "warning" 
-    : "normal";
+const confidenceColors = {
+  high: 'bg-green-500/20 text-green-400',
+  medium: 'bg-amber-500/20 text-amber-400',
+  low: 'bg-neutral-500/20 text-neutral-400'
+};
 
-  const urgencyStyles = {
-    critical: {
-      bg: "bg-red-500/10",
-      border: "border-red-500/20",
-      text: "text-red-400",
-      badge: "bg-red-500/20 text-red-400",
-    },
-    warning: {
-      bg: "bg-amber-500/10",
-      border: "border-amber-500/20",
-      text: "text-amber-400",
-      badge: "bg-amber-500/20 text-amber-400",
-    },
-    normal: {
-      bg: "bg-[#222222]",
-      border: "border-[#2a2a2a]",
-      text: "text-[#888888]",
-      badge: "bg-[#222222] text-[#888888]",
-    },
-  };
-
-  const styles = urgencyStyles[urgency];
-
-  return (
-    <div
-      className={cn(
-        "p-4 rounded-xl border transition-all hover:scale-[1.01]",
-        styles.bg,
-        styles.border
-      )}
-    >
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-[#1a1a1a] flex items-center justify-center">
-            <Package className="w-5 h-5 text-[#888888]" />
-          </div>
-          <div>
-            <h4 className="text-sm font-medium text-[#f5f0eb]">
-              {forecast.productName}
-            </h4>
-            <p className="text-xs text-[#888888]">{forecast.sku}</p>
-          </div>
-        </div>
-        <span className={cn("px-2 py-1 text-xs font-medium rounded", styles.badge)}>
-          {forecast.daysUntilStockout}d left
-        </span>
-      </div>
-
-      <div className="grid grid-cols-3 gap-3 mb-4">
-        <div>
-          <p className="text-[10px] text-[#555555] uppercase tracking-wider">Current</p>
-          <p className="text-sm font-semibold text-[#f5f0eb]">
-            {forecast.currentStock}
-          </p>
-        </div>
-        <div>
-          <p className="text-[10px] text-[#555555] uppercase tracking-wider">Daily Sales</p>
-          <p className="text-sm font-semibold text-[#f5f0eb]">
-            {forecast.avgDailySales}
-          </p>
-        </div>
-        <div>
-          <p className="text-[10px] text-[#555555] uppercase tracking-wider">Confidence</p>
-          <p className="text-sm font-semibold text-[#f5f0eb]">
-            {Math.round(forecast.confidence * 100)}%
-          </p>
-        </div>
-      </div>
-
-      <div className="flex items-center justify-between p-3 bg-[#1a1a1a] rounded-lg">
-        <div className="flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-[#CDB49E]" />
-          <div>
-            <p className="text-[10px] text-[#888888]">Reorder by</p>
-            <p className="text-xs font-medium text-[#f5f0eb]">
-              {new Date(forecast.recommendedReorderDate).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              })}
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <ShoppingCart className="w-4 h-4 text-[#CDB49E]" />
-          <div className="text-right">
-            <p className="text-[10px] text-[#888888]">Order qty</p>
-            <p className="text-xs font-medium text-[#f5f0eb]">
-              {forecast.recommendedQuantity} units
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <button className="w-full mt-3 flex items-center justify-center gap-2 py-2 text-xs text-[#CDB49E] hover:text-[#d4c0ad] transition-colors">
-        Create Purchase Order
-        <ArrowRight className="w-3 h-3" />
-      </button>
-    </div>
-  );
-}
-
-export function InventoryForecastingPanel({ className }: { className?: string }) {
-  const [forecasts, setForecasts] = useState<InventoryForecast[]>([]);
+export function InventoryForecasting() {
+  const [forecasts, setForecasts] = useState<ForecastResult[]>([]);
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
+  const [leadTime, setLeadTime] = useState(7);
 
   useEffect(() => {
     loadForecasts();
-  }, []);
+  }, [leadTime]);
 
-  const loadForecasts = async () => {
+  async function loadForecasts() {
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    setForecasts(getMockInventoryForecasts());
-    setLoading(false);
-  };
+    try {
+      // Get products
+      const { data: products } = await supabase
+        .from('products')
+        .select('id, name, quantity, reorder_level, price')
+        .gt('quantity', 0);
 
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setForecasts(getMockInventoryForecasts());
-    setRefreshing(false);
-  };
+      if (!products) {
+        setForecasts([]);
+        return;
+      }
 
-  const criticalCount = forecasts.filter((f) => f.daysUntilStockout <= 7).length;
-  const warningCount = forecasts.filter(
-    (f) => f.daysUntilStockout > 7 && f.daysUntilStockout <= 14
-  ).length;
+      // Get sales history (last 30 days)
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      const { data: salesItems } = await supabase
+        .from('sale_items')
+        .select(`
+          quantity,
+          product_id,
+          sales!inner(created_at)
+        `)
+        .gte('sales.created_at', thirtyDaysAgo.toISOString());
+
+      const salesHistory = salesItems?.map(item => ({
+        productId: item.product_id,
+        date: (item.sales as any).created_at,
+        quantity: item.quantity
+      })) || [];
+
+      const items = products.map(p => ({
+        id: p.id,
+        name: p.name,
+        quantity: p.quantity || 0,
+        reorder_level: p.reorder_level || 10,
+        price: p.price || 0
+      }));
+
+      const results = forecastInventory(items, salesHistory, leadTime);
+      setForecasts(results);
+    } catch (error) {
+      console.error('Failed to load forecasts:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function getUrgencyColor(days: number): string {
+    if (days <= 7) return 'text-red-400';
+    if (days <= 14) return 'text-amber-400';
+    if (days <= 30) return 'text-blue-400';
+    return 'text-green-400';
+  }
+
+  function getUrgencyBadge(days: number) {
+    if (days <= 7) return { label: 'Critical', class: 'bg-red-500/20 text-red-400' };
+    if (days <= 14) return { label: 'Soon', class: 'bg-amber-500/20 text-amber-400' };
+    if (days <= 30) return { label: 'Upcoming', class: 'bg-blue-500/20 text-blue-400' };
+    return { label: 'OK', class: 'bg-green-500/20 text-green-400' };
+  }
 
   if (loading) {
     return (
-      <div className={cn("bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6", className)}>
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
-            <TrendingDown className="w-4 h-4 text-white" />
-          </div>
-          <div>
-            <h3 className="text-sm font-semibold text-[#f5f0eb]">Inventory Forecast</h3>
-            <p className="text-[10px] text-[#888888]">Analyzing sales velocity...</p>
-          </div>
-        </div>
-        <div className="space-y-3">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="h-40 bg-[#222222] rounded-lg animate-pulse" />
-          ))}
-        </div>
-      </div>
+      <Card className="bg-neutral-900/50 border-neutral-800">
+        <CardContent className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-[#CDB49E]" />
+        </CardContent>
+      </Card>
     );
   }
 
-  return (
-    <div className={cn("bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6", className)}>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
-            <TrendingDown className="w-4 h-4 text-white" />
-          </div>
-          <div>
-            <h3 className="text-sm font-semibold text-[#f5f0eb]">Inventory Forecast</h3>
-            <p className="text-[10px] text-[#888888]">
-              {forecasts.length} products need attention
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          {criticalCount > 0 && (
-            <span className="px-2 py-1 bg-red-500/20 text-red-400 text-xs font-medium rounded">
-              {criticalCount} critical
-            </span>
-          )}
-          {warningCount > 0 && (
-            <span className="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs font-medium rounded">
-              {warningCount} warning
-            </span>
-          )}
-          <button
-            onClick={handleRefresh}
-            disabled={refreshing}
-            className="p-2 text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] rounded-lg transition-all disabled:opacity-50"
-          >
-            <RefreshCw className={cn("w-4 h-4", refreshing && "animate-spin")} />
-          </button>
-        </div>
-      </div>
-
-      {forecasts.length > 0 ? (
-        <div className="space-y-3">
-          {forecasts.map((forecast) => (
-            <ForecastCard key={forecast.productId} forecast={forecast} />
-          ))}
-        </div>
-      ) : (
-        <div className="py-8 text-center">
-          <Package className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
-          <p className="text-sm text-[#f5f0eb]">Stock levels healthy</p>
-          <p className="text-xs text-[#888888] mt-1">
-            No products at risk of stockout in the next 60 days
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// Summary card for dashboard
-export function ForecastSummaryCard({ className }: { className?: string }) {
-  const [forecasts, setForecasts] = useState<InventoryForecast[]>([]);
-
-  useEffect(() => {
-    setForecasts(getMockInventoryForecasts());
-  }, []);
-
-  const criticalCount = forecasts.filter((f) => f.daysUntilStockout <= 7).length;
-  const warningCount = forecasts.filter(
-    (f) => f.daysUntilStockout > 7 && f.daysUntilStockout <= 14
-  ).length;
-
-  const mostUrgent = forecasts[0];
+  const criticalCount = forecasts.filter(f => f.daysUntilStockout <= 7).length;
+  const soonCount = forecasts.filter(f => f.daysUntilStockout > 7 && f.daysUntilStockout <= 14).length;
 
   return (
-    <div
-      className={cn(
-        "p-4 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl",
-        className
-      )}
-    >
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-amber-400" />
-          <span className="text-xs font-medium text-[#f5f0eb]">
-            Reorder Forecast
-          </span>
-        </div>
-        <div className="flex items-center gap-1">
-          {criticalCount > 0 && (
-            <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
-          )}
-          {warningCount > 0 && (
-            <span className="w-2 h-2 rounded-full bg-amber-400" />
-          )}
-        </div>
-      </div>
-
-      {mostUrgent ? (
-        <div>
-          <p className="text-sm text-[#f5f0eb] truncate">{mostUrgent.productName}</p>
-          <p className="text-xs text-[#888888] mt-1">
-            {mostUrgent.daysUntilStockout} days until stockout
-          </p>
-          <div className="flex items-center gap-2 mt-2">
-            <div className="flex-1 h-1.5 bg-[#222222] rounded-full overflow-hidden">
-              <div
-                className={cn(
-                  "h-full rounded-full transition-all",
-                  mostUrgent.daysUntilStockout <= 7
-                    ? "bg-red-400"
-                    : mostUrgent.daysUntilStockout <= 14
-                    ? "bg-amber-400"
-                    : "bg-emerald-400"
-                )}
-                style={{
-                  width: `${Math.min(100, (mostUrgent.daysUntilStockout / 30) * 100)}%`,
-                }}
-              />
+    <Card className="bg-neutral-900/50 border-neutral-800">
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-[#CDB49E]" />
+            <div>
+              <CardTitle className="text-white">Inventory Forecasting</CardTitle>
+              <CardDescription className="text-neutral-400">
+                AI-powered stock predictions based on sales velocity
+              </CardDescription>
             </div>
-            <span className="text-[10px] text-[#888888]">
-              {mostUrgent.currentStock} left
-            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            {criticalCount > 0 && (
+              <Badge className="bg-red-500/20 text-red-400">
+                <AlertTriangle className="h-3 w-3 mr-1" />
+                {criticalCount} critical
+              </Badge>
+            )}
+            {soonCount > 0 && (
+              <Badge className="bg-amber-500/20 text-amber-400">
+                <Clock className="h-3 w-3 mr-1" />
+                {soonCount} soon
+              </Badge>
+            )}
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => loadForecasts()}
+            >
+              <RefreshCw className="h-4 w-4" />
+            </Button>
           </div>
         </div>
-      ) : (
-        <p className="text-xs text-[#888888]">All stock levels healthy</p>
-      )}
-    </div>
+      </CardHeader>
+      <CardContent>
+        {forecasts.length === 0 ? (
+          <div className="text-center py-8 text-neutral-500">
+            <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
+            <p>No forecasts available</p>
+            <p className="text-sm">Add sales data to enable predictions</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {/* Summary Cards */}
+            <div className="grid grid-cols-3 gap-4 mb-6">
+              <div className="p-4 bg-neutral-800/50 rounded-lg">
+                <div className="flex items-center gap-2 text-neutral-400 text-sm mb-1">
+                  <AlertTriangle className="h-4 w-4" />
+                  Reorder Soon
+                </div>
+                <p className="text-2xl font-bold text-white">
+                  {forecasts.filter(f => f.daysUntilStockout <= 14).length}
+                </p>
+              </div>
+              <div className="p-4 bg-neutral-800/50 rounded-lg">
+                <div className="flex items-center gap-2 text-neutral-400 text-sm mb-1">
+                  <Package className="h-4 w-4" />
+                  Total Items
+                </div>
+                <p className="text-2xl font-bold text-white">
+                  {forecasts.length}
+                </p>
+              </div>
+              <div className="p-4 bg-neutral-800/50 rounded-lg">
+                <div className="flex items-center gap-2 text-neutral-400 text-sm mb-1">
+                  <ShoppingCart className="h-4 w-4" />
+                  Avg Daily Sales
+                </div>
+                <p className="text-2xl font-bold text-white">
+                  {(forecasts.reduce((sum, f) => sum + f.avgDailySales, 0) / forecasts.length).toFixed(1)}
+                </p>
+              </div>
+            </div>
+
+            {/* Forecast Table */}
+            <TooltipProvider>
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-neutral-800">
+                    <TableHead className="text-neutral-400">Product</TableHead>
+                    <TableHead className="text-neutral-400">Stock</TableHead>
+                    <TableHead className="text-neutral-400">Daily Sales</TableHead>
+                    <TableHead className="text-neutral-400">Days Left</TableHead>
+                    <TableHead className="text-neutral-400">Reorder By</TableHead>
+                    <TableHead className="text-neutral-400">Suggested Qty</TableHead>
+                    <TableHead className="text-neutral-400">Confidence</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {forecasts.slice(0, 10).map((forecast) => {
+                    const urgency = getUrgencyBadge(forecast.daysUntilStockout);
+                    const stockPercent = Math.min(100, (forecast.currentStock / (forecast.avgDailySales * 30)) * 100);
+
+                    return (
+                      <TableRow key={forecast.productId} className="border-neutral-800">
+                        <TableCell className="text-white font-medium">
+                          {forecast.productName}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <span className="text-white">{forecast.currentStock}</span>
+                            <Progress 
+                              value={stockPercent} 
+                              className="w-16 h-2 bg-neutral-800"
+                            />
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-neutral-400">
+                          {forecast.avgDailySales.toFixed(1)}/day
+                        </TableCell>
+                        <TableCell>
+                          <Badge className={urgency.class}>
+                            {forecast.daysUntilStockout} days
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-neutral-400">
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <div className="flex items-center gap-1">
+                                <Calendar className="h-3 w-3" />
+                                {forecast.suggestedReorderDate.toLocaleDateString('en-US', {
+                                  month: 'short',
+                                  day: 'numeric'
+                                })}
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              Order by this date to avoid stockout (accounting for {leadTime}-day lead time)
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        <TableCell>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <span className="text-[#CDB49E] font-medium">
+                                {forecast.suggestedReorderQty}
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              Enough for 30 days + {leadTime}-day buffer
+                            </TooltipContent>
+                          </Tooltip>
+                        </TableCell>
+                        <TableCell>
+                          <Badge className={confidenceColors[forecast.confidence]}>
+                            {forecast.confidence}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TooltipProvider>
+
+            {forecasts.length > 10 && (
+              <div className="text-center pt-2">
+                <Button variant="ghost" className="text-[#CDB49E]">
+                  View all {forecasts.length} items
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

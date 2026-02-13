@@ -40,6 +40,7 @@ import { useInventoryStore } from "@/stores/inventory-store";
 import { useInvoicesStore } from "@/stores/invoices-store";
 import { useContactsStore } from "@/stores/contacts-store";
 import { formatCurrency } from "@/lib/utils";
+import { AIInsights } from "@/components/dashboard/ai-insights";
 
 /* ─────────────────────── helpers ─────────────────────── */
 
@@ -880,7 +881,10 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── Row 5: Quick actions + AI teaser ── */}
+      {/* ── Row 5: AI Insights ── */}
+      <AIInsights />
+
+      {/* ── Row 6: Quick actions + AI teaser ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Quick actions */}
         <div className="lg:col-span-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">

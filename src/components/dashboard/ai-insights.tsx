@@ -1,276 +1,280 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import {
-  Sparkles,
-  TrendingUp,
-  TrendingDown,
-  AlertTriangle,
-  Package,
-  FileText,
-  DollarSign,
-  CheckCircle,
-  ChevronRight,
-  RefreshCw,
-  X,
-  Zap,
-  Brain,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import {
-  type Insight,
-  getMockInsights,
-} from "@/lib/ai-insights";
+import { useState, useEffect } from 'react';
+import { 
+  Sparkles, TrendingUp, TrendingDown, AlertTriangle, 
+  Lightbulb, Target, ChevronRight, Loader2, RefreshCw,
+  X, CheckCircle, Info, AlertCircle
+} from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { supabase } from '@/lib/supabase/client';
+import { 
+  Insight, 
+  analyzeSales, 
+  analyzeInventory, 
+  analyzeInvoices 
+} from '@/lib/ai/insights';
+import Link from 'next/link';
 
-const SEVERITY_STYLES = {
-  critical: {
-    bg: "bg-red-500/10",
-    border: "border-red-500/20",
-    icon: "text-red-400",
-    badge: "bg-red-500/20 text-red-400",
+const severityConfig = {
+  info: {
+    icon: Info,
+    bg: 'bg-blue-500/10',
+    border: 'border-blue-500/20',
+    text: 'text-blue-400',
+    badge: 'bg-blue-500/20 text-blue-400'
   },
   warning: {
-    bg: "bg-amber-500/10",
-    border: "border-amber-500/20",
-    icon: "text-amber-400",
-    badge: "bg-amber-500/20 text-amber-400",
+    icon: AlertTriangle,
+    bg: 'bg-amber-500/10',
+    border: 'border-amber-500/20',
+    text: 'text-amber-400',
+    badge: 'bg-amber-500/20 text-amber-400'
+  },
+  critical: {
+    icon: AlertCircle,
+    bg: 'bg-red-500/10',
+    border: 'border-red-500/20',
+    text: 'text-red-400',
+    badge: 'bg-red-500/20 text-red-400'
   },
   success: {
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/20",
-    icon: "text-emerald-400",
-    badge: "bg-emerald-500/20 text-emerald-400",
-  },
-  info: {
-    bg: "bg-blue-500/10",
-    border: "border-blue-500/20",
-    icon: "text-blue-400",
-    badge: "bg-blue-500/20 text-blue-400",
-  },
+    icon: CheckCircle,
+    bg: 'bg-green-500/10',
+    border: 'border-green-500/20',
+    text: 'text-green-400',
+    badge: 'bg-green-500/20 text-green-400'
+  }
 };
 
-const TYPE_ICONS: Record<string, typeof TrendingUp> = {
-  sales_trend: TrendingUp,
-  inventory_alert: Package,
-  revenue_change: DollarSign,
-  payment_overdue: FileText,
-  expense_spike: DollarSign,
-  product_performance: Zap,
-  seasonal_pattern: Sparkles,
-  anomaly_detected: AlertTriangle,
-  goal_progress: CheckCircle,
+const typeIcons = {
+  trend: TrendingUp,
+  anomaly: AlertTriangle,
+  alert: AlertCircle,
+  opportunity: Lightbulb,
+  prediction: Target
 };
 
-function InsightCard({
-  insight,
-  onDismiss,
-}: {
-  insight: Insight;
-  onDismiss: (id: string) => void;
-}) {
-  const styles = SEVERITY_STYLES[insight.severity];
-  const Icon = TYPE_ICONS[insight.type] || Sparkles;
-
-  return (
-    <div
-      className={cn(
-        "relative p-4 rounded-xl border transition-all hover:scale-[1.01]",
-        styles.bg,
-        styles.border
-      )}
-    >
-      <button
-        onClick={() => onDismiss(insight.id)}
-        className="absolute top-3 right-3 p-1 text-[#555555] hover:text-[#888888] transition-colors"
-      >
-        <X className="w-3.5 h-3.5" />
-      </button>
-
-      <div className="flex items-start gap-3">
-        <div className={cn("p-2 rounded-lg", styles.bg)}>
-          <Icon className={cn("w-4 h-4", styles.icon)} />
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <h4 className="text-sm font-medium text-[#f5f0eb]">{insight.title}</h4>
-            {insight.metric && (
-              <span
-                className={cn(
-                  "flex items-center gap-0.5 text-xs font-medium",
-                  insight.metric.changePercent > 0 ? "text-emerald-400" : "text-red-400"
-                )}
-              >
-                {insight.metric.changePercent > 0 ? (
-                  <TrendingUp className="w-3 h-3" />
-                ) : (
-                  <TrendingDown className="w-3 h-3" />
-                )}
-                {Math.abs(insight.metric.changePercent).toFixed(1)}%
-              </span>
-            )}
-          </div>
-          <p className="text-xs text-[#888888] leading-relaxed">
-            {insight.description}
-          </p>
-          {insight.action && (
-            <Link
-              href={insight.action.href}
-              className="inline-flex items-center gap-1 mt-2 text-xs text-[#CDB49E] hover:text-[#d4c0ad] transition-colors"
-            >
-              {insight.action.label}
-              <ChevronRight className="w-3 h-3" />
-            </Link>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export function AIInsightsPanel({ className }: { className?: string }) {
+export function AIInsights() {
   const [insights, setInsights] = useState<Insight[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [dismissed, setDismissed] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     loadInsights();
   }, []);
 
-  const loadInsights = async () => {
+  async function loadInsights() {
     setLoading(true);
-    // In real app, fetch from API
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    setInsights(getMockInsights());
-    setLoading(false);
-  };
+    try {
+      // Fetch data for analysis
+      const [salesRes, inventoryRes, invoicesRes] = await Promise.all([
+        // Get sales data for current and previous week
+        supabase
+          .from('sales')
+          .select('created_at, total')
+          .gte('created_at', new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString())
+          .order('created_at', { ascending: true }),
+        
+        // Get inventory items
+        supabase
+          .from('products')
+          .select('id, name, quantity, reorder_level, price'),
+        
+        // Get invoices
+        supabase
+          .from('invoices')
+          .select('id, total, status, due_date, contacts(name)')
+          .neq('status', 'paid')
+      ]);
 
-  const handleRefresh = async () => {
+      const allInsights: Insight[] = [];
+
+      // Analyze sales
+      if (salesRes.data) {
+        const now = new Date();
+        const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const twoWeeksAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+
+        const currentWeekSales = salesRes.data
+          .filter(s => new Date(s.created_at) >= oneWeekAgo)
+          .map(s => ({ date: s.created_at, amount: s.total || 0, count: 1 }));
+
+        const previousWeekSales = salesRes.data
+          .filter(s => {
+            const date = new Date(s.created_at);
+            return date >= twoWeeksAgo && date < oneWeekAgo;
+          })
+          .map(s => ({ date: s.created_at, amount: s.total || 0, count: 1 }));
+
+        if (currentWeekSales.length > 0 || previousWeekSales.length > 0) {
+          allInsights.push(...analyzeSales(currentWeekSales, previousWeekSales));
+        }
+      }
+
+      // Analyze inventory
+      if (inventoryRes.data) {
+        const items = inventoryRes.data.map(p => ({
+          id: p.id,
+          name: p.name,
+          quantity: p.quantity || 0,
+          reorder_level: p.reorder_level || 10,
+          price: p.price || 0
+        }));
+        allInsights.push(...analyzeInventory(items));
+      }
+
+      // Analyze invoices
+      if (invoicesRes.data) {
+        const invoices = invoicesRes.data.map(inv => ({
+          id: inv.id,
+          amount: inv.total || 0,
+          status: inv.status,
+          due_date: inv.due_date,
+          customer_name: (inv.contacts as any)?.name || 'Unknown'
+        }));
+        allInsights.push(...analyzeInvoices(invoices));
+      }
+
+      // Sort by severity (critical first, then warning, then info)
+      const severityOrder = { critical: 0, warning: 1, success: 2, info: 3 };
+      allInsights.sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity]);
+
+      setInsights(allInsights);
+    } catch (error) {
+      console.error('Failed to load insights:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function refresh() {
     setRefreshing(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setInsights(getMockInsights());
+    await loadInsights();
     setRefreshing(false);
-  };
+  }
 
-  const handleDismiss = (id: string) => {
-    setInsights(insights.filter((i) => i.id !== id));
-  };
+  function dismissInsight(id: string) {
+    setDismissed(prev => new Set(prev).add(id));
+  }
+
+  const visibleInsights = insights.filter(i => !dismissed.has(i.id));
 
   if (loading) {
     return (
-      <div className={cn("bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6", className)}>
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#CDB49E] to-[#a08c75] flex items-center justify-center">
-            <Brain className="w-4 h-4 text-[#111111]" />
-          </div>
-          <div>
-            <h3 className="text-sm font-semibold text-[#f5f0eb]">AI Insights</h3>
-            <p className="text-[10px] text-[#888888]">Analyzing your data...</p>
-          </div>
-        </div>
-        <div className="space-y-3">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="h-20 bg-[#222222] rounded-lg animate-pulse" />
-          ))}
-        </div>
-      </div>
+      <Card className="bg-neutral-900/50 border-neutral-800">
+        <CardContent className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-[#CDB49E]" />
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className={cn("bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6", className)}>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#CDB49E] to-[#a08c75] flex items-center justify-center">
-            <Brain className="w-4 h-4 text-[#111111]" />
-          </div>
-          <div>
-            <h3 className="text-sm font-semibold text-[#f5f0eb]">AI Insights</h3>
-            <p className="text-[10px] text-[#888888]">
-              {insights.length} insights found
-            </p>
-          </div>
-        </div>
-        <button
-          onClick={handleRefresh}
-          disabled={refreshing}
-          className="p-2 text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] rounded-lg transition-all disabled:opacity-50"
-        >
-          <RefreshCw className={cn("w-4 h-4", refreshing && "animate-spin")} />
-        </button>
-      </div>
-
-      {insights.length > 0 ? (
-        <div className="space-y-3">
-          {insights.slice(0, 5).map((insight) => (
-            <InsightCard
-              key={insight.id}
-              insight={insight}
-              onDismiss={handleDismiss}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="py-8 text-center">
-          <CheckCircle className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
-          <p className="text-sm text-[#f5f0eb]">All clear!</p>
-          <p className="text-xs text-[#888888] mt-1">
-            No issues detected. Keep up the good work!
-          </p>
-        </div>
-      )}
-
-      {insights.length > 5 && (
-        <Link
-          href="/reports/insights"
-          className="flex items-center justify-center gap-1 mt-4 py-2 text-xs text-[#CDB49E] hover:text-[#d4c0ad] transition-colors"
-        >
-          View all {insights.length} insights
-          <ChevronRight className="w-3 h-3" />
-        </Link>
-      )}
-    </div>
-  );
-}
-
-// Compact version for sidebar
-export function AIInsightsCompact({ className }: { className?: string }) {
-  const [insights, setInsights] = useState<Insight[]>([]);
-
-  useEffect(() => {
-    setInsights(getMockInsights().slice(0, 3));
-  }, []);
-
-  const criticalCount = insights.filter((i) => i.severity === "critical").length;
-  const warningCount = insights.filter((i) => i.severity === "warning").length;
-
-  return (
-    <Link
-      href="/reports/insights"
-      className={cn(
-        "block p-3 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl hover:border-[#3a3a3a] transition-all",
-        className
-      )}
-    >
-      <div className="flex items-center justify-between">
+    <Card className="bg-neutral-900/50 border-neutral-800">
+      <CardHeader className="flex flex-row items-center justify-between pb-2">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-[#CDB49E]" />
-          <span className="text-xs font-medium text-[#f5f0eb]">AI Insights</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          {criticalCount > 0 && (
-            <span className="px-1.5 py-0.5 bg-red-500/20 text-red-400 text-[10px] font-medium rounded">
-              {criticalCount}
-            </span>
+          <Sparkles className="h-5 w-5 text-[#CDB49E]" />
+          <CardTitle className="text-white">AI Insights</CardTitle>
+          {visibleInsights.length > 0 && (
+            <Badge className="bg-[#CDB49E]/20 text-[#CDB49E]">
+              {visibleInsights.length}
+            </Badge>
           )}
-          {warningCount > 0 && (
-            <span className="px-1.5 py-0.5 bg-amber-500/20 text-amber-400 text-[10px] font-medium rounded">
-              {warningCount}
-            </span>
-          )}
-          <ChevronRight className="w-3.5 h-3.5 text-[#555555]" />
         </div>
-      </div>
-    </Link>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={refresh}
+          disabled={refreshing}
+        >
+          <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+        </Button>
+      </CardHeader>
+      <CardContent>
+        {visibleInsights.length === 0 ? (
+          <div className="text-center py-8 text-neutral-500">
+            <Sparkles className="h-12 w-12 mx-auto mb-4 opacity-50" />
+            <p>No insights right now</p>
+            <p className="text-sm">Everything is running smoothly!</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {visibleInsights.map((insight) => {
+              const config = severityConfig[insight.severity];
+              const TypeIcon = typeIcons[insight.type];
+              const SeverityIcon = config.icon;
+
+              return (
+                <div
+                  key={insight.id}
+                  className={`p-4 rounded-lg border ${config.bg} ${config.border} relative group`}
+                >
+                  <button
+                    onClick={() => dismissInsight(insight.id)}
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-neutral-800 rounded"
+                  >
+                    <X className="h-3 w-3 text-neutral-500" />
+                  </button>
+
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2 rounded-lg ${config.bg}`}>
+                      <SeverityIcon className={`h-4 w-4 ${config.text}`} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="text-white font-medium">{insight.title}</h4>
+                        <Badge variant="outline" className="border-neutral-700 text-xs capitalize">
+                          <TypeIcon className="h-3 w-3 mr-1" />
+                          {insight.type}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-neutral-400 mb-2">
+                        {insight.description}
+                      </p>
+
+                      {insight.metric && (
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-lg font-semibold text-white">
+                            ${insight.metric.value.toLocaleString()}
+                          </span>
+                          <Badge className={config.badge}>
+                            {insight.metric.changeType === 'increase' ? (
+                              <TrendingUp className="h-3 w-3 mr-1" />
+                            ) : (
+                              <TrendingDown className="h-3 w-3 mr-1" />
+                            )}
+                            {insight.metric.change.toFixed(1)}%
+                          </Badge>
+                          <span className="text-xs text-neutral-500">
+                            {insight.metric.period}
+                          </span>
+                        </div>
+                      )}
+
+                      {insight.action && (
+                        <Link href={insight.action.href}>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className={`${config.text} hover:${config.bg} p-0 h-auto`}
+                          >
+                            {insight.action.label}
+                            <ChevronRight className="h-3 w-3 ml-1" />
+                          </Button>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

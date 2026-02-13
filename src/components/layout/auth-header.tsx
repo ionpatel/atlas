@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Bell, Search, LogOut, User, Building2 } from "lucide-react";
+import { Bell, LogOut, User, Building2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { SmartSearch } from "@/components/smart-search";
 
 interface UserInfo {
   email: string;
@@ -38,18 +39,8 @@ export function AuthHeader({ userInfo }: { userInfo: UserInfo }) {
 
   return (
     <header className="h-16 border-b border-[#1a1a1a] bg-[#111111] sticky top-0 z-10 flex items-center justify-between px-8">
-      {/* Search */}
-      <div className="flex items-center gap-2.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-4 py-2.5 w-96 group focus-within:border-[#CDB49E]/40 transition-colors duration-200">
-        <Search className="w-4 h-4 text-[#888888] group-focus-within:text-[#CDB49E] transition-colors" />
-        <input
-          type="text"
-          placeholder="Search anything..."
-          className="bg-transparent border-none outline-none text-sm w-full text-[#f5f0eb] placeholder:text-[#888888]"
-        />
-        <kbd className="text-[10px] text-[#888888] bg-[#222222] px-1.5 py-0.5 rounded border border-[#2a2a2a] font-mono">
-          ⌘K
-        </kbd>
-      </div>
+      {/* Smart Search */}
+      <SmartSearch />
 
       {/* Right side */}
       <div className="flex items-center gap-4">
