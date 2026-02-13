@@ -17,12 +17,18 @@ import {
   Droplets, Sparkle, Move3D, SquareDashed, PaletteIcon,
   AlignHorizontalJustifyStart, AlignHorizontalJustifyCenter, AlignHorizontalJustifyEnd,
   AlignHorizontalSpaceBetween, Trophy, Users, Clock, Award, MapPin, Phone, Download,
+  Search, FormInput, Calendar,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ImageLibrary } from "@/components/website/image-library";
+import { SEOSettingsPanel, SEOSettings } from "@/components/website/seo-settings";
+import { StylePresetsPanel, StylePreset } from "@/components/website/style-presets";
+import { FormBuilder, FormConfig } from "@/components/website/form-builder";
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ATLAS WEBSITE BUILDER PRO v2.0
+   ATLAS WEBSITE BUILDER PRO v2.1
    Shopify + Wix + Figma Level Website Builder
+   + Image Library, SEO Settings, Style Presets, Form Builder
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ─────────────────────────── TYPES ─────────────────────────── */
@@ -191,6 +197,14 @@ const COMPONENTS = {
     { id: "carousel", name: "Image Carousel", icon: GalleryHorizontal },
     { id: "slider", name: "Content Slider", icon: SlidersHorizontal },
     { id: "progressBar", name: "Progress Bar", icon: BarChart3 },
+  ],
+  Forms: [
+    { id: "contactForm", name: "Contact Form", icon: Mail },
+    { id: "leadCapture", name: "Lead Capture", icon: FormInput },
+    { id: "newsletterForm", name: "Newsletter", icon: Mail },
+    { id: "feedbackForm", name: "Feedback Form", icon: Star },
+    { id: "eventRegistration", name: "Event Registration", icon: Calendar },
+    { id: "customForm", name: "Custom Form", icon: FormInput },
   ],
 };
 
@@ -982,6 +996,93 @@ const getDefaultElement = (type: string): Partial<ElementData> => {
         color: "#CDB49E",
       }),
       styles: { padding: "60px 32px", backgroundColor: "#111", maxWidth: "600px", margin: "0 auto" },
+    },
+
+    // === FORMS ===
+    contactForm: {
+      content: JSON.stringify({
+        title: "Get in Touch",
+        subtitle: "We'd love to hear from you",
+        fields: [
+          { type: "text", label: "Full Name", placeholder: "John Doe", required: true, width: "full" },
+          { type: "email", label: "Email", placeholder: "john@example.com", required: true, width: "half" },
+          { type: "phone", label: "Phone", placeholder: "+1 (555) 123-4567", required: false, width: "half" },
+          { type: "textarea", label: "Message", placeholder: "How can we help you?", required: true, width: "full" },
+        ],
+        submitText: "Send Message",
+        successMessage: "Thank you! We'll be in touch soon.",
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#111", maxWidth: "600px", margin: "0 auto" },
+    },
+    leadCapture: {
+      content: JSON.stringify({
+        title: "Start Your Free Trial",
+        subtitle: "No credit card required",
+        fields: [
+          { type: "text", label: "Name", placeholder: "Your name", required: true, width: "half" },
+          { type: "email", label: "Work Email", placeholder: "you@company.com", required: true, width: "half" },
+          { type: "text", label: "Company", placeholder: "Company name", required: false, width: "half" },
+          { type: "select", label: "Company Size", required: true, width: "half", options: ["1-10", "11-50", "51-200", "201-500", "500+"] },
+        ],
+        submitText: "Get Started Free",
+        successMessage: "Welcome aboard! Check your email for next steps.",
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#0a0a0a", maxWidth: "500px", margin: "0 auto", borderRadius: "24px", border: "1px solid #222" },
+    },
+    newsletterForm: {
+      content: JSON.stringify({
+        title: "Stay in the Loop",
+        subtitle: "Get updates on new features and releases",
+        fields: [
+          { type: "email", label: "Email Address", placeholder: "you@example.com", required: true, width: "full" },
+        ],
+        submitText: "Subscribe",
+        successMessage: "You're subscribed! Check your inbox to confirm.",
+        inline: true,
+      }),
+      styles: { padding: "60px 32px", backgroundColor: "#111", textAlign: "center" },
+    },
+    feedbackForm: {
+      content: JSON.stringify({
+        title: "Share Your Feedback",
+        subtitle: "Help us improve your experience",
+        fields: [
+          { type: "rating", label: "How would you rate your experience?", required: true, width: "full" },
+          { type: "radio", label: "Would you recommend us?", required: true, width: "full", options: ["Definitely", "Probably", "Not sure", "No"] },
+          { type: "textarea", label: "Additional Comments", placeholder: "Tell us more...", required: false, width: "full" },
+        ],
+        submitText: "Submit Feedback",
+        successMessage: "Thank you for your feedback!",
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#0a0a0a", maxWidth: "600px", margin: "0 auto" },
+    },
+    eventRegistration: {
+      content: JSON.stringify({
+        title: "Register for the Event",
+        subtitle: "Secure your spot today",
+        fields: [
+          { type: "text", label: "Full Name", placeholder: "Your name", required: true, width: "half" },
+          { type: "email", label: "Email", placeholder: "you@example.com", required: true, width: "half" },
+          { type: "phone", label: "Phone", placeholder: "+1 (555) 123-4567", required: false, width: "half" },
+          { type: "select", label: "Session", required: true, width: "half", options: ["Morning (9AM)", "Afternoon (2PM)", "Evening (6PM)"] },
+          { type: "checkbox", label: "Dietary Requirements", required: false, width: "full", options: ["Vegetarian", "Vegan", "Gluten-free", "None"] },
+        ],
+        submitText: "Register Now",
+        successMessage: "You're registered! We'll send a confirmation email shortly.",
+      }),
+      styles: { padding: "80px 32px", backgroundColor: "#111", maxWidth: "600px", margin: "0 auto" },
+    },
+    customForm: {
+      content: JSON.stringify({
+        title: "Custom Form",
+        subtitle: "Configure this form in the right panel",
+        fields: [
+          { type: "text", label: "Field 1", placeholder: "Enter text...", required: false, width: "full" },
+        ],
+        submitText: "Submit",
+        successMessage: "Form submitted successfully!",
+      }),
+      styles: { padding: "60px 32px", backgroundColor: "#0a0a0a", maxWidth: "600px", margin: "0 auto" },
     },
   };
   return defaults[type] || { content: "", styles: {} };
@@ -4236,12 +4337,52 @@ export default function WebsitePage() {
   
   const [selectedElementId, setSelectedElementId] = useState<string | null>(null);
   const [devicePreview, setDevicePreview] = useState<"desktop" | "tablet" | "mobile">("desktop");
-  const [leftPanel, setLeftPanel] = useState<"components" | "layers" | "pages">("components");
+  const [leftPanel, setLeftPanel] = useState<"components" | "layers" | "pages" | "media">("components");
   const [zoom, setZoom] = useState(100);
   const [showPanels, setShowPanels] = useState({ left: true, right: true });
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [history, setHistory] = useState<{ past: ElementData[][]; future: ElementData[][] }>({ past: [], future: [] });
+  
+  // New panel states for SEO, Styles, and Form Builder
+  const [showSEOPanel, setShowSEOPanel] = useState(false);
+  const [showStylePresets, setShowStylePresets] = useState(false);
+  const [showFormBuilder, setShowFormBuilder] = useState(false);
+  const [selectedFormId, setSelectedFormId] = useState<string | null>(null);
+  
+  // SEO Settings state
+  const [seoSettings, setSeoSettings] = useState<SEOSettings>({
+    metaTitle: "",
+    metaDescription: "",
+    ogImage: "",
+    favicon: "",
+    canonicalUrl: "",
+    robotsIndex: true,
+    robotsFollow: true,
+    twitterCard: "summary_large_image",
+    ogType: "website",
+    keywords: [],
+  });
+  
+  // Global Style Preset state
+  const [currentStylePreset, setCurrentStylePreset] = useState<StylePreset>({
+    id: "default",
+    name: "Atlas Default",
+    createdAt: new Date().toISOString(),
+    colors: {
+      primary: "#CDB49E",
+      secondary: "#111111",
+      accent: "#d4c0ad",
+      background: "#0a0a0a",
+      surface: "#111111",
+      text: "#ffffff",
+      textMuted: "#888888",
+      border: "#222222",
+    },
+    fonts: { heading: "Inter", body: "Inter", mono: "JetBrains Mono" },
+    borderRadius: "12px",
+    spacing: "normal",
+  });
 
   const selectedElement = elements.find(el => el.id === selectedElementId) || null;
 
@@ -4632,6 +4773,22 @@ export default function WebsitePage() {
         </div>
 
         <div className="flex items-center gap-2">
+          {/* SEO & Style Buttons */}
+          <button 
+            onClick={() => setShowSEOPanel(true)} 
+            className="p-2 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#1a1a1a]"
+            title="SEO Settings"
+          >
+            <Search className="w-4 h-4" />
+          </button>
+          <button 
+            onClick={() => setShowStylePresets(true)} 
+            className="p-2 text-[#666] hover:text-[#CDB49E] rounded hover:bg-[#1a1a1a]"
+            title="Style Presets"
+          >
+            <Palette className="w-4 h-4" />
+          </button>
+          <div className="h-5 w-px bg-[#333]" />
           <button onClick={() => setShowPanels(p => ({ ...p, left: !p.left }))} className={cn("p-2 rounded", showPanels.left ? "text-[#CDB49E]" : "text-[#555]")}>
             <PanelLeft className="w-4 h-4" />
           </button>
@@ -4714,21 +4871,27 @@ ${bodyContent}
             <div className="flex border-b border-[#222]">
               <button
                 onClick={() => setLeftPanel("pages")}
-                className={cn("flex-1 py-3 text-xs flex items-center justify-center gap-1", leftPanel === "pages" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
+                className={cn("flex-1 py-2.5 text-[10px] flex items-center justify-center gap-0.5", leftPanel === "pages" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
               >
-                <FileText className="w-4 h-4" /> Pages
+                <FileText className="w-3.5 h-3.5" /> Pages
               </button>
               <button
                 onClick={() => setLeftPanel("components")}
-                className={cn("flex-1 py-3 text-xs flex items-center justify-center gap-1", leftPanel === "components" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
+                className={cn("flex-1 py-2.5 text-[10px] flex items-center justify-center gap-0.5", leftPanel === "components" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
               >
-                <Plus className="w-4 h-4" /> Add
+                <Plus className="w-3.5 h-3.5" /> Add
+              </button>
+              <button
+                onClick={() => setLeftPanel("media")}
+                className={cn("flex-1 py-2.5 text-[10px] flex items-center justify-center gap-0.5", leftPanel === "media" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
+              >
+                <ImageIcon className="w-3.5 h-3.5" /> Media
               </button>
               <button
                 onClick={() => setLeftPanel("layers")}
-                className={cn("flex-1 py-3 text-xs flex items-center justify-center gap-1", leftPanel === "layers" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
+                className={cn("flex-1 py-2.5 text-[10px] flex items-center justify-center gap-0.5", leftPanel === "layers" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
               >
-                <Layers className="w-4 h-4" /> Layers
+                <Layers className="w-3.5 h-3.5" /> Layers
               </button>
             </div>
             {leftPanel === "pages" && (
@@ -4743,6 +4906,21 @@ ${bodyContent}
             )}
             {leftPanel === "components" && (
               <ComponentsPanel onAdd={handleAddElement} />
+            )}
+            {leftPanel === "media" && (
+              <ImageLibrary
+                onSelectImage={(url) => {
+                  // Add image element with the selected URL
+                  const newElement: ElementData = {
+                    id: `el-${Date.now()}`,
+                    type: "image",
+                    content: url,
+                    styles: { width: "100%", borderRadius: "12px", marginBottom: "16px" },
+                  };
+                  setElements(prev => [...prev, newElement]);
+                  setSelectedElementId(newElement.id);
+                }}
+              />
             )}
             {leftPanel === "layers" && (
               <LayersPanel
@@ -4811,6 +4989,75 @@ ${bodyContent}
           </div>
         )}
       </div>
+
+      {/* SEO Settings Modal */}
+      {showSEOPanel && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-[#111] rounded-2xl border border-[#333] w-[600px] max-h-[80vh] overflow-hidden shadow-2xl">
+            <SEOSettingsPanel
+              settings={seoSettings}
+              onChange={setSeoSettings}
+              onClose={() => setShowSEOPanel(false)}
+              siteName={currentPage?.name || "Atlas Website"}
+              pageSlug={currentPage?.slug || "/"}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Style Presets Modal */}
+      {showStylePresets && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-[#111] rounded-2xl border border-[#333] w-[500px] max-h-[80vh] overflow-hidden shadow-2xl">
+            <StylePresetsPanel
+              currentPreset={currentStylePreset}
+              onApplyPreset={(preset) => {
+                setCurrentStylePreset(preset);
+                // Apply preset colors to all elements (optional: can be extended)
+                console.log("Applied preset:", preset.name);
+              }}
+              onClose={() => setShowStylePresets(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Form Builder Modal */}
+      {showFormBuilder && selectedFormId && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-[#111] rounded-2xl border border-[#333] w-[900px] max-h-[85vh] overflow-hidden shadow-2xl">
+            <FormBuilder
+              config={{
+                id: selectedFormId,
+                name: "Form",
+                fields: [],
+                submitButton: { text: "Submit", style: "filled", color: "#CDB49E" },
+                successMessage: "Thank you!",
+                styles: {
+                  labelColor: "#888888",
+                  inputBg: "#0a0a0a",
+                  inputBorder: "#333333",
+                  inputText: "#ffffff",
+                  borderRadius: "10px",
+                },
+              }}
+              onChange={(config) => {
+                // Update the form element with new config
+                const element = elements.find(el => el.id === selectedFormId);
+                if (element) {
+                  handleUpdateElement(selectedFormId, {
+                    content: JSON.stringify(config),
+                  });
+                }
+              }}
+              onClose={() => {
+                setShowFormBuilder(false);
+                setSelectedFormId(null);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
