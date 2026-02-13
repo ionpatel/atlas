@@ -15,7 +15,7 @@ import {
   Building2,
   Wallet,
 } from "lucide-react";
-import { usePayrollStore, type PayRun, type PayPeriod } from "@/stores/payroll-store";
+import { usePayrollStore, type PayRun, type PayPeriod, type PayStub } from "@/stores/payroll-store";
 import { cn } from "@/lib/utils";
 
 /* ─────────── helpers ─────────── */
@@ -314,6 +314,169 @@ function exportPayRunToCSV(payRun: PayRun) {
   URL.revokeObjectURL(url);
 }
 
+function generatePayStubPDF(stub: PayStub, payRunName: string) {
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pay Stub - ${stub.employeeName}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; padding: 20px; }
+    .stub { max-width: 800px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .header { background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%); color: white; padding: 30px; }
+    .header h1 { font-size: 24px; margin-bottom: 5px; }
+    .header p { color: #CDB49E; font-size: 14px; }
+    .company { display: flex; justify-content: space-between; align-items: flex-start; margin-top: 20px; }
+    .company-name { font-size: 18px; font-weight: 600; }
+    .pay-date { text-align: right; }
+    .pay-date .label { font-size: 12px; color: #888; }
+    .pay-date .value { font-size: 16px; font-weight: 600; color: #CDB49E; }
+    .content { padding: 30px; }
+    .section { margin-bottom: 25px; }
+    .section-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
+    .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+    .row:last-child { border-bottom: none; }
+    .row .label { color: #555; }
+    .row .value { font-weight: 500; }
+    .row.highlight { background: #f9f9f9; margin: 0 -15px; padding: 12px 15px; border-radius: 6px; }
+    .row.highlight .value { color: #111; font-weight: 600; font-size: 18px; }
+    .earnings .value { color: #059669; }
+    .deductions .value { color: #dc2626; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    .totals { background: #111; color: white; padding: 25px 30px; display: flex; justify-content: space-between; align-items: center; }
+    .totals .label { font-size: 14px; color: #888; }
+    .totals .amount { font-size: 32px; font-weight: 700; color: #CDB49E; }
+    .ytd { background: #f9f9f9; padding: 20px 30px; }
+    .ytd-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 15px; }
+    .ytd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .ytd-item .label { font-size: 11px; color: #888; }
+    .ytd-item .value { font-size: 16px; font-weight: 600; color: #111; }
+    .footer { padding: 20px 30px; text-align: center; font-size: 11px; color: #888; border-top: 1px solid #f0f0f0; }
+    @media print { body { padding: 0; background: white; } .stub { box-shadow: none; } }
+  </style>
+</head>
+<body>
+  <div class="stub">
+    <div class="header">
+      <h1>PAY STUB</h1>
+      <p>${payRunName}</p>
+      <div class="company">
+        <div>
+          <div class="company-name">Atlas ERP</div>
+          <div style="color: #888; font-size: 13px; margin-top: 5px;">Your Company Address</div>
+        </div>
+        <div class="pay-date">
+          <div class="label">PAY DATE</div>
+          <div class="value">${new Date(stub.payDate).toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="content">
+      <div class="section">
+        <div class="section-title">Employee Information</div>
+        <div class="row">
+          <span class="label">Employee Name</span>
+          <span class="value">${stub.employeeName}</span>
+        </div>
+        <div class="row">
+          <span class="label">Pay Period</span>
+          <span class="value">${new Date(stub.periodStart).toLocaleDateString('en-CA', { month: 'short', day: 'numeric' })} – ${new Date(stub.periodEnd).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="section earnings">
+          <div class="section-title">Earnings</div>
+          <div class="row">
+            <span class="label">Regular Pay (${stub.regularHours.toFixed(1)} hrs @ $${stub.regularRate.toFixed(2)})</span>
+            <span class="value">$${stub.regularPay.toFixed(2)}</span>
+          </div>
+          ${stub.overtimePay > 0 ? `<div class="row"><span class="label">Overtime (${stub.overtimeHours.toFixed(1)} hrs)</span><span class="value">$${stub.overtimePay.toFixed(2)}</span></div>` : ''}
+          ${stub.bonus > 0 ? `<div class="row"><span class="label">Bonus</span><span class="value">$${stub.bonus.toFixed(2)}</span></div>` : ''}
+          ${stub.commission > 0 ? `<div class="row"><span class="label">Commission</span><span class="value">$${stub.commission.toFixed(2)}</span></div>` : ''}
+          ${stub.vacation > 0 ? `<div class="row"><span class="label">Vacation Pay</span><span class="value">$${stub.vacation.toFixed(2)}</span></div>` : ''}
+          <div class="row highlight">
+            <span class="label">Gross Pay</span>
+            <span class="value">$${stub.grossPay.toFixed(2)}</span>
+          </div>
+        </div>
+
+        <div class="section deductions">
+          <div class="section-title">Deductions</div>
+          <div class="row">
+            <span class="label">Federal Tax</span>
+            <span class="value">-$${stub.federalTax.toFixed(2)}</span>
+          </div>
+          <div class="row">
+            <span class="label">Provincial Tax</span>
+            <span class="value">-$${stub.provincialTax.toFixed(2)}</span>
+          </div>
+          <div class="row">
+            <span class="label">CPP Contribution</span>
+            <span class="value">-$${stub.cpp.toFixed(2)}</span>
+          </div>
+          <div class="row">
+            <span class="label">EI Premium</span>
+            <span class="value">-$${stub.ei.toFixed(2)}</span>
+          </div>
+          ${stub.otherDeductions > 0 ? `<div class="row"><span class="label">Other Deductions</span><span class="value">-$${stub.otherDeductions.toFixed(2)}</span></div>` : ''}
+          <div class="row highlight">
+            <span class="label">Total Deductions</span>
+            <span class="value">-$${stub.totalDeductions.toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="totals">
+      <div class="label">NET PAY</div>
+      <div class="amount">$${stub.netPay.toFixed(2)}</div>
+    </div>
+
+    <div class="ytd">
+      <div class="ytd-title">Year-to-Date Totals</div>
+      <div class="ytd-grid">
+        <div class="ytd-item">
+          <div class="label">YTD Gross</div>
+          <div class="value">$${stub.ytdGross.toFixed(2)}</div>
+        </div>
+        <div class="ytd-item">
+          <div class="label">YTD Taxes</div>
+          <div class="value">$${(stub.ytdFederalTax + stub.ytdProvincialTax).toFixed(2)}</div>
+        </div>
+        <div class="ytd-item">
+          <div class="label">YTD CPP</div>
+          <div class="value">$${stub.ytdCpp.toFixed(2)}</div>
+        </div>
+        <div class="ytd-item">
+          <div class="label">YTD EI</div>
+          <div class="value">$${stub.ytdEi.toFixed(2)}</div>
+        </div>
+        <div class="ytd-item">
+          <div class="label">YTD Net</div>
+          <div class="value">$${stub.ytdNet.toFixed(2)}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      This is a computer-generated document. Please retain for your records.<br>
+      Generated by Atlas ERP • ${new Date().toLocaleDateString('en-CA')}
+    </div>
+  </div>
+  <script>window.onload = function() { window.print(); }</script>
+</body>
+</html>`;
+
+  const printWindow = window.open('', '_blank');
+  if (printWindow) {
+    printWindow.document.write(html);
+    printWindow.document.close();
+  }
+}
+
 /* ─────────── pay stub detail ─────────── */
 
 function PayStubDetail({
@@ -389,6 +552,7 @@ function PayStubDetail({
                 <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">CPP</th>
                 <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">EI</th>
                 <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Net Pay</th>
+                <th className="text-center px-6 py-3 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Pay Stub</th>
               </tr>
             </thead>
             <tbody>
@@ -403,6 +567,16 @@ function PayStubDetail({
                   <td className="px-6 py-4 text-right text-sm text-[#888888]">{formatCurrency(stub.cpp)}</td>
                   <td className="px-6 py-4 text-right text-sm text-[#888888]">{formatCurrency(stub.ei)}</td>
                   <td className="px-6 py-4 text-right text-sm font-medium text-emerald-400">{formatCurrency(stub.netPay)}</td>
+                  <td className="px-6 py-4 text-center">
+                    <button
+                      onClick={() => generatePayStubPDF(stub, payRun.name)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#CDB49E] bg-[#CDB49E]/10 border border-[#CDB49E]/20 rounded-lg hover:bg-[#CDB49E]/20 transition-all"
+                      title="Download Pay Stub"
+                    >
+                      <FileText className="w-3.5 h-3.5" />
+                      View
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
