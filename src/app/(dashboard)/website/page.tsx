@@ -1420,6 +1420,84 @@ function ComponentsPanel({
   );
 }
 
+/* ─────────────────────────── PAGES PANEL ─────────────────────────── */
+
+function PagesPanel({
+  pages,
+  currentPageId,
+  onSelectPage,
+  onAddPage,
+  onDeletePage,
+  onRenamePage,
+}: {
+  pages: { id: string; name: string; slug: string }[];
+  currentPageId: string;
+  onSelectPage: (id: string) => void;
+  onAddPage: () => void;
+  onDeletePage: (id: string) => void;
+  onRenamePage: (id: string, name: string) => void;
+}) {
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editName, setEditName] = useState("");
+
+  return (
+    <div className="flex-1 overflow-auto p-3">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-xs font-semibold text-[#555] uppercase">Pages</span>
+        <button onClick={onAddPage} className="p-1.5 text-[#CDB49E] hover:bg-[#CDB49E]/10 rounded-lg">
+          <Plus className="w-4 h-4" />
+        </button>
+      </div>
+      <div className="space-y-1">
+        {pages.map((page) => (
+          <div
+            key={page.id}
+            onClick={() => onSelectPage(page.id)}
+            className={cn(
+              "group flex items-center gap-2 p-2.5 rounded-lg cursor-pointer transition-colors",
+              currentPageId === page.id
+                ? "bg-[#CDB49E]/10 border border-[#CDB49E]/30"
+                : "hover:bg-[#1a1a1a] border border-transparent"
+            )}
+          >
+            <FileText className="w-4 h-4 text-[#666]" />
+            {editingId === page.id ? (
+              <input
+                type="text"
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+                onBlur={() => { onRenamePage(page.id, editName); setEditingId(null); }}
+                onKeyDown={(e) => { if (e.key === "Enter") { onRenamePage(page.id, editName); setEditingId(null); } }}
+                className="flex-1 px-2 py-0.5 text-xs bg-[#1a1a1a] border border-[#333] rounded text-white"
+                autoFocus
+              />
+            ) : (
+              <span className="flex-1 text-xs text-white truncate">{page.name}</span>
+            )}
+            <span className="text-[10px] text-[#555]">{page.slug}</span>
+            <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100">
+              <button
+                onClick={(e) => { e.stopPropagation(); setEditingId(page.id); setEditName(page.name); }}
+                className="p-1 text-[#555] hover:text-white rounded"
+              >
+                <Type className="w-3 h-3" />
+              </button>
+              {pages.length > 1 && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); onDeletePage(page.id); }}
+                  className="p-1 text-[#555] hover:text-red-400 rounded"
+                >
+                  <Trash2 className="w-3 h-3" />
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ─────────────────────────── LAYERS PANEL ─────────────────────────── */
 
 function LayersPanel({
@@ -1438,6 +1516,51 @@ function LayersPanel({
   onToggleHidden: (id: string) => void;
 }) {
   const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+
+  const toggleExpanded = (id: string) => {
+    setExpandedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  // Get element details for display
+  const getElementDetails = (el: ElementData) => {
+    try {
+      const data = JSON.parse(el.content || "{}");
+      if (data.heading) return data.heading.substring(0, 30);
+      if (data.title) return data.title.substring(0, 30);
+      if (data.text) return data.text.substring(0, 30);
+      if (typeof el.content === "string" && !el.content.startsWith("{")) {
+        return el.content.substring(0, 30);
+      }
+    } catch {}
+    return null;
+  };
+
+  // Check if element has nested content
+  const hasNestedContent = (el: ElementData) => {
+    try {
+      const data = JSON.parse(el.content || "{}");
+      return data.items || data.plans || data.members || data.columns || data.links;
+    } catch {}
+    return false;
+  };
+
+  // Get nested items
+  const getNestedItems = (el: ElementData) => {
+    try {
+      const data = JSON.parse(el.content || "{}");
+      if (data.items) return data.items.map((i: any) => ({ type: "item", label: i.title || i.question || i.value || "Item" }));
+      if (data.plans) return data.plans.map((p: any) => ({ type: "plan", label: p.name }));
+      if (data.members) return data.members.map((m: any) => ({ type: "member", label: m.name }));
+      if (data.links) return data.links.map((l: string) => ({ type: "link", label: l }));
+    } catch {}
+    return [];
+  };
 
   if (elements.length === 0) {
     return (
@@ -1453,43 +1576,67 @@ function LayersPanel({
 
   return (
     <div className="flex-1 overflow-auto p-2">
-      {elements.map((el, index) => (
-        <div
-          key={el.id}
-          draggable
-          onDragStart={() => setDragIndex(index)}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={() => {
-            if (dragIndex !== null && dragIndex !== index) {
-              onReorder(dragIndex, index);
-            }
-            setDragIndex(null);
-          }}
-          onClick={() => onSelect(el.id)}
-          className={cn(
-            "group flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-colors mb-1",
-            selectedId === el.id
-              ? "bg-[#CDB49E]/10 border border-[#CDB49E]/30"
-              : "hover:bg-[#1a1a1a] border border-transparent",
-            el.hidden && "opacity-40"
-          )}
-        >
-          <GripVertical className="w-3 h-3 text-[#444] cursor-grab" />
-          <span className="flex-1 text-xs text-white truncate capitalize">{el.type}</span>
-          <button
-            onClick={(e) => { e.stopPropagation(); onToggleHidden(el.id); }}
-            className="p-1 text-[#555] hover:text-white rounded opacity-0 group-hover:opacity-100"
-          >
-            {el.hidden ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); onDelete(el.id); }}
-            className="p-1 text-[#555] hover:text-red-400 rounded opacity-0 group-hover:opacity-100"
-          >
-            <Trash2 className="w-3 h-3" />
-          </button>
-        </div>
-      ))}
+      {elements.map((el, index) => {
+        const hasNested = hasNestedContent(el);
+        const isExpanded = expandedIds.has(el.id);
+        const nestedItems = isExpanded ? getNestedItems(el) : [];
+        const details = getElementDetails(el);
+
+        return (
+          <div key={el.id} className="mb-1">
+            <div
+              draggable
+              onDragStart={() => setDragIndex(index)}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={() => {
+                if (dragIndex !== null && dragIndex !== index) {
+                  onReorder(dragIndex, index);
+                }
+                setDragIndex(null);
+              }}
+              onClick={() => onSelect(el.id)}
+              className={cn(
+                "group flex items-center gap-1.5 p-2 rounded-lg cursor-pointer transition-colors",
+                selectedId === el.id
+                  ? "bg-[#CDB49E]/10 border border-[#CDB49E]/30"
+                  : "hover:bg-[#1a1a1a] border border-transparent",
+                el.hidden && "opacity-40"
+              )}
+            >
+              {hasNested ? (
+                <button onClick={(e) => { e.stopPropagation(); toggleExpanded(el.id); }} className="p-0.5 text-[#555] hover:text-white">
+                  {isExpanded ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+                </button>
+              ) : (
+                <GripVertical className="w-3 h-3 text-[#444] cursor-grab" />
+              )}
+              <div className="flex-1 min-w-0">
+                <div className="text-xs text-white truncate capitalize">{el.type}</div>
+                {details && <div className="text-[10px] text-[#555] truncate">{details}...</div>}
+              </div>
+              <button onClick={(e) => { e.stopPropagation(); onToggleHidden(el.id); }} className="p-1 text-[#555] hover:text-white rounded opacity-0 group-hover:opacity-100">
+                {el.hidden ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+              </button>
+              <button onClick={(e) => { e.stopPropagation(); onDelete(el.id); }} className="p-1 text-[#555] hover:text-red-400 rounded opacity-0 group-hover:opacity-100">
+                <Trash2 className="w-3 h-3" />
+              </button>
+            </div>
+            {/* Nested items */}
+            {isExpanded && nestedItems.length > 0 && (
+              <div className="ml-6 mt-1 space-y-0.5">
+                {nestedItems.map((item: any, i: number) => (
+                  <div key={i} className="flex items-center gap-2 p-1.5 rounded text-[10px] text-[#666] bg-[#0a0a0a]">
+                    <span className="w-4 h-4 flex items-center justify-center rounded bg-[#1a1a1a] text-[#555]">
+                      {item.type === "item" ? "•" : item.type === "plan" ? "$" : item.type === "member" ? "👤" : "→"}
+                    </span>
+                    <span className="truncate">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -1498,26 +1645,125 @@ function LayersPanel({
    MAIN PAGE COMPONENT
    ═══════════════════════════════════════════════════════════════════════════ */
 
+// Page type for multi-page support
+interface PageType {
+  id: string;
+  name: string;
+  slug: string;
+  elements: ElementData[];
+}
+
+const STORAGE_KEY = "atlas-website-builder";
+
 export default function WebsitePage() {
   // View state
-  const [view, setView] = useState<"templates" | "editor">("templates");
+  const [view, setView] = useState<"templates" | "editor" | "preview">("templates");
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   
-  // Editor state - FUNCTIONAL
-  const [elements, setElements] = useState<ElementData[]>([]);
+  // Multi-page state
+  const [pages, setPages] = useState<PageType[]>([
+    { id: "page-home", name: "Home", slug: "/", elements: [] }
+  ]);
+  const [currentPageId, setCurrentPageId] = useState("page-home");
+  
+  // Get current page elements
+  const currentPage = pages.find(p => p.id === currentPageId) || pages[0];
+  const elements = currentPage?.elements || [];
+  
+  // Set elements for current page
+  const setElements = useCallback((updater: ElementData[] | ((prev: ElementData[]) => ElementData[])) => {
+    setPages(prev => prev.map(p => {
+      if (p.id === currentPageId) {
+        const newElements = typeof updater === "function" ? updater(p.elements) : updater;
+        return { ...p, elements: newElements };
+      }
+      return p;
+    }));
+  }, [currentPageId]);
+  
   const [selectedElementId, setSelectedElementId] = useState<string | null>(null);
   
   // UI state
   const [devicePreview, setDevicePreview] = useState<"desktop" | "tablet" | "mobile">("desktop");
-  const [leftPanel, setLeftPanel] = useState<"components" | "layers">("components");
+  const [leftPanel, setLeftPanel] = useState<"components" | "layers" | "pages">("components");
   const [zoom, setZoom] = useState(100);
   const [showPanels, setShowPanels] = useState({ left: true, right: true });
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
   
   // History for undo/redo
   const [history, setHistory] = useState<{ past: ElementData[][]; future: ElementData[][] }>({ past: [], future: [] });
 
   // Get selected element
   const selectedElement = elements.find(el => el.id === selectedElementId) || null;
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        if (data.pages && data.pages.length > 0) {
+          setPages(data.pages);
+          setCurrentPageId(data.currentPageId || data.pages[0].id);
+          setView("editor");
+          setSelectedTemplate(data.template || "loaded");
+          setLastSaved(new Date(data.savedAt));
+        }
+      } catch (e) {
+        console.error("Failed to load saved data", e);
+      }
+    }
+  }, []);
+
+  // Save to localStorage
+  const handleSave = useCallback(() => {
+    setIsSaving(true);
+    const data = {
+      pages,
+      currentPageId,
+      template: selectedTemplate,
+      savedAt: new Date().toISOString(),
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    setLastSaved(new Date());
+    setTimeout(() => setIsSaving(false), 500);
+  }, [pages, currentPageId, selectedTemplate]);
+
+  // Auto-save every 30 seconds when in editor
+  useEffect(() => {
+    if (view === "editor" && elements.length > 0) {
+      const interval = setInterval(handleSave, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [view, elements.length, handleSave]);
+
+  // Add new page
+  const handleAddPage = useCallback(() => {
+    const pageNum = pages.length + 1;
+    const newPage: PageType = {
+      id: `page-${Date.now()}`,
+      name: `Page ${pageNum}`,
+      slug: `/page-${pageNum}`,
+      elements: [],
+    };
+    setPages(prev => [...prev, newPage]);
+    setCurrentPageId(newPage.id);
+  }, [pages.length]);
+
+  // Delete page
+  const handleDeletePage = useCallback((pageId: string) => {
+    if (pages.length <= 1) return; // Keep at least one page
+    setPages(prev => prev.filter(p => p.id !== pageId));
+    if (currentPageId === pageId) {
+      setCurrentPageId(pages[0].id);
+    }
+  }, [pages, currentPageId]);
+
+  // Rename page
+  const handleRenamePage = useCallback((pageId: string, newName: string) => {
+    setPages(prev => prev.map(p => p.id === pageId ? { ...p, name: newName } : p));
+  }, []);
 
   // Save to history before changes
   const saveHistory = useCallback(() => {
@@ -1721,6 +1967,68 @@ export default function WebsitePage() {
     );
   }
 
+  // ─────────────────────────── PREVIEW MODE ───────────────────────────
+
+  if (view === "preview") {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a]">
+        {/* Preview Toolbar */}
+        <div className="fixed top-0 left-0 right-0 h-12 bg-[#111]/95 backdrop-blur border-b border-[#222] flex items-center justify-between px-4 z-50">
+          <div className="flex items-center gap-4">
+            <button onClick={() => setView("editor")} className="text-sm text-[#888] hover:text-white flex items-center gap-1">
+              <ChevronRight className="w-4 h-4 rotate-180" /> Back to Editor
+            </button>
+            <span className="text-xs text-[#555]">Preview Mode</span>
+          </div>
+          <div className="flex items-center gap-2">
+            {/* Device Preview */}
+            <div className="flex items-center gap-1 p-1 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a]">
+              {[
+                { id: "desktop" as const, icon: Monitor },
+                { id: "tablet" as const, icon: Tablet },
+                { id: "mobile" as const, icon: Smartphone },
+              ].map(({ id, icon: Icon }) => (
+                <button
+                  key={id}
+                  onClick={() => setDevicePreview(id)}
+                  className={cn("p-1.5 rounded-md", devicePreview === id ? "bg-[#CDB49E]/10 text-[#CDB49E]" : "text-[#555] hover:text-white")}
+                >
+                  <Icon className="w-4 h-4" />
+                </button>
+              ))}
+            </div>
+            <button onClick={() => setView("editor")} className="px-4 py-1.5 bg-[#CDB49E] text-black rounded-lg text-sm font-medium">
+              Edit
+            </button>
+          </div>
+        </div>
+        {/* Preview Content */}
+        <div className="pt-12 flex justify-center">
+          <div className={cn(
+            "bg-[#0a0a0a] min-h-screen",
+            devicePreview === "desktop" && "w-full",
+            devicePreview === "tablet" && "w-[768px]",
+            devicePreview === "mobile" && "w-[375px]"
+          )}>
+            {elements.map((element) => (
+              !element.hidden && (
+                <div key={element.id} style={element.styles as React.CSSProperties}>
+                  <ElementRenderer
+                    element={element}
+                    isSelected={false}
+                    onSelect={() => {}}
+                    onUpdate={() => {}}
+                    onDelete={() => {}}
+                  />
+                </div>
+              )
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // ─────────────────────────── EDITOR ───────────────────────────
 
   return (
@@ -1780,6 +2088,21 @@ export default function WebsitePage() {
           <button onClick={() => setShowPanels(p => ({ ...p, right: !p.right }))} className={cn("p-2 rounded", showPanels.right ? "text-[#CDB49E]" : "text-[#555]")}>
             <PanelRight className="w-4 h-4" />
           </button>
+          <div className="h-5 w-px bg-[#333]" />
+          {/* Save */}
+          <button 
+            onClick={handleSave} 
+            className={cn("px-3 py-1.5 text-sm font-medium rounded-lg flex items-center gap-2 transition-colors", isSaving ? "bg-emerald-600 text-white" : "text-[#888] hover:text-white border border-[#333] hover:border-[#444]")}
+          >
+            <Save className="w-4 h-4" />
+            {isSaving ? "Saving..." : "Save"}
+          </button>
+          {lastSaved && <span className="text-[10px] text-[#555]">Saved {lastSaved.toLocaleTimeString()}</span>}
+          {/* Preview */}
+          <button onClick={() => setView("preview")} className="px-3 py-1.5 text-sm text-[#888] hover:text-white border border-[#333] rounded-lg flex items-center gap-2 hover:border-[#444]">
+            <Eye className="w-4 h-4" /> Preview
+          </button>
+          {/* Publish */}
           <button className="px-4 py-1.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 flex items-center gap-2">
             <Rocket className="w-4 h-4" /> Publish
           </button>
@@ -1793,6 +2116,12 @@ export default function WebsitePage() {
           <div className="w-64 bg-[#111] border-r border-[#222] flex flex-col shrink-0">
             <div className="flex border-b border-[#222]">
               <button
+                onClick={() => setLeftPanel("pages")}
+                className={cn("flex-1 py-3 text-xs flex items-center justify-center gap-1", leftPanel === "pages" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
+              >
+                <FileText className="w-4 h-4" /> Pages
+              </button>
+              <button
                 onClick={() => setLeftPanel("components")}
                 className={cn("flex-1 py-3 text-xs flex items-center justify-center gap-1", leftPanel === "components" ? "text-[#CDB49E] border-b-2 border-[#CDB49E]" : "text-[#666]")}
               >
@@ -1805,9 +2134,20 @@ export default function WebsitePage() {
                 <Layers className="w-4 h-4" /> Layers
               </button>
             </div>
-            {leftPanel === "components" ? (
+            {leftPanel === "pages" && (
+              <PagesPanel
+                pages={pages}
+                currentPageId={currentPageId}
+                onSelectPage={setCurrentPageId}
+                onAddPage={handleAddPage}
+                onDeletePage={handleDeletePage}
+                onRenamePage={handleRenamePage}
+              />
+            )}
+            {leftPanel === "components" && (
               <ComponentsPanel onAdd={handleAddElement} />
-            ) : (
+            )}
+            {leftPanel === "layers" && (
               <LayersPanel
                 elements={elements}
                 selectedId={selectedElementId}
