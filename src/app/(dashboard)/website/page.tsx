@@ -1786,12 +1786,14 @@ function ElementRenderer({
   onSelect,
   onUpdate,
   onDelete,
+  onDuplicate,
 }: {
   element: ElementData;
   isSelected: boolean;
   onSelect: () => void;
   onUpdate: (updates: Partial<ElementData>) => void;
   onDelete: () => void;
+  onDuplicate?: () => void;
 }) {
   const baseStyles = element.styles as React.CSSProperties;
 
@@ -2768,9 +2770,19 @@ function ElementRenderer({
       {isSelected && (
         <div className="absolute -top-8 left-0 flex items-center gap-1 bg-[#1a1a1a] rounded-lg p-1 shadow-lg border border-[#333] z-10">
           <span className="text-[10px] text-[#888] px-2 capitalize">{element.type}</span>
+          {onDuplicate && (
+            <button 
+              onClick={(e) => { e.stopPropagation(); onDuplicate(); }}
+              className="p-1 text-[#666] hover:text-[#CDB49E] rounded"
+              title="Duplicate"
+            >
+              <Copy className="w-3 h-3" />
+            </button>
+          )}
           <button 
             onClick={(e) => { e.stopPropagation(); onDelete(); }}
             className="p-1 text-[#666] hover:text-red-400 rounded"
+            title="Delete"
           >
             <Trash2 className="w-3 h-3" />
           </button>
@@ -3561,6 +3573,27 @@ export default function WebsitePage() {
     if (selectedElementId === id) setSelectedElementId(null);
   }, [selectedElementId, saveHistory, setElements]);
 
+  const handleDuplicateElement = useCallback((id: string) => {
+    saveHistory();
+    const element = elements.find(el => el.id === id);
+    if (!element) return;
+    
+    const newElement: ElementData = {
+      ...element,
+      id: `el-${Date.now()}`,
+      styles: { ...element.styles },
+    };
+    
+    // Insert after the original element
+    const index = elements.findIndex(el => el.id === id);
+    setElements(prev => {
+      const newElements = [...prev];
+      newElements.splice(index + 1, 0, newElement);
+      return newElements;
+    });
+    setSelectedElementId(newElement.id);
+  }, [elements, saveHistory, setElements]);
+
   const handleReorderElements = useCallback((fromIndex: number, toIndex: number) => {
     saveHistory();
     setElements(prev => {
@@ -3921,6 +3954,7 @@ export default function WebsitePage() {
                     onSelect={() => setSelectedElementId(element.id)}
                     onUpdate={(updates) => handleUpdateElement(element.id, updates)}
                     onDelete={() => handleDeleteElement(element.id)}
+                    onDuplicate={() => handleDuplicateElement(element.id)}
                   />
                 ))}
               </div>
