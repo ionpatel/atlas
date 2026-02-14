@@ -209,3 +209,24 @@ export const INTEGRATION_EVENTS = {
   // Sales
   'sale.completed': 'Sale completed'
 } as const;
+
+// Invoice-Accounting integration hook
+export function useInvoiceAccounting() {
+  const syncToAccounting = async (invoiceId: string) => {
+    // Placeholder for invoice -> accounting sync
+    console.log(`Syncing invoice ${invoiceId} to accounting`);
+    return { success: true };
+  };
+
+  const createJournalEntry = async (invoiceId: string, amount: number) => {
+    // Placeholder for journal entry creation
+    console.log(`Creating journal entry for invoice ${invoiceId}: $${amount}`);
+    return { success: true, entryId: `JE-${Date.now()}` };
+  };
+
+  return {
+    syncToAccounting,
+    createJournalEntry,
+    isEnabled: true
+  };
+}

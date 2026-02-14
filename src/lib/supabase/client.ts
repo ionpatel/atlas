@@ -1,6 +1,6 @@
 import { createBrowserClient } from "@supabase/ssr";
 
-export function createClient() {
+function createSupabaseClient() {
   if (
     !process.env.NEXT_PUBLIC_SUPABASE_URL ||
     !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -27,3 +27,9 @@ export function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   );
 }
+
+// Singleton instance for components that import { supabase }
+export const supabase = createSupabaseClient();
+
+// Also export the factory function for backwards compat
+export const createClient = createSupabaseClient;
