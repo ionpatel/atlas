@@ -80,7 +80,6 @@ const moduleConfig: { module: ModuleName; label: string; icon: React.ComponentTy
   { module: "employees", label: "Employees", icon: UserCircle },
   { module: "payroll", label: "Payroll", icon: Wallet },
   { module: "projects", label: "Projects", icon: FolderKanban },
-  { module: "website", label: "Website", icon: Globe },
   { module: "reports", label: "Reports", icon: BarChart3 },
   { module: "settings", label: "Settings", icon: Settings },
 ];

@@ -54,7 +54,6 @@ const MODULE_ICONS: Record<string, typeof Package> = {
   Accounting: DollarSign,
   CRM: Users,
   Projects: FileText,
-  Website: FileText,
 };
 
 /* ─────────────────────── Helper Components ─────────────────────── */

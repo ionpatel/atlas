@@ -194,15 +194,6 @@ export function GlobalCommandPalette({
         keywords: ["projects", "tasks", "kanban", "management"],
       },
       {
-        id: "nav-website",
-        label: "Go to Website Builder",
-        description: "Build your website",
-        icon: Globe,
-        category: "navigation",
-        action: () => navigateTo("/website"),
-        keywords: ["website", "builder", "pages", "web"],
-      },
-      {
         id: "nav-settings",
         label: "Go to Settings",
         description: "App configuration",

@@ -190,17 +190,6 @@ const apps: AppItem[] = [
     available: false,
     category: "Marketing",
   },
-  {
-    name: "Website Builder",
-    description: "Drag & drop site editor",
-    href: "/website",
-    icon: Globe,
-    iconBg: "bg-violet-500/10",
-    iconColor: "text-violet-400",
-    available: false,
-    category: "Marketing",
-  },
-
   // Productivity
   {
     name: "AI Assistant",
