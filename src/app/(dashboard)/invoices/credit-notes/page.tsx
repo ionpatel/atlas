@@ -73,7 +73,7 @@ export default function CreditNotesPage() {
 
       if (error) throw error;
 
-      const mapped = data?.map(cn => ({
+      const mapped = data?.map((cn: any) => ({
         ...cn,
         contact_name: (cn.contacts as any)?.name
       })) || [];

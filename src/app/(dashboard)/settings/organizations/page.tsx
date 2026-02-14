@@ -131,7 +131,7 @@ export default function OrganizationsPage() {
 
       if (error) throw error;
 
-      const mapped = data?.map(m => ({
+      const mapped = data?.map((m: any) => ({
         ...m,
         email: (m.users as any)?.email
       })) || [];

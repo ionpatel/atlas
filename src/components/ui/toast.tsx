@@ -14,13 +14,15 @@ interface Toast {
 
 interface ToastState {
   toasts: Toast[];
-  addToast: (message: string, type?: ToastType) => void;
+  addToast: (messageOrOptions: string | { message: string; type?: ToastType }, type?: ToastType) => void;
   removeToast: (id: string) => void;
 }
 
 export const useToastStore = create<ToastState>((set) => ({
   toasts: [],
-  addToast: (message, type = "success") => {
+  addToast: (messageOrOptions, typeArg = "success") => {
+    const message = typeof messageOrOptions === 'string' ? messageOrOptions : messageOrOptions.message;
+    const type = typeof messageOrOptions === 'string' ? typeArg : (messageOrOptions.type || "success");
     const id = crypto.randomUUID();
     set((state) => ({ toasts: [...state.toasts, { id, message, type }] }));
     setTimeout(() => {

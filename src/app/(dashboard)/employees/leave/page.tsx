@@ -202,7 +202,7 @@ function LeaveRequestForm({ onSubmit, onClose }: {
                         : "border-[#2a2a2a] bg-[#222222] hover:border-[#38BDF8]/50"
                     )}
                   >
-                    <Icon className="w-5 h-5" style={{ color: leaveType === type ? color : "#888888" }} />
+                    <span style={{ color: leaveType === type ? color : "#888888" }}><Icon className="w-5 h-5" /></span>
                     <span className={cn("text-xs", leaveType === type ? "text-[#f5f0eb]" : "text-[#888888]")}>
                       {label.split(" ")[0]}
                     </span>
@@ -296,7 +296,7 @@ function RequestCard({ request, onApprove, onReject, onCancel, isManager }: {
             className="w-10 h-10 rounded-lg flex items-center justify-center"
             style={{ backgroundColor: `${LEAVE_TYPE_LABELS[request.leave_type].color}15` }}
           >
-            <Icon className="w-5 h-5" style={{ color: LEAVE_TYPE_LABELS[request.leave_type].color }} />
+            <span style={{ color: LEAVE_TYPE_LABELS[request.leave_type].color }}><Icon className="w-5 h-5" /></span>
           </div>
           <div>
             <h4 className="font-medium text-[#f5f0eb]">{request.user_name}</h4>
@@ -501,7 +501,7 @@ function PolicySettings({ policies, onUpdate }: {
                   className="w-8 h-8 rounded-lg flex items-center justify-center"
                   style={{ backgroundColor: `${color}15` }}
                 >
-                  <Icon className="w-4 h-4" style={{ color }} />
+                  <span style={{ color }}><Icon className="w-4 h-4" /></span>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-[#f5f0eb]">{label}</p>

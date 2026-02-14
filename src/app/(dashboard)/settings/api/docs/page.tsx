@@ -524,7 +524,7 @@ export default function ApiDocsPage() {
                           <div className="mt-2">
                             <p className="text-xs text-neutral-500 mb-1">Query Parameters:</p>
                             <div className="space-y-1">
-                              {endpoint.params.map(p => (
+                              {endpoint.params.map((p: any) => (
                                 <div key={p.name} className="text-xs">
                                   <code className="text-[#CDB49E]">{p.name}</code>
                                   <span className="text-neutral-500"> ({p.type})</span>
@@ -538,7 +538,7 @@ export default function ApiDocsPage() {
                           <div className="mt-2">
                             <p className="text-xs text-neutral-500 mb-1">Request Body:</p>
                             <div className="space-y-1">
-                              {endpoint.body.map(p => (
+                              {endpoint.body.map((p: any) => (
                                 <div key={p.name} className="text-xs">
                                   <code className="text-[#CDB49E]">{p.name}</code>
                                   {p.required && <span className="text-red-400">*</span>}

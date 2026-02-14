@@ -100,15 +100,15 @@ export function AIInsights() {
         const twoWeeksAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
 
         const currentWeekSales = salesRes.data
-          .filter(s => new Date(s.created_at) >= oneWeekAgo)
-          .map(s => ({ date: s.created_at, amount: s.total || 0, count: 1 }));
+          .filter((s: any) => new Date(s.created_at) >= oneWeekAgo)
+          .map((s: any) => ({ date: s.created_at, amount: s.total || 0, count: 1 }));
 
         const previousWeekSales = salesRes.data
-          .filter(s => {
+          .filter((s: any) => {
             const date = new Date(s.created_at);
             return date >= twoWeeksAgo && date < oneWeekAgo;
           })
-          .map(s => ({ date: s.created_at, amount: s.total || 0, count: 1 }));
+          .map((s: any) => ({ date: s.created_at, amount: s.total || 0, count: 1 }));
 
         if (currentWeekSales.length > 0 || previousWeekSales.length > 0) {
           allInsights.push(...analyzeSales(currentWeekSales, previousWeekSales));
@@ -117,7 +117,7 @@ export function AIInsights() {
 
       // Analyze inventory
       if (inventoryRes.data) {
-        const items = inventoryRes.data.map(p => ({
+        const items = inventoryRes.data.map((p: any) => ({
           id: p.id,
           name: p.name,
           quantity: p.quantity || 0,
@@ -129,7 +129,7 @@ export function AIInsights() {
 
       // Analyze invoices
       if (invoicesRes.data) {
-        const invoices = invoicesRes.data.map(inv => ({
+        const invoices = invoicesRes.data.map((inv: any) => ({
           id: inv.id,
           amount: inv.total || 0,
           status: inv.status,

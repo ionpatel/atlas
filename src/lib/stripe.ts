@@ -205,7 +205,7 @@ export async function getPaymentMethods(orgId: string): Promise<PaymentMethod[]>
     return [];
   }
 
-  return data.map((pm) => ({
+  return data.map((pm: any) => ({
     id: pm.id,
     type: pm.type,
     cardBrand: pm.card_brand,
@@ -233,7 +233,7 @@ export async function getBillingInvoices(orgId: string): Promise<BillingInvoice[
     return [];
   }
 
-  return data.map((inv) => ({
+  return data.map((inv: any) => ({
     id: inv.id,
     amountDue: inv.amount_due,
     amountPaid: inv.amount_paid,

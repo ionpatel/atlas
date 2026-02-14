@@ -208,7 +208,7 @@ function ProductGridCard({
           "w-14 h-14 rounded-xl flex items-center justify-center",
           isOutOfStock ? "bg-red-500/10" : isLowStock ? "bg-amber-500/10" : "bg-[#222222]"
         )}>
-          <Package className="w-6 h-6" style={{ color: isOutOfStock ? "#f87171" : isLowStock ? "#fbbf24" : iconColor }} />
+          <span style={{ color: isOutOfStock ? "#f87171" : isLowStock ? "#fbbf24" : iconColor }}><Package className="w-6 h-6" /></span>
         </div>
       </div>
 

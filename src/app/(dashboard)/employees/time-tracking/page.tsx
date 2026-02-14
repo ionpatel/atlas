@@ -816,7 +816,7 @@ export default function TimeTrackingPage() {
             <span className="text-sm text-[#888888]">Projects</span>
           </div>
           <div className="text-2xl font-bold text-[#f5f0eb]">
-            {new Set(weekEntries.filter(e => e.project_id).map(e => e.project_id)).size}
+            {new Set(weekEntries.filter(e => e.project_id).map((e: any) => e.project_id)).size}
           </div>
         </div>
 

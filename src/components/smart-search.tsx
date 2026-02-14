@@ -114,7 +114,7 @@ export function SmartSearch() {
         .limit(5);
 
       if (products) {
-        searchResults.push(...products.map(p => ({
+        searchResults.push(...products.map((p: any) => ({
           id: p.id,
           type: 'product' as const,
           title: p.name,
@@ -132,7 +132,7 @@ export function SmartSearch() {
         .limit(5);
 
       if (contacts) {
-        searchResults.push(...contacts.map(c => ({
+        searchResults.push(...contacts.map((c: any) => ({
           id: c.id,
           type: 'contact' as const,
           title: c.name,
@@ -150,7 +150,7 @@ export function SmartSearch() {
         .limit(5);
 
       if (invoices) {
-        searchResults.push(...invoices.map(inv => ({
+        searchResults.push(...invoices.map((inv: any) => ({
           id: inv.id,
           type: 'invoice' as const,
           title: `Invoice #${inv.invoice_number}`,
@@ -173,7 +173,7 @@ export function SmartSearch() {
 
           if (overdueInvoices) {
             searchResults.length = 0; // Clear regular results
-            searchResults.push(...overdueInvoices.map(inv => ({
+            searchResults.push(...overdueInvoices.map((inv: any) => ({
               id: inv.id,
               type: 'invoice' as const,
               title: `Invoice #${inv.invoice_number}`,
@@ -193,7 +193,7 @@ export function SmartSearch() {
 
           if (lowStockItems) {
             searchResults.length = 0;
-            searchResults.push(...lowStockItems.map(p => ({
+            searchResults.push(...lowStockItems.map((p: any) => ({
               id: p.id,
               type: 'product' as const,
               title: p.name,

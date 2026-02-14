@@ -271,7 +271,7 @@ export async function smartSearch(query: string): Promise<SearchResult[]> {
 
   // If no specific entity, search everything
   const searchEntities = parsed.entities.length > 0 
-    ? parsed.entities.map(e => e.type)
+    ? parsed.entities.map((e: any) => e.type)
     : ["product", "contact", "invoice"];
 
   for (const entityType of searchEntities) {
@@ -303,7 +303,7 @@ export async function smartSearch(query: string): Promise<SearchResult[]> {
     const actionWords = action.title.toLowerCase().split(" ");
     return actionWords.some((word) => normalizedQuery.includes(word));
   });
-  results.push(...relevantActions.map((a) => ({ ...a, relevance: 0.6 })));
+  results.push(...relevantActions.map((a: any) => ({ ...a, relevance: 0.6 })));
 
   // Sort by relevance
   results.sort((a, b) => b.relevance - a.relevance);
@@ -327,7 +327,7 @@ async function searchProducts(
     const searchTerms = query.split(" ").filter((t) => t.length > 2);
     if (searchTerms.length > 0) {
       dbQuery = dbQuery.or(
-        searchTerms.map((term) => `name.ilike.%${term}%,sku.ilike.%${term}%`).join(",")
+        searchTerms.map((term: any) => `name.ilike.%${term}%,sku.ilike.%${term}%`).join(",")
       );
     }
 
@@ -346,7 +346,7 @@ async function searchProducts(
 
     if (error || !data) return [];
 
-    return data.map((p) => ({
+    return data.map((p: any) => ({
       id: `product-${p.id}`,
       type: "product" as const,
       title: p.name,
@@ -376,7 +376,7 @@ async function searchContacts(
 
     if (error || !data) return [];
 
-    return data.map((c) => ({
+    return data.map((c: any) => ({
       id: `contact-${c.id}`,
       type: "contact" as const,
       title: c.name,
@@ -450,7 +450,7 @@ async function searchEmployees(
 
     if (error || !data) return [];
 
-    return data.map((e) => ({
+    return data.map((e: any) => ({
       id: `employee-${e.id}`,
       type: "employee" as const,
       title: `${e.first_name} ${e.last_name}`,
@@ -475,7 +475,7 @@ function getMockProductResults(query: string): SearchResult[] {
 
   return mockProducts
     .filter((p) => p.name.toLowerCase().includes(query) || p.sku.toLowerCase().includes(query))
-    .map((p) => ({
+    .map((p: any) => ({
       id: `product-${p.id}`,
       type: "product" as const,
       title: p.name,
@@ -495,7 +495,7 @@ function getMockContactResults(query: string): SearchResult[] {
 
   return mockContacts
     .filter((c) => c.name.toLowerCase().includes(query) || c.company.toLowerCase().includes(query))
-    .map((c) => ({
+    .map((c: any) => ({
       id: `contact-${c.id}`,
       type: "contact" as const,
       title: c.name,
@@ -519,18 +519,18 @@ function getMockInvoiceResults(query: string, filters: QueryFilter[]): SearchRes
   // Apply filters
   for (const filter of filters) {
     if (filter.field === "status" && typeof filter.value === "string") {
-      results = results.filter((inv) => inv.status === filter.value);
+      results = results.filter((inv: any) => inv.status === filter.value);
     }
     if (filter.field === "amount" && typeof filter.value === "number") {
       if (filter.operator === "gt") {
-        results = results.filter((inv) => inv.total > filter.value);
+        results = results.filter((inv: any) => inv.total > filter.value);
       } else if (filter.operator === "lt") {
-        results = results.filter((inv) => inv.total < (filter.value as number));
+        results = results.filter((inv: any) => inv.total < (filter.value as number));
       }
     }
   }
 
-  return results.map((inv) => ({
+  return results.map((inv: any) => ({
     id: `invoice-${inv.id}`,
     type: "invoice" as const,
     title: inv.number,

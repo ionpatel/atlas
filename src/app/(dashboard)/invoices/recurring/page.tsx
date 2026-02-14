@@ -77,7 +77,7 @@ export default function RecurringInvoicesPage() {
 
       if (error) throw error;
 
-      const mapped = data?.map(inv => ({
+      const mapped = data?.map((inv: any) => ({
         ...inv,
         contact_name: (inv.contacts as any)?.name
       })) || [];

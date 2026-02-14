@@ -95,7 +95,7 @@ export function OrgSwitcher() {
 
       if (error) throw error;
 
-      const mapped = data?.map(inv => ({
+      const mapped = data?.map((inv: any) => ({
         ...inv,
         org_name: (inv.organizations as any)?.name
       })) || [];

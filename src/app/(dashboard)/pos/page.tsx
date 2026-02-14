@@ -585,7 +585,7 @@ export default function POSPage() {
   // Get unique categories
   const categories: CategoryTab[] = [
     { id: "all", name: "All", count: products.length },
-    ...Array.from(new Set(products.map(p => p.category).filter(Boolean))).map(cat => ({
+    ...Array.from(new Set(products.map((p: any) => p.category).filter(Boolean))).map(cat => ({
       id: cat!,
       name: cat!,
       count: products.filter(p => p.category === cat).length,
@@ -600,7 +600,8 @@ export default function POSPage() {
     const amount = method === "card" ? totals.total : 
                    method === "split" ? (amounts?.cash || 0) + (amounts?.card || 0) :
                    totals.total;
-    const order = processPayment(method, amount);
+    const paymentMethod = method === "split" ? "mixed" : method;
+    const order = processPayment(paymentMethod, amount);
     if (order) {
       setLastOrder(order);
       setShowReceipt(true);

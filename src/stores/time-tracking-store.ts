@@ -213,7 +213,7 @@ export const useTimeTrackingStore = create<TimeTrackingState>((set, get) => ({
     const newDuration = entry.duration_minutes + additionalMinutes;
 
     set((state) => ({
-      entries: state.entries.map(e => 
+      entries: state.entries.map((e: any) => 
         e.id === id ? { ...e, status: "paused" as TimeEntryStatus, duration_minutes: newDuration } : e
       ),
       activeEntry: null,
@@ -252,7 +252,7 @@ export const useTimeTrackingStore = create<TimeTrackingState>((set, get) => ({
     };
 
     set((state) => ({
-      entries: state.entries.map(e => e.id === id ? updatedEntry : e),
+      entries: state.entries.map((e: any) => e.id === id ? updatedEntry : e),
       activeEntry: updatedEntry,
     }));
 
@@ -291,7 +291,7 @@ export const useTimeTrackingStore = create<TimeTrackingState>((set, get) => ({
     }
 
     set((state) => ({
-      entries: state.entries.map(e => 
+      entries: state.entries.map((e: any) => 
         e.id === id ? { 
           ...e, 
           status: "stopped" as TimeEntryStatus, 

@@ -76,4 +76,24 @@ const DialogClose = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttribut
 );
 DialogClose.displayName = "DialogClose";
 
-export { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, DialogClose };
+interface DialogTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean;
+  children: React.ReactNode;
+}
+
+const DialogTrigger = React.forwardRef<HTMLButtonElement, DialogTriggerProps>(
+  ({ className, children, asChild, ...props }, ref) => {
+    // Simple trigger - parent Dialog controls open state via onOpenChange
+    if (asChild && React.isValidElement(children)) {
+      return React.cloneElement(children as React.ReactElement<any>, { ref, ...props });
+    }
+    return (
+      <button ref={ref} className={className} {...props}>
+        {children}
+      </button>
+    );
+  }
+);
+DialogTrigger.displayName = "DialogTrigger";
+
+export { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, DialogClose, DialogTrigger };

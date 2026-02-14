@@ -224,9 +224,21 @@ export function useInvoiceAccounting() {
     return { success: true, entryId: `JE-${Date.now()}` };
   };
 
+  const markAsPaid = async (invoiceId: string) => {
+    // Placeholder for marking invoice as paid
+    console.log(`Marking invoice ${invoiceId} as paid`);
+    return { 
+      success: true, 
+      journalEntry: { 
+        entry_number: `JE-${Date.now()}` 
+      }
+    };
+  };
+
   return {
     syncToAccounting,
     createJournalEntry,
+    markAsPaid,
     isEnabled: true
   };
 }

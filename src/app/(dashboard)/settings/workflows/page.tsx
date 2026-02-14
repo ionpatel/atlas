@@ -99,7 +99,7 @@ function WorkflowCard({
             className="w-10 h-10 rounded-lg flex items-center justify-center"
             style={{ backgroundColor: `${appliesTo?.color || "#38BDF8"}20` }}
           >
-            <Icon className="w-5 h-5" style={{ color: appliesTo?.color || "#38BDF8" }} />
+            <span style={{ color: appliesTo?.color || "#38BDF8" }}><Icon className="w-5 h-5" /></span>
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[#F8FAFC]">{workflow.name}</h3>
@@ -287,7 +287,7 @@ function WorkflowBuilderModal({
             <label className="block text-xs font-medium text-[#64748B] mb-1.5">Applies To</label>
             <select
               value={formData.applies_to}
-              onChange={(e) => setFormData({ ...formData, applies_to: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, applies_to: e.target.value as any })}
               className="w-full px-4 py-2.5 bg-[#0F172A] border border-[#334155] rounded-lg text-sm text-[#F8FAFC] focus:outline-none focus:border-[#38BDF8]/50"
             >
               {APPLIES_TO_OPTIONS.map((opt) => (

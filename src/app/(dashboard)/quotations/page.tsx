@@ -89,7 +89,7 @@ export default function QuotationsPage() {
 
       if (error) throw error;
 
-      const mapped = data?.map(q => ({
+      const mapped = data?.map((q: any) => ({
         ...q,
         contact_name: (q.contacts as any)?.name
       })) || [];

@@ -238,7 +238,7 @@ export default function WebhooksPage() {
         .eq('id', id);
 
       if (error) throw error;
-      setWebhooks(prev => prev.map(w => 
+      setWebhooks(prev => prev.map((w: any) => 
         w.id === id ? { ...w, is_active: active } : w
       ));
     } catch (error) {

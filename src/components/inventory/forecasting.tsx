@@ -68,13 +68,13 @@ export function InventoryForecasting() {
         `)
         .gte('sales.created_at', thirtyDaysAgo.toISOString());
 
-      const salesHistory = salesItems?.map(item => ({
+      const salesHistory = salesItems?.map((item: any) => ({
         productId: item.product_id,
         date: (item.sales as any).created_at,
         quantity: item.quantity
       })) || [];
 
-      const items = products.map(p => ({
+      const items = products.map((p: any) => ({
         id: p.id,
         name: p.name,
         quantity: p.quantity || 0,

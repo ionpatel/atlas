@@ -159,7 +159,7 @@ export default function WarehousesPage() {
 
       if (error) throw error;
 
-      setWarehouses(prev => prev.map(w =>
+      setWarehouses(prev => prev.map((w: any) =>
         w.id === id ? { ...w, is_active: active } : w
       ));
     } catch (error) {
@@ -262,7 +262,7 @@ export default function WarehousesPage() {
               <span className="text-sm">Cities</span>
             </div>
             <p className="text-2xl font-bold text-white">
-              {new Set(warehouses.map(w => w.city).filter(Boolean)).size}
+              {new Set(warehouses.map((w: any) => w.city).filter(Boolean)).size}
             </p>
           </CardContent>
         </Card>
