@@ -522,3 +522,186 @@ export interface ExpenseReport {
   expenses?: Expense[];
   created_at: string;
 }
+
+// =============================================================
+// POS (POINT OF SALE)
+// =============================================================
+
+export type POSSessionStatus = 'open' | 'closed' | 'suspended';
+export type POSTransactionStatus = 'completed' | 'refunded' | 'voided' | 'pending';
+export type POSPaymentMethod = 'cash' | 'card' | 'split' | 'store_credit';
+
+export interface POSSession {
+  id: string;
+  org_id: string;
+  cashier_id: string;
+  register_name: string;
+  start_time: string;
+  end_time?: string;
+  opening_cash: number;
+  closing_cash?: number;
+  expected_cash?: number;
+  cash_difference?: number;
+  status: POSSessionStatus;
+  notes?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface POSTransaction {
+  id: string;
+  org_id: string;
+  session_id: string;
+  customer_id?: string;
+  transaction_number: string;
+  items: POSTransactionItem[];
+  subtotal: number;
+  tax: number;
+  discount: number;
+  total: number;
+  payment_method: POSPaymentMethod;
+  payment_details?: Record<string, unknown>;
+  amount_paid: number;
+  change_given: number;
+  status: POSTransactionStatus;
+  refund_reason?: string;
+  refunded_by?: string;
+  refunded_at?: string;
+  receipt_printed: boolean;
+  receipt_emailed: boolean;
+  notes?: string;
+  created_at: string;
+}
+
+export interface POSTransactionItem {
+  id: string;
+  transaction_id: string;
+  product_id?: string;
+  product_name: string;
+  product_sku?: string;
+  quantity: number;
+  unit_price: number;
+  discount_percent: number;
+  discount_amount: number;
+  tax_rate: number;
+  tax_amount: number;
+  total: number;
+  notes?: string;
+}
+
+export interface POSCashMovement {
+  id: string;
+  session_id: string;
+  movement_type: 'in' | 'out' | 'drop' | 'pickup';
+  amount: number;
+  reason: string;
+  performed_by: string;
+  approved_by?: string;
+  created_at: string;
+}
+
+// =============================================================
+// SUPPORT TICKETS
+// =============================================================
+
+export type TicketStatus = 'open' | 'in_progress' | 'waiting_customer' | 'resolved' | 'closed';
+export type TicketPriority = 'low' | 'normal' | 'high' | 'urgent';
+export type TicketCategory = 'general' | 'billing' | 'order' | 'product' | 'technical' | 'other';
+export type TicketSenderType = 'customer' | 'staff' | 'system';
+
+export interface SupportTicket {
+  id: string;
+  org_id: string;
+  customer_id: string;
+  ticket_number: string;
+  subject: string;
+  description?: string;
+  category: TicketCategory;
+  status: TicketStatus;
+  priority: TicketPriority;
+  assigned_to?: string;
+  resolved_by?: string;
+  resolved_at?: string;
+  first_response_at?: string;
+  related_order_id?: string;
+  related_invoice_id?: string;
+  tags: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TicketMessage {
+  id: string;
+  ticket_id: string;
+  sender_type: TicketSenderType;
+  sender_id?: string;
+  sender_name: string;
+  message: string;
+  attachments: TicketAttachment[];
+  is_internal: boolean;
+  read_at?: string;
+  created_at: string;
+}
+
+export interface TicketAttachment {
+  name: string;
+  url: string;
+  size: number;
+  type: string;
+}
+
+// =============================================================
+// CUSTOMER PORTAL
+// =============================================================
+
+export interface CustomerPortalSession {
+  id: string;
+  org_id: string;
+  customer_id: string;
+  token: string;
+  token_hash: string;
+  ip_address?: string;
+  user_agent?: string;
+  last_activity_at: string;
+  expires_at: string;
+  revoked_at?: string;
+  created_at: string;
+}
+
+export interface CustomerPortalCredentials {
+  id: string;
+  org_id: string;
+  customer_id: string;
+  email: string;
+  password_hash: string;
+  is_active: boolean;
+  email_verified: boolean;
+  email_verified_at?: string;
+  last_login_at?: string;
+  failed_login_attempts: number;
+  locked_until?: string;
+  password_reset_token?: string;
+  password_reset_expires?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// =============================================================
+// BARCODE SCANNING
+// =============================================================
+
+export type BarcodeScanType = 'lookup' | 'inventory_in' | 'inventory_out' | 'pos_sale' | 'batch';
+
+export interface BarcodeScanLog {
+  id: string;
+  org_id: string;
+  user_id: string;
+  barcode: string;
+  scan_type: BarcodeScanType;
+  product_id?: string;
+  product_found: boolean;
+  quantity_adjusted?: number;
+  location?: string;
+  notes?: string;
+  scanned_at: string;
+}
