@@ -140,7 +140,7 @@ export function OrgSwitcher() {
     return (
       <div className="flex items-center gap-2 px-3 py-2">
         <Loader2 className="h-4 w-4 animate-spin text-[#9C4A29]" />
-        <span className="text-sm text-neutral-400">Loading...</span>
+        <span className="text-sm text-[#6B5B4F]">Loading...</span>
       </div>
     );
   }
@@ -150,7 +150,7 @@ export function OrgSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
-          className="w-full justify-between px-3 py-2 h-auto hover:bg-neutral-800"
+          className="w-full justify-between px-3 py-2 h-auto hover:bg-[#DDD7C0] border border-transparent hover:border-[#D4CDB8] rounded-lg transition-all"
           disabled={switching}
         >
           <div className="flex items-center gap-3">
@@ -160,28 +160,28 @@ export function OrgSwitcher() {
               </AvatarFallback>
             </Avatar>
             <div className="text-left">
-              <p className="text-sm font-medium text-white truncate max-w-[140px]">
+              <p className="text-sm font-medium text-[#2D1810] truncate max-w-[140px]">
                 {currentOrg?.org_name || 'Select Organization'}
               </p>
-              <p className="text-xs text-neutral-500 capitalize">
+              <p className="text-xs text-[#6B5B4F] capitalize">
                 {currentOrg?.role || 'No role'}
               </p>
             </div>
           </div>
           {switching ? (
-            <Loader2 className="h-4 w-4 animate-spin text-neutral-400" />
+            <Loader2 className="h-4 w-4 animate-spin text-[#6B5B4F]" />
           ) : (
-            <ChevronDown className="h-4 w-4 text-neutral-400" />
+            <ChevronDown className="h-4 w-4 text-[#6B5B4F]" />
           )}
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent 
-        className="w-64 bg-neutral-900 border-neutral-800" 
+        className="w-64 bg-[#F5F2E8] border border-[#D4CDB8] shadow-xl" 
         align="start"
         sideOffset={4}
       >
-        <DropdownMenuLabel className="text-neutral-400 text-xs font-normal">
+        <DropdownMenuLabel className="text-[#6B5B4F] text-xs font-semibold uppercase tracking-wider">
           Organizations
         </DropdownMenuLabel>
 
@@ -189,13 +189,13 @@ export function OrgSwitcher() {
           <DropdownMenuItem
             key={org.org_id}
             onClick={() => switchOrg(org)}
-            className="flex items-center justify-between cursor-pointer hover:bg-neutral-800"
+            className="flex items-center justify-between cursor-pointer hover:bg-[#DDD7C0] focus:bg-[#DDD7C0] rounded-lg mx-1"
           >
             <div className="flex items-center gap-2">
-              <Building2 className="h-4 w-4 text-neutral-500" />
+              <Building2 className="h-4 w-4 text-[#6B5B4F]" />
               <div>
-                <p className="text-sm text-white">{org.org_name}</p>
-                <p className="text-xs text-neutral-500 capitalize">{org.role}</p>
+                <p className="text-sm text-[#2D1810]">{org.org_name}</p>
+                <p className="text-xs text-[#8B7B6F] capitalize">{org.role}</p>
               </div>
             </div>
             {org.org_id === currentOrg?.org_id && (
@@ -206,8 +206,8 @@ export function OrgSwitcher() {
 
         {invitations.length > 0 && (
           <>
-            <DropdownMenuSeparator className="bg-neutral-800" />
-            <DropdownMenuLabel className="text-neutral-400 text-xs font-normal flex items-center gap-2">
+            <DropdownMenuSeparator className="bg-[#D4CDB8]" />
+            <DropdownMenuLabel className="text-[#6B5B4F] text-xs font-semibold uppercase tracking-wider flex items-center gap-2">
               <Mail className="h-3 w-3" />
               Pending Invitations
               <Badge variant="secondary" className="bg-[#9C4A29]/10 text-[#9C4A29] text-xs">
@@ -219,13 +219,13 @@ export function OrgSwitcher() {
               <DropdownMenuItem
                 key={inv.id}
                 onClick={() => acceptInvitation(inv)}
-                className="flex items-center justify-between cursor-pointer hover:bg-neutral-800"
+                className="flex items-center justify-between cursor-pointer hover:bg-[#DDD7C0] focus:bg-[#DDD7C0] rounded-lg mx-1"
               >
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-[#9C4A29]" />
                   <div>
-                    <p className="text-sm text-white">{inv.org_name}</p>
-                    <p className="text-xs text-neutral-500">Join as {inv.role}</p>
+                    <p className="text-sm text-[#2D1810]">{inv.org_name}</p>
+                    <p className="text-xs text-[#8B7B6F]">Join as {inv.role}</p>
                   </div>
                 </div>
               </DropdownMenuItem>
@@ -233,22 +233,22 @@ export function OrgSwitcher() {
           </>
         )}
 
-        <DropdownMenuSeparator className="bg-neutral-800" />
+        <DropdownMenuSeparator className="bg-[#D4CDB8]" />
 
         <DropdownMenuItem 
           onClick={() => window.location.href = '/settings/organizations'}
-          className="cursor-pointer hover:bg-neutral-800"
+          className="cursor-pointer hover:bg-[#DDD7C0] focus:bg-[#DDD7C0] rounded-lg mx-1"
         >
-          <Users className="h-4 w-4 mr-2 text-neutral-500" />
-          <span>Manage Organizations</span>
+          <Users className="h-4 w-4 mr-2 text-[#6B5B4F]" />
+          <span className="text-[#2D1810]">Manage Organizations</span>
         </DropdownMenuItem>
 
         <DropdownMenuItem 
           onClick={() => window.location.href = '/settings/organizations/new'}
-          className="cursor-pointer hover:bg-neutral-800"
+          className="cursor-pointer hover:bg-[#9C4A29]/10 focus:bg-[#9C4A29]/10 rounded-lg mx-1"
         >
           <Plus className="h-4 w-4 mr-2 text-[#9C4A29]" />
-          <span className="text-[#9C4A29]">Create Organization</span>
+          <span className="text-[#9C4A29] font-medium">Create Organization</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
