@@ -36,13 +36,13 @@ function StorageIndicator({ used, total }: { used: number; total: number }) {
   const totalGB = (total / (1024 * 1024 * 1024)).toFixed(0);
 
   return (
-    <div className="p-4 bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl">
+    <div className="p-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <HardDrive className="w-4 h-4 text-[#273B3A]" />
-          <span className="text-sm font-medium text-[#1A2726]">Storage</span>
+          <span className="text-sm font-medium text-[#273B3A]">Storage</span>
         </div>
-        <span className="text-xs text-[#6B7876]">{usedGB} GB / {totalGB} GB</span>
+        <span className="text-xs text-[#273B3A]">{usedGB} GB / {totalGB} GB</span>
       </div>
       <div className="h-2 bg-[#E6D4C7] rounded-full overflow-hidden">
         <div
@@ -68,20 +68,20 @@ function BreadcrumbNav({
     <div className="flex items-center gap-1.5 text-sm">
       <button
         onClick={() => onNavigate(null)}
-        className="px-2 py-1 rounded hover:bg-[#F0E6E0] text-[#6B7876] hover:text-[#1A2726] transition-colors"
+        className="px-2 py-1 rounded hover:bg-[#E6D4C7] text-[#273B3A] hover:text-[#273B3A] transition-colors"
       >
         Documents
       </button>
       {path.map((folder, i) => (
         <div key={folder.id} className="flex items-center gap-1.5">
-          <ChevronRight className="w-4 h-4 text-[#D8CAC0]" />
+          <ChevronRight className="w-4 h-4 text-[#E6D4C7]" />
           <button
             onClick={() => onNavigate(folder.id)}
             className={cn(
               "px-2 py-1 rounded transition-colors",
               i === path.length - 1
-                ? "text-[#1A2726] font-medium"
-                : "text-[#6B7876] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+                ? "text-[#273B3A] font-medium"
+                : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
             )}
           >
             {folder.name}
@@ -102,7 +102,7 @@ function FolderCard({
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-3 p-4 bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl hover:border-[#273B3A]/50 transition-all text-left group"
+      className="flex items-center gap-3 p-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl hover:border-[#273B3A]/50 transition-all text-left group"
     >
       <div
         className="w-10 h-10 rounded-lg flex items-center justify-center"
@@ -111,12 +111,12 @@ function FolderCard({
         <span style={{ color: folder.color || "#273B3A" }}><Folder className="w-5 h-5" /></span>
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-[#1A2726] truncate">{folder.name}</p>
+        <p className="text-sm font-medium text-[#273B3A] truncate">{folder.name}</p>
         {folder.description && (
-          <p className="text-xs text-[#6B7876] truncate">{folder.description}</p>
+          <p className="text-xs text-[#273B3A] truncate">{folder.description}</p>
         )}
       </div>
-      <ChevronRight className="w-4 h-4 text-[#D8CAC0] group-hover:text-[#273B3A] transition-colors" />
+      <ChevronRight className="w-4 h-4 text-[#E6D4C7] group-hover:text-[#273B3A] transition-colors" />
     </button>
   );
 }
@@ -142,7 +142,7 @@ function DocumentCard({
     return (
       <div
         className={cn(
-          "flex items-center gap-4 p-4 border-b border-[#D8CAC0]/50 hover:bg-[#E6D4C7]/50 transition-colors cursor-pointer",
+          "flex items-center gap-4 p-4 border-b border-[#E6D4C7]/50 hover:bg-[#E6D4C7]/50 transition-colors cursor-pointer",
           isSelected && "bg-[#273B3A]/10"
         )}
         onClick={onClick}
@@ -154,24 +154,24 @@ function DocumentCard({
             e.stopPropagation();
             onSelect();
           }}
-          className="w-4 h-4 rounded border-[#D8CAC0] bg-[#E6D4C7] text-[#273B3A] focus:ring-[#273B3A]/30"
+          className="w-4 h-4 rounded border-[#E6D4C7] bg-[#E6D4C7] text-[#273B3A] focus:ring-[#273B3A]/30"
         />
         <div className="w-10 h-10 rounded-lg bg-[#273B3A]/10 flex items-center justify-center flex-shrink-0">
           <FileIcon className="w-5 h-5 text-[#273B3A]" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <p className="text-sm font-medium text-[#1A2726] truncate">{document.name}</p>
+            <p className="text-sm font-medium text-[#273B3A] truncate">{document.name}</p>
             {document.is_starred && <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />}
           </div>
           <div className="flex items-center gap-3 mt-0.5">
-            <span className="text-xs text-[#6B7876]">{formatFileSize(document.file_size)}</span>
-            <span className="text-xs text-[#6B7876]">v{document.version}</span>
+            <span className="text-xs text-[#273B3A]">{formatFileSize(document.file_size)}</span>
+            <span className="text-xs text-[#273B3A]">v{document.version}</span>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-xs text-[#6B7876]">{formatDate(document.updated_at)}</p>
-          <p className="text-xs text-[#6B7876]">{document.uploader_name}</p>
+          <p className="text-xs text-[#273B3A]">{formatDate(document.updated_at)}</p>
+          <p className="text-xs text-[#273B3A]">{document.uploader_name}</p>
         </div>
         <div className="flex items-center gap-1">
           <button
@@ -179,7 +179,7 @@ function DocumentCard({
               e.stopPropagation();
               onStar();
             }}
-            className="p-2 rounded-lg text-[#6B7876] hover:text-amber-400 hover:bg-amber-500/10"
+            className="p-2 rounded-lg text-[#273B3A] hover:text-amber-400 hover:bg-amber-500/10"
           >
             {document.is_starred ? (
               <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
@@ -187,10 +187,10 @@ function DocumentCard({
               <StarOff className="w-4 h-4" />
             )}
           </button>
-          <button className="p-2 rounded-lg text-[#6B7876] hover:text-[#273B3A] hover:bg-[#273B3A]/10">
+          <button className="p-2 rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[#273B3A]/10">
             <Download className="w-4 h-4" />
           </button>
-          <button className="p-2 rounded-lg text-[#6B7876] hover:text-[#273B3A] hover:bg-[#273B3A]/10">
+          <button className="p-2 rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[#273B3A]/10">
             <Share2 className="w-4 h-4" />
           </button>
         </div>
@@ -201,10 +201,10 @@ function DocumentCard({
   return (
     <div
       className={cn(
-        "p-4 bg-[#F0E6E0] border rounded-xl cursor-pointer transition-all group",
+        "p-4 bg-[#E6D4C7] border rounded-xl cursor-pointer transition-all group",
         isSelected
           ? "border-[#273B3A] bg-[#273B3A]/10"
-          : "border-[#D8CAC0] hover:border-[#273B3A]/50"
+          : "border-[#E6D4C7] hover:border-[#273B3A]/50"
       )}
       onClick={onClick}
     >
@@ -218,7 +218,7 @@ function DocumentCard({
               e.stopPropagation();
               onStar();
             }}
-            className="p-1.5 rounded-lg text-[#6B7876] hover:text-amber-400 hover:bg-amber-500/10"
+            className="p-1.5 rounded-lg text-[#273B3A] hover:text-amber-400 hover:bg-amber-500/10"
           >
             {document.is_starred ? (
               <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
@@ -226,13 +226,13 @@ function DocumentCard({
               <StarOff className="w-3.5 h-3.5" />
             )}
           </button>
-          <button className="p-1.5 rounded-lg text-[#6B7876] hover:text-[#273B3A] hover:bg-[#273B3A]/10">
+          <button className="p-1.5 rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[#273B3A]/10">
             <MoreHorizontal className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
-      <p className="text-sm font-medium text-[#1A2726] truncate mb-1">{document.name}</p>
-      <div className="flex items-center gap-2 text-xs text-[#6B7876]">
+      <p className="text-sm font-medium text-[#273B3A] truncate mb-1">{document.name}</p>
+      <div className="flex items-center gap-2 text-xs text-[#273B3A]">
         <span>{formatFileSize(document.file_size)}</span>
         <span>•</span>
         <span>{formatDate(document.updated_at)}</span>
@@ -242,7 +242,7 @@ function DocumentCard({
           {document.tags.slice(0, 2).map((tag) => (
             <span
               key={tag}
-              className="px-1.5 py-0.5 bg-[#E6D4C7] text-[10px] text-[#6B7876] rounded"
+              className="px-1.5 py-0.5 bg-[#E6D4C7] text-[10px] text-[#273B3A] rounded"
             >
               {tag}
             </span>
@@ -299,7 +299,7 @@ function DocumentPreviewModal({
                 "flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all",
                 activeTab === tab
                   ? "bg-[#273B3A] text-[#E6D4C7]"
-                  : "text-[#4A5654] hover:text-[#1A2726]"
+                  : "text-[#273B3A] hover:text-[#273B3A]"
               )}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -311,9 +311,9 @@ function DocumentPreviewModal({
         {activeTab === "preview" && (
           <div className="space-y-6">
             {/* File preview placeholder */}
-            <div className="aspect-video bg-[#E6D4C7] rounded-xl flex flex-col items-center justify-center border border-[#D8CAC0]">
-              <FileIcon className="w-16 h-16 text-[#D8CAC0] mb-4" />
-              <p className="text-sm text-[#6B7876]">Preview not available</p>
+            <div className="aspect-video bg-[#E6D4C7] rounded-xl flex flex-col items-center justify-center border border-[#E6D4C7]">
+              <FileIcon className="w-16 h-16 text-[#E6D4C7] mb-4" />
+              <p className="text-sm text-[#273B3A]">Preview not available</p>
               <button className="mt-4 flex items-center gap-2 px-4 py-2 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-medium">
                 <Download className="w-4 h-4" />
                 Download
@@ -323,33 +323,33 @@ function DocumentPreviewModal({
             {/* File details */}
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 bg-[#E6D4C7] rounded-lg">
-                <p className="text-xs text-[#6B7876] mb-1">File Type</p>
-                <p className="text-sm text-[#1A2726]">{document.file_type || "Unknown"}</p>
+                <p className="text-xs text-[#273B3A] mb-1">File Type</p>
+                <p className="text-sm text-[#273B3A]">{document.file_type || "Unknown"}</p>
               </div>
               <div className="p-4 bg-[#E6D4C7] rounded-lg">
-                <p className="text-xs text-[#6B7876] mb-1">File Size</p>
-                <p className="text-sm text-[#1A2726]">{formatFileSize(document.file_size)}</p>
+                <p className="text-xs text-[#273B3A] mb-1">File Size</p>
+                <p className="text-sm text-[#273B3A]">{formatFileSize(document.file_size)}</p>
               </div>
               <div className="p-4 bg-[#E6D4C7] rounded-lg">
-                <p className="text-xs text-[#6B7876] mb-1">Uploaded By</p>
-                <p className="text-sm text-[#1A2726]">{document.uploader_name || "Unknown"}</p>
+                <p className="text-xs text-[#273B3A] mb-1">Uploaded By</p>
+                <p className="text-sm text-[#273B3A]">{document.uploader_name || "Unknown"}</p>
               </div>
               <div className="p-4 bg-[#E6D4C7] rounded-lg">
-                <p className="text-xs text-[#6B7876] mb-1">Last Modified</p>
-                <p className="text-sm text-[#1A2726]">{formatDate(document.updated_at)}</p>
+                <p className="text-xs text-[#273B3A] mb-1">Last Modified</p>
+                <p className="text-sm text-[#273B3A]">{formatDate(document.updated_at)}</p>
               </div>
             </div>
 
             {document.description && (
               <div>
-                <p className="text-xs text-[#6B7876] mb-2">Description</p>
-                <p className="text-sm text-[#4A5654]">{document.description}</p>
+                <p className="text-xs text-[#273B3A] mb-2">Description</p>
+                <p className="text-sm text-[#273B3A]">{document.description}</p>
               </div>
             )}
 
             {document.tags.length > 0 && (
               <div>
-                <p className="text-xs text-[#6B7876] mb-2">Tags</p>
+                <p className="text-xs text-[#273B3A] mb-2">Tags</p>
                 <div className="flex flex-wrap gap-2">
                   {document.tags.map((tag) => (
                     <span
@@ -369,8 +369,8 @@ function DocumentPreviewModal({
         {activeTab === "versions" && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <p className="text-sm text-[#6B7876]">
-                Current version: <span className="text-[#1A2726] font-medium">v{document.version}</span>
+              <p className="text-sm text-[#273B3A]">
+                Current version: <span className="text-[#273B3A] font-medium">v{document.version}</span>
               </p>
               <button className="text-xs text-[#273B3A] hover:text-[#7DD3FC]">
                 Upload New Version
@@ -379,8 +379,8 @@ function DocumentPreviewModal({
 
             {versions.length === 0 ? (
               <div className="text-center py-8">
-                <History className="w-12 h-12 mx-auto mb-3 text-[#D8CAC0]" />
-                <p className="text-sm text-[#6B7876]">No previous versions</p>
+                <History className="w-12 h-12 mx-auto mb-3 text-[#E6D4C7]" />
+                <p className="text-sm text-[#273B3A]">No previous versions</p>
               </div>
             ) : (
               <div className="space-y-2">
@@ -390,21 +390,21 @@ function DocumentPreviewModal({
                     className="flex items-center justify-between p-4 bg-[#E6D4C7] rounded-lg"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-[#F0E6E0] flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-lg bg-[#E6D4C7] flex items-center justify-center">
                         <span className="text-sm font-medium text-[#273B3A]">v{version.version}</span>
                       </div>
                       <div>
-                        <p className="text-sm text-[#1A2726]">
+                        <p className="text-sm text-[#273B3A]">
                           {version.notes || `Version ${version.version}`}
                         </p>
-                        <p className="text-xs text-[#6B7876]">
+                        <p className="text-xs text-[#273B3A]">
                           {version.uploader_name} • {formatDate(version.created_at)}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-[#6B7876]">{formatFileSize(version.file_size)}</span>
-                      <button className="p-2 rounded-lg text-[#6B7876] hover:text-[#273B3A] hover:bg-[#273B3A]/10">
+                      <span className="text-xs text-[#273B3A]">{formatFileSize(version.file_size)}</span>
+                      <button className="p-2 rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[#273B3A]/10">
                         <Download className="w-4 h-4" />
                       </button>
                     </div>
@@ -419,14 +419,14 @@ function DocumentPreviewModal({
         {activeTab === "sharing" && (
           <div className="space-y-6">
             <div>
-              <h4 className="text-sm font-medium text-[#1A2726] mb-3">Create Share Link</h4>
+              <h4 className="text-sm font-medium text-[#273B3A] mb-3">Create Share Link</h4>
               <div className="flex gap-2">
                 <input
                   type="text"
                   value={shareLink}
                   readOnly
                   placeholder="Click 'Generate' to create a share link"
-                  className="flex-1 px-4 py-2.5 bg-[#E6D4C7] border border-[#D8CAC0] rounded-lg text-sm text-[#1A2726]"
+                  className="flex-1 px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A]"
                 />
                 {shareLink ? (
                   <button
@@ -449,11 +449,11 @@ function DocumentPreviewModal({
             </div>
 
             <div>
-              <h4 className="text-sm font-medium text-[#1A2726] mb-3">Active Share Links</h4>
+              <h4 className="text-sm font-medium text-[#273B3A] mb-3">Active Share Links</h4>
               {shares.length === 0 ? (
                 <div className="text-center py-8 bg-[#E6D4C7] rounded-lg">
-                  <Link2 className="w-12 h-12 mx-auto mb-3 text-[#D8CAC0]" />
-                  <p className="text-sm text-[#6B7876]">No active share links</p>
+                  <Link2 className="w-12 h-12 mx-auto mb-3 text-[#E6D4C7]" />
+                  <p className="text-sm text-[#273B3A]">No active share links</p>
                 </div>
               ) : (
                 <div className="space-y-2">
@@ -463,19 +463,19 @@ function DocumentPreviewModal({
                       className="flex items-center justify-between p-4 bg-[#E6D4C7] rounded-lg"
                     >
                       <div>
-                        <p className="text-sm text-[#1A2726] font-mono">
+                        <p className="text-sm text-[#273B3A] font-mono">
                           ...{share.share_token.slice(-8)}
                         </p>
-                        <p className="text-xs text-[#6B7876]">
+                        <p className="text-xs text-[#273B3A]">
                           {share.expires_at ? `Expires ${formatDate(share.expires_at)}` : "Never expires"}
                           {" • "}{share.download_count} downloads
                         </p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-1 bg-[#F0E6E0] text-xs text-[#4A5654] rounded">
+                        <span className="px-2 py-1 bg-[#E6D4C7] text-xs text-[#273B3A] rounded">
                           {share.permissions}
                         </span>
-                        <button className="p-2 rounded-lg text-[#6B7876] hover:text-red-400 hover:bg-red-500/10">
+                        <button className="p-2 rounded-lg text-[#273B3A] hover:text-red-400 hover:bg-red-500/10">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
@@ -538,7 +538,7 @@ function UploadModal({
             "border-2 border-dashed rounded-xl p-12 text-center transition-all",
             dragging
               ? "border-[#273B3A] bg-[#273B3A]/10"
-              : "border-[#D8CAC0] hover:border-[#273B3A]/50"
+              : "border-[#E6D4C7] hover:border-[#273B3A]/50"
           )}
           onDragOver={(e) => {
             e.preventDefault();
@@ -551,11 +551,11 @@ function UploadModal({
             handleUpload(e.dataTransfer.files);
           }}
         >
-          <Upload className="w-12 h-12 mx-auto mb-4 text-[#D8CAC0]" />
-          <p className="text-sm text-[#1A2726] mb-2">
+          <Upload className="w-12 h-12 mx-auto mb-4 text-[#E6D4C7]" />
+          <p className="text-sm text-[#273B3A] mb-2">
             Drag and drop files here
           </p>
-          <p className="text-xs text-[#6B7876] mb-4">or</p>
+          <p className="text-xs text-[#273B3A] mb-4">or</p>
           <label className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold cursor-pointer hover:bg-[#7DD3FC]">
             <Upload className="w-4 h-4" />
             Browse Files
@@ -569,11 +569,11 @@ function UploadModal({
         </div>
 
         <div className="p-4 bg-[#E6D4C7] rounded-lg">
-          <p className="text-xs text-[#6B7876]">
-            <strong className="text-[#4A5654]">Supported formats:</strong> PDF, DOC, DOCX, XLS, XLSX, PNG, JPG, ZIP
+          <p className="text-xs text-[#273B3A]">
+            <strong className="text-[#273B3A]">Supported formats:</strong> PDF, DOC, DOCX, XLS, XLSX, PNG, JPG, ZIP
           </p>
-          <p className="text-xs text-[#6B7876] mt-1">
-            <strong className="text-[#4A5654]">Max file size:</strong> 100 MB per file
+          <p className="text-xs text-[#273B3A] mt-1">
+            <strong className="text-[#273B3A]">Max file size:</strong> 100 MB per file
           </p>
         </div>
       </div>
@@ -624,26 +624,26 @@ function NewFolderModal({
     <Modal open={open} onClose={onClose} title="New Folder" size="sm">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-xs font-medium text-[#6B7876] mb-1.5">Folder Name</label>
+          <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Folder Name</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#D8CAC0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/50"
+            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/50"
             required
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-[#6B7876] mb-1.5">Description</label>
+          <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Description</label>
           <input
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#D8CAC0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/50"
+            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/50"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-[#6B7876] mb-2">Color</label>
+          <label className="block text-xs font-medium text-[#273B3A] mb-2">Color</label>
           <div className="flex gap-2">
             {colors.map((c) => (
               <button
@@ -652,18 +652,18 @@ function NewFolderModal({
                 onClick={() => setColor(c)}
                 className={cn(
                   "w-8 h-8 rounded-lg transition-all",
-                  color === c && "ring-2 ring-offset-2 ring-offset-[#F0E6E0] ring-white/30"
+                  color === c && "ring-2 ring-offset-2 ring-offset-[#E6D4C7] ring-white/30"
                 )}
                 style={{ backgroundColor: c }}
               />
             ))}
           </div>
         </div>
-        <div className="flex justify-end gap-3 pt-4 border-t border-[#D8CAC0]">
+        <div className="flex justify-end gap-3 pt-4 border-t border-[#E6D4C7]">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-sm text-[#4A5654] hover:text-[#1A2726]"
+            className="px-4 py-2 text-sm text-[#273B3A] hover:text-[#273B3A]"
           >
             Cancel
           </button>
@@ -720,17 +720,17 @@ export default function DocumentsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#1A2726]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#273B3A]">
             Documents
           </h1>
-          <p className="text-[#6B7876] text-sm mt-1">
+          <p className="text-[#273B3A] text-sm mt-1">
             Manage your files and folders
           </p>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setNewFolderModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 border border-[#D8CAC0] rounded-lg text-sm font-medium text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+            className="flex items-center gap-2 px-4 py-2.5 border border-[#E6D4C7] rounded-lg text-sm font-medium text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
           >
             <Folder className="w-4 h-4" />
             New Folder
@@ -751,8 +751,8 @@ export default function DocumentsPage() {
           <StorageIndicator used={stats.used} total={stats.total} />
 
           {/* Quick Access */}
-          <div className="p-4 bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl">
-            <h3 className="text-xs font-semibold text-[#6B7876] uppercase tracking-wider mb-3">
+          <div className="p-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl">
+            <h3 className="text-xs font-semibold text-[#273B3A] uppercase tracking-wider mb-3">
               Quick Access
             </h3>
             <div className="space-y-1">
@@ -765,7 +765,7 @@ export default function DocumentsPage() {
                   "w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors",
                   currentFolderId === null && !searchQuery
                     ? "bg-[#273B3A]/10 text-[#273B3A]"
-                    : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#E6D4C7]"
+                    : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
                 )}
               >
                 <FolderOpen className="w-4 h-4" />
@@ -775,7 +775,7 @@ export default function DocumentsPage() {
                 onClick={() => {
                   setSearchQuery("is:starred");
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[#4A5654] hover:text-[#1A2726] hover:bg-[#E6D4C7]"
+                className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
               >
                 <Star className="w-4 h-4" />
                 Starred
@@ -790,29 +790,29 @@ export default function DocumentsPage() {
           <div className="flex items-center justify-between">
             <BreadcrumbNav path={folderPath} onNavigate={setCurrentFolder} />
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2.5 bg-[#F0E6E0] border border-[#D8CAC0] rounded-lg px-3 py-2 focus-within:border-[#273B3A]/40 transition-colors">
-                <Search className="w-4 h-4 text-[#6B7876]" />
+              <div className="flex items-center gap-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-3 py-2 focus-within:border-[#273B3A]/40 transition-colors">
+                <Search className="w-4 h-4 text-[#273B3A]" />
                 <input
                   type="text"
                   placeholder="Search documents..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-transparent border-none outline-none text-sm w-48 text-[#1A2726] placeholder:text-[#6B7876]"
+                  className="bg-transparent border-none outline-none text-sm w-48 text-[#273B3A] placeholder:text-[#273B3A]"
                 />
                 {searchQuery && (
-                  <button onClick={() => setSearchQuery("")} className="text-[#6B7876] hover:text-[#1A2726]">
+                  <button onClick={() => setSearchQuery("")} className="text-[#273B3A] hover:text-[#273B3A]">
                     <X className="w-3.5 h-3.5" />
                   </button>
                 )}
               </div>
-              <div className="flex border border-[#D8CAC0] rounded-lg overflow-hidden">
+              <div className="flex border border-[#E6D4C7] rounded-lg overflow-hidden">
                 <button
                   onClick={() => setViewMode("grid")}
                   className={cn(
                     "p-2 transition-colors",
                     viewMode === "grid"
                       ? "bg-[#273B3A]/10 text-[#273B3A]"
-                      : "text-[#6B7876] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+                      : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
                   )}
                 >
                   <Grid className="w-4 h-4" />
@@ -823,7 +823,7 @@ export default function DocumentsPage() {
                     "p-2 transition-colors",
                     viewMode === "list"
                       ? "bg-[#273B3A]/10 text-[#273B3A]"
-                      : "text-[#6B7876] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+                      : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
                   )}
                 >
                   <List className="w-4 h-4" />
@@ -841,7 +841,7 @@ export default function DocumentsPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={clearSelection}
-                  className="px-3 py-1.5 text-sm text-[#4A5654] hover:text-[#1A2726]"
+                  className="px-3 py-1.5 text-sm text-[#273B3A] hover:text-[#273B3A]"
                 >
                   Clear
                 </button>
@@ -859,7 +859,7 @@ export default function DocumentsPage() {
           {/* Folders */}
           {!searchQuery && subfolders.length > 0 && (
             <div>
-              <h3 className="text-xs font-semibold text-[#6B7876] uppercase tracking-wider mb-3">
+              <h3 className="text-xs font-semibold text-[#273B3A] uppercase tracking-wider mb-3">
                 Folders
               </h3>
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
@@ -877,15 +877,15 @@ export default function DocumentsPage() {
           {/* Documents */}
           <div>
             {!searchQuery && (
-              <h3 className="text-xs font-semibold text-[#6B7876] uppercase tracking-wider mb-3">
+              <h3 className="text-xs font-semibold text-[#273B3A] uppercase tracking-wider mb-3">
                 Files
               </h3>
             )}
 
             {documents.length === 0 ? (
-              <div className="text-center py-16 bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl">
-                <FileText className="w-12 h-12 mx-auto mb-4 text-[#D8CAC0]" />
-                <p className="text-sm text-[#6B7876] mb-4">
+              <div className="text-center py-16 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl">
+                <FileText className="w-12 h-12 mx-auto mb-4 text-[#E6D4C7]" />
+                <p className="text-sm text-[#273B3A] mb-4">
                   {searchQuery ? "No documents found" : "No documents in this folder"}
                 </p>
                 <button
@@ -911,7 +911,7 @@ export default function DocumentsPage() {
                 ))}
               </div>
             ) : (
-              <div className="bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl overflow-hidden">
+              <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
                 {documents.map((doc) => (
                   <DocumentCard
                     key={doc.id}

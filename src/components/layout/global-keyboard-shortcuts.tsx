@@ -113,7 +113,7 @@ export function GlobalKeyboardShortcuts({ isOpen, onClose }: GlobalKeyboardShort
       />
       
       {/* Modal */}
-      <div className="relative w-full max-w-3xl bg-[#F0E6E0] border border-[#333] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-3xl bg-[#E6D4C7] border border-[#333] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#333]">
           <div className="flex items-center gap-3">

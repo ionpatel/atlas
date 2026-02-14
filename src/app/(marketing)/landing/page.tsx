@@ -21,10 +21,10 @@ import {
 } from "lucide-react";
 
 /* ─────────────────────── palette tokens ─────────────────────── */
-// bg: #E6D4C7 | card: #F0E6E0 | elevated: #D8CAC0
-// border: #C9BAB0 | muted text: #4A5654 | dim: #6B7876
-// accent: #273B3A | accent-hover: #344948 | accent-muted: rgba(156,74,41,0.15)
-// warm white: #1A2726
+// bg: #E6D4C7 | card: #E6D4C7 | elevated: #E6D4C7
+// border: #E6D4C7 | muted text: #273B3A | dim: #273B3A
+// accent: #273B3A | accent-hover: #273B3A | accent-muted: rgba(156,74,41,0.15)
+// warm white: #273B3A
 // green: #34d399 | red: #f87171 | blue: #60a5fa | violet: #a78bfa | amber: #fbbf24
 
 /* ─────────────────────── scroll reveal ─────────────────────── */
@@ -198,13 +198,13 @@ function AnimatedStatCard({
   return (
     <div
       ref={ref}
-      className="p-3 rounded-xl bg-[#D8CAC0] border border-[#C9BAB0] text-left"
+      className="p-3 rounded-xl bg-[#E6D4C7] border border-[#E6D4C7] text-left"
       style={{
         animation: visible ? `fadeInScale 0.6s cubic-bezier(.16,1,.3,1) ${delay}ms both` : "none",
       }}
     >
       <div className="flex items-center justify-between mb-1.5">
-        <p className="text-[9px] text-[#6B7876] uppercase tracking-wider font-medium">
+        <p className="text-[9px] text-[#273B3A] uppercase tracking-wider font-medium">
           {label}
         </p>
         <svg
@@ -240,7 +240,7 @@ function AnimatedBarChart({ visible, delay }: { visible: boolean; delay: number 
   const bars = [40, 65, 45, 80, 55, 90, 70, 85, 60, 95, 75, 88];
 
   return (
-    <div className="h-24 rounded-xl bg-[#D8CAC0] border border-[#C9BAB0] flex items-end justify-center gap-1 sm:gap-1.5 px-3 pb-3 pt-2 overflow-hidden">
+    <div className="h-24 rounded-xl bg-[#E6D4C7] border border-[#E6D4C7] flex items-end justify-center gap-1 sm:gap-1.5 px-3 pb-3 pt-2 overflow-hidden">
       {bars.map((h, i) => (
         <div
           key={i}
@@ -262,7 +262,7 @@ function AnimatedDonutChart({ visible, delay }: { visible: boolean; delay: numbe
     { value: 45, color: "#34d399", label: "Paid" },
     { value: 25, color: "#273B3A", label: "Sent" },
     { value: 15, color: "#f87171", label: "Overdue" },
-    { value: 15, color: "#6B7876", label: "Draft" },
+    { value: 15, color: "#273B3A", label: "Draft" },
   ];
   const size = 80;
   const thickness = 8;
@@ -301,8 +301,8 @@ function AnimatedDonutChart({ visible, delay }: { visible: boolean; delay: numbe
           })}
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-xs font-bold text-[#1A2726]">100</span>
-          <span className="text-[7px] text-[#6B7876] uppercase">Total</span>
+          <span className="text-xs font-bold text-[#273B3A]">100</span>
+          <span className="text-[7px] text-[#273B3A] uppercase">Total</span>
         </div>
       </div>
       <div className="space-y-1">
@@ -320,7 +320,7 @@ function AnimatedDonutChart({ visible, delay }: { visible: boolean; delay: numbe
               className="w-1.5 h-1.5 rounded-full"
               style={{ backgroundColor: seg.color }}
             />
-            <span className="text-[8px] text-[#4A5654]">{seg.label}</span>
+            <span className="text-[8px] text-[#273B3A]">{seg.label}</span>
           </div>
         ))}
       </div>
@@ -340,7 +340,7 @@ function ActivityFeed({ visible, delay }: { visible: boolean; delay: number }) {
       {items.map((item, i) => (
         <div
           key={i}
-          className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-[#F0E6E0]"
+          className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-[#E6D4C7]"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(12px)",
@@ -351,10 +351,10 @@ function ActivityFeed({ visible, delay }: { visible: boolean; delay: number }) {
             className="w-1.5 h-1.5 rounded-full flex-shrink-0"
             style={{ backgroundColor: item.accent }}
           />
-          <span className="text-[8px] sm:text-[9px] text-[#4A5654] truncate flex-1">
+          <span className="text-[8px] sm:text-[9px] text-[#273B3A] truncate flex-1">
             {item.text}
           </span>
-          <span className="text-[7px] text-[#6B7876] flex-shrink-0">{item.time}</span>
+          <span className="text-[7px] text-[#273B3A] flex-shrink-0">{item.time}</span>
         </div>
       ))}
     </div>
@@ -373,17 +373,17 @@ function FloatingInvoiceCard({ visible, delay }: { visible: boolean; delay: numb
         transition: `all 0.8s cubic-bezier(.16,1,.3,1) ${delay}ms`,
       }}
     >
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-3 shadow-2xl shadow-black/60">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-3 shadow-2xl shadow-black/60">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-[8px] font-mono text-[#4A5654]">INV-1042</span>
+          <span className="text-[8px] font-mono text-[#273B3A]">INV-1042</span>
           <span className="text-[7px] px-1.5 py-0.5 rounded-full bg-[#34d399]/10 text-[#34d399] font-medium border border-[#34d399]/20">
             Paid
           </span>
         </div>
-        <p className="text-xs font-semibold text-[#1A2726]">$2,450.00</p>
-        <p className="text-[8px] text-[#6B7876] mt-1">Maple Leaf Co.</p>
-        <div className="mt-2 h-px bg-[#C9BAB0]" />
-        <p className="text-[7px] text-[#6B7876] mt-1.5">Due: Feb 15, 2026</p>
+        <p className="text-xs font-semibold text-[#273B3A]">$2,450.00</p>
+        <p className="text-[8px] text-[#273B3A] mt-1">Maple Leaf Co.</p>
+        <div className="mt-2 h-px bg-[#E6D4C7]" />
+        <p className="text-[7px] text-[#273B3A] mt-1.5">Due: Feb 15, 2026</p>
       </div>
     </div>
   );
@@ -399,14 +399,14 @@ function FloatingNotificationToast({ visible, delay }: { visible: boolean; delay
         transition: `all 0.7s cubic-bezier(.16,1,.3,1) ${delay}ms`,
       }}
     >
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-3 shadow-2xl shadow-black/60">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-3 shadow-2xl shadow-black/60">
         <div className="flex items-center gap-2 mb-1.5">
           <div className="w-4 h-4 rounded-full bg-[#34d399]/15 flex items-center justify-center flex-shrink-0">
             <Check size={8} className="text-[#34d399]" />
           </div>
-          <span className="text-[8px] font-semibold text-[#1A2726]">Payment Received</span>
+          <span className="text-[8px] font-semibold text-[#273B3A]">Payment Received</span>
         </div>
-        <p className="text-[8px] text-[#4A5654] leading-relaxed">
+        <p className="text-[8px] text-[#273B3A] leading-relaxed">
           $1,200 from Northern Supply has been processed.
         </p>
       </div>
@@ -424,18 +424,18 @@ function FloatingProductCard({ visible, delay }: { visible: boolean; delay: numb
         transition: `all 0.8s cubic-bezier(.16,1,.3,1) ${delay}ms`,
       }}
     >
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-3 shadow-2xl shadow-black/60">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-3 shadow-2xl shadow-black/60">
         <div className="flex items-center gap-2 mb-2">
           <div className="w-5 h-5 rounded bg-[#a78bfa]/15 flex items-center justify-center">
             <Package size={10} className="text-[#a78bfa]" />
           </div>
-          <span className="text-[8px] font-semibold text-[#1A2726] truncate">Widget Pro X</span>
+          <span className="text-[8px] font-semibold text-[#273B3A] truncate">Widget Pro X</span>
         </div>
         <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[7px] text-[#6B7876]">Stock Level</span>
+          <span className="text-[7px] text-[#273B3A]">Stock Level</span>
           <span className="text-[8px] font-medium text-[#fbbf24]">Low</span>
         </div>
-        <div className="h-1.5 rounded-full bg-[#D8CAC0] overflow-hidden">
+        <div className="h-1.5 rounded-full bg-[#E6D4C7] overflow-hidden">
           <div
             className="h-full rounded-full bg-[#fbbf24]"
             style={{
@@ -444,7 +444,7 @@ function FloatingProductCard({ visible, delay }: { visible: boolean; delay: numb
             }}
           />
         </div>
-        <p className="text-[7px] text-[#6B7876] mt-1.5">12 / 50 units</p>
+        <p className="text-[7px] text-[#273B3A] mt-1.5">12 / 50 units</p>
       </div>
     </div>
   );
@@ -461,7 +461,7 @@ function FloatingAIChatBubble({ visible, delay }: { visible: boolean; delay: num
       }}
     >
       <div
-        className="bg-[#F0E6E0] border border-[#273B3A]/20 rounded-xl p-3 shadow-2xl shadow-black/60"
+        className="bg-[#E6D4C7] border border-[#273B3A]/20 rounded-xl p-3 shadow-2xl shadow-black/60"
         style={{
           animation: visible ? "pulseGlow 3s ease-in-out infinite" : "none",
           animationDelay: `${delay + 1000}ms`,
@@ -473,7 +473,7 @@ function FloatingAIChatBubble({ visible, delay }: { visible: boolean; delay: num
           </div>
           <span className="text-[8px] font-semibold text-[#273B3A]">Atlas AI</span>
         </div>
-        <p className="text-[8px] text-[#4A5654] leading-relaxed">
+        <p className="text-[8px] text-[#273B3A] leading-relaxed">
           Revenue is up 12% this month. Your top seller is Widget Pro X.
         </p>
       </div>
@@ -496,20 +496,20 @@ function AnimatedDashboardMockup() {
 
       {/* Main dashboard card */}
       <div
-        className="rounded-2xl border border-[#C9BAB0] bg-[#F0E6E0] overflow-hidden shadow-2xl shadow-black/40"
+        className="rounded-2xl border border-[#E6D4C7] bg-[#E6D4C7] overflow-hidden shadow-2xl shadow-black/40"
         style={{
           animation: visible ? "fadeInScale 0.8s cubic-bezier(.16,1,.3,1) both" : "none",
         }}
       >
         {/* Browser chrome */}
-        <div className="flex items-center gap-2 px-5 py-3 border-b border-[#C9BAB0] bg-[#F0E6E0]">
+        <div className="flex items-center gap-2 px-5 py-3 border-b border-[#E6D4C7] bg-[#E6D4C7]">
           <div className="flex gap-1.5">
             <div className="w-2.5 h-2.5 rounded-full bg-[#f87171]/60" />
             <div className="w-2.5 h-2.5 rounded-full bg-[#fbbf24]/60" />
             <div className="w-2.5 h-2.5 rounded-full bg-[#34d399]/60" />
           </div>
           <div className="flex-1 text-center">
-            <div className="inline-block px-4 py-1 rounded-md bg-[#D8CAC0] text-[10px] text-[#6B7876] font-mono">
+            <div className="inline-block px-4 py-1 rounded-md bg-[#E6D4C7] text-[10px] text-[#273B3A] font-mono">
               app.atlas-erp.ca/dashboard
             </div>
           </div>
@@ -555,18 +555,18 @@ function AnimatedDashboardMockup() {
             <div className="col-span-2">
               <AnimatedBarChart visible={visible} delay={800} />
             </div>
-            <div className="rounded-xl bg-[#D8CAC0] border border-[#C9BAB0] p-2.5 flex items-center justify-center">
+            <div className="rounded-xl bg-[#E6D4C7] border border-[#E6D4C7] p-2.5 flex items-center justify-center">
               <AnimatedDonutChart visible={visible} delay={1000} />
             </div>
           </div>
 
           {/* Activity feed */}
-          <div className="rounded-xl bg-[#D8CAC0] border border-[#C9BAB0] p-2.5">
+          <div className="rounded-xl bg-[#E6D4C7] border border-[#E6D4C7] p-2.5">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[8px] sm:text-[9px] font-semibold text-[#4A5654] uppercase tracking-wider">
+              <span className="text-[8px] sm:text-[9px] font-semibold text-[#273B3A] uppercase tracking-wider">
                 Recent Activity
               </span>
-              <span className="text-[7px] text-[#6B7876]">Live</span>
+              <span className="text-[7px] text-[#273B3A]">Live</span>
             </div>
             <ActivityFeed visible={visible} delay={1200} />
           </div>
@@ -607,7 +607,7 @@ function Nav() {
           <div className="w-9 h-9 rounded-lg bg-[#273B3A] flex items-center justify-center font-bold text-sm text-[#E6D4C7] transition-transform duration-300 group-hover:scale-105">
             A
           </div>
-          <span className="text-lg font-semibold tracking-tight text-[#1A2726]">
+          <span className="text-lg font-semibold tracking-tight text-[#273B3A]">
             Atlas
           </span>
         </Link>
@@ -618,7 +618,7 @@ function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-[#4A5654] hover:text-[#1A2726] transition-colors duration-300"
+              className="text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors duration-300"
             >
               {l.label}
             </a>
@@ -629,13 +629,13 @@ function Nav() {
         <div className="hidden md:flex items-center gap-5">
           <Link
             href="/login"
-            className="text-sm text-[#4A5654] hover:text-[#1A2726] transition-colors duration-300"
+            className="text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors duration-300"
           >
             Log in
           </Link>
           <Link
             href="/signup"
-            className="text-sm font-medium px-6 py-2.5 rounded-full bg-[#273B3A] text-[#E6D4C7] hover:bg-[#344948] transition-all duration-300 shadow-lg shadow-[#273B3A]/10"
+            className="text-sm font-medium px-6 py-2.5 rounded-full bg-[#273B3A] text-[#E6D4C7] hover:bg-[#273B3A] transition-all duration-300 shadow-lg shadow-[#273B3A]/10"
           >
             Start Free Trial
           </Link>
@@ -643,7 +643,7 @@ function Nav() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-[#1A2726]"
+          className="md:hidden text-[#273B3A]"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? <XIcon size={22} /> : <Menu size={22} />}
@@ -652,19 +652,19 @@ function Nav() {
 
       {/* Mobile drawer */}
       {menuOpen && (
-        <div className="md:hidden bg-[#E6D4C7]/98 backdrop-blur-2xl border-t border-[#C9BAB0] px-6 pb-8 pt-6 space-y-5">
+        <div className="md:hidden bg-[#E6D4C7]/98 backdrop-blur-2xl border-t border-[#E6D4C7] px-6 pb-8 pt-6 space-y-5">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
               onClick={() => setMenuOpen(false)}
-              className="block text-sm text-[#4A5654] hover:text-[#1A2726] transition-colors"
+              className="block text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors"
             >
               {l.label}
             </a>
           ))}
           <div className="flex items-center gap-5 pt-3">
-            <Link href="/login" className="text-sm text-[#4A5654]">
+            <Link href="/login" className="text-sm text-[#273B3A]">
               Log in
             </Link>
             <Link
@@ -686,7 +686,7 @@ function Hero() {
     <section className="relative min-h-screen flex items-center justify-center pt-[72px] overflow-hidden bg-[#E6D4C7]">
       {/* Ambient glow */}
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-[#273B3A]/[0.04] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9BAB0] to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#E6D4C7] to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center py-20">
         <Reveal>
@@ -697,7 +697,7 @@ function Hero() {
         </Reveal>
 
         <Reveal delay={120}>
-          <h1 className="text-4xl sm:text-5xl lg:text-[3.75rem] font-bold tracking-tight text-[#1A2726] leading-[1.08]">
+          <h1 className="text-4xl sm:text-5xl lg:text-[3.75rem] font-bold tracking-tight text-[#273B3A] leading-[1.08]">
             Run your business
             <br />
             <span className="text-[#273B3A]">smarter, not harder</span>
@@ -705,11 +705,11 @@ function Hero() {
         </Reveal>
 
         <Reveal delay={240}>
-          <p className="mt-7 text-lg sm:text-xl text-[#4A5654] max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-7 text-lg sm:text-xl text-[#273B3A] max-w-2xl mx-auto leading-relaxed">
             Atlas is the modern ERP that replaces Odoo at a fraction of the
             cost. Inventory, invoicing, accounting, HR, CRM, and an AI
             assistant — starting at{" "}
-            <span className="text-[#1A2726] font-semibold">$9/user/month</span>.
+            <span className="text-[#273B3A] font-semibold">$9/user/month</span>.
           </p>
         </Reveal>
 
@@ -717,7 +717,7 @@ function Hero() {
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/signup"
-              className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[#273B3A] text-[#E6D4C7] font-semibold text-base hover:bg-[#344948] transition-all duration-300 shadow-xl shadow-[#273B3A]/15"
+              className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[#273B3A] text-[#E6D4C7] font-semibold text-base hover:bg-[#273B3A] transition-all duration-300 shadow-xl shadow-[#273B3A]/15"
             >
               Start Free Trial
               <ArrowRight
@@ -727,7 +727,7 @@ function Hero() {
             </Link>
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-transparent text-[#1A2726] font-semibold text-base hover:bg-[#F0E6E0] transition-all duration-300 border border-[#C9BAB0] hover:border-[rgba(156,74,41,0.15)]"
+              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-transparent text-[#273B3A] font-semibold text-base hover:bg-[#E6D4C7] transition-all duration-300 border border-[#E6D4C7] hover:border-[rgba(156,74,41,0.15)]"
             >
               See Live Demo
             </Link>
@@ -735,7 +735,7 @@ function Hero() {
         </Reveal>
 
         <Reveal delay={440}>
-          <p className="mt-6 text-xs text-[#6B7876]">
+          <p className="mt-6 text-xs text-[#273B3A]">
             14-day free trial · No credit card required
           </p>
         </Reveal>
@@ -758,16 +758,16 @@ function SocialProof() {
     "Pacific Trade",
   ];
   return (
-    <Reveal className="py-16 border-y border-[#C9BAB0] bg-[#E6D4C7]">
+    <Reveal className="py-16 border-y border-[#E6D4C7] bg-[#E6D4C7]">
       <div className="mx-auto max-w-6xl px-6 text-center">
-        <p className="text-[11px] text-[#6B7876] mb-10 tracking-[0.25em] uppercase font-medium">
+        <p className="text-[11px] text-[#273B3A] mb-10 tracking-[0.25em] uppercase font-medium">
           Trusted by 500+ Canadian businesses
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-14 gap-y-5">
           {logos.map((name) => (
             <span
               key={name}
-              className="text-[#C9BAB0] font-semibold text-base tracking-tight select-none hover:text-[#6B7876] transition-colors duration-500"
+              className="text-[#E6D4C7] font-semibold text-base tracking-tight select-none hover:text-[#273B3A] transition-colors duration-500"
             >
               {name}
             </span>
@@ -808,7 +808,7 @@ function ProblemSolution() {
       <div className="mx-auto max-w-6xl px-6">
         <Reveal>
           <div className="text-center max-w-2xl mx-auto mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1A2726]">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#273B3A]">
               Odoo charges{" "}
               <span className="line-through text-[#444444] decoration-red-500/50">
                 $49/user
@@ -818,7 +818,7 @@ function ProblemSolution() {
               We charge{" "}
               <span className="text-[#273B3A]">$9</span>.
             </h2>
-            <p className="mt-5 text-[#4A5654] text-lg">
+            <p className="mt-5 text-[#273B3A] text-lg">
               Current ERPs are overpriced, over-engineered, and stuck in the
               past.
             </p>
@@ -828,12 +828,12 @@ function ProblemSolution() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {problems.map((p, i) => (
             <Reveal key={p.title} delay={i * 100}>
-              <div className="group p-7 rounded-2xl bg-[#F0E6E0] border border-[#C9BAB0] hover:border-[rgba(156,74,41,0.15)] hover:bg-[#1e1e1e] transition-all duration-500">
+              <div className="group p-7 rounded-2xl bg-[#E6D4C7] border border-[#E6D4C7] hover:border-[rgba(156,74,41,0.15)] hover:bg-[#1e1e1e] transition-all duration-500">
                 <span className="text-3xl">{p.emoji}</span>
-                <h3 className="text-[#1A2726] font-semibold text-base mt-5 mb-2.5">
+                <h3 className="text-[#273B3A] font-semibold text-base mt-5 mb-2.5">
                   {p.title}
                 </h3>
-                <p className="text-[#4A5654] text-sm leading-relaxed">
+                <p className="text-[#273B3A] text-sm leading-relaxed">
                   {p.desc}
                 </p>
               </div>
@@ -894,10 +894,10 @@ function Features() {
             <p className="text-sm font-medium text-[#273B3A] mb-4 tracking-wide uppercase">
               Everything you need
             </p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1A2726]">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#273B3A]">
               Six modules. One platform.
             </h2>
-            <p className="mt-5 text-[#4A5654] text-lg">
+            <p className="mt-5 text-[#273B3A] text-lg">
               Every module works together. No plugins, no integrations, no
               headaches.
             </p>
@@ -909,7 +909,7 @@ function Features() {
             const Icon = f.icon;
             return (
               <Reveal key={f.title} delay={i * 80}>
-                <div className="group relative p-8 rounded-2xl bg-[#F0E6E0] border border-[#C9BAB0] hover:border-[#273B3A]/20 transition-all duration-500 h-full">
+                <div className="group relative p-8 rounded-2xl bg-[#E6D4C7] border border-[#E6D4C7] hover:border-[#273B3A]/20 transition-all duration-500 h-full">
                   {f.badge && (
                     <span className="absolute top-6 right-6 text-[10px] font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full bg-[rgba(156,74,41,0.15)] text-[#273B3A] border border-[#273B3A]/15">
                       Only in Atlas
@@ -918,10 +918,10 @@ function Features() {
                   <div className="w-12 h-12 rounded-xl bg-[rgba(156,74,41,0.15)] flex items-center justify-center mb-6 group-hover:bg-[#273B3A]/15 transition-colors duration-500">
                     <Icon size={22} className="text-[#273B3A]" />
                   </div>
-                  <h3 className="text-[#1A2726] font-semibold text-base mb-2.5">
+                  <h3 className="text-[#273B3A] font-semibold text-base mb-2.5">
                     {f.title}
                   </h3>
-                  <p className="text-[#4A5654] text-sm leading-relaxed">
+                  <p className="text-[#273B3A] text-sm leading-relaxed">
                     {f.desc}
                   </p>
                 </div>
@@ -953,8 +953,8 @@ function Comparison() {
     if (v === true)
       return <Check size={18} className="text-[#273B3A] mx-auto" />;
     if (v === false)
-      return <X size={18} className="text-[#C9BAB0] mx-auto" />;
-    return <span className="text-sm text-[#4A5654]">{String(v)}</span>;
+      return <X size={18} className="text-[#E6D4C7] mx-auto" />;
+    return <span className="text-sm text-[#273B3A]">{String(v)}</span>;
   };
 
   return (
@@ -965,19 +965,19 @@ function Comparison() {
             <p className="text-sm font-medium text-[#273B3A] mb-4 tracking-wide uppercase">
               Honest comparison
             </p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1A2726]">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#273B3A]">
               See how Atlas stacks up
             </h2>
           </div>
         </Reveal>
 
         <Reveal delay={100}>
-          <div className="rounded-2xl border border-[#C9BAB0] overflow-hidden bg-[#F0E6E0]">
+          <div className="rounded-2xl border border-[#E6D4C7] overflow-hidden bg-[#E6D4C7]">
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="border-b border-[#C9BAB0]">
-                    <th className="p-5 text-sm font-medium text-[#6B7876]">
+                  <tr className="border-b border-[#E6D4C7]">
+                    <th className="p-5 text-sm font-medium text-[#273B3A]">
                       Feature
                     </th>
                     <th className="p-5 text-sm font-semibold text-[#273B3A] text-center">
@@ -988,10 +988,10 @@ function Comparison() {
                         Atlas
                       </div>
                     </th>
-                    <th className="p-5 text-sm font-medium text-[#6B7876] text-center">
+                    <th className="p-5 text-sm font-medium text-[#273B3A] text-center">
                       Odoo
                     </th>
-                    <th className="p-5 text-sm font-medium text-[#6B7876] text-center">
+                    <th className="p-5 text-sm font-medium text-[#273B3A] text-center">
                       QuickBooks
                     </th>
                   </tr>
@@ -1000,14 +1000,14 @@ function Comparison() {
                   {rows.map((row, i) => (
                     <tr
                       key={row.feature}
-                      className={`border-b border-[#C9BAB0]/50 ${
-                        i % 2 === 0 ? "bg-[#F0E6E0]" : "bg-[#F0E6E0]"
+                      className={`border-b border-[#E6D4C7]/50 ${
+                        i % 2 === 0 ? "bg-[#E6D4C7]" : "bg-[#E6D4C7]"
                       }`}
                     >
-                      <td className="p-5 text-sm text-[#1A2726] font-medium">
+                      <td className="p-5 text-sm text-[#273B3A] font-medium">
                         {row.feature}
                       </td>
-                      <td className="p-5 text-center font-medium text-[#1A2726]">
+                      <td className="p-5 text-center font-medium text-[#273B3A]">
                         {renderCell(row.atlas)}
                       </td>
                       <td className="p-5 text-center">
@@ -1083,10 +1083,10 @@ function Pricing() {
             <p className="text-sm font-medium text-[#273B3A] mb-4 tracking-wide uppercase">
               Simple pricing
             </p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1A2726]">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#273B3A]">
               One price. No surprises.
             </h2>
-            <p className="mt-5 text-[#4A5654] text-lg">
+            <p className="mt-5 text-[#273B3A] text-lg">
               14-day free trial on all plans. No credit card required.
             </p>
           </div>
@@ -1098,8 +1098,8 @@ function Pricing() {
               <div
                 className={`relative rounded-2xl p-8 h-full transition-all duration-500 ${
                   plan.popular
-                    ? "bg-[#F0E6E0] border-2 border-[#273B3A] shadow-2xl shadow-[#273B3A]/5"
-                    : "bg-[#F0E6E0] border border-[#C9BAB0] hover:border-[rgba(156,74,41,0.15)]"
+                    ? "bg-[#E6D4C7] border-2 border-[#273B3A] shadow-2xl shadow-[#273B3A]/5"
+                    : "bg-[#E6D4C7] border border-[#E6D4C7] hover:border-[rgba(156,74,41,0.15)]"
                 }`}
               >
                 {plan.popular && (
@@ -1107,15 +1107,15 @@ function Pricing() {
                     Most Popular
                   </div>
                 )}
-                <h3 className="text-base font-semibold text-[#1A2726]">
+                <h3 className="text-base font-semibold text-[#273B3A]">
                   {plan.name}
                 </h3>
-                <p className="text-sm text-[#4A5654] mt-1">{plan.desc}</p>
+                <p className="text-sm text-[#273B3A] mt-1">{plan.desc}</p>
                 <div className="mt-7 mb-7">
-                  <span className="text-5xl font-bold text-[#1A2726]">
+                  <span className="text-5xl font-bold text-[#273B3A]">
                     ${plan.price}
                   </span>
-                  <span className="text-[#6B7876] text-sm ml-1.5">
+                  <span className="text-[#273B3A] text-sm ml-1.5">
                     /user/mo
                   </span>
                 </div>
@@ -1123,8 +1123,8 @@ function Pricing() {
                   href="/signup"
                   className={`block text-center py-3.5 rounded-full font-semibold text-sm transition-all duration-300 ${
                     plan.popular
-                      ? "bg-[#273B3A] text-[#E6D4C7] hover:bg-[#344948] shadow-lg shadow-[#273B3A]/10"
-                      : "bg-[#D8CAC0] text-[#1A2726] hover:bg-[#C9BAB0] border border-[#C9BAB0]"
+                      ? "bg-[#273B3A] text-[#E6D4C7] hover:bg-[#273B3A] shadow-lg shadow-[#273B3A]/10"
+                      : "bg-[#E6D4C7] text-[#273B3A] hover:bg-[#E6D4C7] border border-[#E6D4C7]"
                   }`}
                 >
                   Start Free Trial
@@ -1133,12 +1133,12 @@ function Pricing() {
                   {plan.features.map((f) => (
                     <li
                       key={f}
-                      className="flex items-start gap-3 text-sm text-[#4A5654]"
+                      className="flex items-start gap-3 text-sm text-[#273B3A]"
                     >
                       <Check
                         size={16}
                         className={`shrink-0 mt-0.5 ${
-                          plan.popular ? "text-[#273B3A]" : "text-[#6B7876]"
+                          plan.popular ? "text-[#273B3A]" : "text-[#273B3A]"
                         }`}
                       />
                       {f}
@@ -1188,10 +1188,10 @@ function Testimonials() {
       <div className="mx-auto max-w-6xl px-6">
         <Reveal>
           <div className="text-center max-w-2xl mx-auto mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1A2726]">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#273B3A]">
               Loved across Canada
             </h2>
-            <p className="mt-5 text-[#4A5654] text-lg">
+            <p className="mt-5 text-[#273B3A] text-lg">
               Real businesses, real results.
             </p>
           </div>
@@ -1200,7 +1200,7 @@ function Testimonials() {
         <div className="grid md:grid-cols-3 gap-5">
           {testimonials.map((t, i) => (
             <Reveal key={t.name} delay={i * 120}>
-              <div className="group p-8 rounded-2xl bg-[#F0E6E0] border border-[#C9BAB0] hover:border-[rgba(156,74,41,0.15)] transition-all duration-500 h-full flex flex-col">
+              <div className="group p-8 rounded-2xl bg-[#E6D4C7] border border-[#E6D4C7] hover:border-[rgba(156,74,41,0.15)] transition-all duration-500 h-full flex flex-col">
                 <div className="flex gap-1 mb-6">
                   {Array.from({ length: t.rating }).map((_, j) => (
                     <Star
@@ -1213,11 +1213,11 @@ function Testimonials() {
                 <p className="text-[#aaaaaa] text-sm leading-relaxed flex-1">
                   &ldquo;{t.quote}&rdquo;
                 </p>
-                <div className="mt-7 pt-6 border-t border-[#C9BAB0]">
-                  <p className="text-sm font-semibold text-[#1A2726]">
+                <div className="mt-7 pt-6 border-t border-[#E6D4C7]">
+                  <p className="text-sm font-semibold text-[#273B3A]">
                     {t.name}
                   </p>
-                  <p className="text-xs text-[#6B7876] mt-1 flex items-center gap-1.5">
+                  <p className="text-xs text-[#273B3A] mt-1 flex items-center gap-1.5">
                     {t.role} <MapPin size={10} /> {t.location}
                   </p>
                 </div>
@@ -1241,10 +1241,10 @@ function FinalCTA() {
 
       <Reveal>
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1A2726]">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#273B3A]">
             Ready to run your business smarter?
           </h2>
-          <p className="mt-5 text-[#4A5654] text-lg max-w-xl mx-auto">
+          <p className="mt-5 text-[#273B3A] text-lg max-w-xl mx-auto">
             Join 500+ Canadian businesses already saving time and money with
             Atlas.
           </p>
@@ -1262,11 +1262,11 @@ function FinalCTA() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="flex-1 px-6 py-3.5 rounded-full bg-[#F0E6E0] border border-[#C9BAB0] text-[#1A2726] placeholder:text-[#6B7876] text-sm focus:outline-none focus:ring-2 focus:ring-[#273B3A]/20 focus:border-[#273B3A]/40 transition-all duration-300"
+              className="flex-1 px-6 py-3.5 rounded-full bg-[#E6D4C7] border border-[#E6D4C7] text-[#273B3A] placeholder:text-[#273B3A] text-sm focus:outline-none focus:ring-2 focus:ring-[#273B3A]/20 focus:border-[#273B3A]/40 transition-all duration-300"
             />
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#273B3A] text-[#E6D4C7] font-semibold text-sm hover:bg-[#344948] transition-all duration-300 shadow-lg shadow-[#273B3A]/10"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#273B3A] text-[#E6D4C7] font-semibold text-sm hover:bg-[#273B3A] transition-all duration-300 shadow-lg shadow-[#273B3A]/10"
             >
               Get Started <ArrowRight size={14} />
             </button>
@@ -1322,7 +1322,7 @@ function Footer() {
   ];
 
   return (
-    <footer className="border-t border-[#C9BAB0] bg-[#E6D4C7]">
+    <footer className="border-t border-[#E6D4C7] bg-[#E6D4C7]">
       <div className="mx-auto max-w-6xl px-6 py-20">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
           {/* Brand column */}
@@ -1331,19 +1331,19 @@ function Footer() {
               <div className="w-8 h-8 rounded-lg bg-[#273B3A] flex items-center justify-center font-bold text-xs text-[#E6D4C7]">
                 A
               </div>
-              <span className="text-base font-semibold text-[#1A2726]">
+              <span className="text-base font-semibold text-[#273B3A]">
                 Atlas
               </span>
             </Link>
-            <p className="text-sm text-[#6B7876] leading-relaxed">
+            <p className="text-sm text-[#273B3A] leading-relaxed">
               Modern ERP for Canadian businesses.
             </p>
-            <p className="mt-3 text-sm text-[#6B7876]">Built in Canada 🇨🇦</p>
+            <p className="mt-3 text-sm text-[#273B3A]">Built in Canada 🇨🇦</p>
           </div>
           {/* Link columns */}
           {columns.map((col) => (
             <div key={col.title}>
-              <h4 className="text-xs font-semibold text-[#4A5654] uppercase tracking-[0.2em] mb-5">
+              <h4 className="text-xs font-semibold text-[#273B3A] uppercase tracking-[0.2em] mb-5">
                 {col.title}
               </h4>
               <ul className="space-y-3">
@@ -1351,7 +1351,7 @@ function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-sm text-[#6B7876] hover:text-[#273B3A] transition-colors duration-300"
+                      className="text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors duration-300"
                     >
                       {link.label}
                     </a>
@@ -1363,7 +1363,7 @@ function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 pt-8 border-t border-[#C9BAB0] flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-16 pt-8 border-t border-[#E6D4C7] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-[#444444]">
             © {new Date().getFullYear()} Atlas ERP Inc. All rights reserved.
           </p>
@@ -1387,7 +1387,7 @@ function Footer() {
 /* ─────────────────────── PAGE ─────────────────────── */
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#E6D4C7] text-[#1A2726] overflow-x-hidden antialiased">
+    <div className="min-h-screen bg-[#E6D4C7] text-[#273B3A] overflow-x-hidden antialiased">
       <Nav />
       <Hero />
       <SocialProof />

@@ -142,7 +142,7 @@ function RoleBadge({ role }: { role: string }) {
     owner: "bg-[rgba(156,74,41,0.15)] text-[#273B3A] border-[#273B3A]/20",
     admin: "bg-violet-500/10 text-violet-400 border-violet-500/20",
     manager: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-    staff: "bg-[#D8CAC0] text-[#4A5654] border-[#C9BAB0]",
+    staff: "bg-[#E6D4C7] text-[#273B3A] border-[#E6D4C7]",
   };
 
   const icons: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -181,7 +181,7 @@ function ToggleSwitch({
       {enabled ? (
         <ToggleRight className="w-8 h-8 text-[#273B3A]" />
       ) : (
-        <ToggleLeft className="w-8 h-8 text-[#6B7876]" />
+        <ToggleLeft className="w-8 h-8 text-[#273B3A]" />
       )}
     </button>
   );
@@ -198,22 +198,22 @@ function GeneralSection() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-lg font-semibold text-[#1A2726]">General</h2>
-        <p className="text-sm text-[#4A5654] mt-1">
+        <h2 className="text-lg font-semibold text-[#273B3A]">General</h2>
+        <p className="text-sm text-[#273B3A] mt-1">
           Manage your organization settings.
         </p>
       </div>
 
       {/* Logo upload */}
       <div>
-        <label className="block text-sm font-medium text-[#1A2726] mb-3">
+        <label className="block text-sm font-medium text-[#273B3A] mb-3">
           Organization Logo
         </label>
         <div className="flex items-center gap-5">
-          <div className="w-20 h-20 rounded-xl bg-[#D8CAC0] border-2 border-dashed border-[#C9BAB0] flex items-center justify-center">
+          <div className="w-20 h-20 rounded-xl bg-[#E6D4C7] border-2 border-dashed border-[#E6D4C7] flex items-center justify-center">
             <span className="text-2xl font-bold text-[#273B3A]">A</span>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#C9BAB0] rounded-lg text-sm text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0] transition-all duration-200">
+          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200">
             <Upload className="w-4 h-4" />
             Upload Logo
           </button>
@@ -223,35 +223,35 @@ function GeneralSection() {
       {/* Fields */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+          <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
             Organization Name
           </label>
           <input
             type="text"
             value={orgName}
             onChange={(e) => setOrgName(e.target.value)}
-            className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+          <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
             Slug
           </label>
           <input
             type="text"
             value={orgSlug}
             onChange={(e) => setOrgSlug(e.target.value)}
-            className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+          <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
             Timezone
           </label>
           <select
             value={timezone}
             onChange={(e) => setTimezone(e.target.value)}
-            className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
           >
             <option value="America/Toronto">America/Toronto (EST)</option>
             <option value="America/Vancouver">America/Vancouver (PST)</option>
@@ -261,13 +261,13 @@ function GeneralSection() {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+          <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
             Currency
           </label>
           <select
             value={currency}
             onChange={(e) => setCurrency(e.target.value)}
-            className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
           >
             <option value="CAD">CAD — Canadian Dollar</option>
             <option value="USD">USD — US Dollar</option>
@@ -277,8 +277,8 @@ function GeneralSection() {
         </div>
       </div>
 
-      <div className="pt-4 border-t border-[#C9BAB0]">
-        <button className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200">
+      <div className="pt-4 border-t border-[#E6D4C7]">
+        <button className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200">
           Save Changes
         </button>
       </div>
@@ -291,39 +291,39 @@ function UsersSection() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-[#1A2726]">
+          <h2 className="text-lg font-semibold text-[#273B3A]">
             Users &amp; Roles
           </h2>
-          <p className="text-sm text-[#4A5654] mt-1">
+          <p className="text-sm text-[#273B3A] mt-1">
             Manage team members and their permissions.
           </p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200">
+        <button className="flex items-center gap-2 px-4 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200">
           <Plus className="w-4 h-4" />
           Invite Member
         </button>
       </div>
 
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl overflow-hidden">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
         {mockMembers.map((member, i) => (
           <div
             key={member.email}
             className={cn(
-              "px-6 py-4 flex items-center justify-between transition-colors hover:bg-[#D8CAC0]/50",
-              i < mockMembers.length - 1 && "border-b border-[#C9BAB0]/50"
+              "px-6 py-4 flex items-center justify-between transition-colors hover:bg-[#E6D4C7]/50",
+              i < mockMembers.length - 1 && "border-b border-[#E6D4C7]/50"
             )}
           >
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#D8CAC0] border border-[#C9BAB0] flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 rounded-full bg-[#E6D4C7] border border-[#E6D4C7] flex items-center justify-center flex-shrink-0">
                 <span className="text-xs font-semibold text-[#273B3A]">
                   {member.avatar}
                 </span>
               </div>
               <div>
-                <p className="text-sm font-medium text-[#1A2726]">
+                <p className="text-sm font-medium text-[#273B3A]">
                   {member.name}
                 </p>
-                <p className="text-xs text-[#4A5654] mt-0.5">
+                <p className="text-xs text-[#273B3A] mt-0.5">
                   {member.email}
                 </p>
               </div>
@@ -340,29 +340,29 @@ function BillingSection() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-[#1A2726]">Billing</h2>
-        <p className="text-sm text-[#4A5654] mt-1">
+        <h2 className="text-lg font-semibold text-[#273B3A]">Billing</h2>
+        <p className="text-sm text-[#273B3A] mt-1">
           Manage your subscription and usage.
         </p>
       </div>
 
       {/* Current plan */}
-      <div className="bg-[#F0E6E0] border border-[#273B3A]/20 rounded-xl p-6">
+      <div className="bg-[#E6D4C7] border border-[#273B3A]/20 rounded-xl p-6">
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="text-base font-semibold text-[#1A2726]">
+              <h3 className="text-base font-semibold text-[#273B3A]">
                 Business Plan
               </h3>
               <span className="px-2 py-0.5 rounded-full bg-[rgba(156,74,41,0.15)] text-[#273B3A] text-[10px] font-semibold uppercase tracking-wider">
                 Current
               </span>
             </div>
-            <p className="text-sm text-[#4A5654]">
+            <p className="text-sm text-[#273B3A]">
               $49/month · Billed monthly
             </p>
           </div>
-          <button className="px-4 py-2.5 border border-[#C9BAB0] rounded-lg text-sm text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0] transition-all duration-200">
+          <button className="px-4 py-2.5 border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200">
             Change Plan
           </button>
         </div>
@@ -379,18 +379,18 @@ function BillingSection() {
           return (
             <div
               key={stat.label}
-              className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-5"
+              className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5"
             >
-              <p className="text-xs text-[#4A5654] uppercase tracking-wider mb-3">
+              <p className="text-xs text-[#273B3A] uppercase tracking-wider mb-3">
                 {stat.label}
               </p>
-              <p className="text-xl font-bold text-[#1A2726]">
+              <p className="text-xl font-bold text-[#273B3A]">
                 {stat.used}{" "}
-                <span className="text-sm font-normal text-[#6B7876]">
+                <span className="text-sm font-normal text-[#273B3A]">
                   / {stat.limit}
                 </span>
               </p>
-              <div className="mt-3 h-1.5 bg-[#D8CAC0] rounded-full overflow-hidden">
+              <div className="mt-3 h-1.5 bg-[#E6D4C7] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#273B3A] rounded-full transition-all duration-500"
                   style={{ width: `${pct}%` }}
@@ -437,18 +437,18 @@ function BillingSection() {
           <div
             key={plan.name}
             className={cn(
-              "bg-[#F0E6E0] border rounded-xl p-5",
+              "bg-[#E6D4C7] border rounded-xl p-5",
               plan.current
                 ? "border-[#273B3A]/30"
-                : "border-[#C9BAB0]"
+                : "border-[#E6D4C7]"
             )}
           >
-            <h4 className="text-sm font-semibold text-[#1A2726]">
+            <h4 className="text-sm font-semibold text-[#273B3A]">
               {plan.name}
             </h4>
-            <p className="text-2xl font-bold text-[#1A2726] mt-1">
+            <p className="text-2xl font-bold text-[#273B3A] mt-1">
               {plan.price}
-              <span className="text-sm font-normal text-[#6B7876]">
+              <span className="text-sm font-normal text-[#273B3A]">
                 /mo
               </span>
             </p>
@@ -456,7 +456,7 @@ function BillingSection() {
               {plan.features.map((f) => (
                 <li
                   key={f}
-                  className="flex items-center gap-2 text-xs text-[#4A5654]"
+                  className="flex items-center gap-2 text-xs text-[#273B3A]"
                 >
                   <Check className="w-3 h-3 text-[#273B3A]" />
                   {f}
@@ -489,26 +489,26 @@ function ModulesSection() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-[#1A2726]">Modules</h2>
-        <p className="text-sm text-[#4A5654] mt-1">
+        <h2 className="text-lg font-semibold text-[#273B3A]">Modules</h2>
+        <p className="text-sm text-[#273B3A] mt-1">
           Enable or disable modules for your organization.
         </p>
       </div>
 
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl overflow-hidden">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
         {modules.map((mod, i) => (
           <div
             key={mod.name}
             className={cn(
               "px-6 py-4 flex items-center justify-between",
-              i < modules.length - 1 && "border-b border-[#C9BAB0]/50"
+              i < modules.length - 1 && "border-b border-[#E6D4C7]/50"
             )}
           >
             <div>
-              <p className="text-sm font-medium text-[#1A2726]">
+              <p className="text-sm font-medium text-[#273B3A]">
                 {mod.name}
               </p>
-              <p className="text-xs text-[#4A5654] mt-0.5">
+              <p className="text-xs text-[#273B3A] mt-0.5">
                 {mod.description}
               </p>
             </div>
@@ -527,8 +527,8 @@ function IntegrationsSection() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-[#1A2726]">Integrations</h2>
-        <p className="text-sm text-[#4A5654] mt-1">
+        <h2 className="text-lg font-semibold text-[#273B3A]">Integrations</h2>
+        <p className="text-sm text-[#273B3A] mt-1">
           Connect third-party services to your workspace.
         </p>
       </div>
@@ -537,7 +537,7 @@ function IntegrationsSection() {
         {mockIntegrations.map((integration) => (
           <div
             key={integration.name}
-            className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-5 flex items-start justify-between hover:border-[#273B3A]/20 transition-all duration-200"
+            className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5 flex items-start justify-between hover:border-[#273B3A]/20 transition-all duration-200"
           >
             <div className="flex items-start gap-4">
               <div
@@ -551,15 +551,15 @@ function IntegrationsSection() {
                 />
               </div>
               <div>
-                <p className="text-sm font-medium text-[#1A2726]">
+                <p className="text-sm font-medium text-[#273B3A]">
                   {integration.name}
                 </p>
-                <p className="text-xs text-[#4A5654] mt-1 leading-relaxed">
+                <p className="text-xs text-[#273B3A] mt-1 leading-relaxed">
                   {integration.description}
                 </p>
               </div>
             </div>
-            <button className="flex items-center gap-1.5 px-3 py-1.5 border border-[#C9BAB0] rounded-lg text-[11px] font-medium text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all duration-200 flex-shrink-0 ml-4">
+            <button className="flex items-center gap-1.5 px-3 py-1.5 border border-[#E6D4C7] rounded-lg text-[11px] font-medium text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200 flex-shrink-0 ml-4">
               Connect
               <ExternalLink className="w-3 h-3" />
             </button>
@@ -583,15 +583,15 @@ function TaxSection() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-lg font-semibold text-[#1A2726]">Tax Settings</h2>
-        <p className="text-sm text-[#4A5654] mt-1">
+        <h2 className="text-lg font-semibold text-[#273B3A]">Tax Settings</h2>
+        <p className="text-sm text-[#273B3A] mt-1">
           Configure tax rates and registration numbers.
         </p>
       </div>
 
       {/* Business number */}
       <div>
-        <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+        <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
           Business / GST Number
         </label>
         <input
@@ -599,30 +599,30 @@ function TaxSection() {
           value={businessNumber}
           onChange={(e) => setBusinessNumber(e.target.value)}
           placeholder="e.g. 123456789 RT0001"
-          className="w-full max-w-md px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder-[#6B7876] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+          className="w-full max-w-md px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
         />
       </div>
 
       {/* Tax rates */}
       <div>
-        <h3 className="text-sm font-medium text-[#1A2726] mb-4">
+        <h3 className="text-sm font-medium text-[#273B3A] mb-4">
           Tax Rates
         </h3>
-        <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl overflow-hidden">
+        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
           {taxRates.map((tax, i) => (
             <div
               key={tax.name}
               className={cn(
                 "px-6 py-4 flex items-center justify-between gap-4",
-                i < taxRates.length - 1 && "border-b border-[#C9BAB0]/50"
+                i < taxRates.length - 1 && "border-b border-[#E6D4C7]/50"
               )}
             >
               <div className="flex items-center gap-4 flex-1 min-w-0">
                 <div>
-                  <p className="text-sm font-medium text-[#1A2726]">
+                  <p className="text-sm font-medium text-[#273B3A]">
                     {tax.name}
                   </p>
-                  <p className="text-xs text-[#4A5654] mt-0.5">
+                  <p className="text-xs text-[#273B3A] mt-0.5">
                     {tax.rate}%
                   </p>
                 </div>
@@ -632,15 +632,15 @@ function TaxSection() {
                 value={tax.number}
                 onChange={(e) => updateTaxNumber(i, e.target.value)}
                 placeholder="Tax registration #"
-                className="w-52 px-3 py-2 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-xs text-[#1A2726] placeholder-[#6B7876] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+                className="w-52 px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-xs text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
               />
             </div>
           ))}
         </div>
       </div>
 
-      <div className="pt-4 border-t border-[#C9BAB0]">
-        <button className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200">
+      <div className="pt-4 border-t border-[#E6D4C7]">
+        <button className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200">
           Save Tax Settings
         </button>
       </div>
@@ -676,71 +676,71 @@ function CompanySection() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-lg font-semibold text-[#1A2726]">Company Profile</h2>
-        <p className="text-sm text-[#4A5654] mt-1">
+        <h2 className="text-lg font-semibold text-[#273B3A]">Company Profile</h2>
+        <p className="text-sm text-[#273B3A] mt-1">
           Legal and business information about your company.
         </p>
       </div>
 
       {/* Legal Information */}
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-6">
-        <h3 className="text-sm font-semibold text-[#1A2726] mb-4 flex items-center gap-2">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#273B3A] mb-4 flex items-center gap-2">
           <FileText className="w-4 h-4 text-[#273B3A]" />
           Legal Information
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Legal Name
             </label>
             <input
               type="text"
               value={formData.legalName}
               onChange={(e) => updateField("legalName", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Trading Name / DBA
             </label>
             <input
               type="text"
               value={formData.tradingName}
               onChange={(e) => updateField("tradingName", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Registration Number
             </label>
             <input
               type="text"
               value={formData.registrationNumber}
               onChange={(e) => updateField("registrationNumber", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Tax ID / EIN
             </label>
             <input
               type="text"
               value={formData.taxId}
               onChange={(e) => updateField("taxId", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Industry
             </label>
             <select
               value={formData.industry}
               onChange={(e) => updateField("industry", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             >
               <option value="technology">Technology</option>
               <option value="healthcare">Healthcare</option>
@@ -751,13 +751,13 @@ function CompanySection() {
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Company Size
             </label>
             <select
               value={formData.companySize}
               onChange={(e) => updateField("companySize", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             >
               <option value="1-10">1-10 employees</option>
               <option value="11-50">11-50 employees</option>
@@ -770,107 +770,107 @@ function CompanySection() {
       </div>
 
       {/* Contact Information */}
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-6">
-        <h3 className="text-sm font-semibold text-[#1A2726] mb-4 flex items-center gap-2">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#273B3A] mb-4 flex items-center gap-2">
           <Globe className="w-4 h-4 text-[#273B3A]" />
           Contact Information
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Website
             </label>
             <input
               type="url"
               value={formData.website}
               onChange={(e) => updateField("website", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Email
             </label>
             <input
               type="email"
               value={formData.email}
               onChange={(e) => updateField("email", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             />
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Phone
             </label>
             <input
               type="tel"
               value={formData.phone}
               onChange={(e) => updateField("phone", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             />
           </div>
         </div>
       </div>
 
       {/* Address */}
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-6">
-        <h3 className="text-sm font-semibold text-[#1A2726] mb-4 flex items-center gap-2">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#273B3A] mb-4 flex items-center gap-2">
           <MapPin className="w-4 h-4 text-[#273B3A]" />
           Business Address
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="sm:col-span-2">
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Street Address
             </label>
             <input
               type="text"
               value={formData.address}
               onChange={(e) => updateField("address", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               City
             </label>
             <input
               type="text"
               value={formData.city}
               onChange={(e) => updateField("city", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Province / State
             </label>
             <input
               type="text"
               value={formData.province}
               onChange={(e) => updateField("province", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Postal Code
             </label>
             <input
               type="text"
               value={formData.postalCode}
               onChange={(e) => updateField("postalCode", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-2">
               Country
             </label>
             <select
               value={formData.country}
               onChange={(e) => updateField("country", e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
             >
               <option value="Canada">Canada</option>
               <option value="United States">United States</option>
@@ -880,8 +880,8 @@ function CompanySection() {
         </div>
       </div>
 
-      <div className="pt-4 border-t border-[#C9BAB0]">
-        <button className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200">
+      <div className="pt-4 border-t border-[#E6D4C7]">
+        <button className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200">
           Save Company Profile
         </button>
       </div>
@@ -911,24 +911,24 @@ function BrandingSection() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-lg font-semibold text-[#1A2726]">Branding</h2>
-        <p className="text-sm text-[#4A5654] mt-1">
+        <h2 className="text-lg font-semibold text-[#273B3A]">Branding</h2>
+        <p className="text-sm text-[#273B3A] mt-1">
           Customize the look and feel of your workspace.
         </p>
       </div>
 
       {/* Logo & Favicon */}
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-6">
-        <h3 className="text-sm font-semibold text-[#1A2726] mb-4">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#273B3A] mb-4">
           Logo & Favicon
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-3">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-3">
               Company Logo
             </label>
             <div className="flex items-center gap-4">
-              <div className="w-24 h-24 rounded-xl bg-[#D8CAC0] border-2 border-dashed border-[#C9BAB0] flex items-center justify-center">
+              <div className="w-24 h-24 rounded-xl bg-[#E6D4C7] border-2 border-dashed border-[#E6D4C7] flex items-center justify-center">
                 {logoUrl ? (
                   <img src={logoUrl} alt="Logo" className="w-full h-full object-contain rounded-xl" />
                 ) : (
@@ -936,22 +936,22 @@ function BrandingSection() {
                 )}
               </div>
               <div className="flex flex-col gap-2">
-                <button className="flex items-center gap-2 px-4 py-2 border border-[#C9BAB0] rounded-lg text-xs text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all">
+                <button className="flex items-center gap-2 px-4 py-2 border border-[#E6D4C7] rounded-lg text-xs text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all">
                   <Upload className="w-3.5 h-3.5" />
                   Upload Logo
                 </button>
-                <p className="text-[10px] text-[#6B7876]">
+                <p className="text-[10px] text-[#273B3A]">
                   PNG, JPG up to 2MB. 200x200px recommended.
                 </p>
               </div>
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-3">
+            <label className="block text-xs font-medium text-[#273B3A] uppercase tracking-wider mb-3">
               Favicon
             </label>
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-lg bg-[#D8CAC0] border-2 border-dashed border-[#C9BAB0] flex items-center justify-center">
+              <div className="w-16 h-16 rounded-lg bg-[#E6D4C7] border-2 border-dashed border-[#E6D4C7] flex items-center justify-center">
                 {faviconUrl ? (
                   <img src={faviconUrl} alt="Favicon" className="w-full h-full object-contain rounded-lg" />
                 ) : (
@@ -959,11 +959,11 @@ function BrandingSection() {
                 )}
               </div>
               <div className="flex flex-col gap-2">
-                <button className="flex items-center gap-2 px-4 py-2 border border-[#C9BAB0] rounded-lg text-xs text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all">
+                <button className="flex items-center gap-2 px-4 py-2 border border-[#E6D4C7] rounded-lg text-xs text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all">
                   <Upload className="w-3.5 h-3.5" />
                   Upload Favicon
                 </button>
-                <p className="text-[10px] text-[#6B7876]">
+                <p className="text-[10px] text-[#273B3A]">
                   32x32px or 64x64px. ICO, PNG, or SVG.
                 </p>
               </div>
@@ -973,8 +973,8 @@ function BrandingSection() {
       </div>
 
       {/* Theme */}
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-6">
-        <h3 className="text-sm font-semibold text-[#1A2726] mb-4">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#273B3A] mb-4">
           Theme
         </h3>
         <div className="grid grid-cols-3 gap-3">
@@ -990,7 +990,7 @@ function BrandingSection() {
                 "flex flex-col items-center gap-2 p-4 rounded-xl border transition-all",
                 theme === t.id
                   ? "bg-[rgba(156,74,41,0.15)] border-[#273B3A]/30 text-[#273B3A]"
-                  : "bg-[#E6D4C7] border-[#C9BAB0] text-[#4A5654] hover:text-[#1A2726] hover:border-[#C9BAB0]"
+                  : "bg-[#E6D4C7] border-[#E6D4C7] text-[#273B3A] hover:text-[#273B3A] hover:border-[#E6D4C7]"
               )}
             >
               <t.icon className="w-5 h-5" />
@@ -1001,8 +1001,8 @@ function BrandingSection() {
       </div>
 
       {/* Brand Color */}
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-6">
-        <h3 className="text-sm font-semibold text-[#1A2726] mb-4">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#273B3A] mb-4">
           Brand Color
         </h3>
         <div className="space-y-4">
@@ -1014,7 +1014,7 @@ function BrandingSection() {
                 onClick={() => setPrimaryColor(color)}
                 className={cn(
                   "w-8 h-8 rounded-lg transition-all",
-                  primaryColor === color && "ring-2 ring-offset-2 ring-offset-[#F0E6E0] ring-white/30"
+                  primaryColor === color && "ring-2 ring-offset-2 ring-offset-[#E6D4C7] ring-white/30"
                 )}
                 style={{ backgroundColor: color }}
               />
@@ -1024,11 +1024,11 @@ function BrandingSection() {
           {/* Custom Color Input */}
           <div className="flex items-center gap-3">
             <div
-              className="w-12 h-12 rounded-lg border border-[#C9BAB0]"
+              className="w-12 h-12 rounded-lg border border-[#E6D4C7]"
               style={{ backgroundColor: primaryColor }}
             />
             <div className="flex-1">
-              <label className="block text-xs font-medium text-[#4A5654] mb-1.5">
+              <label className="block text-xs font-medium text-[#273B3A] mb-1.5">
                 Custom Color
               </label>
               <div className="flex items-center gap-2">
@@ -1036,9 +1036,9 @@ function BrandingSection() {
                   type="text"
                   value={primaryColor}
                   onChange={(e) => setPrimaryColor(e.target.value)}
-                  className="flex-1 px-3 py-2 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] font-mono focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+                  className="flex-1 px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] font-mono focus:outline-none focus:border-[#273B3A]/40 transition-colors"
                 />
-                <button className="p-2 border border-[#C9BAB0] rounded-lg text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all">
+                <button className="p-2 border border-[#E6D4C7] rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all">
                   <Copy className="w-4 h-4" />
                 </button>
               </div>
@@ -1047,7 +1047,7 @@ function BrandingSection() {
 
           {/* Preview */}
           <div className="mt-4 p-4 bg-[#E6D4C7] rounded-lg">
-            <p className="text-xs text-[#4A5654] mb-3">Preview</p>
+            <p className="text-xs text-[#273B3A] mb-3">Preview</p>
             <div className="flex items-center gap-3">
               <button
                 className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
@@ -1071,8 +1071,8 @@ function BrandingSection() {
         </div>
       </div>
 
-      <div className="pt-4 border-t border-[#C9BAB0]">
-        <button className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200">
+      <div className="pt-4 border-t border-[#E6D4C7]">
+        <button className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200">
           Save Branding
         </button>
       </div>
@@ -1086,8 +1086,8 @@ function NotificationsSection() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-lg font-semibold text-[#1A2726]">Email Notifications</h2>
-        <p className="text-sm text-[#4A5654] mt-1">
+        <h2 className="text-lg font-semibold text-[#273B3A]">Email Notifications</h2>
+        <p className="text-sm text-[#273B3A] mt-1">
           Configure email alerts for important business events.
         </p>
       </div>
@@ -1101,11 +1101,11 @@ function NotificationsSection() {
         ].map((item) => (
           <div
             key={item.label}
-            className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-4 flex items-center gap-3"
+            className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-4 flex items-center gap-3"
           >
             <span className="text-2xl">{item.icon}</span>
             <div>
-              <p className="text-sm font-medium text-[#1A2726]">{item.label}</p>
+              <p className="text-sm font-medium text-[#273B3A]">{item.label}</p>
               <p className="text-xs text-emerald-400">Enabled</p>
             </div>
           </div>
@@ -1113,8 +1113,8 @@ function NotificationsSection() {
       </div>
 
       {/* Features list */}
-      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-6">
-        <h3 className="text-sm font-semibold text-[#1A2726] mb-4">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#273B3A] mb-4">
           Email Notification Features
         </h3>
         <ul className="space-y-3">
@@ -1125,7 +1125,7 @@ function NotificationsSection() {
             "Daily or weekly digest summaries of business activity",
             "Test email functionality to verify your setup",
           ].map((feature, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm text-[#4A5654]">
+            <li key={i} className="flex items-start gap-2 text-sm text-[#273B3A]">
               <Check className="w-4 h-4 text-[#273B3A] mt-0.5 flex-shrink-0" />
               {feature}
             </li>
@@ -1136,22 +1136,22 @@ function NotificationsSection() {
       {/* CTA to full page */}
       <Link
         href="/settings/notifications"
-        className="flex items-center justify-between p-6 bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl hover:border-[#273B3A]/30 transition-all group"
+        className="flex items-center justify-between p-6 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl hover:border-[#273B3A]/30 transition-all group"
       >
         <div className="flex items-center gap-4">
           <div className="p-3 rounded-lg bg-[rgba(156,74,41,0.15)]">
             <Bell className="w-6 h-6 text-[#273B3A]" />
           </div>
           <div>
-            <h3 className="text-base font-semibold text-[#1A2726]">
+            <h3 className="text-base font-semibold text-[#273B3A]">
               Configure Notification Preferences
             </h3>
-            <p className="text-sm text-[#4A5654] mt-0.5">
+            <p className="text-sm text-[#273B3A] mt-0.5">
               Manage alerts, set digest frequency, and test email delivery
             </p>
           </div>
         </div>
-        <ChevronRight className="w-5 h-5 text-[#6B7876] group-hover:text-[#273B3A] transition-colors" />
+        <ChevronRight className="w-5 h-5 text-[#273B3A] group-hover:text-[#273B3A] transition-colors" />
       </Link>
     </div>
   );
@@ -1163,7 +1163,7 @@ function NotificationsSection() {
 function AuditLogsRedirect() {
   return (
     <div className="flex flex-col items-center justify-center py-12">
-      <p className="text-[#4A5654] text-sm">Redirecting to Audit Logs...</p>
+      <p className="text-[#273B3A] text-sm">Redirecting to Audit Logs...</p>
     </div>
   );
 }
@@ -1192,10 +1192,10 @@ export default function SettingsPage() {
     <div className="max-w-[1400px]">
       {/* ── Page header ── */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight text-[#1A2726]">
+        <h1 className="text-2xl font-semibold tracking-tight text-[#273B3A]">
           Settings
         </h1>
-        <p className="text-[#4A5654] text-sm mt-1">
+        <p className="text-[#273B3A] text-sm mt-1">
           Configure your organization and workspace.
         </p>
       </div>
@@ -1213,7 +1213,7 @@ export default function SettingsPage() {
                 <Link
                   key={tab.id}
                   href={tab.href as string}
-                  className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 text-left text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+                  className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 text-left text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
                 >
                   <tab.icon className="w-[18px] h-[18px] flex-shrink-0" />
                   {tab.label}
@@ -1229,7 +1229,7 @@ export default function SettingsPage() {
                   "w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 text-left",
                   isActive
                     ? "bg-[#273B3A] text-[#E6D4C7]"
-                    : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+                    : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
                 )}
               >
                 <tab.icon

@@ -172,7 +172,7 @@ function getRoleColor(name: string): string {
     admin: "bg-[rgba(156,74,41,0.15)] text-[#273B3A] border-[#273B3A]/20",
     manager: "bg-violet-500/10 text-violet-400 border-violet-500/20",
     employee: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-    viewer: "bg-[#D8CAC0] text-[#4A5654] border-[#C9BAB0]",
+    viewer: "bg-[#E6D4C7] text-[#273B3A] border-[#E6D4C7]",
   };
   return colors[name.toLowerCase()] || colors.viewer;
 }
@@ -196,7 +196,7 @@ function PermissionCheckbox({
         "w-5 h-5 rounded border flex items-center justify-center transition-all",
         checked
           ? "bg-[#273B3A] border-[#273B3A]"
-          : "bg-[#D8CAC0] border-[#C9BAB0] hover:border-[#6B7876]",
+          : "bg-[#E6D4C7] border-[#E6D4C7] hover:border-[#273B3A]",
         disabled && "opacity-50 cursor-not-allowed"
       )}
     >
@@ -219,10 +219,10 @@ function RoleCard({
   onEdit: () => void;
 }) {
   return (
-    <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl overflow-hidden">
+    <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
       {/* Role Header */}
       <div
-        className="px-6 py-4 flex items-center justify-between cursor-pointer hover:bg-[#D8CAC0]/50 transition-colors"
+        className="px-6 py-4 flex items-center justify-between cursor-pointer hover:bg-[#E6D4C7]/50 transition-colors"
         onClick={onToggle}
       >
         <div className="flex items-center gap-4">
@@ -231,18 +231,18 @@ function RoleCard({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-semibold text-[#1A2726]">{role.name}</h3>
+              <h3 className="text-sm font-semibold text-[#273B3A]">{role.name}</h3>
               {role.is_system && (
-                <span className="px-1.5 py-0.5 rounded text-[9px] font-medium uppercase tracking-wider bg-[#D8CAC0] text-[#6B7876]">
+                <span className="px-1.5 py-0.5 rounded text-[9px] font-medium uppercase tracking-wider bg-[#E6D4C7] text-[#273B3A]">
                   System
                 </span>
               )}
             </div>
-            <p className="text-xs text-[#4A5654] mt-0.5">{role.description}</p>
+            <p className="text-xs text-[#273B3A] mt-0.5">{role.description}</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-xs text-[#4A5654]">
+          <span className="text-xs text-[#273B3A]">
             {role.user_count} user{role.user_count !== 1 ? "s" : ""}
           </span>
           <div className="flex items-center gap-2">
@@ -253,22 +253,22 @@ function RoleCard({
                     e.stopPropagation();
                     onEdit();
                   }}
-                  className="p-1.5 rounded-lg text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all"
+                  className="p-1.5 rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all"
                 >
                   <Edit2 className="w-4 h-4" />
                 </button>
                 <button
                   onClick={(e) => e.stopPropagation()}
-                  className="p-1.5 rounded-lg text-[#4A5654] hover:text-red-400 hover:bg-red-500/10 transition-all"
+                  className="p-1.5 rounded-lg text-[#273B3A] hover:text-red-400 hover:bg-red-500/10 transition-all"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
               </>
             )}
             {isExpanded ? (
-              <ChevronDown className="w-4 h-4 text-[#6B7876]" />
+              <ChevronDown className="w-4 h-4 text-[#273B3A]" />
             ) : (
-              <ChevronRight className="w-4 h-4 text-[#6B7876]" />
+              <ChevronRight className="w-4 h-4 text-[#273B3A]" />
             )}
           </div>
         </div>
@@ -276,9 +276,9 @@ function RoleCard({
 
       {/* Permission Matrix */}
       {isExpanded && (
-        <div className="border-t border-[#C9BAB0]">
+        <div className="border-t border-[#E6D4C7]">
           <div className="px-6 py-3 bg-[#E6D4C7]/50">
-            <div className="grid grid-cols-[1fr_80px_80px_80px_80px] gap-2 text-[10px] font-medium uppercase tracking-wider text-[#6B7876]">
+            <div className="grid grid-cols-[1fr_80px_80px_80px_80px] gap-2 text-[10px] font-medium uppercase tracking-wider text-[#273B3A]">
               <div>Module</div>
               <div className="text-center">View</div>
               <div className="text-center">Create</div>
@@ -286,18 +286,18 @@ function RoleCard({
               <div className="text-center">Delete</div>
             </div>
           </div>
-          <div className="divide-y divide-[#C9BAB0]/50">
+          <div className="divide-y divide-[#E6D4C7]/50">
             {moduleConfig.map((m) => {
               const permission = role.permissions.find((p) => p.module === m.module);
               if (!permission) return null;
               return (
                 <div
                   key={m.module}
-                  className="px-6 py-3 grid grid-cols-[1fr_80px_80px_80px_80px] gap-2 items-center hover:bg-[#D8CAC0]/30 transition-colors"
+                  className="px-6 py-3 grid grid-cols-[1fr_80px_80px_80px_80px] gap-2 items-center hover:bg-[#E6D4C7]/30 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <m.icon className="w-4 h-4 text-[#6B7876]" />
-                    <span className="text-sm text-[#1A2726]">{m.label}</span>
+                    <m.icon className="w-4 h-4 text-[#273B3A]" />
+                    <span className="text-sm text-[#273B3A]">{m.label}</span>
                   </div>
                   <div className="flex justify-center">
                     <PermissionCheckbox
@@ -349,31 +349,31 @@ function UserRoleAssignment({
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
   return (
-    <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl overflow-hidden">
-      <div className="px-6 py-4 border-b border-[#C9BAB0]">
-        <h3 className="text-sm font-semibold text-[#1A2726]">User Role Assignments</h3>
-        <p className="text-xs text-[#4A5654] mt-1">Assign roles to team members</p>
+    <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
+      <div className="px-6 py-4 border-b border-[#E6D4C7]">
+        <h3 className="text-sm font-semibold text-[#273B3A]">User Role Assignments</h3>
+        <p className="text-xs text-[#273B3A] mt-1">Assign roles to team members</p>
       </div>
-      <div className="divide-y divide-[#C9BAB0]/50">
+      <div className="divide-y divide-[#E6D4C7]/50">
         {users.map((user) => (
           <div
             key={user.id}
-            className="px-6 py-4 flex items-center justify-between hover:bg-[#D8CAC0]/30 transition-colors"
+            className="px-6 py-4 flex items-center justify-between hover:bg-[#E6D4C7]/30 transition-colors"
           >
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#D8CAC0] border border-[#C9BAB0] flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 rounded-full bg-[#E6D4C7] border border-[#E6D4C7] flex items-center justify-center flex-shrink-0">
                 <span className="text-xs font-semibold text-[#273B3A]">{user.avatar}</span>
               </div>
               <div>
-                <p className="text-sm font-medium text-[#1A2726]">{user.name}</p>
-                <p className="text-xs text-[#4A5654] mt-0.5">{user.email}</p>
+                <p className="text-sm font-medium text-[#273B3A]">{user.name}</p>
+                <p className="text-xs text-[#273B3A] mt-0.5">{user.email}</p>
               </div>
             </div>
             <div className="relative">
               <select
                 value={user.role_id}
                 onChange={() => {}}
-                className="appearance-none px-4 py-2 pr-8 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 cursor-pointer"
+                className="appearance-none px-4 py-2 pr-8 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 cursor-pointer"
               >
                 {roles.map((role) => (
                   <option key={role.id} value={role.id}>
@@ -381,7 +381,7 @@ function UserRoleAssignment({
                   </option>
                 ))}
               </select>
-              <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6B7876] pointer-events-none" />
+              <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#273B3A] pointer-events-none" />
             </div>
           </div>
         ))}
@@ -401,7 +401,7 @@ export default function RolesPage() {
       {/* Back link */}
       <Link
         href="/settings"
-        className="inline-flex items-center gap-2 text-sm text-[#4A5654] hover:text-[#1A2726] transition-colors mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors mb-6"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Settings
@@ -410,28 +410,28 @@ export default function RolesPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#1A2726]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#273B3A]">
             Roles & Permissions
           </h1>
-          <p className="text-[#4A5654] text-sm mt-1">
+          <p className="text-[#273B3A] text-sm mt-1">
             Manage user roles and their access permissions
           </p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200">
+        <button className="flex items-center gap-2 px-4 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200">
           <Plus className="w-4 h-4" />
           Create Role
         </button>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 p-1 bg-[#F0E6E0] rounded-lg w-fit mb-6">
+      <div className="flex gap-1 p-1 bg-[#E6D4C7] rounded-lg w-fit mb-6">
         <button
           onClick={() => setActiveTab("roles")}
           className={cn(
             "px-4 py-2 rounded-md text-sm font-medium transition-all",
             activeTab === "roles"
               ? "bg-[#273B3A] text-[#E6D4C7]"
-              : "text-[#4A5654] hover:text-[#1A2726]"
+              : "text-[#273B3A] hover:text-[#273B3A]"
           )}
         >
           Roles
@@ -442,7 +442,7 @@ export default function RolesPage() {
             "px-4 py-2 rounded-md text-sm font-medium transition-all",
             activeTab === "users"
               ? "bg-[#273B3A] text-[#E6D4C7]"
-              : "text-[#4A5654] hover:text-[#1A2726]"
+              : "text-[#273B3A] hover:text-[#273B3A]"
           )}
         >
           User Assignments
@@ -467,14 +467,14 @@ export default function RolesPage() {
       )}
 
       {/* Info box */}
-      <div className="mt-8 p-4 bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl">
+      <div className="mt-8 p-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl">
         <div className="flex items-start gap-3">
           <div className="p-2 rounded-lg bg-blue-500/10">
             <Shield className="w-4 h-4 text-blue-400" />
           </div>
           <div>
-            <h4 className="text-sm font-medium text-[#1A2726]">About System Roles</h4>
-            <p className="text-xs text-[#4A5654] mt-1 leading-relaxed">
+            <h4 className="text-sm font-medium text-[#273B3A]">About System Roles</h4>
+            <p className="text-xs text-[#273B3A] mt-1 leading-relaxed">
               System roles (Admin, Manager, Employee, Viewer) cannot be edited or deleted.
               They serve as templates. To customize permissions, create a new role with
               the specific access levels you need.

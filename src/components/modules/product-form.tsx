@@ -24,17 +24,17 @@ const categories = [
 const units = ["box", "bottle", "strip", "tablet", "capsule", "tube", "pack"];
 
 const inputClass =
-  "w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder:text-[#4A5654]/50 focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200";
+  "w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A]/50 focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200";
 
-const labelClass = "block text-sm font-medium text-[#4A5654] mb-2";
+const labelClass = "block text-sm font-medium text-[#273B3A] mb-2";
 
 function SectionHeader({ icon: Icon, title }: { icon: React.ElementType; title: string }) {
   return (
-    <div className="flex items-center gap-2.5 pb-3 mb-5 border-b border-[#C9BAB0]">
-      <div className="p-1.5 rounded-md bg-[#D8CAC0]">
+    <div className="flex items-center gap-2.5 pb-3 mb-5 border-b border-[#E6D4C7]">
+      <div className="p-1.5 rounded-md bg-[#E6D4C7]">
         <Icon className="w-3.5 h-3.5 text-[#273B3A]" />
       </div>
-      <h3 className="text-xs font-semibold uppercase tracking-widest text-[#4A5654]">{title}</h3>
+      <h3 className="text-xs font-semibold uppercase tracking-widest text-[#273B3A]">{title}</h3>
     </div>
   );
 }
@@ -93,11 +93,11 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Image Upload Placeholder */}
       <div className="flex justify-center">
-        <div className="w-full max-w-[200px] h-[140px] border-2 border-dashed border-[#C9BAB0] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-[#273B3A]/40 hover:bg-[#D8CAC0]/30 transition-all duration-200 group">
-          <div className="p-3 rounded-xl bg-[#D8CAC0] group-hover:bg-[rgba(156,74,41,0.15)] transition-colors">
-            <Camera className="w-5 h-5 text-[#6B7876] group-hover:text-[#273B3A] transition-colors" />
+        <div className="w-full max-w-[200px] h-[140px] border-2 border-dashed border-[#E6D4C7] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-[#273B3A]/40 hover:bg-[#E6D4C7]/30 transition-all duration-200 group">
+          <div className="p-3 rounded-xl bg-[#E6D4C7] group-hover:bg-[rgba(156,74,41,0.15)] transition-colors">
+            <Camera className="w-5 h-5 text-[#273B3A] group-hover:text-[#273B3A] transition-colors" />
           </div>
-          <span className="text-[11px] text-[#6B7876] group-hover:text-[#4A5654] transition-colors">Upload Image</span>
+          <span className="text-[11px] text-[#273B3A] group-hover:text-[#273B3A] transition-colors">Upload Image</span>
         </div>
       </div>
 
@@ -191,10 +191,10 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
                   onChange={(e) => update("is_active", e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-9 h-5 bg-[#C9BAB0] rounded-full peer-checked:bg-[#273B3A] transition-colors duration-200" />
+                <div className="w-9 h-5 bg-[#E6D4C7] rounded-full peer-checked:bg-[#273B3A] transition-colors duration-200" />
                 <div className="absolute top-0.5 left-0.5 w-4 h-4 bg-[#E6D4C7] rounded-full peer-checked:translate-x-4 transition-transform duration-200" />
               </div>
-              <span className="text-[#4A5654] group-hover:text-[#1A2726] transition-colors">
+              <span className="text-[#273B3A] group-hover:text-[#273B3A] transition-colors">
                 Active product
               </span>
             </label>
@@ -235,7 +235,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
           {form.cost_price > 0 && form.sell_price > 0 && (
             <div className="sm:col-span-2">
               <div className="px-4 py-2.5 bg-emerald-500/5 border border-emerald-500/10 rounded-lg flex items-center gap-2">
-                <span className="text-xs text-[#4A5654]">Margin:</span>
+                <span className="text-xs text-[#273B3A]">Margin:</span>
                 <span className="text-xs font-semibold text-emerald-400">
                   ${(form.sell_price - form.cost_price).toFixed(2)} ({((form.sell_price - form.cost_price) / form.cost_price * 100).toFixed(1)}%)
                 </span>
@@ -271,7 +271,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
               className={inputClass}
               placeholder="0"
             />
-            <p className="text-[11px] text-[#6B7876] mt-1.5">Alert when stock falls below this</p>
+            <p className="text-[11px] text-[#273B3A] mt-1.5">Alert when stock falls below this</p>
           </div>
         </div>
       </div>
@@ -322,17 +322,17 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#C9BAB0]">
+      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E6D4C7]">
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 text-sm font-medium text-[#4A5654] hover:text-[#1A2726] bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg hover:bg-[#C9BAB0] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-medium text-[#273B3A] hover:text-[#273B3A] bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg hover:bg-[#E6D4C7] transition-all duration-200"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-5 py-2.5 text-sm font-semibold bg-[#273B3A] text-[#E6D4C7] rounded-lg hover:bg-[#344948] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-semibold bg-[#273B3A] text-[#E6D4C7] rounded-lg hover:bg-[#273B3A] transition-all duration-200"
         >
           {product ? "Update Product" : "Add Product"}
         </button>

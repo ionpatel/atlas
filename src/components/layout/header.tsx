@@ -61,8 +61,8 @@ function NotificationDropdown() {
       <button
         onClick={() => setOpen(!open)}
         className={cn(
-          "relative p-2 rounded-lg text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all duration-200",
-          open && "bg-[#D8CAC0] text-[#1A2726]"
+          "relative p-2 rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200",
+          open && "bg-[#E6D4C7] text-[#273B3A]"
         )}
       >
         <Bell className="w-5 h-5" />
@@ -74,9 +74,9 @@ function NotificationDropdown() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-11 w-80 bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl shadow-2xl z-50 overflow-hidden">
-          <div className="px-4 py-3 border-b border-[#C9BAB0] flex items-center justify-between">
-            <p className="text-sm font-semibold text-[#1A2726]">Notifications</p>
+        <div className="absolute right-0 top-11 w-80 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl shadow-2xl z-50 overflow-hidden">
+          <div className="px-4 py-3 border-b border-[#E6D4C7] flex items-center justify-between">
+            <p className="text-sm font-semibold text-[#273B3A]">Notifications</p>
             <span className="text-[10px] font-medium text-[#273B3A] bg-[#273B3A]/10 px-2 py-0.5 rounded-full">
               {unreadCount} new
             </span>
@@ -89,8 +89,8 @@ function NotificationDropdown() {
                 href={n.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 hover:bg-[#D8CAC0] transition-colors",
-                  i < notifications.length - 1 && "border-b border-[#C9BAB0]/50"
+                  "flex items-center gap-3 px-4 py-3 hover:bg-[#E6D4C7] transition-colors",
+                  i < notifications.length - 1 && "border-b border-[#E6D4C7]/50"
                 )}
               >
                 <div className={cn(
@@ -103,19 +103,19 @@ function NotificationDropdown() {
                   )} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-[#1A2726]">{n.label}</p>
-                  <p className="text-[11px] text-[#6B7876]">Just now</p>
+                  <p className="text-sm text-[#273B3A]">{n.label}</p>
+                  <p className="text-[11px] text-[#273B3A]">Just now</p>
                 </div>
                 <div className={cn("w-2 h-2 rounded-full flex-shrink-0", n.color)} />
               </Link>
             ))}
           </div>
 
-          <div className="px-4 py-3 border-t border-[#C9BAB0] bg-[#E6D4C7]">
+          <div className="px-4 py-3 border-t border-[#E6D4C7] bg-[#E6D4C7]">
             <Link
               href="/notifications"
               onClick={() => setOpen(false)}
-              className="text-sm text-[#273B3A] hover:text-[#1E2E2D] font-medium transition-colors"
+              className="text-sm text-[#273B3A] hover:text-[#273B3A] font-medium transition-colors"
             >
               View all notifications →
             </Link>
@@ -128,7 +128,7 @@ function NotificationDropdown() {
 
 export function Header() {
   return (
-    <header className="h-14 border-b border-[#C9BAB0] bg-[#E6D4C7] sticky top-0 z-40 flex items-center justify-between px-6">
+    <header className="h-14 border-b border-[#E6D4C7] bg-[#E6D4C7] sticky top-0 z-40 flex items-center justify-between px-6">
       {/* Smart Search */}
       <SmartSearch className="w-96" />
 

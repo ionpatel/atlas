@@ -140,7 +140,7 @@ export function OrgSwitcher() {
     return (
       <div className="flex items-center gap-2 px-3 py-2">
         <Loader2 className="h-4 w-4 animate-spin text-[#273B3A]" />
-        <span className="text-sm text-[#4A5654]">Loading...</span>
+        <span className="text-sm text-[#273B3A]">Loading...</span>
       </div>
     );
   }
@@ -150,7 +150,7 @@ export function OrgSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
-          className="w-full justify-between px-3 py-2 h-auto hover:bg-[#D8CAC0] border border-transparent hover:border-[#C9BAB0] rounded-lg transition-all"
+          className="w-full justify-between px-3 py-2 h-auto hover:bg-[#E6D4C7] border border-transparent hover:border-[#E6D4C7] rounded-lg transition-all"
           disabled={switching}
         >
           <div className="flex items-center gap-3">
@@ -160,28 +160,28 @@ export function OrgSwitcher() {
               </AvatarFallback>
             </Avatar>
             <div className="text-left">
-              <p className="text-sm font-medium text-[#1A2726] truncate max-w-[140px]">
+              <p className="text-sm font-medium text-[#273B3A] truncate max-w-[140px]">
                 {currentOrg?.org_name || 'Select Organization'}
               </p>
-              <p className="text-xs text-[#4A5654] capitalize">
+              <p className="text-xs text-[#273B3A] capitalize">
                 {currentOrg?.role || 'No role'}
               </p>
             </div>
           </div>
           {switching ? (
-            <Loader2 className="h-4 w-4 animate-spin text-[#4A5654]" />
+            <Loader2 className="h-4 w-4 animate-spin text-[#273B3A]" />
           ) : (
-            <ChevronDown className="h-4 w-4 text-[#4A5654]" />
+            <ChevronDown className="h-4 w-4 text-[#273B3A]" />
           )}
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent 
-        className="w-64 bg-[#F0E6E0] border border-[#C9BAB0] shadow-xl" 
+        className="w-64 bg-[#E6D4C7] border border-[#E6D4C7] shadow-xl" 
         align="start"
         sideOffset={4}
       >
-        <DropdownMenuLabel className="text-[#4A5654] text-xs font-semibold uppercase tracking-wider">
+        <DropdownMenuLabel className="text-[#273B3A] text-xs font-semibold uppercase tracking-wider">
           Organizations
         </DropdownMenuLabel>
 
@@ -189,13 +189,13 @@ export function OrgSwitcher() {
           <DropdownMenuItem
             key={org.org_id}
             onClick={() => switchOrg(org)}
-            className="flex items-center justify-between cursor-pointer hover:bg-[#D8CAC0] focus:bg-[#D8CAC0] rounded-lg mx-1"
+            className="flex items-center justify-between cursor-pointer hover:bg-[#E6D4C7] focus:bg-[#E6D4C7] rounded-lg mx-1"
           >
             <div className="flex items-center gap-2">
-              <Building2 className="h-4 w-4 text-[#4A5654]" />
+              <Building2 className="h-4 w-4 text-[#273B3A]" />
               <div>
-                <p className="text-sm text-[#1A2726]">{org.org_name}</p>
-                <p className="text-xs text-[#6B7876] capitalize">{org.role}</p>
+                <p className="text-sm text-[#273B3A]">{org.org_name}</p>
+                <p className="text-xs text-[#273B3A] capitalize">{org.role}</p>
               </div>
             </div>
             {org.org_id === currentOrg?.org_id && (
@@ -206,8 +206,8 @@ export function OrgSwitcher() {
 
         {invitations.length > 0 && (
           <>
-            <DropdownMenuSeparator className="bg-[#C9BAB0]" />
-            <DropdownMenuLabel className="text-[#4A5654] text-xs font-semibold uppercase tracking-wider flex items-center gap-2">
+            <DropdownMenuSeparator className="bg-[#E6D4C7]" />
+            <DropdownMenuLabel className="text-[#273B3A] text-xs font-semibold uppercase tracking-wider flex items-center gap-2">
               <Mail className="h-3 w-3" />
               Pending Invitations
               <Badge variant="secondary" className="bg-[#273B3A]/10 text-[#273B3A] text-xs">
@@ -219,13 +219,13 @@ export function OrgSwitcher() {
               <DropdownMenuItem
                 key={inv.id}
                 onClick={() => acceptInvitation(inv)}
-                className="flex items-center justify-between cursor-pointer hover:bg-[#D8CAC0] focus:bg-[#D8CAC0] rounded-lg mx-1"
+                className="flex items-center justify-between cursor-pointer hover:bg-[#E6D4C7] focus:bg-[#E6D4C7] rounded-lg mx-1"
               >
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-[#273B3A]" />
                   <div>
-                    <p className="text-sm text-[#1A2726]">{inv.org_name}</p>
-                    <p className="text-xs text-[#6B7876]">Join as {inv.role}</p>
+                    <p className="text-sm text-[#273B3A]">{inv.org_name}</p>
+                    <p className="text-xs text-[#273B3A]">Join as {inv.role}</p>
                   </div>
                 </div>
               </DropdownMenuItem>
@@ -233,14 +233,14 @@ export function OrgSwitcher() {
           </>
         )}
 
-        <DropdownMenuSeparator className="bg-[#C9BAB0]" />
+        <DropdownMenuSeparator className="bg-[#E6D4C7]" />
 
         <DropdownMenuItem 
           onClick={() => window.location.href = '/settings/organizations'}
-          className="cursor-pointer hover:bg-[#D8CAC0] focus:bg-[#D8CAC0] rounded-lg mx-1"
+          className="cursor-pointer hover:bg-[#E6D4C7] focus:bg-[#E6D4C7] rounded-lg mx-1"
         >
-          <Users className="h-4 w-4 mr-2 text-[#4A5654]" />
-          <span className="text-[#1A2726]">Manage Organizations</span>
+          <Users className="h-4 w-4 mr-2 text-[#273B3A]" />
+          <span className="text-[#273B3A]">Manage Organizations</span>
         </DropdownMenuItem>
 
         <DropdownMenuItem 

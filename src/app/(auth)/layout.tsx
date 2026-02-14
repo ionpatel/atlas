@@ -13,18 +13,18 @@ export default function AuthLayout({
           <div className="w-11 h-11 rounded-xl bg-[#273B3A] flex items-center justify-center">
             <span className="text-[#E6D4C7] font-bold text-lg">A</span>
           </div>
-          <span className="text-[#1A2726] text-2xl font-semibold tracking-tight">
+          <span className="text-[#273B3A] text-2xl font-semibold tracking-tight">
             Atlas
           </span>
         </div>
 
         {/* Card */}
-        <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-2xl p-8 shadow-2xl shadow-black/20">
+        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl p-8 shadow-2xl shadow-black/20">
           {children}
         </div>
 
         {/* Footer */}
-        <p className="text-center text-[10px] text-[#4A5654]/60 mt-8 uppercase tracking-widest">
+        <p className="text-center text-[10px] text-[#273B3A]/60 mt-8 uppercase tracking-widest">
           Enterprise Resource Planning
         </p>
       </div>

@@ -109,8 +109,8 @@ function NavLink({ item, collapsed, isActive }: { item: NavItem; collapsed: bool
       className={cn(
         "flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-200",
         isActive
-          ? "bg-gradient-to-r from-[#273B3A] to-[#1E2E2D] text-[#E6D4C7] shadow-md shadow-[#273B3A]/20"
-          : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+          ? "bg-gradient-to-r from-[#273B3A] to-[#273B3A] text-[#E6D4C7] shadow-md shadow-[#273B3A]/20"
+          : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
       )}
     >
       <item.icon className={cn("w-[18px] h-[18px] flex-shrink-0", isActive && "text-[#E6D4C7]")} />
@@ -162,15 +162,15 @@ function NavGroupSection({
           className={cn(
             "w-full flex items-center justify-center p-2.5 rounded-lg transition-all duration-200",
             hasActiveChild
-              ? "bg-gradient-to-r from-[#273B3A] to-[#1E2E2D] text-[#E6D4C7]"
-              : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+              ? "bg-gradient-to-r from-[#273B3A] to-[#273B3A] text-[#E6D4C7]"
+              : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
           )}
         >
           <group.icon className="w-[18px] h-[18px]" />
         </button>
         {/* Tooltip on hover */}
         <div className="absolute left-full ml-2 top-0 hidden group-hover:block z-50">
-          <div className="bg-[#1A2726] text-[#E6D4C7] rounded-lg shadow-xl py-2 px-1 min-w-[160px]">
+          <div className="bg-[#273B3A] text-[#E6D4C7] rounded-lg shadow-xl py-2 px-1 min-w-[160px]">
             <div className="px-3 py-1.5 text-xs font-semibold text-[#273B3A] uppercase tracking-wider">
               {group.label}
             </div>
@@ -204,7 +204,7 @@ function NavGroupSection({
           "w-full flex items-center justify-between px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-200",
           hasActiveChild
             ? "text-[#273B3A]"
-            : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+            : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
         )}
       >
         <div className="flex items-center gap-3">
@@ -236,8 +236,8 @@ function NavGroupSection({
                 className={cn(
                   "flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-200",
                   isActive
-                    ? "bg-gradient-to-r from-[#273B3A] to-[#1E2E2D] text-[#E6D4C7] shadow-md shadow-[#273B3A]/20"
-                    : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+                    ? "bg-gradient-to-r from-[#273B3A] to-[#273B3A] text-[#E6D4C7] shadow-md shadow-[#273B3A]/20"
+                    : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
                 )}
               >
                 <item.icon className={cn("w-4 h-4 flex-shrink-0", isActive && "text-[#E6D4C7]")} />
@@ -286,11 +286,11 @@ export function Sidebar() {
       {/* Logo */}
       <div className="h-14 flex items-center px-4 border-b border-[#D4CEB8]">
         <Link href="/dashboard" className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#273B3A] to-[#1E2E2D] flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#273B3A]/20">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#273B3A] to-[#273B3A] flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#273B3A]/20">
             <span className="text-[#E6D4C7] font-bold text-sm tracking-tight">A</span>
           </div>
           {!collapsed && (
-            <span className="text-[#1A2726] font-semibold text-lg tracking-tight">
+            <span className="text-[#273B3A] font-semibold text-lg tracking-tight">
               Atlas
             </span>
           )}
@@ -340,7 +340,7 @@ export function Sidebar() {
       <div className="p-2 border-t border-[#D4CEB8]">
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="w-full flex items-center justify-center py-2 text-[#4A5654] hover:text-[#1A2726] rounded-lg hover:bg-[#F0E6E0] transition-all duration-200"
+          className="w-full flex items-center justify-center py-2 text-[#273B3A] hover:text-[#273B3A] rounded-lg hover:bg-[#E6D4C7] transition-all duration-200"
         >
           <ChevronLeft
             className={cn(

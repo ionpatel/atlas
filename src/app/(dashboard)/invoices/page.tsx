@@ -18,8 +18,8 @@ function StatusBadge({ status }: { status: string }) {
     paid: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
     sent: "bg-[rgba(156,74,41,0.15)] text-[#273B3A] border-[#273B3A]/20",
     overdue: "bg-red-500/10 text-red-400 border-red-500/20",
-    draft: "bg-[#D8CAC0] text-[#4A5654] border-[#C9BAB0]",
-    cancelled: "bg-[#D8CAC0] text-[#4A5654]/60 border-[#C9BAB0]",
+    draft: "bg-[#E6D4C7] text-[#273B3A] border-[#E6D4C7]",
+    cancelled: "bg-[#E6D4C7] text-[#273B3A]/60 border-[#E6D4C7]",
   };
   const label = status.charAt(0).toUpperCase() + status.slice(1);
   return (
@@ -50,15 +50,15 @@ function SummaryCard({
   };
   const c = colorMap[color] || colorMap.accent;
   return (
-    <div className={`${c.bg} border border-[#C9BAB0] rounded-xl p-5`}>
+    <div className={`${c.bg} border border-[#E6D4C7] rounded-xl p-5`}>
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-medium text-[#4A5654] uppercase tracking-wider">{label}</span>
+        <span className="text-xs font-medium text-[#273B3A] uppercase tracking-wider">{label}</span>
         <div className={`w-8 h-8 rounded-lg ${c.iconBg} flex items-center justify-center`}>
           <Icon className={`w-4 h-4 ${c.text}`} />
         </div>
       </div>
       <div className={`text-xl font-bold ${c.text}`}>{formatCurrency(amount)}</div>
-      <div className="text-xs text-[#4A5654] mt-1">{count} invoice{count !== 1 ? "s" : ""}</div>
+      <div className="text-xs text-[#273B3A] mt-1">{count} invoice{count !== 1 ? "s" : ""}</div>
     </div>
   );
 }
@@ -79,67 +79,67 @@ function InvoicePreviewModal({
   const cur = invoice.currency || "CAD";
   return (
     <Modal open={open} onClose={onClose} title="Invoice Preview" size="xl">
-      <div className="bg-[#E6D4C7] border border-[#C9BAB0] rounded-xl p-8 space-y-8">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-8 space-y-8">
         {/* Header */}
         <div className="flex justify-between items-start">
           <div>
             <h2 className="text-2xl font-bold text-[#273B3A]">INVOICE</h2>
-            <p className="text-sm text-[#4A5654] mt-1">{invoice.invoice_number}</p>
+            <p className="text-sm text-[#273B3A] mt-1">{invoice.invoice_number}</p>
           </div>
           <div className="text-right">
-            <h3 className="text-lg font-semibold text-[#1A2726]">Atlas Pharmacy</h3>
-            <p className="text-xs text-[#4A5654] mt-1">123 Main Street, Suite 100</p>
-            <p className="text-xs text-[#4A5654]">Toronto, ON M5V 1A1</p>
-            <p className="text-xs text-[#4A5654]">info@atlaspharmacy.ca</p>
+            <h3 className="text-lg font-semibold text-[#273B3A]">Atlas Pharmacy</h3>
+            <p className="text-xs text-[#273B3A] mt-1">123 Main Street, Suite 100</p>
+            <p className="text-xs text-[#273B3A]">Toronto, ON M5V 1A1</p>
+            <p className="text-xs text-[#273B3A]">info@atlaspharmacy.ca</p>
           </div>
         </div>
 
-        <div className="border-t border-[#C9BAB0]" />
+        <div className="border-t border-[#E6D4C7]" />
 
         {/* Bill To + Dates */}
         <div className="grid grid-cols-2 gap-8">
           <div>
-            <p className="text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest mb-2">Bill To</p>
-            <p className="text-sm font-semibold text-[#1A2726]">{contactName}</p>
+            <p className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest mb-2">Bill To</p>
+            <p className="text-sm font-semibold text-[#273B3A]">{contactName}</p>
           </div>
           <div className="text-right space-y-1">
             <div className="flex justify-end gap-6 text-sm">
-              <span className="text-[#4A5654]">Issue Date:</span>
-              <span className="text-[#1A2726]">{formatDate(invoice.issue_date)}</span>
+              <span className="text-[#273B3A]">Issue Date:</span>
+              <span className="text-[#273B3A]">{formatDate(invoice.issue_date)}</span>
             </div>
             <div className="flex justify-end gap-6 text-sm">
-              <span className="text-[#4A5654]">Due Date:</span>
-              <span className="text-[#1A2726]">{formatDate(invoice.due_date)}</span>
+              <span className="text-[#273B3A]">Due Date:</span>
+              <span className="text-[#273B3A]">{formatDate(invoice.due_date)}</span>
             </div>
             <div className="flex justify-end gap-6 text-sm">
-              <span className="text-[#4A5654]">Status:</span>
+              <span className="text-[#273B3A]">Status:</span>
               <StatusBadge status={invoice.status} />
             </div>
           </div>
         </div>
 
         {/* Line Items Table */}
-        <div className="border border-[#C9BAB0] rounded-lg overflow-hidden">
+        <div className="border border-[#E6D4C7] rounded-lg overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="bg-[#F0E6E0] border-b border-[#C9BAB0]">
-                <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Description</th>
-                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Qty</th>
-                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Unit Price</th>
-                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Amount</th>
+              <tr className="bg-[#E6D4C7] border-b border-[#E6D4C7]">
+                <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Description</th>
+                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Qty</th>
+                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Unit Price</th>
+                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Amount</th>
               </tr>
             </thead>
             <tbody>
               {items.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-4 py-6 text-center text-[#4A5654] text-sm italic">No line items</td>
+                  <td colSpan={4} className="px-4 py-6 text-center text-[#273B3A] text-sm italic">No line items</td>
                 </tr>
               ) : (
                 items.map((item) => (
-                  <tr key={item.id} className="border-b border-[#C9BAB0]/50 last:border-0">
-                    <td className="px-4 py-3 text-sm text-[#1A2726]">{item.description}</td>
-                    <td className="px-4 py-3 text-sm text-[#1A2726] text-right">{item.quantity}</td>
-                    <td className="px-4 py-3 text-sm text-[#1A2726] text-right">{formatCurrency(item.unit_price, cur)}</td>
+                  <tr key={item.id} className="border-b border-[#E6D4C7]/50 last:border-0">
+                    <td className="px-4 py-3 text-sm text-[#273B3A]">{item.description}</td>
+                    <td className="px-4 py-3 text-sm text-[#273B3A] text-right">{item.quantity}</td>
+                    <td className="px-4 py-3 text-sm text-[#273B3A] text-right">{formatCurrency(item.unit_price, cur)}</td>
                     <td className="px-4 py-3 text-sm text-[#273B3A] text-right font-medium">{formatCurrency(item.total, cur)}</td>
                   </tr>
                 ))
@@ -151,25 +151,25 @@ function InvoicePreviewModal({
         {/* Totals */}
         <div className="flex justify-end">
           <div className="w-72 space-y-2 text-sm">
-            <div className="flex justify-between text-[#4A5654]">
+            <div className="flex justify-between text-[#273B3A]">
               <span>Subtotal</span>
-              <span className="text-[#1A2726]">{formatCurrency(invoice.subtotal, cur)}</span>
+              <span className="text-[#273B3A]">{formatCurrency(invoice.subtotal, cur)}</span>
             </div>
-            <div className="flex justify-between text-[#4A5654]">
+            <div className="flex justify-between text-[#273B3A]">
               <span>Tax</span>
-              <span className="text-[#1A2726]">{formatCurrency(invoice.tax, cur)}</span>
+              <span className="text-[#273B3A]">{formatCurrency(invoice.tax, cur)}</span>
             </div>
-            <div className="flex justify-between font-bold text-lg border-t border-[#C9BAB0] pt-3 mt-3">
-              <span className="text-[#1A2726]">Total</span>
+            <div className="flex justify-between font-bold text-lg border-t border-[#E6D4C7] pt-3 mt-3">
+              <span className="text-[#273B3A]">Total</span>
               <span className="text-[#273B3A]">{formatCurrency(invoice.total, cur)}</span>
             </div>
           </div>
         </div>
 
         {invoice.notes && (
-          <div className="border-t border-[#C9BAB0] pt-4">
-            <p className="text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest mb-2">Notes</p>
-            <p className="text-sm text-[#4A5654]">{invoice.notes}</p>
+          <div className="border-t border-[#E6D4C7] pt-4">
+            <p className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest mb-2">Notes</p>
+            <p className="text-sm text-[#273B3A]">{invoice.notes}</p>
           </div>
         )}
       </div>
@@ -193,7 +193,7 @@ function KanbanColumn({
   onPreview: (inv: Invoice) => void;
 }) {
   const colorMap: Record<string, { border: string; dot: string }> = {
-    gray: { border: "border-[#6B7876]/30", dot: "bg-[#4A5654]" },
+    gray: { border: "border-[#273B3A]/30", dot: "bg-[#273B3A]" },
     accent: { border: "border-[#273B3A]/30", dot: "bg-[#273B3A]" },
     green: { border: "border-emerald-500/30", dot: "bg-emerald-400" },
     red: { border: "border-red-500/30", dot: "bg-red-400" },
@@ -202,29 +202,29 @@ function KanbanColumn({
 
   return (
     <div className={`flex-1 min-w-[250px] bg-[#E6D4C7] border ${c.border} rounded-xl overflow-hidden`}>
-      <div className="px-4 py-3 border-b border-[#C9BAB0] flex items-center gap-2">
+      <div className="px-4 py-3 border-b border-[#E6D4C7] flex items-center gap-2">
         <div className={`w-2 h-2 rounded-full ${c.dot}`} />
-        <h3 className="text-sm font-semibold text-[#1A2726]">{title}</h3>
-        <span className="ml-auto text-xs text-[#4A5654] bg-[#D8CAC0] px-2 py-0.5 rounded-full">{invoices.length}</span>
+        <h3 className="text-sm font-semibold text-[#273B3A]">{title}</h3>
+        <span className="ml-auto text-xs text-[#273B3A] bg-[#E6D4C7] px-2 py-0.5 rounded-full">{invoices.length}</span>
       </div>
       <div className="p-3 space-y-3 max-h-[60vh] overflow-y-auto">
         {invoices.length === 0 ? (
-          <p className="text-xs text-[#6B7876] text-center py-6">No invoices</p>
+          <p className="text-xs text-[#273B3A] text-center py-6">No invoices</p>
         ) : (
           invoices.map((inv) => (
             <div
               key={inv.id}
-              className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg p-4 hover:border-[#273B3A]/25 transition-all duration-200 cursor-pointer group"
+              className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg p-4 hover:border-[#273B3A]/25 transition-all duration-200 cursor-pointer group"
               onClick={() => onPreview(inv)}
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-mono text-[#273B3A] font-medium">{inv.invoice_number}</span>
                 <StatusBadge status={inv.status} />
               </div>
-              <p className="text-sm text-[#1A2726] font-medium">{getContactName(inv.contact_id)}</p>
+              <p className="text-sm text-[#273B3A] font-medium">{getContactName(inv.contact_id)}</p>
               <div className="flex items-center justify-between mt-3">
                 <span className="text-lg font-bold text-[#273B3A]">{formatCurrency(inv.total)}</span>
-                <span className="text-xs text-[#4A5654]">{formatDate(inv.due_date)}</span>
+                <span className="text-xs text-[#273B3A]">{formatDate(inv.due_date)}</span>
               </div>
               {inv.status !== "paid" && inv.status !== "cancelled" && (
                 <button
@@ -232,7 +232,7 @@ function KanbanColumn({
                     e.stopPropagation();
                     onAction(inv);
                   }}
-                  className="mt-3 w-full py-1.5 text-xs font-medium rounded-lg border border-[#C9BAB0] text-[#4A5654] hover:text-[#273B3A] hover:border-[#273B3A]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200 opacity-0 group-hover:opacity-100"
+                  className="mt-3 w-full py-1.5 text-xs font-medium rounded-lg border border-[#E6D4C7] text-[#273B3A] hover:text-[#273B3A] hover:border-[#273B3A]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200 opacity-0 group-hover:opacity-100"
                 >
                   {inv.status === "draft" && "Send Invoice"}
                   {inv.status === "sent" && "Register Payment"}
@@ -350,16 +350,16 @@ export default function InvoicesPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#1A2726]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#273B3A]">
             Invoices
           </h1>
-          <p className="text-[#4A5654] text-sm mt-1">
+          <p className="text-[#273B3A] text-sm mt-1">
             {filtered.length} of {invoices.length} invoices
           </p>
         </div>
         <button
           onClick={() => setModalOpen(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200"
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
           New Invoice
@@ -376,17 +376,17 @@ export default function InvoicesPage() {
 
       {/* Search, Filters & View Toggle */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#273B3A]/40 transition-colors duration-200">
-          <Search className="w-4 h-4 text-[#4A5654]" />
+        <div className="flex items-center gap-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#273B3A]/40 transition-colors duration-200">
+          <Search className="w-4 h-4 text-[#273B3A]" />
           <input
             type="text"
             placeholder="Search invoices..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm w-full text-[#1A2726] placeholder:text-[#4A5654]/60"
+            className="bg-transparent border-none outline-none text-sm w-full text-[#273B3A] placeholder:text-[#273B3A]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#4A5654] hover:text-[#1A2726]">
+            <button onClick={() => setSearchQuery("")} className="text-[#273B3A] hover:text-[#273B3A]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -396,7 +396,7 @@ export default function InvoicesPage() {
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.status
               ? "border-[#273B3A]/50 text-[#273B3A] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#C9BAB0] text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+              : "border-[#E6D4C7] text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
           }`}
         >
           <Filter className="w-4 h-4" />
@@ -404,13 +404,13 @@ export default function InvoicesPage() {
         </button>
 
         {/* View toggle */}
-        <div className="flex items-center border border-[#C9BAB0] rounded-lg overflow-hidden ml-auto">
+        <div className="flex items-center border border-[#E6D4C7] rounded-lg overflow-hidden ml-auto">
           <button
             onClick={() => setViewMode("list")}
             className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               viewMode === "list"
                 ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
-                : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+                : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
             }`}
           >
             <List className="w-4 h-4" />
@@ -421,7 +421,7 @@ export default function InvoicesPage() {
             className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               viewMode === "kanban"
                 ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
-                : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+                : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
             }`}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -435,7 +435,7 @@ export default function InvoicesPage() {
           <select
             value={filters.status}
             onChange={(e) => setFilter("status", e.target.value)}
-            className="px-4 py-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
           >
             <option value="">All Status</option>
             <option value="draft">Draft</option>
@@ -459,24 +459,24 @@ export default function InvoicesPage() {
 
       {/* List View */}
       {viewMode === "list" && (
-        <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl overflow-hidden">
+        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[#C9BAB0]">
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Invoice</th>
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Customer</th>
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Date</th>
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Due Date</th>
-                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Amount</th>
-                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Status</th>
-                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Actions</th>
+              <tr className="border-b border-[#E6D4C7]">
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Invoice</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Customer</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Date</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Due Date</th>
+                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Amount</th>
+                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Status</th>
+                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Actions</th>
               </tr>
             </thead>
             <tbody>
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-16 text-center text-[#4A5654] text-sm">
-                    <FileText className="w-8 h-8 mx-auto mb-3 text-[#4A5654]/40" />
+                  <td colSpan={7} className="px-6 py-16 text-center text-[#273B3A] text-sm">
+                    <FileText className="w-8 h-8 mx-auto mb-3 text-[#273B3A]/40" />
                     No invoices found
                   </td>
                 </tr>
@@ -484,7 +484,7 @@ export default function InvoicesPage() {
                 filtered.map((inv, i) => (
                   <tr
                     key={inv.id}
-                    className={`hover:bg-[#D8CAC0] transition-colors duration-150 cursor-pointer border-b border-[#C9BAB0]/50 last:border-0 ${
+                    className={`hover:bg-[#E6D4C7] transition-colors duration-150 cursor-pointer border-b border-[#E6D4C7]/50 last:border-0 ${
                       i % 2 === 1 ? "bg-[#E6D4C7]/40" : ""
                     }`}
                     onClick={() => handlePreview(inv)}
@@ -494,12 +494,12 @@ export default function InvoicesPage() {
                         <div className="w-8 h-8 rounded-lg bg-[rgba(156,74,41,0.15)] flex items-center justify-center flex-shrink-0">
                           <FileText className="w-3.5 h-3.5 text-[#273B3A]" />
                         </div>
-                        <span className="text-sm font-medium text-[#1A2726] font-mono">{inv.invoice_number}</span>
+                        <span className="text-sm font-medium text-[#273B3A] font-mono">{inv.invoice_number}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-[#1A2726]">{getContactName(inv.contact_id)}</td>
-                    <td className="px-6 py-4 text-sm text-[#4A5654]">{formatDate(inv.issue_date)}</td>
-                    <td className="px-6 py-4 text-sm text-[#4A5654]">{formatDate(inv.due_date)}</td>
+                    <td className="px-6 py-4 text-sm text-[#273B3A]">{getContactName(inv.contact_id)}</td>
+                    <td className="px-6 py-4 text-sm text-[#273B3A]">{formatDate(inv.issue_date)}</td>
+                    <td className="px-6 py-4 text-sm text-[#273B3A]">{formatDate(inv.due_date)}</td>
                     <td className="px-6 py-4 text-sm text-right font-semibold text-[#273B3A]">{formatCurrency(inv.total)}</td>
                     <td className="px-6 py-4 text-right">
                       <StatusBadge status={inv.status} />
@@ -551,14 +551,14 @@ export default function InvoicesPage() {
                             e.stopPropagation();
                             handlePreview(inv);
                           }}
-                          className="p-2 rounded-lg text-[#4A5654] hover:text-[#273B3A] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                          className="p-2 rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                           title="Preview"
                         >
                           <Eye className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={(e) => handleDelete(e, inv.id)}
-                          className="p-2 rounded-lg text-[#4A5654] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                          className="p-2 rounded-lg text-[#273B3A] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
                           title="Delete"
                         >
                           <Trash2 className="w-3.5 h-3.5" />

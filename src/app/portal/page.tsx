@@ -143,15 +143,15 @@ function PortalNav({
   ];
 
   return (
-    <header className="border-b border-[#D8CAC0]">
+    <header className="border-b border-[#E6D4C7]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/portal" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#273B3A] to-[#1E2E2D] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#273B3A] to-[#273B3A] flex items-center justify-center">
               <span className="text-[#E6D4C7] font-bold text-sm">A</span>
             </div>
-            <span className="text-[#1A2726] font-semibold text-lg hidden sm:block">
+            <span className="text-[#273B3A] font-semibold text-lg hidden sm:block">
               Customer Portal
             </span>
           </Link>
@@ -166,7 +166,7 @@ function PortalNav({
                   "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all",
                   activeTab === tab.id
                     ? "bg-[#273B3A]/10 text-[#273B3A]"
-                    : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
+                    : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
                 )}
               >
                 <tab.icon className="w-4 h-4" />
@@ -178,12 +178,12 @@ function PortalNav({
           {/* User Menu */}
           <div className="flex items-center gap-3">
             <div className="hidden sm:block text-right">
-              <p className="text-sm font-medium text-[#1A2726]">{customer?.name}</p>
-              <p className="text-xs text-[#6B7876]">{customer?.email}</p>
+              <p className="text-sm font-medium text-[#273B3A]">{customer?.name}</p>
+              <p className="text-xs text-[#273B3A]">{customer?.email}</p>
             </div>
             <button
               onClick={onLogout}
-              className="p-2 text-[#6B7876] hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+              className="p-2 text-[#273B3A] hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
               title="Sign out"
             >
               <LogOut className="w-5 h-5" />
@@ -221,27 +221,27 @@ function InvoicesTab() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-[#1A2726]">Invoices</h2>
-          <p className="text-[#4A5654] mt-1">View and download your invoices</p>
+          <h2 className="text-2xl font-bold text-[#273B3A]">Invoices</h2>
+          <p className="text-[#273B3A] mt-1">View and download your invoices</p>
         </div>
       </div>
 
       {/* Filters */}
       <div className="flex items-center gap-4">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6B7876]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#273B3A]" />
           <input
             type="text"
             placeholder="Search invoices..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-[#F0E6E0] border border-[#D8CAC0] rounded-lg text-sm text-[#1A2726] placeholder-[#6B7876] focus:outline-none focus:border-[#273B3A] transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
           />
         </div>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-4 py-2.5 bg-[#F0E6E0] border border-[#D8CAC0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A] transition-colors"
+          className="px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
         >
           <option value="all">All Status</option>
           <option value="paid">Paid</option>
@@ -251,29 +251,29 @@ function InvoicesTab() {
       </div>
 
       {/* Invoice List */}
-      <div className="bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl overflow-hidden">
+      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[#D8CAC0]">
-              <th className="text-left px-6 py-4 text-xs font-semibold text-[#6B7876] uppercase tracking-wider">Invoice</th>
-              <th className="text-left px-6 py-4 text-xs font-semibold text-[#6B7876] uppercase tracking-wider">Date</th>
-              <th className="text-left px-6 py-4 text-xs font-semibold text-[#6B7876] uppercase tracking-wider">Due Date</th>
-              <th className="text-right px-6 py-4 text-xs font-semibold text-[#6B7876] uppercase tracking-wider">Amount</th>
-              <th className="text-center px-6 py-4 text-xs font-semibold text-[#6B7876] uppercase tracking-wider">Status</th>
-              <th className="text-right px-6 py-4 text-xs font-semibold text-[#6B7876] uppercase tracking-wider">Actions</th>
+            <tr className="border-b border-[#E6D4C7]">
+              <th className="text-left px-6 py-4 text-xs font-semibold text-[#273B3A] uppercase tracking-wider">Invoice</th>
+              <th className="text-left px-6 py-4 text-xs font-semibold text-[#273B3A] uppercase tracking-wider">Date</th>
+              <th className="text-left px-6 py-4 text-xs font-semibold text-[#273B3A] uppercase tracking-wider">Due Date</th>
+              <th className="text-right px-6 py-4 text-xs font-semibold text-[#273B3A] uppercase tracking-wider">Amount</th>
+              <th className="text-center px-6 py-4 text-xs font-semibold text-[#273B3A] uppercase tracking-wider">Status</th>
+              <th className="text-right px-6 py-4 text-xs font-semibold text-[#273B3A] uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#D8CAC0]/50">
+          <tbody className="divide-y divide-[#E6D4C7]/50">
             {filteredInvoices.map((invoice) => (
-              <tr key={invoice.id} className="hover:bg-[#D8CAC0]/30 transition-colors">
+              <tr key={invoice.id} className="hover:bg-[#E6D4C7]/30 transition-colors">
                 <td className="px-6 py-4">
-                  <p className="text-sm font-medium text-[#1A2726]">{invoice.number}</p>
-                  <p className="text-xs text-[#6B7876]">{invoice.items} items</p>
+                  <p className="text-sm font-medium text-[#273B3A]">{invoice.number}</p>
+                  <p className="text-xs text-[#273B3A]">{invoice.items} items</p>
                 </td>
-                <td className="px-6 py-4 text-sm text-[#4A5654]">{invoice.date}</td>
-                <td className="px-6 py-4 text-sm text-[#4A5654]">{invoice.dueDate}</td>
+                <td className="px-6 py-4 text-sm text-[#273B3A]">{invoice.date}</td>
+                <td className="px-6 py-4 text-sm text-[#273B3A]">{invoice.dueDate}</td>
                 <td className="px-6 py-4 text-right">
-                  <span className="text-sm font-semibold text-[#1A2726]">
+                  <span className="text-sm font-semibold text-[#273B3A]">
                     ${invoice.amount.toFixed(2)}
                   </span>
                 </td>
@@ -316,14 +316,14 @@ function OrdersTab() {
     delivered: { color: "bg-emerald-500/10 text-emerald-400", icon: CheckCircle2 },
     shipped: { color: "bg-blue-500/10 text-blue-400", icon: Package },
     processing: { color: "bg-amber-500/10 text-amber-400", icon: Timer },
-    pending: { color: "bg-[#D8CAC0] text-[#4A5654]", icon: Clock },
+    pending: { color: "bg-[#E6D4C7] text-[#273B3A]", icon: Clock },
   };
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-[#1A2726]">Order History</h2>
-        <p className="text-[#4A5654] mt-1">Track your orders and deliveries</p>
+        <h2 className="text-2xl font-bold text-[#273B3A]">Order History</h2>
+        <p className="text-[#273B3A] mt-1">Track your orders and deliveries</p>
       </div>
 
       <div className="space-y-4">
@@ -332,12 +332,12 @@ function OrdersTab() {
           return (
             <div
               key={order.id}
-              className="bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl p-5 hover:border-[#273B3A]/30 transition-colors"
+              className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5 hover:border-[#273B3A]/30 transition-colors"
             >
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-3">
-                    <h3 className="font-semibold text-[#1A2726]">{order.number}</h3>
+                    <h3 className="font-semibold text-[#273B3A]">{order.number}</h3>
                     <span className={cn(
                       "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium",
                       status.color
@@ -346,7 +346,7 @@ function OrdersTab() {
                       {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                     </span>
                   </div>
-                  <p className="text-sm text-[#6B7876] mt-1">
+                  <p className="text-sm text-[#273B3A] mt-1">
                     {order.items} items • Ordered on {order.date}
                   </p>
                 </div>
@@ -354,7 +354,7 @@ function OrdersTab() {
                   <p className="text-lg font-bold text-[#273B3A]">
                     ${order.total.toFixed(2)}
                   </p>
-                  <button className="text-xs text-[#4A5654] hover:text-[#273B3A] mt-1 flex items-center gap-1">
+                  <button className="text-xs text-[#273B3A] hover:text-[#273B3A] mt-1 flex items-center gap-1">
                     View Details <ChevronRight className="w-3 h-3" />
                   </button>
                 </div>
@@ -362,7 +362,7 @@ function OrdersTab() {
 
               {/* Progress Bar for non-delivered orders */}
               {order.status !== "delivered" && (
-                <div className="mt-4 pt-4 border-t border-[#D8CAC0]">
+                <div className="mt-4 pt-4 border-t border-[#E6D4C7]">
                   <div className="flex items-center gap-4">
                     {["pending", "processing", "shipped", "delivered"].map((step, i) => (
                       <div key={step} className="flex-1 relative">
@@ -370,15 +370,15 @@ function OrdersTab() {
                           "h-1 rounded-full",
                           ["pending", "processing", "shipped", "delivered"].indexOf(order.status) >= i
                             ? "bg-[#273B3A]"
-                            : "bg-[#D8CAC0]"
+                            : "bg-[#E6D4C7]"
                         )} />
                         {i < 3 && (
-                          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#E6D4C7] border-2 border-[#D8CAC0]" />
+                          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#E6D4C7] border-2 border-[#E6D4C7]" />
                         )}
                       </div>
                     ))}
                   </div>
-                  <div className="flex justify-between mt-2 text-[10px] text-[#6B7876]">
+                  <div className="flex justify-between mt-2 text-[10px] text-[#273B3A]">
                     <span>Pending</span>
                     <span>Processing</span>
                     <span>Shipped</span>
@@ -399,7 +399,7 @@ function SupportTab() {
   const [newTicket, setNewTicket] = useState({ subject: "", description: "" });
 
   const priorityColors = {
-    low: "bg-[#D8CAC0] text-[#4A5654]",
+    low: "bg-[#E6D4C7] text-[#273B3A]",
     normal: "bg-blue-500/10 text-blue-400",
     high: "bg-amber-500/10 text-amber-400",
     urgent: "bg-red-500/10 text-red-400",
@@ -408,8 +408,8 @@ function SupportTab() {
   const statusColors = {
     open: "bg-emerald-500/10 text-emerald-400",
     in_progress: "bg-blue-500/10 text-blue-400",
-    resolved: "bg-[#D8CAC0] text-[#4A5654]",
-    closed: "bg-[#D8CAC0] text-[#6B7876]",
+    resolved: "bg-[#E6D4C7] text-[#273B3A]",
+    closed: "bg-[#E6D4C7] text-[#273B3A]",
   };
 
   const handleSubmitTicket = (e: React.FormEvent) => {
@@ -423,12 +423,12 @@ function SupportTab() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-[#1A2726]">Support Tickets</h2>
-          <p className="text-[#4A5654] mt-1">Get help from our support team</p>
+          <h2 className="text-2xl font-bold text-[#273B3A]">Support Tickets</h2>
+          <p className="text-[#273B3A] mt-1">Get help from our support team</p>
         </div>
         <button
           onClick={() => setShowNewTicket(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg font-semibold hover:bg-[#1E2E2D] transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg font-semibold hover:bg-[#273B3A] transition-colors"
         >
           <Plus className="w-4 h-4" />
           New Ticket
@@ -437,36 +437,36 @@ function SupportTab() {
 
       {/* New Ticket Form */}
       {showNewTicket && (
-        <div className="bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl p-6">
+        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-[#1A2726]">Create Support Ticket</h3>
+            <h3 className="font-semibold text-[#273B3A]">Create Support Ticket</h3>
             <button
               onClick={() => setShowNewTicket(false)}
-              className="p-1 text-[#6B7876] hover:text-[#1A2726] transition-colors"
+              className="p-1 text-[#273B3A] hover:text-[#273B3A] transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
           <form onSubmit={handleSubmitTicket} className="space-y-4">
             <div>
-              <label className="block text-sm text-[#4A5654] mb-2">Subject</label>
+              <label className="block text-sm text-[#273B3A] mb-2">Subject</label>
               <input
                 type="text"
                 value={newTicket.subject}
                 onChange={(e) => setNewTicket({ ...newTicket, subject: e.target.value })}
                 placeholder="Brief description of your issue"
-                className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#D8CAC0] rounded-lg text-[#1A2726] placeholder-[#6B7876] focus:outline-none focus:border-[#273B3A] transition-colors"
+                className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm text-[#4A5654] mb-2">Description</label>
+              <label className="block text-sm text-[#273B3A] mb-2">Description</label>
               <textarea
                 value={newTicket.description}
                 onChange={(e) => setNewTicket({ ...newTicket, description: e.target.value })}
                 placeholder="Please provide as much detail as possible..."
                 rows={4}
-                className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#D8CAC0] rounded-lg text-[#1A2726] placeholder-[#6B7876] focus:outline-none focus:border-[#273B3A] transition-colors resize-none"
+                className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors resize-none"
                 required
               />
             </div>
@@ -474,13 +474,13 @@ function SupportTab() {
               <button
                 type="button"
                 onClick={() => setShowNewTicket(false)}
-                className="px-4 py-2 text-[#4A5654] hover:text-[#1A2726] transition-colors"
+                className="px-4 py-2 text-[#273B3A] hover:text-[#273B3A] transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="flex items-center gap-2 px-4 py-2 bg-[#273B3A] text-[#E6D4C7] rounded-lg font-semibold hover:bg-[#1E2E2D] transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-[#273B3A] text-[#E6D4C7] rounded-lg font-semibold hover:bg-[#273B3A] transition-colors"
               >
                 <Send className="w-4 h-4" />
                 Submit Ticket
@@ -495,12 +495,12 @@ function SupportTab() {
         {mockTickets.map((ticket) => (
           <div
             key={ticket.id}
-            className="bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl p-5 hover:border-[#273B3A]/30 transition-colors cursor-pointer"
+            className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5 hover:border-[#273B3A]/30 transition-colors cursor-pointer"
           >
             <div className="flex items-start justify-between">
               <div>
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-mono text-[#6B7876]">{ticket.number}</span>
+                  <span className="text-xs font-mono text-[#273B3A]">{ticket.number}</span>
                   <span className={cn(
                     "px-2 py-0.5 rounded text-[10px] font-medium",
                     statusColors[ticket.status]
@@ -514,12 +514,12 @@ function SupportTab() {
                     {ticket.priority.toUpperCase()}
                   </span>
                 </div>
-                <h3 className="font-medium text-[#1A2726] mt-2">{ticket.subject}</h3>
-                <p className="text-sm text-[#6B7876] mt-1">
+                <h3 className="font-medium text-[#273B3A] mt-2">{ticket.subject}</h3>
+                <p className="text-sm text-[#273B3A] mt-1">
                   Created {ticket.createdAt} • Last update {ticket.lastUpdate}
                 </p>
               </div>
-              <div className="flex items-center gap-2 text-sm text-[#4A5654]">
+              <div className="flex items-center gap-2 text-sm text-[#273B3A]">
                 <MessageSquare className="w-4 h-4" />
                 {ticket.messages}
               </div>
@@ -543,19 +543,19 @@ function ProfileTab() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-[#1A2726]">Profile Settings</h2>
-        <p className="text-[#4A5654] mt-1">Manage your account information</p>
+        <h2 className="text-2xl font-bold text-[#273B3A]">Profile Settings</h2>
+        <p className="text-[#273B3A] mt-1">Manage your account information</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Contact Information */}
-        <div className="bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#D8CAC0] flex items-center justify-between">
-            <h3 className="font-semibold text-[#1A2726]">Contact Information</h3>
+        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
+          <div className="px-6 py-4 border-b border-[#E6D4C7] flex items-center justify-between">
+            <h3 className="font-semibold text-[#273B3A]">Contact Information</h3>
             {!editing ? (
               <button
                 onClick={() => setEditing(true)}
-                className="flex items-center gap-1.5 text-sm text-[#273B3A] hover:text-[#1E2E2D] transition-colors"
+                className="flex items-center gap-1.5 text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors"
               >
                 <Pencil className="w-4 h-4" />
                 Edit
@@ -564,13 +564,13 @@ function ProfileTab() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setEditing(false)}
-                  className="text-sm text-[#6B7876] hover:text-[#1A2726] transition-colors"
+                  className="text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSave}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#1E2E2D] transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-colors"
                 >
                   <Save className="w-4 h-4" />
                   Save
@@ -588,7 +588,7 @@ function ProfileTab() {
               { icon: MapPin, label: "Address", key: "address" },
             ].map((field) => (
               <div key={field.key}>
-                <label className="flex items-center gap-2 text-sm text-[#6B7876] mb-1.5">
+                <label className="flex items-center gap-2 text-sm text-[#273B3A] mb-1.5">
                   <field.icon className="w-4 h-4" />
                   {field.label}
                 </label>
@@ -597,10 +597,10 @@ function ProfileTab() {
                     type="text"
                     value={info[field.key as keyof CustomerInfo]}
                     onChange={(e) => setInfo({ ...info, [field.key]: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#D8CAC0] rounded-lg text-[#1A2726] focus:outline-none focus:border-[#273B3A] transition-colors"
+                    className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
                   />
                 ) : (
-                  <p className="text-[#1A2726]">{info[field.key as keyof CustomerInfo]}</p>
+                  <p className="text-[#273B3A]">{info[field.key as keyof CustomerInfo]}</p>
                 )}
               </div>
             ))}
@@ -609,25 +609,25 @@ function ProfileTab() {
 
         {/* Account Summary */}
         <div className="space-y-6">
-          <div className="bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl p-6">
-            <h3 className="font-semibold text-[#1A2726] mb-4">Account Summary</h3>
+          <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+            <h3 className="font-semibold text-[#273B3A] mb-4">Account Summary</h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-[#4A5654]">Total Invoices</span>
-                <span className="text-[#1A2726] font-semibold">{mockInvoices.length}</span>
+                <span className="text-[#273B3A]">Total Invoices</span>
+                <span className="text-[#273B3A] font-semibold">{mockInvoices.length}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#4A5654]">Open Invoices</span>
+                <span className="text-[#273B3A]">Open Invoices</span>
                 <span className="text-amber-400 font-semibold">
                   {mockInvoices.filter((i) => i.status !== "paid").length}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#4A5654]">Total Orders</span>
-                <span className="text-[#1A2726] font-semibold">{mockOrders.length}</span>
+                <span className="text-[#273B3A]">Total Orders</span>
+                <span className="text-[#273B3A] font-semibold">{mockOrders.length}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#4A5654]">Open Tickets</span>
+                <span className="text-[#273B3A]">Open Tickets</span>
                 <span className="text-[#273B3A] font-semibold">
                   {mockTickets.filter((t) => t.status === "open" || t.status === "in_progress").length}
                 </span>
@@ -635,18 +635,18 @@ function ProfileTab() {
             </div>
           </div>
 
-          <div className="bg-[#F0E6E0] border border-[#D8CAC0] rounded-xl p-6">
-            <h3 className="font-semibold text-[#1A2726] mb-4">Account Actions</h3>
+          <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+            <h3 className="font-semibold text-[#273B3A] mb-4">Account Actions</h3>
             <div className="space-y-3">
-              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#E6D4C7] rounded-lg text-sm text-[#4A5654] hover:text-[#1A2726] transition-colors">
+              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors">
                 <span>Change Password</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
-              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#E6D4C7] rounded-lg text-sm text-[#4A5654] hover:text-[#1A2726] transition-colors">
+              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors">
                 <span>Notification Preferences</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
-              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#E6D4C7] rounded-lg text-sm text-[#4A5654] hover:text-[#1A2726] transition-colors">
+              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors">
                 <span>Download All Data</span>
                 <ChevronRight className="w-4 h-4" />
               </button>

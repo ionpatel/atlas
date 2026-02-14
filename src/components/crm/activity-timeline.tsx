@@ -143,13 +143,13 @@ export function ActivityTimeline({
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-[#1A2726]">Activity</h3>
+        <h3 className="text-sm font-semibold text-[#273B3A]">Activity</h3>
         <div className="flex items-center gap-2">
           {/* Filter dropdown */}
           <div className="relative">
             <button
               onClick={() => setShowFilterMenu(!showFilterMenu)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 border border-[#C9BAB0] rounded-lg text-xs text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0] transition-all"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 border border-[#E6D4C7] rounded-lg text-xs text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all"
             >
               <Filter className="w-3 h-3" />
               {filterType === "all"
@@ -163,7 +163,7 @@ export function ActivityTimeline({
                   className="fixed inset-0 z-10"
                   onClick={() => setShowFilterMenu(false)}
                 />
-                <div className="absolute right-0 top-full mt-1 w-36 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg shadow-xl z-20 py-1">
+                <div className="absolute right-0 top-full mt-1 w-36 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg shadow-xl z-20 py-1">
                   <button
                     onClick={() => {
                       setFilterType("all");
@@ -173,7 +173,7 @@ export function ActivityTimeline({
                       "w-full text-left px-3 py-2 text-xs transition-colors",
                       filterType === "all"
                         ? "text-[#273B3A] bg-[rgba(156,74,41,0.15)]"
-                        : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0]"
+                        : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
                     )}
                   >
                     All Activity
@@ -189,7 +189,7 @@ export function ActivityTimeline({
                         "w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors",
                         filterType === type
                           ? "text-[#273B3A] bg-[rgba(156,74,41,0.15)]"
-                          : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0]"
+                          : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
                       )}
                     >
                       <config.icon className={cn("w-3 h-3", config.color)} />
@@ -204,7 +204,7 @@ export function ActivityTimeline({
           {onAddActivity && (
             <button
               onClick={onAddActivity}
-              className="flex items-center gap-1 px-2.5 py-1.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-xs font-medium hover:bg-[#344948] transition-all"
+              className="flex items-center gap-1 px-2.5 py-1.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-xs font-medium hover:bg-[#273B3A] transition-all"
             >
               <Plus className="w-3 h-3" />
               Log
@@ -217,9 +217,9 @@ export function ActivityTimeline({
       <div className="flex-1 overflow-y-auto pr-1 -mr-1">
         {filteredActivities.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
-            <Clock className="w-8 h-8 text-[#6B7876] mb-3" />
-            <p className="text-sm text-[#4A5654]">No activities yet</p>
-            <p className="text-xs text-[#6B7876] mt-1">
+            <Clock className="w-8 h-8 text-[#273B3A] mb-3" />
+            <p className="text-sm text-[#273B3A]">No activities yet</p>
+            <p className="text-xs text-[#273B3A] mt-1">
               Log calls, emails, and meetings here
             </p>
           </div>
@@ -229,11 +229,11 @@ export function ActivityTimeline({
               <div key={group.date}>
                 {/* Date header */}
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="h-px flex-1 bg-[#C9BAB0]" />
-                  <span className="text-[10px] font-medium text-[#6B7876] uppercase tracking-wider">
+                  <div className="h-px flex-1 bg-[#E6D4C7]" />
+                  <span className="text-[10px] font-medium text-[#273B3A] uppercase tracking-wider">
                     {group.date}
                   </span>
-                  <div className="h-px flex-1 bg-[#C9BAB0]" />
+                  <div className="h-px flex-1 bg-[#E6D4C7]" />
                 </div>
 
                 {/* Activities */}
@@ -266,7 +266,7 @@ export function ActivityTimeline({
                           <div className="flex items-center gap-2 mb-0.5">
                             <p
                               className={cn(
-                                "font-medium text-[#1A2726] truncate",
+                                "font-medium text-[#273B3A] truncate",
                                 compact ? "text-xs" : "text-sm"
                               )}
                             >
@@ -287,12 +287,12 @@ export function ActivityTimeline({
                           </div>
 
                           {activity.description && !compact && (
-                            <p className="text-xs text-[#4A5654] mb-1 line-clamp-2">
+                            <p className="text-xs text-[#273B3A] mb-1 line-clamp-2">
                               {activity.description}
                             </p>
                           )}
 
-                          <div className="flex items-center gap-3 text-[11px] text-[#6B7876]">
+                          <div className="flex items-center gap-3 text-[11px] text-[#273B3A]">
                             <span className="flex items-center gap-1">
                               <User className="w-3 h-3" />
                               {activity.user}

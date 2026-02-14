@@ -31,8 +31,8 @@ export default function LoginPage() {
   return (
     <>
       <div className="text-center mb-8">
-        <h1 className="text-xl font-semibold text-[#1A2726]">Welcome back</h1>
-        <p className="text-sm text-[#4A5654] mt-1.5">
+        <h1 className="text-xl font-semibold text-[#273B3A]">Welcome back</h1>
+        <p className="text-sm text-[#273B3A] mt-1.5">
           Sign in to your Atlas account
         </p>
       </div>
@@ -47,7 +47,7 @@ export default function LoginPage() {
         <div className="space-y-2">
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-[#4A5654]"
+            className="block text-sm font-medium text-[#273B3A]"
           >
             Email
           </label>
@@ -58,14 +58,14 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@company.com"
             required
-            className="w-full h-11 px-4 rounded-lg border border-[#C9BAB0] bg-[#E6D4C7] text-[#1A2726] text-sm placeholder:text-[#4A5654]/60 focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="w-full h-11 px-4 rounded-lg border border-[#E6D4C7] bg-[#E6D4C7] text-[#273B3A] text-sm placeholder:text-[#273B3A]/60 focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
           />
         </div>
 
         <div className="space-y-2">
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-[#4A5654]"
+            className="block text-sm font-medium text-[#273B3A]"
           >
             Password
           </label>
@@ -76,14 +76,14 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••"
             required
-            className="w-full h-11 px-4 rounded-lg border border-[#C9BAB0] bg-[#E6D4C7] text-[#1A2726] text-sm placeholder:text-[#4A5654]/60 focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="w-full h-11 px-4 rounded-lg border border-[#E6D4C7] bg-[#E6D4C7] text-[#273B3A] text-sm placeholder:text-[#273B3A]/60 focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full h-11 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+          className="w-full h-11 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
         >
           {loading ? (
             <>
@@ -96,11 +96,11 @@ export default function LoginPage() {
         </button>
       </form>
 
-      <p className="text-center text-sm text-[#4A5654] mt-8">
+      <p className="text-center text-sm text-[#273B3A] mt-8">
         Don&apos;t have an account?{" "}
         <Link
           href="/signup"
-          className="text-[#273B3A] hover:text-[#344948] font-medium transition-colors"
+          className="text-[#273B3A] hover:text-[#273B3A] font-medium transition-colors"
         >
           Create one
         </Link>

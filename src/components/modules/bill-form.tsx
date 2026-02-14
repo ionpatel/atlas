@@ -25,9 +25,9 @@ interface FormLine {
 }
 
 const inputClass =
-  "w-full px-3 py-2 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder:text-[#6B7876] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200";
+  "w-full px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200";
 
-const labelClass = "block text-xs font-medium text-[#4A5654] mb-1.5";
+const labelClass = "block text-xs font-medium text-[#273B3A] mb-1.5";
 
 export function BillForm({ onSubmit, onCancel }: BillFormProps) {
   const accounts = useAccountingStore((s) => s.accounts);
@@ -235,14 +235,14 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           {/* Type Toggle */}
-          <div className="flex items-center bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg p-0.5">
+          <div className="flex items-center bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg p-0.5">
             <button
               type="button"
               onClick={() => setBillType("bill")}
               className={`px-3.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${
                 billType === "bill"
                   ? "bg-[#273B3A] text-[#E6D4C7]"
-                  : "text-[#4A5654] hover:text-[#1A2726]"
+                  : "text-[#273B3A] hover:text-[#273B3A]"
               }`}
             >
               Bill
@@ -253,7 +253,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
               className={`px-3.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${
                 billType === "receipt"
                   ? "bg-[#273B3A] text-[#E6D4C7]"
-                  : "text-[#4A5654] hover:text-[#1A2726]"
+                  : "text-[#273B3A] hover:text-[#273B3A]"
               }`}
             >
               Receipt
@@ -268,17 +268,17 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
             className={`px-2.5 py-1 rounded-full text-[11px] font-medium border ${
               status === "draft"
                 ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A] border-[#273B3A]/30"
-                : "bg-[#D8CAC0] text-[#6B7876] border-[#C9BAB0]"
+                : "bg-[#E6D4C7] text-[#273B3A] border-[#E6D4C7]"
             }`}
           >
             Draft
           </span>
-          <div className="w-6 h-px bg-[#C9BAB0]" />
+          <div className="w-6 h-px bg-[#E6D4C7]" />
           <span
             className={`px-2.5 py-1 rounded-full text-[11px] font-medium border ${
               status === "posted"
                 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                : "bg-[#D8CAC0] text-[#6B7876] border-[#C9BAB0]"
+                : "bg-[#E6D4C7] text-[#273B3A] border-[#E6D4C7]"
             }`}
           >
             Posted
@@ -291,14 +291,14 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
         <button
           type="button"
           onClick={handleConfirm}
-          className="px-5 py-2 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200"
+          className="px-5 py-2 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200"
         >
           Confirm
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2 border border-[#C9BAB0] rounded-lg text-sm text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all duration-200"
+          className="px-5 py-2 border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200"
         >
           Cancel
         </button>
@@ -324,17 +324,17 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
               className={inputClass}
             />
             {showVendorDropdown && filteredVendors.length > 0 && (
-              <div className="absolute z-20 top-full left-0 right-0 mt-1 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg shadow-xl max-h-40 overflow-y-auto">
+              <div className="absolute z-20 top-full left-0 right-0 mt-1 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg shadow-xl max-h-40 overflow-y-auto">
                 {filteredVendors.map((v) => (
                   <button
                     key={v.id}
                     type="button"
                     onMouseDown={() => selectVendor(v.id, v.name)}
-                    className="w-full text-left px-3 py-2 text-sm text-[#1A2726] hover:bg-[#C9BAB0] transition-colors"
+                    className="w-full text-left px-3 py-2 text-sm text-[#273B3A] hover:bg-[#E6D4C7] transition-colors"
                   >
                     {v.name}
                     {v.company && (
-                      <span className="text-[#4A5654] ml-2">({v.company})</span>
+                      <span className="text-[#273B3A] ml-2">({v.company})</span>
                     )}
                   </button>
                 ))}
@@ -392,7 +392,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
               Due Date{" "}
               <button
                 type="button"
-                className="text-[#273B3A] hover:text-[#344948] text-[10px] ml-1"
+                className="text-[#273B3A] hover:text-[#273B3A] text-[10px] ml-1"
               >
                 or Payment Terms
               </button>
@@ -408,7 +408,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1 border-b border-[#C9BAB0]">
+      <div className="flex items-center gap-1 border-b border-[#E6D4C7]">
         {billTabs.map((tab) => (
           <button
             key={tab.id}
@@ -417,7 +417,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
             className={`px-4 py-2.5 text-sm font-medium transition-all duration-200 border-b-2 -mb-px ${
               activeTab === tab.id
                 ? "border-[#273B3A] text-[#273B3A]"
-                : "border-transparent text-[#4A5654] hover:text-[#1A2726]"
+                : "border-transparent text-[#273B3A] hover:text-[#273B3A]"
             }`}
           >
             {tab.label}
@@ -430,22 +430,22 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
         <div>
           {/* Table header */}
           <div className="grid grid-cols-[2fr_1.5fr_80px_100px_70px_100px_32px] gap-2 px-1 pb-2">
-            <span className="text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
+            <span className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
               Label
             </span>
-            <span className="text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
+            <span className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
               Account
             </span>
-            <span className="text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest text-right">
+            <span className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest text-right">
               Qty
             </span>
-            <span className="text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest text-right">
+            <span className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest text-right">
               Price
             </span>
-            <span className="text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest text-right">
+            <span className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest text-right">
               Tax %
             </span>
-            <span className="text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest text-right">
+            <span className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest text-right">
               Amount
             </span>
             <span />
@@ -466,12 +466,12 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
                         updateLine(line.key, "label", e.target.value)
                       }
                       placeholder="Section title..."
-                      className="px-3 py-2 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm font-semibold text-[#1A2726] placeholder:text-[#6B7876] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
+                      className="px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm font-semibold text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
                     />
                     <button
                       type="button"
                       onClick={() => removeLine(line.key)}
-                      className="p-2 text-[#4A5654] hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200"
+                      className="p-2 text-[#273B3A] hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -491,12 +491,12 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
                         updateLine(line.key, "label", e.target.value)
                       }
                       placeholder="Add a note..."
-                      className="px-3 py-2 bg-[#D8CAC0] border border-dashed border-[#C9BAB0] rounded-lg text-sm italic text-[#4A5654] placeholder:text-[#6B7876] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
+                      className="px-3 py-2 bg-[#E6D4C7] border border-dashed border-[#E6D4C7] rounded-lg text-sm italic text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
                     />
                     <button
                       type="button"
                       onClick={() => removeLine(line.key)}
-                      className="p-2 text-[#4A5654] hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200"
+                      className="p-2 text-[#273B3A] hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -516,14 +516,14 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
                       updateLine(line.key, "label", e.target.value)
                     }
                     placeholder="Line description"
-                    className="px-3 py-2 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder:text-[#6B7876] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
+                    className="px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
                   />
                   <select
                     value={line.account_id}
                     onChange={(e) =>
                       updateLine(line.key, "account_id", e.target.value)
                     }
-                    className="px-3 py-2 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
+                    className="px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
                   >
                     <option value="">Select</option>
                     {expenseAccounts.map((a) => (
@@ -543,7 +543,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
                         parseInt(e.target.value) || 1
                       )
                     }
-                    className="px-3 py-2 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] text-right focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
+                    className="px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] text-right focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
                   />
                   <input
                     type="number"
@@ -557,7 +557,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
                         parseFloat(e.target.value) || 0
                       )
                     }
-                    className="px-3 py-2 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] text-right focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
+                    className="px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] text-right focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
                   />
                   <input
                     type="number"
@@ -572,7 +572,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
                         parseFloat(e.target.value) || 0
                       )
                     }
-                    className="px-3 py-2 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] text-right focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
+                    className="px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] text-right focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200"
                   />
                   <div className="text-sm text-right font-medium text-[#273B3A] px-1">
                     {formatCurrency(amount)}
@@ -580,7 +580,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
                   <button
                     type="button"
                     onClick={() => removeLine(line.key)}
-                    className="p-2 text-[#4A5654] hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200"
+                    className="p-2 text-[#273B3A] hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200"
                     disabled={lines.length <= 1}
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -595,7 +595,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
             <button
               type="button"
               onClick={addLine}
-              className="flex items-center gap-1.5 text-xs text-[#273B3A] hover:text-[#344948] font-medium transition-colors"
+              className="flex items-center gap-1.5 text-xs text-[#273B3A] hover:text-[#273B3A] font-medium transition-colors"
             >
               <Plus className="w-3 h-3" />
               Add a line
@@ -603,7 +603,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
             <button
               type="button"
               onClick={addSection}
-              className="flex items-center gap-1.5 text-xs text-[#4A5654] hover:text-[#1A2726] font-medium transition-colors"
+              className="flex items-center gap-1.5 text-xs text-[#273B3A] hover:text-[#273B3A] font-medium transition-colors"
             >
               <LayoutList className="w-3 h-3" />
               Add a section
@@ -611,7 +611,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
             <button
               type="button"
               onClick={addNote}
-              className="flex items-center gap-1.5 text-xs text-[#4A5654] hover:text-[#1A2726] font-medium transition-colors"
+              className="flex items-center gap-1.5 text-xs text-[#273B3A] hover:text-[#273B3A] font-medium transition-colors"
             >
               <StickyNote className="w-3 h-3" />
               Add a note
@@ -621,20 +621,20 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
       )}
 
       {activeTab === "journal" && (
-        <div className="bg-[#D8CAC0] border border-[#C9BAB0] rounded-xl overflow-hidden">
+        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[#C9BAB0]">
-                <th className="text-left px-5 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
+              <tr className="border-b border-[#E6D4C7]">
+                <th className="text-left px-5 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
                   Account
                 </th>
-                <th className="text-left px-5 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
+                <th className="text-left px-5 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
                   Label
                 </th>
-                <th className="text-right px-5 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
+                <th className="text-right px-5 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
                   Debit
                 </th>
-                <th className="text-right px-5 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
+                <th className="text-right px-5 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
                   Credit
                 </th>
               </tr>
@@ -644,9 +644,9 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
                 <tr>
                   <td
                     colSpan={4}
-                    className="px-5 py-8 text-center text-sm text-[#4A5654]"
+                    className="px-5 py-8 text-center text-sm text-[#273B3A]"
                   >
-                    <FileText className="w-6 h-6 mx-auto mb-2 text-[#6B7876]" />
+                    <FileText className="w-6 h-6 mx-auto mb-2 text-[#273B3A]" />
                     Add invoice lines to generate journal items
                   </td>
                 </tr>
@@ -654,18 +654,18 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
                 journalItems.map((item, i) => (
                   <tr
                     key={i}
-                    className="border-b border-[#C9BAB0]/50 last:border-0"
+                    className="border-b border-[#E6D4C7]/50 last:border-0"
                   >
-                    <td className="px-5 py-2.5 text-sm text-[#1A2726]">
+                    <td className="px-5 py-2.5 text-sm text-[#273B3A]">
                       {item.account}
                     </td>
-                    <td className="px-5 py-2.5 text-sm text-[#4A5654]">
+                    <td className="px-5 py-2.5 text-sm text-[#273B3A]">
                       {item.label}
                     </td>
-                    <td className="px-5 py-2.5 text-sm text-right font-mono text-[#1A2726]">
+                    <td className="px-5 py-2.5 text-sm text-right font-mono text-[#273B3A]">
                       {item.debit > 0 ? formatCurrency(item.debit) : ""}
                     </td>
-                    <td className="px-5 py-2.5 text-sm text-right font-mono text-[#1A2726]">
+                    <td className="px-5 py-2.5 text-sm text-right font-mono text-[#273B3A]">
                       {item.credit > 0 ? formatCurrency(item.credit) : ""}
                     </td>
                   </tr>
@@ -716,22 +716,22 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
       )}
 
       {/* Totals section */}
-      <div className="flex justify-end border-t border-[#C9BAB0] pt-4">
+      <div className="flex justify-end border-t border-[#E6D4C7] pt-4">
         <div className="w-72 space-y-2 text-sm">
-          <div className="flex justify-between text-[#4A5654]">
+          <div className="flex justify-between text-[#273B3A]">
             <span>Untaxed Amount</span>
-            <span className="text-[#1A2726] font-medium">
+            <span className="text-[#273B3A] font-medium">
               {formatCurrency(subtotal)}
             </span>
           </div>
-          <div className="flex justify-between text-[#4A5654]">
+          <div className="flex justify-between text-[#273B3A]">
             <span>Taxes</span>
-            <span className="text-[#1A2726] font-medium">
+            <span className="text-[#273B3A] font-medium">
               {formatCurrency(taxTotal)}
             </span>
           </div>
-          <div className="flex justify-between font-semibold text-base border-t border-[#C9BAB0] pt-2.5 mt-2.5">
-            <span className="text-[#1A2726]">Total</span>
+          <div className="flex justify-between font-semibold text-base border-t border-[#E6D4C7] pt-2.5 mt-2.5">
+            <span className="text-[#273B3A]">Total</span>
             <span className="text-[#273B3A]">{formatCurrency(total)}</span>
           </div>
         </div>

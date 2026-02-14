@@ -417,7 +417,7 @@ export function GlobalCommandPalette({
       />
       
       {/* Palette */}
-      <div className="relative w-full max-w-xl mx-4 bg-[#F0E6E0] border border-[#333] rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-4 duration-200">
+      <div className="relative w-full max-w-xl mx-4 bg-[#E6D4C7] border border-[#333] rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-4 duration-200">
         {/* Search Input */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-[#333]">
           <Search className="w-5 h-5 text-[#666]" />

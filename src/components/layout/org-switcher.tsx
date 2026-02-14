@@ -41,7 +41,7 @@ export function OrgSwitcher({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "w-full flex items-center gap-3 p-3 rounded-xl bg-[#F0E6E0] border border-[#C9BAB0] hover:border-[#3a3a3a] transition-all",
+          "w-full flex items-center gap-3 p-3 rounded-xl bg-[#E6D4C7] border border-[#E6D4C7] hover:border-[#3a3a3a] transition-all",
           collapsed && "justify-center"
         )}
       >
@@ -51,16 +51,16 @@ export function OrgSwitcher({
         {!collapsed && (
           <>
             <div className="flex-1 text-left min-w-0">
-              <p className="text-sm font-medium text-[#1A2726] truncate">
+              <p className="text-sm font-medium text-[#273B3A] truncate">
                 {currentOrg.name}
               </p>
-              <p className="text-[10px] text-[#4A5654] capitalize">
+              <p className="text-[10px] text-[#273B3A] capitalize">
                 {currentOrg.role}
               </p>
             </div>
             <ChevronDown
               className={cn(
-                "w-4 h-4 text-[#6B7876] transition-transform",
+                "w-4 h-4 text-[#273B3A] transition-transform",
                 isOpen && "rotate-180"
               )}
             />
@@ -76,12 +76,12 @@ export function OrgSwitcher({
           />
           <div
             className={cn(
-              "absolute z-50 w-64 mt-2 bg-[#E6D4C7] border border-[#C9BAB0] rounded-xl shadow-2xl overflow-hidden",
+              "absolute z-50 w-64 mt-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl shadow-2xl overflow-hidden",
               collapsed ? "left-full ml-2 top-0" : "left-0 top-full"
             )}
           >
-            <div className="p-2 border-b border-[#C9BAB0]">
-              <p className="px-2 py-1 text-[10px] font-medium text-[#6B7876] uppercase tracking-wider">
+            <div className="p-2 border-b border-[#E6D4C7]">
+              <p className="px-2 py-1 text-[10px] font-medium text-[#273B3A] uppercase tracking-wider">
                 Your Organizations
               </p>
             </div>
@@ -95,18 +95,18 @@ export function OrgSwitcher({
                     setIsOpen(false);
                   }}
                   className={cn(
-                    "w-full flex items-center gap-3 px-3 py-2.5 hover:bg-[#F0E6E0] transition-colors",
-                    org.id === currentOrg.id && "bg-[#F0E6E0]"
+                    "w-full flex items-center gap-3 px-3 py-2.5 hover:bg-[#E6D4C7] transition-colors",
+                    org.id === currentOrg.id && "bg-[#E6D4C7]"
                   )}
                 >
-                  <div className="w-8 h-8 rounded-lg bg-[#D8CAC0] flex items-center justify-center flex-shrink-0">
-                    <Building2 className="w-4 h-4 text-[#4A5654]" />
+                  <div className="w-8 h-8 rounded-lg bg-[#E6D4C7] flex items-center justify-center flex-shrink-0">
+                    <Building2 className="w-4 h-4 text-[#273B3A]" />
                   </div>
                   <div className="flex-1 text-left min-w-0">
-                    <p className="text-sm font-medium text-[#1A2726] truncate">
+                    <p className="text-sm font-medium text-[#273B3A] truncate">
                       {org.name}
                     </p>
-                    <p className="text-[10px] text-[#4A5654] capitalize">
+                    <p className="text-[10px] text-[#273B3A] capitalize">
                       {org.role}
                     </p>
                   </div>
@@ -117,13 +117,13 @@ export function OrgSwitcher({
               ))}
             </div>
 
-            <div className="border-t border-[#C9BAB0] p-2">
+            <div className="border-t border-[#E6D4C7] p-2">
               <button
                 onClick={() => {
                   window.location.href = "/settings/organization";
                   setIsOpen(false);
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0] rounded-lg transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] rounded-lg transition-colors"
               >
                 <Settings className="w-4 h-4" />
                 Organization Settings
@@ -133,7 +133,7 @@ export function OrgSwitcher({
                   window.location.href = "/settings/users";
                   setIsOpen(false);
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0] rounded-lg transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] rounded-lg transition-colors"
               >
                 <Users className="w-4 h-4" />
                 Manage Team

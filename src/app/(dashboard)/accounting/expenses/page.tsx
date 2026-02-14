@@ -54,7 +54,7 @@ function ExpenseStatusBadge({ status }: { status: ExpenseStatus }) {
 function CategoryBadge({ name, icon }: { name: string; icon?: string }) {
   const emoji = icon ? CATEGORY_ICONS[icon] || "🧾" : "🧾";
   return (
-    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#D8CAC0] text-[#4A5654] border border-[#C9BAB0]">
+    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#E6D4C7] text-[#273B3A] border border-[#E6D4C7]">
       <span>{emoji}</span>
       {name}
     </span>
@@ -127,24 +127,24 @@ function ExpenseForm({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#F0E6E0] border border-[#C9BAB0] rounded-2xl w-full max-w-lg max-h-[90vh] overflow-auto shadow-2xl">
-        <div className="flex items-center justify-between p-6 border-b border-[#C9BAB0]">
-          <h2 className="text-xl font-semibold text-[#1A2726]">
+      <div className="relative bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl w-full max-w-lg max-h-[90vh] overflow-auto shadow-2xl">
+        <div className="flex items-center justify-between p-6 border-b border-[#E6D4C7]">
+          <h2 className="text-xl font-semibold text-[#273B3A]">
             {isEditing ? "Edit Expense" : "Add Expense"}
           </h2>
-          <button onClick={onClose} className="text-[#4A5654] hover:text-[#1A2726] transition-colors">
+          <button onClick={onClose} className="text-[#273B3A] hover:text-[#273B3A] transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] mb-1.5">Category</label>
+            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Category</label>
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
               required
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
             >
               <option value="">Select a category</option>
               {categories.map((cat) => (
@@ -156,13 +156,13 @@ function ExpenseForm({
           </div>
 
           {isMileage ? (
-            <div className="space-y-4 p-4 bg-[#D8CAC0] rounded-lg border border-[#C9BAB0]">
+            <div className="space-y-4 p-4 bg-[#E6D4C7] rounded-lg border border-[#E6D4C7]">
               <div className="flex items-center gap-2 text-[#273B3A]">
                 <Car className="w-5 h-5" />
                 <span className="text-sm font-medium">Mileage Calculator</span>
               </div>
               <div>
-                <label className="block text-xs font-medium text-[#4A5654] mb-1.5">Distance (km)</label>
+                <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Distance (km)</label>
                 <input
                   type="number"
                   value={mileageDistance}
@@ -170,19 +170,19 @@ function ExpenseForm({
                   placeholder="0"
                   step="0.1"
                   required
-                  className="w-full px-4 py-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder:text-[#6B7876] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+                  className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
                 />
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-[#4A5654]">Rate: ${MILEAGE_RATE}/km</span>
-                <span className="text-[#1A2726] font-medium">Total: {formatCurrency(parseFloat(amount) || 0)}</span>
+                <span className="text-[#273B3A]">Rate: ${MILEAGE_RATE}/km</span>
+                <span className="text-[#273B3A] font-medium">Total: {formatCurrency(parseFloat(amount) || 0)}</span>
               </div>
             </div>
           ) : (
             <div>
-              <label className="block text-xs font-medium text-[#4A5654] mb-1.5">Amount (CAD)</label>
+              <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Amount (CAD)</label>
               <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6B7876]" />
+                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#273B3A]" />
                 <input
                   type="number"
                   value={amount}
@@ -190,47 +190,47 @@ function ExpenseForm({
                   placeholder="0.00"
                   step="0.01"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder:text-[#6B7876] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
                 />
               </div>
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] mb-1.5">Date</label>
+            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Date</label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] mb-1.5">Vendor / Merchant</label>
+            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Vendor / Merchant</label>
             <input
               type="text"
               value={vendor}
               onChange={(e) => setVendor(e.target.value)}
               placeholder="e.g., Air Canada, Uber, Staples"
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder:text-[#6B7876] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] mb-1.5">Description</label>
+            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="What was this expense for?"
               rows={2}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder:text-[#6B7876] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200 resize-none"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200 resize-none"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] mb-1.5">Receipt</label>
+            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Receipt</label>
             <div className="relative">
               <input
                 type="file"
@@ -241,7 +241,7 @@ function ExpenseForm({
               />
               <label
                 htmlFor="receipt-upload"
-                className="flex items-center justify-center gap-2 w-full px-4 py-4 bg-[#D8CAC0] border border-dashed border-[#C9BAB0] rounded-lg text-sm text-[#4A5654] hover:border-[#273B3A]/50 hover:text-[#1A2726] cursor-pointer transition-all duration-200"
+                className="flex items-center justify-center gap-2 w-full px-4 py-4 bg-[#E6D4C7] border border-dashed border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:border-[#273B3A]/50 hover:text-[#273B3A] cursor-pointer transition-all duration-200"
               >
                 <Upload className="w-5 h-5" />
                 {receiptFile ? receiptFile.name : expense?.receipt_filename || "Upload receipt (image or PDF)"}
@@ -253,13 +253,13 @@ function ExpenseForm({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#D8CAC0] hover:bg-[#C9BAB0] text-[#1A2726] rounded-lg transition-colors"
+              className="flex-1 px-4 py-2.5 bg-[#E6D4C7] hover:bg-[#E6D4C7] text-[#273B3A] rounded-lg transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#273B3A] to-[#1E2E2D] hover:from-[#273B3A]/90 hover:to-[#1E2E2D]/90 text-[#E6D4C7] font-medium rounded-lg transition-all"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#273B3A] to-[#273B3A] hover:from-[#273B3A]/90 hover:to-[#273B3A]/90 text-[#E6D4C7] font-medium rounded-lg transition-all"
             >
               <Plus className="w-4 h-4" />
               {isEditing ? "Save Changes" : "Add Expense"}
@@ -295,10 +295,10 @@ function ExpenseCard({
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-5 hover:border-[#273B3A]/20 transition-colors">
+    <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5 hover:border-[#273B3A]/20 transition-colors">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-[#D8CAC0] flex items-center justify-center text-lg">
+          <div className="w-10 h-10 rounded-lg bg-[#E6D4C7] flex items-center justify-center text-lg">
             {expense.category_name && CATEGORY_ICONS[
               expense.is_mileage ? "car" : 
               expense.category_name === "Travel" ? "plane" :
@@ -310,10 +310,10 @@ function ExpenseCard({
             ] || "🧾"}
           </div>
           <div>
-            <h4 className="font-medium text-[#1A2726] line-clamp-1">
+            <h4 className="font-medium text-[#273B3A] line-clamp-1">
               {expense.description || expense.category_name || "Expense"}
             </h4>
-            <p className="text-xs text-[#4A5654]">
+            <p className="text-xs text-[#273B3A]">
               {expense.vendor && `${expense.vendor} • `}
               {formatDate(expense.expense_date)}
             </p>
@@ -324,16 +324,16 @@ function ExpenseCard({
 
       <div className="flex items-center justify-between mb-4">
         <div>
-          <span className="text-2xl font-bold text-[#1A2726]">{formatCurrency(expense.amount)}</span>
+          <span className="text-2xl font-bold text-[#273B3A]">{formatCurrency(expense.amount)}</span>
           {expense.is_mileage && expense.mileage_distance && (
-            <p className="text-xs text-[#4A5654] mt-1">
+            <p className="text-xs text-[#273B3A] mt-1">
               <Car className="w-3 h-3 inline mr-1" />
               {expense.mileage_distance} km @ ${expense.mileage_rate}/km
             </p>
           )}
         </div>
         {expense.receipt_url && (
-          <button className="flex items-center gap-1 px-2 py-1 bg-[#D8CAC0] rounded-lg text-xs text-[#4A5654] hover:text-[#1A2726] transition-colors">
+          <button className="flex items-center gap-1 px-2 py-1 bg-[#E6D4C7] rounded-lg text-xs text-[#273B3A] hover:text-[#273B3A] transition-colors">
             <Image className="w-3.5 h-3.5" />
             Receipt
           </button>
@@ -351,12 +351,12 @@ function ExpenseCard({
       )}
 
       {/* Action Buttons based on status */}
-      <div className="flex gap-2 mt-4 pt-4 border-t border-[#C9BAB0]">
+      <div className="flex gap-2 mt-4 pt-4 border-t border-[#E6D4C7]">
         {expense.status === "draft" && (
           <>
             <button
               onClick={onEdit}
-              className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-[#D8CAC0] hover:bg-[#C9BAB0] text-[#1A2726] rounded-lg transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-[#E6D4C7] hover:bg-[#E6D4C7] text-[#273B3A] rounded-lg transition-colors"
             >
               <Pencil className="w-4 h-4" />
               Edit
@@ -439,19 +439,19 @@ function ExpenseRow({
   isManager?: boolean;
 }) {
   return (
-    <div className="flex items-center gap-4 p-4 bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl hover:border-[#273B3A]/20 transition-colors">
-      <div className="w-10 h-10 rounded-lg bg-[#D8CAC0] flex items-center justify-center text-lg flex-shrink-0">
+    <div className="flex items-center gap-4 p-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl hover:border-[#273B3A]/20 transition-colors">
+      <div className="w-10 h-10 rounded-lg bg-[#E6D4C7] flex items-center justify-center text-lg flex-shrink-0">
         {CATEGORY_ICONS[expense.is_mileage ? "car" : "receipt"] || "🧾"}
       </div>
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <h4 className="font-medium text-[#1A2726] truncate">
+          <h4 className="font-medium text-[#273B3A] truncate">
             {expense.description || expense.category_name || "Expense"}
           </h4>
           <CategoryBadge name={expense.category_name || "Other"} />
         </div>
-        <div className="flex items-center gap-3 mt-1 text-sm text-[#4A5654]">
+        <div className="flex items-center gap-3 mt-1 text-sm text-[#273B3A]">
           {expense.vendor && <span>{expense.vendor}</span>}
           <span>{formatDate(expense.expense_date)}</span>
           <span className="text-xs">{expense.user_name}</span>
@@ -459,15 +459,15 @@ function ExpenseRow({
       </div>
 
       <div className="text-right flex-shrink-0">
-        <div className="font-semibold text-[#1A2726]">{formatCurrency(expense.amount)}</div>
+        <div className="font-semibold text-[#273B3A]">{formatCurrency(expense.amount)}</div>
         <ExpenseStatusBadge status={expense.status} />
       </div>
 
       <div className="flex items-center gap-1 flex-shrink-0">
         {expense.status === "draft" && (
           <>
-            <button onClick={onEdit} className="p-2 hover:bg-[#D8CAC0] rounded-lg transition-colors">
-              <Pencil className="w-4 h-4 text-[#4A5654]" />
+            <button onClick={onEdit} className="p-2 hover:bg-[#E6D4C7] rounded-lg transition-colors">
+              <Pencil className="w-4 h-4 text-[#273B3A]" />
             </button>
             <button onClick={onSubmit} className="p-2 hover:bg-[#273B3A]/10 rounded-lg transition-colors">
               <FileText className="w-4 h-4 text-[#273B3A]" />
@@ -531,22 +531,22 @@ function MileageCalculator({ onClose, onAdd }: {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#F0E6E0] border border-[#C9BAB0] rounded-2xl w-full max-w-md shadow-2xl">
-        <div className="flex items-center justify-between p-6 border-b border-[#C9BAB0]">
+      <div className="relative bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl w-full max-w-md shadow-2xl">
+        <div className="flex items-center justify-between p-6 border-b border-[#E6D4C7]">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-[#273B3A]/10 flex items-center justify-center">
               <Car className="w-5 h-5 text-[#273B3A]" />
             </div>
-            <h2 className="text-xl font-semibold text-[#1A2726]">Mileage Calculator</h2>
+            <h2 className="text-xl font-semibold text-[#273B3A]">Mileage Calculator</h2>
           </div>
-          <button onClick={onClose} className="text-[#4A5654] hover:text-[#1A2726] transition-colors">
+          <button onClick={onClose} className="text-[#273B3A] hover:text-[#273B3A] transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] mb-1.5">Distance (km)</label>
+            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Distance (km)</label>
             <input
               type="number"
               value={distance}
@@ -555,40 +555,40 @@ function MileageCalculator({ onClose, onAdd }: {
               step="0.1"
               required
               autoFocus
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder:text-[#6B7876] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
             />
           </div>
 
-          <div className="p-4 bg-[#D8CAC0] rounded-lg border border-[#C9BAB0]">
+          <div className="p-4 bg-[#E6D4C7] rounded-lg border border-[#E6D4C7]">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-[#4A5654]">Rate per km</span>
-              <span className="text-sm text-[#1A2726]">${MILEAGE_RATE}</span>
+              <span className="text-sm text-[#273B3A]">Rate per km</span>
+              <span className="text-sm text-[#273B3A]">${MILEAGE_RATE}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-[#4A5654]">Total Reimbursement</span>
+              <span className="text-sm text-[#273B3A]">Total Reimbursement</span>
               <span className="text-xl font-bold text-[#273B3A]">{formatCurrency(amount)}</span>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] mb-1.5">Date</label>
+            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Date</label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#4A5654] mb-1.5">Trip Description</label>
+            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Trip Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="e.g., Client visit - Downtown office"
               rows={2}
-              className="w-full px-4 py-2.5 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder:text-[#6B7876] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200 resize-none"
+              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200 resize-none"
             />
           </div>
 
@@ -596,14 +596,14 @@ function MileageCalculator({ onClose, onAdd }: {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#D8CAC0] hover:bg-[#C9BAB0] text-[#1A2726] rounded-lg transition-colors"
+              className="flex-1 px-4 py-2.5 bg-[#E6D4C7] hover:bg-[#E6D4C7] text-[#273B3A] rounded-lg transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={!distance}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#273B3A] to-[#1E2E2D] hover:from-[#273B3A]/90 hover:to-[#1E2E2D]/90 text-[#E6D4C7] font-medium rounded-lg transition-all disabled:opacity-50"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#273B3A] to-[#273B3A] hover:from-[#273B3A]/90 hover:to-[#273B3A]/90 text-[#E6D4C7] font-medium rounded-lg transition-all disabled:opacity-50"
             >
               <Plus className="w-4 h-4" />
               Add Mileage
@@ -725,20 +725,20 @@ export default function ExpensesPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1A2726]">Expense Reports</h1>
-          <p className="text-[#4A5654] mt-1">Track and manage your business expenses</p>
+          <h1 className="text-2xl font-bold text-[#273B3A]">Expense Reports</h1>
+          <p className="text-[#273B3A] mt-1">Track and manage your business expenses</p>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={handleExportPDF}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#D8CAC0] hover:bg-[#C9BAB0] text-[#1A2726] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#E6D4C7] hover:bg-[#E6D4C7] text-[#273B3A] rounded-lg transition-colors"
           >
             <Download className="w-4 h-4" />
             Export PDF
           </button>
           <button
             onClick={() => setShowMileageCalc(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#D8CAC0] hover:bg-[#C9BAB0] text-[#1A2726] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#E6D4C7] hover:bg-[#E6D4C7] text-[#273B3A] rounded-lg transition-colors"
           >
             <Car className="w-4 h-4" />
             Mileage
@@ -748,7 +748,7 @@ export default function ExpensesPage() {
               setEditingExpense(null);
               setShowExpenseForm(true);
             }}
-            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#273B3A] to-[#1E2E2D] hover:from-[#273B3A]/90 hover:to-[#1E2E2D]/90 text-[#E6D4C7] font-medium rounded-lg transition-all shadow-lg shadow-[#273B3A]/20"
+            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#273B3A] to-[#273B3A] hover:from-[#273B3A]/90 hover:to-[#273B3A]/90 text-[#E6D4C7] font-medium rounded-lg transition-all shadow-lg shadow-[#273B3A]/20"
           >
             <Plus className="w-4 h-4" />
             Add Expense
@@ -758,44 +758,44 @@ export default function ExpensesPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-5">
+        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
               <Clock className="w-5 h-5 text-amber-400" />
             </div>
-            <span className="text-sm text-[#4A5654]">Pending</span>
+            <span className="text-sm text-[#273B3A]">Pending</span>
           </div>
-          <div className="text-2xl font-bold text-[#1A2726]">{formatCurrency(pendingTotal)}</div>
+          <div className="text-2xl font-bold text-[#273B3A]">{formatCurrency(pendingTotal)}</div>
         </div>
 
-        <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-5">
+        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
               <CheckCircle2 className="w-5 h-5 text-emerald-400" />
             </div>
-            <span className="text-sm text-[#4A5654]">Approved</span>
+            <span className="text-sm text-[#273B3A]">Approved</span>
           </div>
-          <div className="text-2xl font-bold text-[#1A2726]">{formatCurrency(approvedTotal)}</div>
+          <div className="text-2xl font-bold text-[#273B3A]">{formatCurrency(approvedTotal)}</div>
         </div>
 
-        <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-5">
+        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
               <RefreshCcw className="w-5 h-5 text-blue-400" />
             </div>
-            <span className="text-sm text-[#4A5654]">Reimbursed</span>
+            <span className="text-sm text-[#273B3A]">Reimbursed</span>
           </div>
-          <div className="text-2xl font-bold text-[#1A2726]">{formatCurrency(reimbursedTotal)}</div>
+          <div className="text-2xl font-bold text-[#273B3A]">{formatCurrency(reimbursedTotal)}</div>
         </div>
 
-        <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-5">
+        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-[#273B3A]/10 flex items-center justify-center">
               <TrendingUp className="w-5 h-5 text-[#273B3A]" />
             </div>
-            <span className="text-sm text-[#4A5654]">Total</span>
+            <span className="text-sm text-[#273B3A]">Total</span>
           </div>
-          <div className="text-2xl font-bold text-[#1A2726]">
+          <div className="text-2xl font-bold text-[#273B3A]">
             {formatCurrency(pendingTotal + approvedTotal + reimbursedTotal)}
           </div>
         </div>
@@ -804,20 +804,20 @@ export default function ExpensesPage() {
       {/* Filters */}
       <div className="flex items-center gap-4 flex-wrap">
         <div className="relative flex-1 max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6B7876]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#273B3A]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search expenses..."
-            className="w-full pl-10 pr-4 py-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder:text-[#6B7876] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all"
           />
         </div>
 
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-4 py-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30"
+          className="px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30"
         >
           <option value="">All Status</option>
           <option value="draft">Draft</option>
@@ -830,7 +830,7 @@ export default function ExpensesPage() {
         <select
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="px-4 py-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30"
+          className="px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30"
         >
           <option value="">All Categories</option>
           {categories.map((cat) => (
@@ -838,12 +838,12 @@ export default function ExpensesPage() {
           ))}
         </select>
 
-        <div className="flex items-center gap-2 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg p-1 ml-auto">
+        <div className="flex items-center gap-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg p-1 ml-auto">
           <button
             onClick={() => setViewMode("grid")}
             className={cn(
               "p-2 rounded-md transition-colors",
-              viewMode === "grid" ? "bg-[#273B3A] text-[#E6D4C7]" : "text-[#4A5654] hover:text-[#1A2726]"
+              viewMode === "grid" ? "bg-[#273B3A] text-[#E6D4C7]" : "text-[#273B3A] hover:text-[#273B3A]"
             )}
           >
             <Receipt className="w-4 h-4" />
@@ -852,7 +852,7 @@ export default function ExpensesPage() {
             onClick={() => setViewMode("list")}
             className={cn(
               "p-2 rounded-md transition-colors",
-              viewMode === "list" ? "bg-[#273B3A] text-[#E6D4C7]" : "text-[#4A5654] hover:text-[#1A2726]"
+              viewMode === "list" ? "bg-[#273B3A] text-[#E6D4C7]" : "text-[#273B3A] hover:text-[#273B3A]"
             )}
           >
             <FileText className="w-4 h-4" />
@@ -862,7 +862,7 @@ export default function ExpensesPage() {
 
       {/* Content */}
       {displayedExpenses.length === 0 ? (
-        <div className="text-center py-12 text-[#4A5654]">
+        <div className="text-center py-12 text-[#273B3A]">
           <Receipt className="w-12 h-12 mx-auto mb-4 opacity-50" />
           <p>No expenses found</p>
           <button
