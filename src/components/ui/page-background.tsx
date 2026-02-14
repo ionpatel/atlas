@@ -1,303 +1,255 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useEffect, useState, useMemo } from "react";
 
-// SVG patterns for each module - subtle, professional business graphics
-const patterns: Record<string, React.ReactNode> = {
-  dashboard: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="dashboard-pattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
-          {/* Bar chart */}
-          <rect x="10" y="60" width="12" height="40" fill="currentColor" opacity="0.04" rx="2"/>
-          <rect x="26" y="40" width="12" height="60" fill="currentColor" opacity="0.04" rx="2"/>
-          <rect x="42" y="50" width="12" height="50" fill="currentColor" opacity="0.04" rx="2"/>
-          {/* Line chart */}
-          <path d="M70 80 L85 60 L100 70 L115 40" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.04"/>
-          <circle cx="70" cy="80" r="3" fill="currentColor" opacity="0.04"/>
-          <circle cx="85" cy="60" r="3" fill="currentColor" opacity="0.04"/>
-          <circle cx="100" cy="70" r="3" fill="currentColor" opacity="0.04"/>
-          <circle cx="115" cy="40" r="3" fill="currentColor" opacity="0.04"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#dashboard-pattern)"/>
-    </svg>
-  ),
-  
-  inventory: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="inventory-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-          {/* Package box */}
-          <rect x="20" y="30" width="30" height="25" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.05" rx="2"/>
-          <line x1="20" y1="42" x2="50" y2="42" stroke="currentColor" strokeWidth="1" opacity="0.05"/>
-          <line x1="35" y1="30" x2="35" y2="42" stroke="currentColor" strokeWidth="1" opacity="0.05"/>
-          {/* Barcode */}
-          <rect x="60" y="35" width="2" height="15" fill="currentColor" opacity="0.04"/>
-          <rect x="64" y="35" width="1" height="15" fill="currentColor" opacity="0.04"/>
-          <rect x="67" y="35" width="3" height="15" fill="currentColor" opacity="0.04"/>
-          <rect x="72" y="35" width="1" height="15" fill="currentColor" opacity="0.04"/>
-          <rect x="75" y="35" width="2" height="15" fill="currentColor" opacity="0.04"/>
-          <rect x="79" y="35" width="1" height="15" fill="currentColor" opacity="0.04"/>
-          {/* Stacked boxes */}
-          <rect x="25" y="65" width="18" height="14" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04" rx="1"/>
-          <rect x="30" y="58" width="18" height="14" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04" rx="1"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#inventory-pattern)"/>
-    </svg>
-  ),
-  
-  invoices: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="invoices-pattern" x="0" y="0" width="100" height="120" patternUnits="userSpaceOnUse">
-          {/* Document */}
-          <rect x="20" y="20" width="35" height="45" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.05" rx="2"/>
-          <line x1="28" y1="32" x2="47" y2="32" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <line x1="28" y1="40" x2="47" y2="40" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <line x1="28" y1="48" x2="40" y2="48" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          {/* Dollar sign */}
-          <text x="70" y="50" fontSize="24" fill="currentColor" opacity="0.04" fontWeight="600">$</text>
-          {/* Check mark */}
-          <path d="M65 80 L72 87 L85 70" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.04" strokeLinecap="round" strokeLinejoin="round"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#invoices-pattern)"/>
-    </svg>
-  ),
-  
-  contacts: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="contacts-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-          {/* Person icon */}
-          <circle cx="35" cy="30" r="10" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.05"/>
-          <path d="M20 60 Q35 45 50 60" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.05"/>
-          {/* Connection lines */}
-          <circle cx="75" cy="35" r="6" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <circle cx="75" cy="65" r="6" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <line x1="75" y1="41" x2="75" y2="59" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          {/* Card */}
-          <rect x="20" y="70" width="30" height="20" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04" rx="2"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#contacts-pattern)"/>
-    </svg>
-  ),
-  
-  crm: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="crm-pattern" x="0" y="0" width="120" height="100" patternUnits="userSpaceOnUse">
-          {/* Funnel */}
-          <path d="M20 25 L50 25 L42 45 L42 60 L28 60 L28 45 Z" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.05"/>
-          {/* Target */}
-          <circle cx="85" cy="45" r="18" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <circle cx="85" cy="45" r="12" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <circle cx="85" cy="45" r="6" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <circle cx="85" cy="45" r="2" fill="currentColor" opacity="0.05"/>
-          {/* Handshake simplified */}
-          <path d="M30 80 Q45 70 60 80" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.04"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#crm-pattern)"/>
-    </svg>
-  ),
-  
-  accounting: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="accounting-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-          {/* Calculator */}
-          <rect x="20" y="20" width="30" height="40" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.05" rx="3"/>
-          <rect x="24" y="24" width="22" height="10" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="24" y="38" width="5" height="5" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="32" y="38" width="5" height="5" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="40" y="38" width="5" height="5" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="24" y="46" width="5" height="5" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="32" y="46" width="5" height="5" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="40" y="46" width="5" height="5" fill="currentColor" opacity="0.03" rx="1"/>
-          {/* Pie chart */}
-          <circle cx="70" cy="50" r="15" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <path d="M70 50 L70 35 A15 15 0 0 1 82 58 Z" fill="currentColor" opacity="0.03"/>
-          {/* Coins */}
-          <ellipse cx="75" cy="85" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <ellipse cx="75" cy="82" rx="10" ry="4" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#accounting-pattern)"/>
-    </svg>
-  ),
-  
-  employees: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="employees-pattern" x="0" y="0" width="120" height="100" patternUnits="userSpaceOnUse">
-          {/* Team of people */}
-          <circle cx="30" cy="30" r="8" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <path d="M18 55 Q30 42 42 55" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <circle cx="55" cy="28" r="8" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <path d="M43 53 Q55 40 67 53" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <circle cx="80" cy="30" r="8" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <path d="M68 55 Q80 42 92 55" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          {/* ID badge */}
-          <rect x="35" y="65" width="24" height="30" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04" rx="2"/>
-          <circle cx="47" cy="76" r="5" fill="currentColor" opacity="0.03"/>
-          <rect x="40" y="84" width="14" height="2" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="42" y="88" width="10" height="2" fill="currentColor" opacity="0.03" rx="1"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#employees-pattern)"/>
-    </svg>
-  ),
-  
-  settings: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="settings-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-          {/* Gear */}
-          <circle cx="40" cy="45" r="12" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.05"/>
-          <circle cx="40" cy="45" r="5" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          {/* Gear teeth */}
-          <rect x="37" y="28" width="6" height="6" fill="currentColor" opacity="0.04" rx="1"/>
-          <rect x="37" y="56" width="6" height="6" fill="currentColor" opacity="0.04" rx="1"/>
-          <rect x="23" y="42" width="6" height="6" fill="currentColor" opacity="0.04" rx="1"/>
-          <rect x="51" y="42" width="6" height="6" fill="currentColor" opacity="0.04" rx="1"/>
-          {/* Sliders */}
-          <line x1="65" y1="35" x2="90" y2="35" stroke="currentColor" strokeWidth="2" opacity="0.04"/>
-          <circle cx="75" cy="35" r="4" fill="currentColor" opacity="0.04"/>
-          <line x1="65" y1="50" x2="90" y2="50" stroke="currentColor" strokeWidth="2" opacity="0.04"/>
-          <circle cx="82" cy="50" r="4" fill="currentColor" opacity="0.04"/>
-          <line x1="65" y1="65" x2="90" y2="65" stroke="currentColor" strokeWidth="2" opacity="0.04"/>
-          <circle cx="70" cy="65" r="4" fill="currentColor" opacity="0.04"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#settings-pattern)"/>
-    </svg>
-  ),
-  
-  projects: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="projects-pattern" x="0" y="0" width="120" height="100" patternUnits="userSpaceOnUse">
-          {/* Kanban board */}
-          <rect x="15" y="20" width="25" height="60" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04" rx="2"/>
-          <rect x="45" y="20" width="25" height="60" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04" rx="2"/>
-          <rect x="75" y="20" width="25" height="60" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04" rx="2"/>
-          {/* Cards */}
-          <rect x="18" y="28" width="19" height="12" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="18" y="44" width="19" height="12" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="48" y="28" width="19" height="12" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="78" y="28" width="19" height="12" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="78" y="44" width="19" height="12" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="78" y="60" width="19" height="12" fill="currentColor" opacity="0.03" rx="1"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#projects-pattern)"/>
-    </svg>
-  ),
-  
-  sales: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="sales-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-          {/* Shopping cart */}
-          <circle cx="32" cy="70" r="4" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <circle cx="52" cy="70" r="4" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <path d="M20 30 L28 30 L35 55 L55 55 L60 40 L30 40" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.05"/>
-          {/* Trending up */}
-          <path d="M70 65 L80 50 L90 55 L100 35" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.04"/>
-          <path d="M95 35 L100 35 L100 40" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.04"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#sales-pattern)"/>
-    </svg>
-  ),
-  
-  purchase: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="purchase-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-          {/* Clipboard with list */}
-          <rect x="25" y="15" width="30" height="40" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.05" rx="2"/>
-          <rect x="35" y="10" width="10" height="8" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04" rx="2"/>
-          <line x1="32" y1="28" x2="48" y2="28" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <line x1="32" y1="36" x2="48" y2="36" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <line x1="32" y1="44" x2="42" y2="44" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          {/* Truck */}
-          <rect x="60" y="50" width="25" height="18" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04" rx="2"/>
-          <rect x="85" y="55" width="10" height="13" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04" rx="1"/>
-          <circle cx="68" cy="70" r="4" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-          <circle cx="88" cy="70" r="4" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#purchase-pattern)"/>
-    </svg>
-  ),
-  
-  pos: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="pos-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-          {/* Cash register */}
-          <rect x="20" y="35" width="40" height="30" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.05" rx="3"/>
-          <rect x="25" y="40" width="30" height="12" fill="currentColor" opacity="0.03" rx="1"/>
-          <rect x="20" y="55" width="40" height="5" fill="currentColor" opacity="0.03"/>
-          {/* Credit card */}
-          <rect x="65" y="40" width="28" height="18" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04" rx="2"/>
-          <rect x="68" y="48" width="15" height="3" fill="currentColor" opacity="0.03" rx="1"/>
-          {/* Receipt */}
-          <path d="M70 65 L70 90 L85 90 L85 65 L82 68 L79 65 L76 68 L73 65 Z" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.04"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#pos-pattern)"/>
-    </svg>
-  ),
-  
-  default: (
-    <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="default-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-          {/* Simple grid dots */}
-          <circle cx="30" cy="30" r="1.5" fill="currentColor" opacity="0.04"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#default-pattern)"/>
-    </svg>
-  ),
-};
-
-// Map routes to pattern keys
-function getPatternKey(pathname: string): string {
-  if (pathname.includes('/dashboard')) return 'dashboard';
-  if (pathname.includes('/inventory')) return 'inventory';
-  if (pathname.includes('/invoices') || pathname.includes('/quotations') || pathname.includes('/credit-notes')) return 'invoices';
-  if (pathname.includes('/contacts')) return 'contacts';
-  if (pathname.includes('/crm')) return 'crm';
-  if (pathname.includes('/accounting') || pathname.includes('/expenses')) return 'accounting';
-  if (pathname.includes('/employees') || pathname.includes('/payroll')) return 'employees';
-  if (pathname.includes('/settings')) return 'settings';
-  if (pathname.includes('/projects')) return 'projects';
-  if (pathname.includes('/sales')) return 'sales';
-  if (pathname.includes('/purchase')) return 'purchase';
-  if (pathname.includes('/pos')) return 'pos';
-  if (pathname.includes('/documents') || pathname.includes('/contracts')) return 'invoices';
-  if (pathname.includes('/reports')) return 'dashboard';
-  if (pathname.includes('/apps')) return 'settings';
-  return 'default';
-}
-
+// Premium animated background with floating shapes and gradient mesh
 export function PageBackground() {
   const pathname = usePathname();
-  const patternKey = getPatternKey(pathname);
-  const pattern = patterns[patternKey] || patterns.default;
+  const [mounted, setMounted] = useState(false);
   
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Generate consistent random positions based on pathname
+  const shapes = useMemo(() => {
+    const seed = pathname.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const random = (i: number) => ((seed * (i + 1) * 9301 + 49297) % 233280) / 233280;
+    
+    return Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      size: 150 + random(i) * 300,
+      x: random(i * 2) * 100,
+      y: random(i * 3) * 100,
+      duration: 20 + random(i * 4) * 30,
+      delay: random(i * 5) * -20,
+      opacity: 0.03 + random(i * 6) * 0.04,
+    }));
+  }, [pathname]);
+
+  // Floating particles
+  const particles = useMemo(() => {
+    const seed = pathname.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const random = (i: number) => ((seed * (i + 1) * 7919 + 104729) % 233280) / 233280;
+    
+    return Array.from({ length: 30 }, (_, i) => ({
+      id: i,
+      size: 2 + random(i) * 4,
+      x: random(i * 2) * 100,
+      y: random(i * 3) * 100,
+      duration: 15 + random(i * 4) * 25,
+      delay: random(i * 5) * -15,
+    }));
+  }, [pathname]);
+
+  if (!mounted) return null;
+
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden text-cinnamon z-0">
-      {pattern}
-      {/* Gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-cream-dark/30" />
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      {/* Base gradient */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: `
+            radial-gradient(ellipse 80% 50% at 20% 40%, rgba(156, 74, 41, 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse 60% 60% at 80% 20%, rgba(156, 74, 41, 0.06) 0%, transparent 50%),
+            radial-gradient(ellipse 50% 80% at 60% 80%, rgba(156, 74, 41, 0.05) 0%, transparent 50%),
+            linear-gradient(180deg, rgba(232, 227, 204, 0) 0%, rgba(221, 215, 192, 0.3) 100%)
+          `
+        }}
+      />
+
+      {/* Animated gradient mesh */}
+      <div className="absolute inset-0">
+        <svg className="w-full h-full" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            {/* Gradient definitions */}
+            <radialGradient id="mesh1" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#9C4A29" stopOpacity="0.1" />
+              <stop offset="100%" stopColor="#9C4A29" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="mesh2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#7D3B21" stopOpacity="0.08" />
+              <stop offset="100%" stopColor="#7D3B21" stopOpacity="0" />
+            </radialGradient>
+            
+            {/* Blur filter */}
+            <filter id="blur">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="40" />
+            </filter>
+          </defs>
+
+          {/* Animated mesh blobs */}
+          {shapes.map((shape) => (
+            <circle
+              key={shape.id}
+              r={shape.size}
+              fill={shape.id % 2 === 0 ? "url(#mesh1)" : "url(#mesh2)"}
+              filter="url(#blur)"
+              style={{
+                animation: `float-${shape.id % 4} ${shape.duration}s ease-in-out infinite`,
+                animationDelay: `${shape.delay}s`,
+                transformOrigin: 'center',
+                cx: `${shape.x}%`,
+                cy: `${shape.y}%`,
+              }}
+            />
+          ))}
+        </svg>
+      </div>
+
+      {/* Floating geometric shapes */}
+      <div className="absolute inset-0">
+        {shapes.slice(0, 6).map((shape, i) => (
+          <div
+            key={`geo-${shape.id}`}
+            className="absolute"
+            style={{
+              left: `${shape.x}%`,
+              top: `${shape.y}%`,
+              animation: `float-geo ${shape.duration}s ease-in-out infinite, rotate-slow ${shape.duration * 2}s linear infinite`,
+              animationDelay: `${shape.delay}s`,
+            }}
+          >
+            {i % 3 === 0 ? (
+              // Circle
+              <div 
+                className="rounded-full border border-cinnamon/10"
+                style={{ 
+                  width: shape.size * 0.3, 
+                  height: shape.size * 0.3,
+                  opacity: shape.opacity * 1.5,
+                }}
+              />
+            ) : i % 3 === 1 ? (
+              // Square
+              <div 
+                className="border border-cinnamon/10 rounded-lg"
+                style={{ 
+                  width: shape.size * 0.25, 
+                  height: shape.size * 0.25,
+                  opacity: shape.opacity * 1.5,
+                  transform: 'rotate(45deg)',
+                }}
+              />
+            ) : (
+              // Triangle (using borders)
+              <div 
+                style={{ 
+                  width: 0,
+                  height: 0,
+                  borderLeft: `${shape.size * 0.15}px solid transparent`,
+                  borderRight: `${shape.size * 0.15}px solid transparent`,
+                  borderBottom: `${shape.size * 0.25}px solid rgba(156, 74, 41, ${shape.opacity * 1.5})`,
+                }}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Floating particles/dots */}
+      <div className="absolute inset-0">
+        {particles.map((particle) => (
+          <div
+            key={`particle-${particle.id}`}
+            className="absolute rounded-full bg-cinnamon"
+            style={{
+              width: particle.size,
+              height: particle.size,
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              opacity: 0.08,
+              animation: `particle-float ${particle.duration}s ease-in-out infinite`,
+              animationDelay: `${particle.delay}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Grid pattern overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(156, 74, 41, 0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(156, 74, 41, 0.5) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
+        }}
+      />
+
+      {/* Noise texture overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.015]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Vignette effect */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse at center, transparent 40%, rgba(45, 24, 16, 0.03) 100%)',
+        }}
+      />
+
+      {/* Animated gradient line at top */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] overflow-hidden">
+        <div 
+          className="h-full w-[200%]"
+          style={{
+            background: 'linear-gradient(90deg, transparent, rgba(156, 74, 41, 0.3), rgba(156, 74, 41, 0.5), rgba(156, 74, 41, 0.3), transparent)',
+            animation: 'shimmer-line 8s ease-in-out infinite',
+          }}
+        />
+      </div>
+
+      {/* CSS Keyframes */}
+      <style jsx>{`
+        @keyframes float-0 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          25% { transform: translate(30px, -20px) scale(1.05); }
+          50% { transform: translate(-20px, 30px) scale(0.95); }
+          75% { transform: translate(20px, 20px) scale(1.02); }
+        }
+        @keyframes float-1 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(-40px, 20px) scale(1.03); }
+          66% { transform: translate(30px, -30px) scale(0.97); }
+        }
+        @keyframes float-2 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(25px, 25px) scale(1.04); }
+        }
+        @keyframes float-3 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          25% { transform: translate(-20px, -30px) scale(0.96); }
+          75% { transform: translate(35px, 15px) scale(1.06); }
+        }
+        @keyframes float-geo {
+          0%, 100% { transform: translateY(0) translateX(0); }
+          25% { transform: translateY(-15px) translateX(10px); }
+          50% { transform: translateY(5px) translateX(-8px); }
+          75% { transform: translateY(-8px) translateX(12px); }
+        }
+        @keyframes rotate-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes particle-float {
+          0%, 100% { transform: translateY(0) translateX(0); opacity: 0.08; }
+          25% { transform: translateY(-20px) translateX(10px); opacity: 0.12; }
+          50% { transform: translateY(10px) translateX(-15px); opacity: 0.06; }
+          75% { transform: translateY(-10px) translateX(20px); opacity: 0.1; }
+        }
+        @keyframes shimmer-line {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0%); }
+        }
+      `}</style>
     </div>
   );
 }
