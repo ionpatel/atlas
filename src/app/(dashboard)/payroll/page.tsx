@@ -63,7 +63,7 @@ async function generateT4(employeeName: string, ytdData: {
   const totalTax = ytdData.federalTax + ytdData.provincialTax;
   const html = `
 <div class="t4" style="max-width: 800px; margin: 0 auto; background: white; border: 2px solid #000; font-family: Arial, sans-serif;">
-  <div style="background: #F5F2E8; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+  <div style="background: #F0E6E0; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
     <h1 style="font-size: 24px; margin: 0;">T4</h1>
     <div style="font-size: 28px; font-weight: bold;">${year}</div>
   </div>
@@ -202,10 +202,10 @@ function StatCard({
   trend?: { value: string; positive: boolean };
 }) {
   return (
-    <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-5 hover:border-[#9C4A29]/20 transition-all duration-200">
+    <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-5 hover:border-[#273B3A]/20 transition-all duration-200">
       <div className="flex items-start justify-between mb-3">
-        <div className="p-2.5 rounded-lg bg-[#9C4A29]/10">
-          <Icon className="w-5 h-5 text-[#9C4A29]" />
+        <div className="p-2.5 rounded-lg bg-[#273B3A]/10">
+          <Icon className="w-5 h-5 text-[#273B3A]" />
         </div>
         {trend && (
           <div className={cn(
@@ -217,9 +217,9 @@ function StatCard({
           </div>
         )}
       </div>
-      <p className="text-2xl font-semibold text-[#2D1810] mb-1">{value}</p>
-      <p className="text-xs text-[#6B5B4F]">{label}</p>
-      {subValue && <p className="text-xs text-[#8B7B6F] mt-1">{subValue}</p>}
+      <p className="text-2xl font-semibold text-[#1A2726] mb-1">{value}</p>
+      <p className="text-xs text-[#4A5654]">{label}</p>
+      {subValue && <p className="text-xs text-[#6B7876] mt-1">{subValue}</p>}
     </div>
   );
 }
@@ -239,12 +239,12 @@ function PayRunCard({
   return (
     <div
       onClick={onClick}
-      className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-5 hover:border-[#9C4A29]/25 transition-all duration-200 cursor-pointer group"
+      className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-5 hover:border-[#273B3A]/25 transition-all duration-200 cursor-pointer group"
     >
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="text-sm font-semibold text-[#2D1810] mb-1">{payRun.name}</h3>
-          <p className="text-xs text-[#6B5B4F]">
+          <h3 className="text-sm font-semibold text-[#1A2726] mb-1">{payRun.name}</h3>
+          <p className="text-xs text-[#4A5654]">
             {formatDateShort(payRun.periodStart)} – {formatDateShort(payRun.periodEnd)}
           </p>
         </div>
@@ -259,25 +259,25 @@ function PayRunCard({
 
       <div className="grid grid-cols-3 gap-4 mb-4">
         <div>
-          <p className="text-xs text-[#8B7B6F] mb-1">Employees</p>
-          <p className="text-sm font-medium text-[#2D1810]">{payRun.employeeCount}</p>
+          <p className="text-xs text-[#6B7876] mb-1">Employees</p>
+          <p className="text-sm font-medium text-[#1A2726]">{payRun.employeeCount}</p>
         </div>
         <div>
-          <p className="text-xs text-[#8B7B6F] mb-1">Gross Pay</p>
-          <p className="text-sm font-medium text-[#2D1810]">{formatCurrency(payRun.totalGross)}</p>
+          <p className="text-xs text-[#6B7876] mb-1">Gross Pay</p>
+          <p className="text-sm font-medium text-[#1A2726]">{formatCurrency(payRun.totalGross)}</p>
         </div>
         <div>
-          <p className="text-xs text-[#8B7B6F] mb-1">Net Pay</p>
+          <p className="text-xs text-[#6B7876] mb-1">Net Pay</p>
           <p className="text-sm font-medium text-emerald-400">{formatCurrency(payRun.totalNet)}</p>
         </div>
       </div>
 
-      <div className="flex items-center justify-between pt-3 border-t border-[#D4CDB8]">
-        <div className="flex items-center gap-2 text-xs text-[#6B5B4F]">
-          <Calendar className="w-3.5 h-3.5 text-[#8B7B6F]" />
+      <div className="flex items-center justify-between pt-3 border-t border-[#C9BAB0]">
+        <div className="flex items-center gap-2 text-xs text-[#4A5654]">
+          <Calendar className="w-3.5 h-3.5 text-[#6B7876]" />
           Pay date: {formatDate(payRun.payDate)}
         </div>
-        <ChevronRight className="w-4 h-4 text-[#8B7B6F] group-hover:text-[#9C4A29] transition-colors duration-200" />
+        <ChevronRight className="w-4 h-4 text-[#6B7876] group-hover:text-[#273B3A] transition-colors duration-200" />
       </div>
     </div>
   );
@@ -305,26 +305,26 @@ function CreatePayRunModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#F5F2E8] border border-[#D4CDB8] rounded-2xl w-full max-w-lg p-6 shadow-2xl">
-        <h2 className="text-xl font-semibold text-[#2D1810] mb-6">Run Payroll</h2>
+      <div className="relative bg-[#F0E6E0] border border-[#C9BAB0] rounded-2xl w-full max-w-lg p-6 shadow-2xl">
+        <h2 className="text-xl font-semibold text-[#1A2726] mb-6">Run Payroll</h2>
 
         <div className="space-y-4">
           <div>
-            <label className="text-xs text-[#6B5B4F] mb-1.5 block">Pay Run Name</label>
+            <label className="text-xs text-[#4A5654] mb-1.5 block">Pay Run Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg px-4 py-3 text-sm text-[#2D1810] focus:border-[#9C4A29]/50 focus:outline-none transition-colors"
+              className="w-full bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg px-4 py-3 text-sm text-[#1A2726] focus:border-[#273B3A]/50 focus:outline-none transition-colors"
             />
           </div>
 
           <div>
-            <label className="text-xs text-[#6B5B4F] mb-1.5 block">Pay Period</label>
+            <label className="text-xs text-[#4A5654] mb-1.5 block">Pay Period</label>
             <select
               value={payPeriod}
               onChange={(e) => setPayPeriod(e.target.value as PayPeriod)}
-              className="w-full bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg px-4 py-3 text-sm text-[#2D1810] focus:border-[#9C4A29]/50 focus:outline-none transition-colors"
+              className="w-full bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg px-4 py-3 text-sm text-[#1A2726] focus:border-[#273B3A]/50 focus:outline-none transition-colors"
             >
               <option value="weekly">Weekly</option>
               <option value="bi-weekly">Bi-weekly</option>
@@ -335,32 +335,32 @@ function CreatePayRunModal({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs text-[#6B5B4F] mb-1.5 block">Period Start</label>
+              <label className="text-xs text-[#4A5654] mb-1.5 block">Period Start</label>
               <input
                 type="date"
                 value={periodStart}
                 onChange={(e) => setPeriodStart(e.target.value)}
-                className="w-full bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg px-4 py-3 text-sm text-[#2D1810] focus:border-[#9C4A29]/50 focus:outline-none transition-colors"
+                className="w-full bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg px-4 py-3 text-sm text-[#1A2726] focus:border-[#273B3A]/50 focus:outline-none transition-colors"
               />
             </div>
             <div>
-              <label className="text-xs text-[#6B5B4F] mb-1.5 block">Period End</label>
+              <label className="text-xs text-[#4A5654] mb-1.5 block">Period End</label>
               <input
                 type="date"
                 value={periodEnd}
                 onChange={(e) => setPeriodEnd(e.target.value)}
-                className="w-full bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg px-4 py-3 text-sm text-[#2D1810] focus:border-[#9C4A29]/50 focus:outline-none transition-colors"
+                className="w-full bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg px-4 py-3 text-sm text-[#1A2726] focus:border-[#273B3A]/50 focus:outline-none transition-colors"
               />
             </div>
           </div>
 
           <div>
-            <label className="text-xs text-[#6B5B4F] mb-1.5 block">Pay Date</label>
+            <label className="text-xs text-[#4A5654] mb-1.5 block">Pay Date</label>
             <input
               type="date"
               value={payDate}
               onChange={(e) => setPayDate(e.target.value)}
-              className="w-full bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg px-4 py-3 text-sm text-[#2D1810] focus:border-[#9C4A29]/50 focus:outline-none transition-colors"
+              className="w-full bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg px-4 py-3 text-sm text-[#1A2726] focus:border-[#273B3A]/50 focus:outline-none transition-colors"
             />
           </div>
         </div>
@@ -368,7 +368,7 @@ function CreatePayRunModal({
         <div className="flex gap-3 mt-6">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-3 border border-[#D4CDB8] rounded-lg text-sm font-medium text-[#6B5B4F] hover:text-[#2D1810] hover:border-[#3a3a3a] transition-all duration-200"
+            className="flex-1 px-4 py-3 border border-[#C9BAB0] rounded-lg text-sm font-medium text-[#4A5654] hover:text-[#1A2726] hover:border-[#3a3a3a] transition-all duration-200"
           >
             Cancel
           </button>
@@ -377,7 +377,7 @@ function CreatePayRunModal({
               onCreate({ name, payPeriod, periodStart, periodEnd, payDate });
               onClose();
             }}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200"
           >
             <Play className="w-4 h-4" />
             Run Payroll
@@ -453,9 +453,9 @@ function exportPayRunToCSV(payRun: PayRun) {
 async function generatePayStubPDF(stub: PayStub, payRunName: string) {
   const html = `
 <div class="stub" style="max-width: 800px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-  <div style="background: linear-gradient(135deg, #E8E3CC 0%, #F5F2E8 100%); color: white; padding: 30px;">
+  <div style="background: linear-gradient(135deg, #E6D4C7 0%, #F0E6E0 100%); color: white; padding: 30px;">
     <h1 style="font-size: 24px; margin: 0 0 5px 0;">PAY STUB</h1>
-    <p style="color: #9C4A29; font-size: 14px; margin: 0;">${payRunName}</p>
+    <p style="color: #273B3A; font-size: 14px; margin: 0;">${payRunName}</p>
     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 20px;">
       <div>
         <div style="font-size: 18px; font-weight: 600;">Atlas ERP</div>
@@ -463,7 +463,7 @@ async function generatePayStubPDF(stub: PayStub, payRunName: string) {
       </div>
       <div style="text-align: right;">
         <div style="font-size: 12px; color: #888;">PAY DATE</div>
-        <div style="font-size: 16px; font-weight: 600; color: #9C4A29;">${new Date(stub.payDate).toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
+        <div style="font-size: 16px; font-weight: 600; color: #273B3A;">${new Date(stub.payDate).toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
       </div>
     </div>
   </div>
@@ -527,7 +527,7 @@ async function generatePayStubPDF(stub: PayStub, payRunName: string) {
 
   <div style="background: #111; color: white; padding: 25px 30px; display: flex; justify-content: space-between; align-items: center;">
     <div style="font-size: 14px; color: #888;">NET PAY</div>
-    <div style="font-size: 32px; font-weight: 700; color: #9C4A29;">$${stub.netPay.toFixed(2)}</div>
+    <div style="font-size: 32px; font-weight: 700; color: #273B3A;">$${stub.netPay.toFixed(2)}</div>
   </div>
 
   <div style="background: #f9f9f9; padding: 20px 30px;">
@@ -585,12 +585,12 @@ function PayStubDetail({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#F5F2E8] border border-[#D4CDB8] rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl">
+      <div className="relative bg-[#F0E6E0] border border-[#C9BAB0] rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-[#D4CDB8]">
+        <div className="flex items-center justify-between p-6 border-b border-[#C9BAB0]">
           <div>
-            <h2 className="text-xl font-semibold text-[#2D1810]">{payRun.name}</h2>
-            <p className="text-sm text-[#6B5B4F] mt-1">
+            <h2 className="text-xl font-semibold text-[#1A2726]">{payRun.name}</h2>
+            <p className="text-sm text-[#4A5654] mt-1">
               {formatDate(payRun.periodStart)} – {formatDate(payRun.periodEnd)}
             </p>
           </div>
@@ -603,7 +603,7 @@ function PayStubDetail({
             </span>
             <button
               onClick={onClose}
-              className="text-[#6B5B4F] hover:text-[#2D1810] transition-colors"
+              className="text-[#4A5654] hover:text-[#1A2726] transition-colors"
             >
               ✕
             </button>
@@ -611,21 +611,21 @@ function PayStubDetail({
         </div>
 
         {/* Summary */}
-        <div className="grid grid-cols-4 gap-4 p-6 border-b border-[#D4CDB8] bg-[#0a0a0a]/50">
+        <div className="grid grid-cols-4 gap-4 p-6 border-b border-[#C9BAB0] bg-[#0a0a0a]/50">
           <div>
-            <p className="text-xs text-[#8B7B6F] mb-1">Employees</p>
-            <p className="text-lg font-semibold text-[#2D1810]">{payRun.employeeCount}</p>
+            <p className="text-xs text-[#6B7876] mb-1">Employees</p>
+            <p className="text-lg font-semibold text-[#1A2726]">{payRun.employeeCount}</p>
           </div>
           <div>
-            <p className="text-xs text-[#8B7B6F] mb-1">Gross Pay</p>
-            <p className="text-lg font-semibold text-[#2D1810]">{formatCurrency(payRun.totalGross)}</p>
+            <p className="text-xs text-[#6B7876] mb-1">Gross Pay</p>
+            <p className="text-lg font-semibold text-[#1A2726]">{formatCurrency(payRun.totalGross)}</p>
           </div>
           <div>
-            <p className="text-xs text-[#8B7B6F] mb-1">Deductions</p>
+            <p className="text-xs text-[#6B7876] mb-1">Deductions</p>
             <p className="text-lg font-semibold text-red-400">{formatCurrency(payRun.totalDeductions)}</p>
           </div>
           <div>
-            <p className="text-xs text-[#8B7B6F] mb-1">Net Pay</p>
+            <p className="text-xs text-[#6B7876] mb-1">Net Pay</p>
             <p className="text-lg font-semibold text-emerald-400">{formatCurrency(payRun.totalNet)}</p>
           </div>
         </div>
@@ -633,35 +633,35 @@ function PayStubDetail({
         {/* Pay Stubs Table */}
         <div className="overflow-auto max-h-[400px]">
           <table className="w-full">
-            <thead className="sticky top-0 bg-[#F5F2E8]">
-              <tr className="border-b border-[#D4CDB8]">
-                <th className="text-left px-6 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Employee</th>
-                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Gross</th>
-                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Federal Tax</th>
-                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Provincial</th>
-                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">CPP</th>
-                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">EI</th>
-                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Net Pay</th>
-                <th className="text-center px-6 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Pay Stub</th>
+            <thead className="sticky top-0 bg-[#F0E6E0]">
+              <tr className="border-b border-[#C9BAB0]">
+                <th className="text-left px-6 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Employee</th>
+                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Gross</th>
+                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Federal Tax</th>
+                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Provincial</th>
+                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">CPP</th>
+                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">EI</th>
+                <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Net Pay</th>
+                <th className="text-center px-6 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Pay Stub</th>
               </tr>
             </thead>
             <tbody>
               {payRun.payStubs.map((stub) => (
-                <tr key={stub.id} className="border-b border-[#D4CDB8]/50 hover:bg-[#F5F2E8] transition-colors">
+                <tr key={stub.id} className="border-b border-[#C9BAB0]/50 hover:bg-[#F0E6E0] transition-colors">
                   <td className="px-6 py-4">
-                    <p className="text-sm font-medium text-[#2D1810]">{stub.employeeName}</p>
+                    <p className="text-sm font-medium text-[#1A2726]">{stub.employeeName}</p>
                   </td>
-                  <td className="px-6 py-4 text-right text-sm text-[#2D1810]">{formatCurrency(stub.grossPay)}</td>
-                  <td className="px-6 py-4 text-right text-sm text-[#6B5B4F]">{formatCurrency(stub.federalTax)}</td>
-                  <td className="px-6 py-4 text-right text-sm text-[#6B5B4F]">{formatCurrency(stub.provincialTax)}</td>
-                  <td className="px-6 py-4 text-right text-sm text-[#6B5B4F]">{formatCurrency(stub.cpp)}</td>
-                  <td className="px-6 py-4 text-right text-sm text-[#6B5B4F]">{formatCurrency(stub.ei)}</td>
+                  <td className="px-6 py-4 text-right text-sm text-[#1A2726]">{formatCurrency(stub.grossPay)}</td>
+                  <td className="px-6 py-4 text-right text-sm text-[#4A5654]">{formatCurrency(stub.federalTax)}</td>
+                  <td className="px-6 py-4 text-right text-sm text-[#4A5654]">{formatCurrency(stub.provincialTax)}</td>
+                  <td className="px-6 py-4 text-right text-sm text-[#4A5654]">{formatCurrency(stub.cpp)}</td>
+                  <td className="px-6 py-4 text-right text-sm text-[#4A5654]">{formatCurrency(stub.ei)}</td>
                   <td className="px-6 py-4 text-right text-sm font-medium text-emerald-400">{formatCurrency(stub.netPay)}</td>
                   <td className="px-6 py-4 text-center">
                     <div className="flex items-center justify-center gap-2">
                       <button
                         onClick={async () => await generatePayStubPDF(stub, payRun.name)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#9C4A29] bg-[#9C4A29]/10 border border-[#9C4A29]/20 rounded-lg hover:bg-[#9C4A29]/20 transition-all"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#273B3A] bg-[#273B3A]/10 border border-[#273B3A]/20 rounded-lg hover:bg-[#273B3A]/20 transition-all"
                         title="Download Pay Stub PDF"
                       >
                         <Download className="w-3.5 h-3.5" />
@@ -690,17 +690,17 @@ function PayStubDetail({
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-between p-6 border-t border-[#D4CDB8] bg-[#0a0a0a]/50">
-          <div className="flex items-center gap-2 text-xs text-[#6B5B4F]">
-            <Building2 className="w-4 h-4 text-[#8B7B6F]" />
-            <span>Employer cost: <span className="text-[#2D1810] font-medium">{formatCurrency(payRun.totalEmployerCost)}</span></span>
-            <span className="text-[#8B7B6F]">•</span>
+        <div className="flex items-center justify-between p-6 border-t border-[#C9BAB0] bg-[#0a0a0a]/50">
+          <div className="flex items-center gap-2 text-xs text-[#4A5654]">
+            <Building2 className="w-4 h-4 text-[#6B7876]" />
+            <span>Employer cost: <span className="text-[#1A2726] font-medium">{formatCurrency(payRun.totalEmployerCost)}</span></span>
+            <span className="text-[#6B7876]">•</span>
             <span>Includes CPP & EI contributions</span>
           </div>
           <div className="flex gap-3">
             <button 
               onClick={() => exportPayRunToCSV(payRun)}
-              className="flex items-center gap-2 px-4 py-2.5 border border-[#D4CDB8] rounded-lg text-sm font-medium text-[#6B5B4F] hover:text-[#2D1810] hover:border-[#3a3a3a] transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-2.5 border border-[#C9BAB0] rounded-lg text-sm font-medium text-[#4A5654] hover:text-[#1A2726] hover:border-[#3a3a3a] transition-all duration-200"
             >
               <Download className="w-4 h-4" />
               Export
@@ -717,7 +717,7 @@ function PayStubDetail({
             {payRun.status === "approved" && (
               <button
                 onClick={onMarkPaid}
-                className="flex items-center gap-2 px-4 py-2.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200"
+                className="flex items-center gap-2 px-4 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200"
               >
                 <Wallet className="w-4 h-4" />
                 Mark as Paid
@@ -785,14 +785,14 @@ export default function PayrollPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#2D1810]">Payroll</h1>
-          <p className="text-[#6B5B4F] text-sm mt-1">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#1A2726]">Payroll</h1>
+          <p className="text-[#4A5654] text-sm mt-1">
             Canadian payroll with CPP, EI, and tax calculations
           </p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200"
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200"
         >
           <Play className="w-4 h-4" />
           Run Payroll
@@ -829,7 +829,7 @@ export default function PayrollPage() {
 
       {/* Pay Runs */}
       <div>
-        <h2 className="text-lg font-semibold text-[#2D1810] mb-4">Pay Runs</h2>
+        <h2 className="text-lg font-semibold text-[#1A2726] mb-4">Pay Runs</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {payRuns.map((payRun) => (
             <PayRunCard
@@ -842,24 +842,24 @@ export default function PayrollPage() {
       </div>
 
       {/* Quick Info */}
-      <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-6">
-        <h3 className="text-sm font-semibold text-[#2D1810] mb-4">🇨🇦 Canadian Compliance</h3>
+      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-[#1A2726] mb-4">🇨🇦 Canadian Compliance</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
           <div>
-            <p className="text-[#8B7B6F] text-xs mb-1">CPP Rate (2026)</p>
-            <p className="text-[#2D1810]">5.95% (max $4,034)</p>
+            <p className="text-[#6B7876] text-xs mb-1">CPP Rate (2026)</p>
+            <p className="text-[#1A2726]">5.95% (max $4,034)</p>
           </div>
           <div>
-            <p className="text-[#8B7B6F] text-xs mb-1">EI Rate (2026)</p>
-            <p className="text-[#2D1810]">1.63% (max $1,072)</p>
+            <p className="text-[#6B7876] text-xs mb-1">EI Rate (2026)</p>
+            <p className="text-[#1A2726]">1.63% (max $1,072)</p>
           </div>
           <div>
-            <p className="text-[#8B7B6F] text-xs mb-1">Federal Basic</p>
-            <p className="text-[#2D1810]">$15,705</p>
+            <p className="text-[#6B7876] text-xs mb-1">Federal Basic</p>
+            <p className="text-[#1A2726]">$15,705</p>
           </div>
           <div>
-            <p className="text-[#8B7B6F] text-xs mb-1">Ontario Basic</p>
-            <p className="text-[#2D1810]">$11,865</p>
+            <p className="text-[#6B7876] text-xs mb-1">Ontario Basic</p>
+            <p className="text-[#1A2726]">$11,865</p>
           </div>
         </div>
       </div>

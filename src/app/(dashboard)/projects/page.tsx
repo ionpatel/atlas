@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 const tagStyles: Record<string, string> = {
   Architecture: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   Design: "bg-pink-500/10 text-pink-400 border-pink-500/20",
-  Internal: "bg-[rgba(156,74,41,0.15)] text-[#9C4A29] border-[#9C4A29]/20",
+  Internal: "bg-[rgba(156,74,41,0.15)] text-[#273B3A] border-[#273B3A]/20",
   External: "bg-violet-500/10 text-violet-400 border-violet-500/20",
   Development: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
   Cloud: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
@@ -41,7 +41,7 @@ const statusConfig: Record<
   on_track: { label: "On Track", color: "#34d399", border: "border-l-emerald-400" },
   at_risk: { label: "At Risk", color: "#fbbf24", border: "border-l-amber-400" },
   off_track: { label: "Off Track", color: "#f87171", border: "border-l-red-400" },
-  done: { label: "Done", color: "#6B5B4F", border: "border-l-[#6B5B4F]" },
+  done: { label: "Done", color: "#4A5654", border: "border-l-[#4A5654]" },
 };
 
 function getInitials(name: string) {
@@ -80,10 +80,10 @@ export default function ProjectsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#2D1810]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#1A2726]">
             Projects
           </h1>
-          <p className="text-[#6B5B4F] text-sm mt-1">
+          <p className="text-[#4A5654] text-sm mt-1">
             {filtered.length} projects
           </p>
         </div>
@@ -92,7 +92,7 @@ export default function ProjectsPage() {
           <div className="relative">
             <button
               onClick={() => setShowNewMenu(!showNewMenu)}
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200"
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200"
             >
               <Plus className="w-4 h-4" />
               New
@@ -104,12 +104,12 @@ export default function ProjectsPage() {
                   className="fixed inset-0 z-10"
                   onClick={() => setShowNewMenu(false)}
                 />
-                <div className="absolute right-0 top-full mt-1 w-48 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg shadow-xl shadow-black/40 z-20 py-1">
+                <div className="absolute right-0 top-full mt-1 w-48 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg shadow-xl shadow-black/40 z-20 py-1">
                   {["Blank Project", "From Template", "Import"].map((item) => (
                     <button
                       key={item}
                       onClick={() => setShowNewMenu(false)}
-                      className="w-full text-left px-4 py-2.5 text-sm text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-colors"
+                      className="w-full text-left px-4 py-2.5 text-sm text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-colors"
                     >
                       {item}
                     </button>
@@ -123,19 +123,19 @@ export default function ProjectsPage() {
 
       {/* Search + Filter + View Toggle */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#9C4A29]/40 transition-colors duration-200">
-          <Search className="w-4 h-4 text-[#6B5B4F]" />
+        <div className="flex items-center gap-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#273B3A]/40 transition-colors duration-200">
+          <Search className="w-4 h-4 text-[#4A5654]" />
           <input
             type="text"
             placeholder="Search projects..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm w-full text-[#2D1810] placeholder:text-[#6B5B4F]/60"
+            className="bg-transparent border-none outline-none text-sm w-full text-[#1A2726] placeholder:text-[#4A5654]/60"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="text-[#6B5B4F] hover:text-[#2D1810]"
+              className="text-[#4A5654] hover:text-[#1A2726]"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -146,7 +146,7 @@ export default function ProjectsPage() {
         <select
           value={filters.status}
           onChange={(e) => setFilter("status", e.target.value)}
-          className="px-4 py-2.5 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg text-sm text-[#2D1810] focus:outline-none focus:border-[#9C4A29]/40 transition-colors cursor-pointer"
+          className="px-4 py-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:border-[#273B3A]/40 transition-colors cursor-pointer"
         >
           <option value="">All Status</option>
           <option value="on_track">On Track</option>
@@ -156,14 +156,14 @@ export default function ProjectsPage() {
         </select>
 
         {/* View Toggle */}
-        <div className="flex items-center border border-[#D4CDB8] rounded-lg overflow-hidden ml-auto">
+        <div className="flex items-center border border-[#C9BAB0] rounded-lg overflow-hidden ml-auto">
           <button
             onClick={() => setViewMode("grid")}
             className={cn(
               "flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200",
               viewMode === "grid"
-                ? "bg-[rgba(156,74,41,0.15)] text-[#9C4A29]"
-                : "text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8]"
+                ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
+                : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
             )}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -174,8 +174,8 @@ export default function ProjectsPage() {
             className={cn(
               "flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200",
               viewMode === "list"
-                ? "bg-[rgba(156,74,41,0.15)] text-[#9C4A29]"
-                : "text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8]"
+                ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
+                : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
             )}
           >
             <List className="w-4 h-4" />
@@ -188,7 +188,7 @@ export default function ProjectsPage() {
       {viewMode === "grid" ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {filtered.length === 0 ? (
-            <div className="col-span-full text-center py-16 text-[#6B5B4F] text-sm">
+            <div className="col-span-full text-center py-16 text-[#4A5654] text-sm">
               No projects found
             </div>
           ) : (
@@ -198,7 +198,7 @@ export default function ProjectsPage() {
                 <div
                   key={proj.id}
                   className={cn(
-                    "bg-[#F5F2E8] border border-[#D4CDB8] border-l-4 rounded-xl p-5 hover:border-[#9C4A29]/25 hover:shadow-lg hover:shadow-black/20 transition-all duration-200 cursor-pointer group",
+                    "bg-[#F0E6E0] border border-[#C9BAB0] border-l-4 rounded-xl p-5 hover:border-[#273B3A]/25 hover:shadow-lg hover:shadow-black/20 transition-all duration-200 cursor-pointer group",
                     sc.border
                   )}
                 >
@@ -215,18 +215,18 @@ export default function ProjectsPage() {
                         className={cn(
                           "w-4 h-4 transition-colors duration-200",
                           proj.is_favorite
-                            ? "fill-[#9C4A29] text-[#9C4A29]"
-                            : "text-[#D4CDB8] hover:text-[#9C4A29]"
+                            ? "fill-[#273B3A] text-[#273B3A]"
+                            : "text-[#C9BAB0] hover:text-[#273B3A]"
                         )}
                       />
                     </button>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-semibold text-[#2D1810] leading-tight">
+                      <h3 className="text-sm font-semibold text-[#1A2726] leading-tight">
                         {proj.name}
                       </h3>
                       <div className="flex items-center gap-1.5 mt-1">
-                        <Building2 className="w-3 h-3 text-[#8B7B6F]" />
-                        <span className="text-xs text-[#6B5B4F]">
+                        <Building2 className="w-3 h-3 text-[#6B7876]" />
+                        <span className="text-xs text-[#4A5654]">
                           {proj.customer}
                         </span>
                       </div>
@@ -235,8 +235,8 @@ export default function ProjectsPage() {
 
                   {/* Date range */}
                   <div className="flex items-center gap-1.5 mb-3">
-                    <Calendar className="w-3 h-3 text-[#8B7B6F]" />
-                    <span className="text-[11px] text-[#8B7B6F]">
+                    <Calendar className="w-3 h-3 text-[#6B7876]" />
+                    <span className="text-[11px] text-[#6B7876]">
                       {formatDateShort(proj.start_date)} —{" "}
                       {formatDateShort(proj.end_date)}
                     </span>
@@ -250,7 +250,7 @@ export default function ProjectsPage() {
                         className={cn(
                           "px-2 py-0.5 rounded-full text-[10px] font-medium border",
                           tagStyles[tag] ||
-                            "bg-[#DDD7C0] text-[#6B5B4F] border-[#D4CDB8]"
+                            "bg-[#D8CAC0] text-[#4A5654] border-[#C9BAB0]"
                         )}
                       >
                         {tag}
@@ -259,19 +259,19 @@ export default function ProjectsPage() {
                   </div>
 
                   {/* Bottom: Tasks, Milestones, Status, Avatars */}
-                  <div className="flex items-center justify-between pt-3 border-t border-[#D4CDB8]">
+                  <div className="flex items-center justify-between pt-3 border-t border-[#C9BAB0]">
                     <div className="flex items-center gap-3">
                       {/* Tasks */}
                       <span className="text-xs font-medium text-emerald-400">
                         {proj.task_count} Tasks
                       </span>
                       {/* Milestones */}
-                      <span className="flex items-center gap-1 text-xs text-[#6B5B4F]">
+                      <span className="flex items-center gap-1 text-xs text-[#4A5654]">
                         <Flag className="w-3 h-3" />
                         {proj.milestone_progress}
                       </span>
                       {/* Time */}
-                      <Clock className="w-3 h-3 text-[#8B7B6F]" />
+                      <Clock className="w-3 h-3 text-[#6B7876]" />
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -286,17 +286,17 @@ export default function ProjectsPage() {
                         {proj.assigned_to.slice(0, 2).map((name, idx) => (
                           <div
                             key={idx}
-                            className="w-6 h-6 rounded-full bg-[#DDD7C0] border-2 border-[#F5F2E8] flex items-center justify-center"
+                            className="w-6 h-6 rounded-full bg-[#D8CAC0] border-2 border-[#F0E6E0] flex items-center justify-center"
                             title={name}
                           >
-                            <span className="text-[8px] font-bold text-[#6B5B4F]">
+                            <span className="text-[8px] font-bold text-[#4A5654]">
                               {getInitials(name)}
                             </span>
                           </div>
                         ))}
                         {proj.assigned_to.length > 2 && (
-                          <div className="w-6 h-6 rounded-full bg-[#DDD7C0] border-2 border-[#F5F2E8] flex items-center justify-center">
-                            <span className="text-[8px] font-bold text-[#8B7B6F]">
+                          <div className="w-6 h-6 rounded-full bg-[#D8CAC0] border-2 border-[#F0E6E0] flex items-center justify-center">
+                            <span className="text-[8px] font-bold text-[#6B7876]">
                               +{proj.assigned_to.length - 2}
                             </span>
                           </div>
@@ -311,27 +311,27 @@ export default function ProjectsPage() {
         </div>
       ) : (
         /* List View */
-        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl overflow-hidden">
+        <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[#D4CDB8]">
+              <tr className="border-b border-[#C9BAB0]">
                 <th className="w-8 px-4 py-4" />
-                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                   Project
                 </th>
-                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                   Customer
                 </th>
-                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                   Tasks
                 </th>
-                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                   Milestones
                 </th>
-                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                   Timeline
                 </th>
-                <th className="text-right px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                <th className="text-right px-4 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                   Status
                 </th>
               </tr>
@@ -341,7 +341,7 @@ export default function ProjectsPage() {
                 <tr>
                   <td
                     colSpan={7}
-                    className="px-6 py-16 text-center text-[#6B5B4F] text-sm"
+                    className="px-6 py-16 text-center text-[#4A5654] text-sm"
                   >
                     No projects found
                   </td>
@@ -353,8 +353,8 @@ export default function ProjectsPage() {
                     <tr
                       key={proj.id}
                       className={cn(
-                        "hover:bg-[#DDD7C0] transition-colors duration-150 cursor-pointer border-b border-[#D4CDB8]/50 last:border-0",
-                        i % 2 === 1 && "bg-[#E8E3CC]/40"
+                        "hover:bg-[#D8CAC0] transition-colors duration-150 cursor-pointer border-b border-[#C9BAB0]/50 last:border-0",
+                        i % 2 === 1 && "bg-[#E6D4C7]/40"
                       )}
                     >
                       <td className="px-4 py-4">
@@ -365,18 +365,18 @@ export default function ProjectsPage() {
                             className={cn(
                               "w-3.5 h-3.5",
                               proj.is_favorite
-                                ? "fill-[#9C4A29] text-[#9C4A29]"
-                                : "text-[#D4CDB8] hover:text-[#9C4A29]"
+                                ? "fill-[#273B3A] text-[#273B3A]"
+                                : "text-[#C9BAB0] hover:text-[#273B3A]"
                             )}
                           />
                         </button>
                       </td>
                       <td className="px-4 py-4">
-                        <span className="text-sm font-medium text-[#2D1810]">
+                        <span className="text-sm font-medium text-[#1A2726]">
                           {proj.name}
                         </span>
                       </td>
-                      <td className="px-4 py-4 text-sm text-[#6B5B4F]">
+                      <td className="px-4 py-4 text-sm text-[#4A5654]">
                         {proj.customer}
                       </td>
                       <td className="px-4 py-4">
@@ -385,12 +385,12 @@ export default function ProjectsPage() {
                         </span>
                       </td>
                       <td className="px-4 py-4">
-                        <span className="flex items-center gap-1 text-sm text-[#6B5B4F]">
+                        <span className="flex items-center gap-1 text-sm text-[#4A5654]">
                           <Flag className="w-3 h-3" />
                           {proj.milestone_progress}
                         </span>
                       </td>
-                      <td className="px-4 py-4 text-sm text-[#8B7B6F]">
+                      <td className="px-4 py-4 text-sm text-[#6B7876]">
                         {formatDateShort(proj.start_date)} —{" "}
                         {formatDateShort(proj.end_date)}
                       </td>
@@ -400,7 +400,7 @@ export default function ProjectsPage() {
                             className="w-2 h-2 rounded-full"
                             style={{ backgroundColor: sc.color }}
                           />
-                          <span className="text-xs text-[#6B5B4F]">
+                          <span className="text-xs text-[#4A5654]">
                             {sc.label}
                           </span>
                         </span>

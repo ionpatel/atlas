@@ -19,7 +19,7 @@ function TypeBadge({ type }: { type: string }) {
   const styles: Record<string, string> = {
     vendor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
     customer: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    both: "bg-[rgba(156,74,41,0.15)] text-[#9C4A29] border-[#9C4A29]/20",
+    both: "bg-[rgba(156,74,41,0.15)] text-[#273B3A] border-[#273B3A]/20",
   };
   const label = type.charAt(0).toUpperCase() + type.slice(1);
   return (
@@ -41,16 +41,16 @@ function StatCard({
   color: string;
 }) {
   const colorMap: Record<string, { bg: string; text: string; iconBg: string }> = {
-    accent: { bg: "bg-[rgba(156,74,41,0.15)]/50", text: "text-[#9C4A29]", iconBg: "bg-[rgba(156,74,41,0.15)]" },
+    accent: { bg: "bg-[rgba(156,74,41,0.15)]/50", text: "text-[#273B3A]", iconBg: "bg-[rgba(156,74,41,0.15)]" },
     green: { bg: "bg-emerald-500/5", text: "text-emerald-400", iconBg: "bg-emerald-500/10" },
     blue: { bg: "bg-blue-500/5", text: "text-blue-400", iconBg: "bg-blue-500/10" },
     violet: { bg: "bg-violet-500/5", text: "text-violet-400", iconBg: "bg-violet-500/10" },
   };
   const c = colorMap[color] || colorMap.accent;
   return (
-    <div className={`${c.bg} border border-[#D4CDB8] rounded-xl p-5`}>
+    <div className={`${c.bg} border border-[#C9BAB0] rounded-xl p-5`}>
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-medium text-[#6B5B4F] uppercase tracking-wider">{label}</span>
+        <span className="text-xs font-medium text-[#4A5654] uppercase tracking-wider">{label}</span>
         <div className={`w-8 h-8 rounded-lg ${c.iconBg} flex items-center justify-center`}>
           <Icon className={`w-4 h-4 ${c.text}`} />
         </div>
@@ -79,29 +79,29 @@ function ContactDetailPanel({
       ? "border-l-emerald-400"
       : contact.type === "vendor"
       ? "border-l-blue-400"
-      : "border-l-[#9C4A29]";
+      : "border-l-[#273B3A]";
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end" onClick={onClose}>
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
       <div
-        className={`relative w-full max-w-lg bg-[#F5F2E8] border-l-4 ${borderColor} shadow-2xl shadow-black/40 animate-in slide-in-from-right duration-300 h-full overflow-y-auto`}
+        className={`relative w-full max-w-lg bg-[#F0E6E0] border-l-4 ${borderColor} shadow-2xl shadow-black/40 animate-in slide-in-from-right duration-300 h-full overflow-y-auto`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-[#F5F2E8] border-b border-[#D4CDB8] px-6 py-5 z-10">
+        <div className="sticky top-0 bg-[#F0E6E0] border-b border-[#C9BAB0] px-6 py-5 z-10">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-full bg-[rgba(156,74,41,0.15)] flex items-center justify-center flex-shrink-0">
-                <span className="text-xl font-bold text-[#9C4A29]">
+                <span className="text-xl font-bold text-[#273B3A]">
                   {contact.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
                 </span>
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-[#2D1810]">{contact.name}</h2>
+                <h2 className="text-lg font-semibold text-[#1A2726]">{contact.name}</h2>
                 <div className="flex items-center gap-2 mt-1">
                   {contact.company && (
-                    <span className="text-sm text-[#6B5B4F]">{contact.company}</span>
+                    <span className="text-sm text-[#4A5654]">{contact.company}</span>
                   )}
                   <TypeBadge type={contact.type} />
                 </div>
@@ -110,13 +110,13 @@ function ContactDetailPanel({
             <div className="flex items-center gap-2">
               <button
                 onClick={() => onEdit(contact)}
-                className="p-2 rounded-lg text-[#6B5B4F] hover:text-[#9C4A29] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                className="p-2 rounded-lg text-[#4A5654] hover:text-[#273B3A] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
               >
                 <Pencil className="w-4 h-4" />
               </button>
               <button
                 onClick={onClose}
-                className="p-2 rounded-lg text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-all duration-200"
+                className="p-2 rounded-lg text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all duration-200"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -128,7 +128,7 @@ function ContactDetailPanel({
             {contact.email && (
               <a
                 href={`mailto:${contact.email}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#6B5B4F] hover:text-[#9C4A29] border border-[#D4CDB8] rounded-lg hover:border-[#9C4A29]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#4A5654] hover:text-[#273B3A] border border-[#C9BAB0] rounded-lg hover:border-[#273B3A]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200"
               >
                 <Mail className="w-3 h-3" />
                 Email
@@ -137,7 +137,7 @@ function ContactDetailPanel({
             {contact.phone && (
               <a
                 href={`tel:${contact.phone}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#6B5B4F] hover:text-[#9C4A29] border border-[#D4CDB8] rounded-lg hover:border-[#9C4A29]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#4A5654] hover:text-[#273B3A] border border-[#C9BAB0] rounded-lg hover:border-[#273B3A]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200"
               >
                 <Phone className="w-3 h-3" />
                 Call
@@ -153,13 +153,13 @@ function ContactDetailPanel({
                 onClick={() => setTab(t)}
                 className={`px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 transition-all duration-200 ${
                   tab === t
-                    ? "border-[#9C4A29] text-[#9C4A29] bg-[#DDD7C0]"
-                    : "border-transparent text-[#6B5B4F] hover:text-[#2D1810]"
+                    ? "border-[#273B3A] text-[#273B3A] bg-[#D8CAC0]"
+                    : "border-transparent text-[#4A5654] hover:text-[#1A2726]"
                 }`}
               >
                 {t.charAt(0).toUpperCase() + t.slice(1)}
                 {t === "invoices" && contactInvoices.length > 0 && (
-                  <span className="ml-1.5 px-1.5 py-0.5 text-[10px] bg-[rgba(156,74,41,0.15)] text-[#9C4A29] rounded-full">
+                  <span className="ml-1.5 px-1.5 py-0.5 text-[10px] bg-[rgba(156,74,41,0.15)] text-[#273B3A] rounded-full">
                     {contactInvoices.length}
                   </span>
                 )}
@@ -181,30 +181,30 @@ function ContactDetailPanel({
                 ].map(
                   (field) =>
                     field.value && (
-                      <div key={field.label} className="bg-[#E8E3CC] border border-[#D4CDB8] rounded-lg p-4">
+                      <div key={field.label} className="bg-[#E6D4C7] border border-[#C9BAB0] rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-1">
-                          <field.icon className="w-3.5 h-3.5 text-[#8B7B6F]" />
-                          <span className="text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">{field.label}</span>
+                          <field.icon className="w-3.5 h-3.5 text-[#6B7876]" />
+                          <span className="text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">{field.label}</span>
                         </div>
-                        <p className="text-sm text-[#2D1810] pl-5.5">{field.value}</p>
+                        <p className="text-sm text-[#1A2726] pl-5.5">{field.value}</p>
                       </div>
                     )
                 )}
                 {contact.notes && (
-                  <div className="bg-[#E8E3CC] border border-[#D4CDB8] rounded-lg p-4">
+                  <div className="bg-[#E6D4C7] border border-[#C9BAB0] rounded-lg p-4">
                     <div className="flex items-center gap-2 mb-1">
-                      <FileText className="w-3.5 h-3.5 text-[#8B7B6F]" />
-                      <span className="text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Notes</span>
+                      <FileText className="w-3.5 h-3.5 text-[#6B7876]" />
+                      <span className="text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Notes</span>
                     </div>
-                    <p className="text-sm text-[#2D1810]">{contact.notes}</p>
+                    <p className="text-sm text-[#1A2726]">{contact.notes}</p>
                   </div>
                 )}
-                <div className="bg-[#E8E3CC] border border-[#D4CDB8] rounded-lg p-4">
+                <div className="bg-[#E6D4C7] border border-[#C9BAB0] rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-1">
-                    <Clock className="w-3.5 h-3.5 text-[#8B7B6F]" />
-                    <span className="text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Added</span>
+                    <Clock className="w-3.5 h-3.5 text-[#6B7876]" />
+                    <span className="text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Added</span>
                   </div>
-                  <p className="text-sm text-[#2D1810]">{formatDate(contact.created_at)}</p>
+                  <p className="text-sm text-[#1A2726]">{formatDate(contact.created_at)}</p>
                 </div>
               </div>
             </div>
@@ -214,31 +214,31 @@ function ContactDetailPanel({
             <div className="space-y-3">
               {contactInvoices.length === 0 ? (
                 <div className="text-center py-12">
-                  <FileText className="w-8 h-8 mx-auto mb-3 text-[#6B5B4F]/40" />
-                  <p className="text-sm text-[#6B5B4F]">No invoices for this contact</p>
+                  <FileText className="w-8 h-8 mx-auto mb-3 text-[#4A5654]/40" />
+                  <p className="text-sm text-[#4A5654]">No invoices for this contact</p>
                 </div>
               ) : (
                 contactInvoices.map((inv) => {
                   const statusColor: Record<string, string> = {
                     paid: "text-emerald-400",
-                    sent: "text-[#9C4A29]",
+                    sent: "text-[#273B3A]",
                     overdue: "text-red-400",
-                    draft: "text-[#6B5B4F]",
-                    cancelled: "text-[#8B7B6F]",
+                    draft: "text-[#4A5654]",
+                    cancelled: "text-[#6B7876]",
                   };
                   return (
                     <div
                       key={inv.id}
-                      className="bg-[#E8E3CC] border border-[#D4CDB8] rounded-lg p-4 hover:border-[#9C4A29]/25 transition-all duration-200"
+                      className="bg-[#E6D4C7] border border-[#C9BAB0] rounded-lg p-4 hover:border-[#273B3A]/25 transition-all duration-200"
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <span className="text-sm font-mono font-medium text-[#2D1810]">{inv.invoice_number}</span>
-                          <p className="text-xs text-[#6B5B4F] mt-0.5">{formatDate(inv.issue_date)}</p>
+                          <span className="text-sm font-mono font-medium text-[#1A2726]">{inv.invoice_number}</span>
+                          <p className="text-xs text-[#4A5654] mt-0.5">{formatDate(inv.issue_date)}</p>
                         </div>
                         <div className="text-right">
-                          <span className="text-sm font-semibold text-[#9C4A29]">{formatCurrency(inv.total)}</span>
-                          <p className={`text-xs mt-0.5 capitalize ${statusColor[inv.status] || "text-[#6B5B4F]"}`}>
+                          <span className="text-sm font-semibold text-[#273B3A]">{formatCurrency(inv.total)}</span>
+                          <p className={`text-xs mt-0.5 capitalize ${statusColor[inv.status] || "text-[#4A5654]"}`}>
                             {inv.status}
                           </p>
                         </div>
@@ -252,9 +252,9 @@ function ContactDetailPanel({
 
           {tab === "activity" && (
             <div className="text-center py-12">
-              <Clock className="w-8 h-8 mx-auto mb-3 text-[#6B5B4F]/40" />
-              <p className="text-sm text-[#6B5B4F]">No activity yet</p>
-              <p className="text-xs text-[#8B7B6F] mt-1">Activity will appear here once you interact with this contact</p>
+              <Clock className="w-8 h-8 mx-auto mb-3 text-[#4A5654]/40" />
+              <p className="text-sm text-[#4A5654]">No activity yet</p>
+              <p className="text-xs text-[#6B7876] mt-1">Activity will appear here once you interact with this contact</p>
             </div>
           )}
         </div>
@@ -381,7 +381,7 @@ export default function ContactsPage() {
   const borderColorForType = (type: string) => {
     if (type === "customer") return "border-l-emerald-400";
     if (type === "vendor") return "border-l-blue-400";
-    return "border-l-[#9C4A29]";
+    return "border-l-[#273B3A]";
   };
 
   return (
@@ -389,28 +389,28 @@ export default function ContactsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#2D1810]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#1A2726]">
             Contacts
           </h1>
-          <p className="text-[#6B5B4F] text-sm mt-1">
+          <p className="text-[#4A5654] text-sm mt-1">
             {filtered.length} of {contacts.length} contacts
           </p>
         </div>
         <div className="flex items-center gap-2">
           {/* Import/Export */}
           <div className="relative">
-            <div className="flex items-center border border-[#D4CDB8] rounded-lg overflow-hidden">
+            <div className="flex items-center border border-[#C9BAB0] rounded-lg overflow-hidden">
               <button
                 onClick={handleExportCSV}
-                className="flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0] transition-all duration-200"
               >
                 <Download className="w-3.5 h-3.5" />
                 Export
               </button>
-              <div className="w-px h-6 bg-[#D4CDB8]" />
+              <div className="w-px h-6 bg-[#C9BAB0]" />
               <button
                 onClick={() => setImportOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0] transition-all duration-200"
               >
                 <Upload className="w-3.5 h-3.5" />
                 Import
@@ -420,7 +420,7 @@ export default function ContactsPage() {
 
           <button
             onClick={() => setModalOpen(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200"
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200"
           >
             <Plus className="w-4 h-4" />
             Add Contact
@@ -438,17 +438,17 @@ export default function ContactsPage() {
 
       {/* Search, Filters & View Toggle */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#9C4A29]/40 transition-colors duration-200">
-          <Search className="w-4 h-4 text-[#6B5B4F]" />
+        <div className="flex items-center gap-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#273B3A]/40 transition-colors duration-200">
+          <Search className="w-4 h-4 text-[#4A5654]" />
           <input
             type="text"
             placeholder="Search contacts..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm w-full text-[#2D1810] placeholder:text-[#6B5B4F]/60"
+            className="bg-transparent border-none outline-none text-sm w-full text-[#1A2726] placeholder:text-[#4A5654]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#6B5B4F] hover:text-[#2D1810]">
+            <button onClick={() => setSearchQuery("")} className="text-[#4A5654] hover:text-[#1A2726]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -457,8 +457,8 @@ export default function ContactsPage() {
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.type
-              ? "border-[#9C4A29]/50 text-[#9C4A29] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#D4CDB8] text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8]"
+              ? "border-[#273B3A]/50 text-[#273B3A] bg-[rgba(156,74,41,0.15)]/50"
+              : "border-[#C9BAB0] text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
           }`}
         >
           <Filter className="w-4 h-4" />
@@ -466,13 +466,13 @@ export default function ContactsPage() {
         </button>
 
         {/* View toggle */}
-        <div className="flex items-center border border-[#D4CDB8] rounded-lg overflow-hidden ml-auto">
+        <div className="flex items-center border border-[#C9BAB0] rounded-lg overflow-hidden ml-auto">
           <button
             onClick={() => setViewMode("list")}
             className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               viewMode === "list"
-                ? "bg-[rgba(156,74,41,0.15)] text-[#9C4A29]"
-                : "text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8]"
+                ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
+                : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
             }`}
           >
             <List className="w-4 h-4" />
@@ -482,8 +482,8 @@ export default function ContactsPage() {
             onClick={() => setViewMode("grid")}
             className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               viewMode === "grid"
-                ? "bg-[rgba(156,74,41,0.15)] text-[#9C4A29]"
-                : "text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8]"
+                ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
+                : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
             }`}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -497,7 +497,7 @@ export default function ContactsPage() {
           <select
             value={filters.type}
             onChange={(e) => setFilter("type", e.target.value)}
-            className="px-4 py-2.5 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg text-sm text-[#2D1810] focus:outline-none focus:ring-2 focus:ring-[#9C4A29]/30 focus:border-[#9C4A29]/50 transition-all duration-200"
+            className="px-4 py-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
           >
             <option value="">All Types</option>
             <option value="customer">Customer</option>
@@ -511,8 +511,8 @@ export default function ContactsPage() {
       {viewMode === "grid" && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.length === 0 ? (
-            <div className="col-span-full text-center py-16 text-[#6B5B4F] text-sm">
-              <Users className="w-8 h-8 mx-auto mb-3 text-[#6B5B4F]/40" />
+            <div className="col-span-full text-center py-16 text-[#4A5654] text-sm">
+              <Users className="w-8 h-8 mx-auto mb-3 text-[#4A5654]/40" />
               No contacts found
             </div>
           ) : (
@@ -520,11 +520,11 @@ export default function ContactsPage() {
               <div
                 key={c.id}
                 onClick={() => handleContactClick(c)}
-                className={`bg-[#F5F2E8] border border-[#D4CDB8] border-l-4 ${borderColorForType(c.type)} rounded-xl p-6 hover:border-[#9C4A29]/25 transition-all duration-300 cursor-pointer group`}
+                className={`bg-[#F0E6E0] border border-[#C9BAB0] border-l-4 ${borderColorForType(c.type)} rounded-xl p-6 hover:border-[#273B3A]/25 transition-all duration-300 cursor-pointer group`}
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-11 h-11 rounded-full bg-[rgba(156,74,41,0.15)] flex items-center justify-center group-hover:bg-[#9C4A29]/20 transition-colors duration-300">
-                    <span className="text-sm font-bold text-[#9C4A29]">
+                  <div className="w-11 h-11 rounded-full bg-[rgba(156,74,41,0.15)] flex items-center justify-center group-hover:bg-[#273B3A]/20 transition-colors duration-300">
+                    <span className="text-sm font-bold text-[#273B3A]">
                       {c.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
                     </span>
                   </div>
@@ -535,7 +535,7 @@ export default function ContactsPage() {
                         <a
                           href={`mailto:${c.email}`}
                           onClick={(e) => e.stopPropagation()}
-                          className="p-1.5 rounded-lg text-[#6B5B4F] hover:text-[#9C4A29] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                          className="p-1.5 rounded-lg text-[#4A5654] hover:text-[#273B3A] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                           title="Email"
                         >
                           <Mail className="w-3 h-3" />
@@ -545,7 +545,7 @@ export default function ContactsPage() {
                         <a
                           href={`tel:${c.phone}`}
                           onClick={(e) => e.stopPropagation()}
-                          className="p-1.5 rounded-lg text-[#6B5B4F] hover:text-[#9C4A29] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                          className="p-1.5 rounded-lg text-[#4A5654] hover:text-[#273B3A] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                           title="Call"
                         >
                           <Phone className="w-3 h-3" />
@@ -556,14 +556,14 @@ export default function ContactsPage() {
                           e.stopPropagation();
                           setEditingContact(c);
                         }}
-                        className="p-1.5 rounded-lg text-[#6B5B4F] hover:text-[#9C4A29] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                        className="p-1.5 rounded-lg text-[#4A5654] hover:text-[#273B3A] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                         title="Edit"
                       >
                         <Pencil className="w-3 h-3" />
                       </button>
                       <button
                         onClick={(e) => handleDelete(e, c.id)}
-                        className="p-1.5 rounded-lg text-[#6B5B4F] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                        className="p-1.5 rounded-lg text-[#4A5654] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
                         title="Delete"
                       >
                         <Trash2 className="w-3 h-3" />
@@ -571,24 +571,24 @@ export default function ContactsPage() {
                     </div>
                   </div>
                 </div>
-                <h3 className="font-semibold text-sm text-[#2D1810]">{c.name}</h3>
-                <p className="text-xs text-[#6B5B4F] mt-0.5">{c.company || "—"}</p>
-                <div className="mt-4 space-y-2 border-t border-[#D4CDB8] pt-4">
+                <h3 className="font-semibold text-sm text-[#1A2726]">{c.name}</h3>
+                <p className="text-xs text-[#4A5654] mt-0.5">{c.company || "—"}</p>
+                <div className="mt-4 space-y-2 border-t border-[#C9BAB0] pt-4">
                   {c.email && (
-                    <div className="flex items-center gap-2.5 text-xs text-[#6B5B4F]">
-                      <Mail className="w-3 h-3 text-[#6B5B4F]/60" />
+                    <div className="flex items-center gap-2.5 text-xs text-[#4A5654]">
+                      <Mail className="w-3 h-3 text-[#4A5654]/60" />
                       <span className="truncate">{c.email}</span>
                     </div>
                   )}
                   {c.phone && (
-                    <div className="flex items-center gap-2.5 text-xs text-[#6B5B4F]">
-                      <Phone className="w-3 h-3 text-[#6B5B4F]/60" />
+                    <div className="flex items-center gap-2.5 text-xs text-[#4A5654]">
+                      <Phone className="w-3 h-3 text-[#4A5654]/60" />
                       {c.phone}
                     </div>
                   )}
                 </div>
                 <div className="mt-3 flex items-center justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  <span className="text-xs text-[#9C4A29] flex items-center gap-1">
+                  <span className="text-xs text-[#273B3A] flex items-center gap-1">
                     View details <ChevronRight className="w-3 h-3" />
                   </span>
                 </div>
@@ -600,23 +600,23 @@ export default function ContactsPage() {
 
       {/* List View */}
       {viewMode === "list" && (
-        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl overflow-hidden">
+        <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[#D4CDB8]">
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Name</th>
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Company</th>
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Email</th>
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Phone</th>
-                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Type</th>
-                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest w-32">Actions</th>
+              <tr className="border-b border-[#C9BAB0]">
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Name</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Company</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Email</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Phone</th>
+                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Type</th>
+                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest w-32">Actions</th>
               </tr>
             </thead>
             <tbody>
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-16 text-center text-[#6B5B4F] text-sm">
-                    <Users className="w-8 h-8 mx-auto mb-3 text-[#6B5B4F]/40" />
+                  <td colSpan={6} className="px-6 py-16 text-center text-[#4A5654] text-sm">
+                    <Users className="w-8 h-8 mx-auto mb-3 text-[#4A5654]/40" />
                     No contacts found
                   </td>
                 </tr>
@@ -625,23 +625,23 @@ export default function ContactsPage() {
                   <tr
                     key={c.id}
                     onClick={() => handleContactClick(c)}
-                    className={`hover:bg-[#DDD7C0] transition-colors duration-150 cursor-pointer border-b border-[#D4CDB8]/50 last:border-0 ${
-                      i % 2 === 1 ? "bg-[#E8E3CC]/40" : ""
+                    className={`hover:bg-[#D8CAC0] transition-colors duration-150 cursor-pointer border-b border-[#C9BAB0]/50 last:border-0 ${
+                      i % 2 === 1 ? "bg-[#E6D4C7]/40" : ""
                     }`}
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-[rgba(156,74,41,0.15)] flex items-center justify-center flex-shrink-0">
-                          <span className="text-xs font-bold text-[#9C4A29]">
+                          <span className="text-xs font-bold text-[#273B3A]">
                             {c.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
                           </span>
                         </div>
-                        <span className="text-sm font-medium text-[#2D1810]">{c.name}</span>
+                        <span className="text-sm font-medium text-[#1A2726]">{c.name}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-[#6B5B4F]">{c.company || "—"}</td>
-                    <td className="px-6 py-4 text-sm text-[#6B5B4F]">{c.email || "—"}</td>
-                    <td className="px-6 py-4 text-sm text-[#6B5B4F]">{c.phone || "—"}</td>
+                    <td className="px-6 py-4 text-sm text-[#4A5654]">{c.company || "—"}</td>
+                    <td className="px-6 py-4 text-sm text-[#4A5654]">{c.email || "—"}</td>
+                    <td className="px-6 py-4 text-sm text-[#4A5654]">{c.phone || "—"}</td>
                     <td className="px-6 py-4 text-right">
                       <TypeBadge type={c.type} />
                     </td>
@@ -651,7 +651,7 @@ export default function ContactsPage() {
                           <a
                             href={`mailto:${c.email}`}
                             onClick={(e) => e.stopPropagation()}
-                            className="p-2 rounded-lg text-[#6B5B4F] hover:text-[#9C4A29] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                            className="p-2 rounded-lg text-[#4A5654] hover:text-[#273B3A] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                           >
                             <Mail className="w-3.5 h-3.5" />
                           </a>
@@ -660,7 +660,7 @@ export default function ContactsPage() {
                           <a
                             href={`tel:${c.phone}`}
                             onClick={(e) => e.stopPropagation()}
-                            className="p-2 rounded-lg text-[#6B5B4F] hover:text-[#9C4A29] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                            className="p-2 rounded-lg text-[#4A5654] hover:text-[#273B3A] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                           >
                             <Phone className="w-3.5 h-3.5" />
                           </a>
@@ -670,13 +670,13 @@ export default function ContactsPage() {
                             e.stopPropagation();
                             setEditingContact(c);
                           }}
-                          className="p-2 rounded-lg text-[#6B5B4F] hover:text-[#9C4A29] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                          className="p-2 rounded-lg text-[#4A5654] hover:text-[#273B3A] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                         >
                           <Pencil className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={(e) => handleDelete(e, c.id)}
-                          className="p-2 rounded-lg text-[#6B5B4F] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                          className="p-2 rounded-lg text-[#4A5654] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>

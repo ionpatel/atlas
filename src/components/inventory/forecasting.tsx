@@ -109,7 +109,7 @@ export function InventoryForecasting() {
     return (
       <Card className="bg-neutral-900/50 border-neutral-800">
         <CardContent className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-[#9C4A29]" />
+          <Loader2 className="h-8 w-8 animate-spin text-[#273B3A]" />
         </CardContent>
       </Card>
     );
@@ -123,7 +123,7 @@ export function InventoryForecasting() {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-[#9C4A29]" />
+            <TrendingUp className="h-5 w-5 text-[#273B3A]" />
             <div>
               <CardTitle className="text-white">Inventory Forecasting</CardTitle>
               <CardDescription className="text-neutral-400">
@@ -254,7 +254,7 @@ export function InventoryForecasting() {
                         <TableCell>
                           <Tooltip>
                             <TooltipTrigger>
-                              <span className="text-[#9C4A29] font-medium">
+                              <span className="text-[#273B3A] font-medium">
                                 {forecast.suggestedReorderQty}
                               </span>
                             </TooltipTrigger>
@@ -277,7 +277,7 @@ export function InventoryForecasting() {
 
             {forecasts.length > 10 && (
               <div className="text-center pt-2">
-                <Button variant="ghost" className="text-[#9C4A29]">
+                <Button variant="ghost" className="text-[#273B3A]">
                   View all {forecasts.length} items
                 </Button>
               </div>

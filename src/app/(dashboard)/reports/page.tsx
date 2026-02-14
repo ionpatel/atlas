@@ -76,7 +76,7 @@ const reports: Report[] = [
     name: "Accounts Receivable",
     description: "Outstanding invoices and aging report",
     icon: DollarSign,
-    color: "text-[#9C4A29]",
+    color: "text-[#273B3A]",
     bgColor: "bg-[rgba(156,74,41,0.15)]",
     category: "finance",
   },
@@ -345,18 +345,18 @@ function ReportPreview({
   if (!reportConfig) return null;
 
   return (
-    <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl overflow-hidden">
+    <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl overflow-hidden">
       {/* Report Header */}
-      <div className="px-6 py-5 border-b border-[#D4CDB8] flex items-center justify-between">
+      <div className="px-6 py-5 border-b border-[#C9BAB0] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className={cn("p-2.5 rounded-xl", reportConfig.bgColor)}>
             <reportConfig.icon className={cn("w-5 h-5", reportConfig.color)} />
           </div>
           <div>
-            <h2 className="text-base font-semibold text-[#2D1810]">
+            <h2 className="text-base font-semibold text-[#1A2726]">
               {reportConfig.name}
             </h2>
-            <p className="text-xs text-[#6B5B4F]">
+            <p className="text-xs text-[#4A5654]">
               Generated {new Date().toLocaleDateString("en-US", {
                 month: "short",
                 day: "numeric",
@@ -366,15 +366,15 @@ function ReportPreview({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-1.5 px-3 py-2 border border-[#D4CDB8] rounded-lg text-xs text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-all">
+          <button className="flex items-center gap-1.5 px-3 py-2 border border-[#C9BAB0] rounded-lg text-xs text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all">
             <Printer className="w-3.5 h-3.5" />
             Print
           </button>
-          <button className="flex items-center gap-1.5 px-3 py-2 border border-[#D4CDB8] rounded-lg text-xs text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-all">
+          <button className="flex items-center gap-1.5 px-3 py-2 border border-[#C9BAB0] rounded-lg text-xs text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all">
             <Share2 className="w-3.5 h-3.5" />
             Share
           </button>
-          <div className="w-px h-6 bg-[#D4CDB8]" />
+          <div className="w-px h-6 bg-[#C9BAB0]" />
           <button
             onClick={onExportPDF}
             className="flex items-center gap-1.5 px-3 py-2 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg text-xs font-medium hover:bg-red-500/20 transition-all"
@@ -400,12 +400,12 @@ function ReportPreview({
             {Object.entries(reportData.summary as Record<string, number | undefined>).filter((entry): entry is [string, number] => entry[1] !== undefined).map(([key, value]) => (
               <div
                 key={key}
-                className="bg-[#E8E3CC] border border-[#D4CDB8] rounded-xl p-4"
+                className="bg-[#E6D4C7] border border-[#C9BAB0] rounded-xl p-4"
               >
-                <p className="text-xs text-[#6B5B4F] uppercase tracking-wider mb-2">
+                <p className="text-xs text-[#4A5654] uppercase tracking-wider mb-2">
                   {key.replace(/([A-Z])/g, " $1").trim()}
                 </p>
-                <p className="text-xl font-bold text-[#2D1810]">
+                <p className="text-xl font-bold text-[#1A2726]">
                   {key.toLowerCase().includes("value") ||
                   key.toLowerCase().includes("revenue") ||
                   key.toLowerCase().includes("amount") ||
@@ -427,20 +427,20 @@ function ReportPreview({
         {/* Data Tables */}
         {reportData.byMonth && (
           <div className="mb-6">
-            <h3 className="text-sm font-semibold text-[#2D1810] mb-3">
+            <h3 className="text-sm font-semibold text-[#1A2726] mb-3">
               Monthly Breakdown
             </h3>
-            <div className="bg-[#E8E3CC] border border-[#D4CDB8] rounded-xl overflow-hidden">
+            <div className="bg-[#E6D4C7] border border-[#C9BAB0] rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-[#D4CDB8]">
-                    <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                  <tr className="border-b border-[#C9BAB0]">
+                    <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                       Month
                     </th>
-                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                       Revenue
                     </th>
-                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                       Orders
                     </th>
                   </tr>
@@ -450,17 +450,17 @@ function ReportPreview({
                     <tr
                       key={row.month}
                       className={cn(
-                        "border-b border-[#D4CDB8]/50 last:border-0",
-                        i % 2 === 1 && "bg-[#F5F2E8]/50"
+                        "border-b border-[#C9BAB0]/50 last:border-0",
+                        i % 2 === 1 && "bg-[#F0E6E0]/50"
                       )}
                     >
-                      <td className="px-4 py-3 text-sm text-[#2D1810]">
+                      <td className="px-4 py-3 text-sm text-[#1A2726]">
                         {row.month}
                       </td>
-                      <td className="px-4 py-3 text-sm text-right text-[#2D1810]">
+                      <td className="px-4 py-3 text-sm text-right text-[#1A2726]">
                         {formatCurrency(row.revenue)}
                       </td>
-                      <td className="px-4 py-3 text-sm text-right text-[#6B5B4F]">
+                      <td className="px-4 py-3 text-sm text-right text-[#4A5654]">
                         {row.orders}
                       </td>
                     </tr>
@@ -473,23 +473,23 @@ function ReportPreview({
 
         {reportData.byCategory && (
           <div className="mb-6">
-            <h3 className="text-sm font-semibold text-[#2D1810] mb-3">
+            <h3 className="text-sm font-semibold text-[#1A2726] mb-3">
               By Category
             </h3>
-            <div className="bg-[#E8E3CC] border border-[#D4CDB8] rounded-xl overflow-hidden">
+            <div className="bg-[#E6D4C7] border border-[#C9BAB0] rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-[#D4CDB8]">
-                    <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                  <tr className="border-b border-[#C9BAB0]">
+                    <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                       Category
                     </th>
-                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                       Products
                     </th>
-                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                       Units
                     </th>
-                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                       Value
                     </th>
                   </tr>
@@ -499,20 +499,20 @@ function ReportPreview({
                     <tr
                       key={row.category}
                       className={cn(
-                        "border-b border-[#D4CDB8]/50 last:border-0",
-                        i % 2 === 1 && "bg-[#F5F2E8]/50"
+                        "border-b border-[#C9BAB0]/50 last:border-0",
+                        i % 2 === 1 && "bg-[#F0E6E0]/50"
                       )}
                     >
-                      <td className="px-4 py-3 text-sm text-[#2D1810]">
+                      <td className="px-4 py-3 text-sm text-[#1A2726]">
                         {row.category}
                       </td>
-                      <td className="px-4 py-3 text-sm text-right text-[#6B5B4F]">
+                      <td className="px-4 py-3 text-sm text-right text-[#4A5654]">
                         {row.count}
                       </td>
-                      <td className="px-4 py-3 text-sm text-right text-[#6B5B4F]">
+                      <td className="px-4 py-3 text-sm text-right text-[#4A5654]">
                         {row.quantity}
                       </td>
-                      <td className="px-4 py-3 text-sm text-right text-[#2D1810]">
+                      <td className="px-4 py-3 text-sm text-right text-[#1A2726]">
                         {formatCurrency(row.value)}
                       </td>
                     </tr>
@@ -525,23 +525,23 @@ function ReportPreview({
 
         {reportData.topBySales && (
           <div>
-            <h3 className="text-sm font-semibold text-[#2D1810] mb-3">
+            <h3 className="text-sm font-semibold text-[#1A2726] mb-3">
               Top Products by Revenue
             </h3>
-            <div className="bg-[#E8E3CC] border border-[#D4CDB8] rounded-xl overflow-hidden">
+            <div className="bg-[#E6D4C7] border border-[#C9BAB0] rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-[#D4CDB8]">
-                    <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                  <tr className="border-b border-[#C9BAB0]">
+                    <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                       Product
                     </th>
-                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                       Units Sold
                     </th>
-                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                       Revenue
                     </th>
-                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">
+                    <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">
                       Margin
                     </th>
                   </tr>
@@ -551,20 +551,20 @@ function ReportPreview({
                     <tr
                       key={row.sku}
                       className={cn(
-                        "border-b border-[#D4CDB8]/50 last:border-0",
-                        i % 2 === 1 && "bg-[#F5F2E8]/50"
+                        "border-b border-[#C9BAB0]/50 last:border-0",
+                        i % 2 === 1 && "bg-[#F0E6E0]/50"
                       )}
                     >
                       <td className="px-4 py-3">
                         <div>
-                          <p className="text-sm text-[#2D1810]">{row.name}</p>
-                          <p className="text-xs text-[#8B7B6F] font-mono">{row.sku}</p>
+                          <p className="text-sm text-[#1A2726]">{row.name}</p>
+                          <p className="text-xs text-[#6B7876] font-mono">{row.sku}</p>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm text-right text-[#6B5B4F]">
+                      <td className="px-4 py-3 text-sm text-right text-[#4A5654]">
                         {row.sold}
                       </td>
-                      <td className="px-4 py-3 text-sm text-right text-[#2D1810]">
+                      <td className="px-4 py-3 text-sm text-right text-[#1A2726]">
                         {formatCurrency(row.revenue)}
                       </td>
                       <td className="px-4 py-3 text-sm text-right">
@@ -620,20 +620,20 @@ export default function ReportsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#2D1810]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#1A2726]">
             Reports
           </h1>
-          <p className="text-[#6B5B4F] text-sm mt-1">
+          <p className="text-[#4A5654] text-sm mt-1">
             Generate and export business reports
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#D4CDB8] rounded-lg text-sm text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all">
+          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#C9BAB0] rounded-lg text-sm text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0] transition-all">
             <Calendar className="w-4 h-4" />
             This Month
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
-          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#D4CDB8] rounded-lg text-sm text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all">
+          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#C9BAB0] rounded-lg text-sm text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0] transition-all">
             <RefreshCcw className="w-4 h-4" />
             Refresh
           </button>
@@ -642,7 +642,7 @@ export default function ReportsPage() {
 
       {/* Category Filter */}
       <div className="flex items-center gap-2">
-        <span className="text-xs text-[#8B7B6F] uppercase tracking-wider mr-2">
+        <span className="text-xs text-[#6B7876] uppercase tracking-wider mr-2">
           Category:
         </span>
         {["all", "sales", "inventory", "finance", "customers"].map((cat) => (
@@ -652,8 +652,8 @@ export default function ReportsPage() {
             className={cn(
               "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
               categoryFilter === cat
-                ? "bg-[#9C4A29] text-[#E8E3CC]"
-                : "text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8]"
+                ? "bg-[#273B3A] text-[#E6D4C7]"
+                : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
             )}
           >
             {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -664,13 +664,13 @@ export default function ReportsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Report Selection */}
         <div className="lg:col-span-1">
-          <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl overflow-hidden">
-            <div className="px-4 py-3 border-b border-[#D4CDB8]">
-              <h2 className="text-sm font-semibold text-[#2D1810]">
+          <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl overflow-hidden">
+            <div className="px-4 py-3 border-b border-[#C9BAB0]">
+              <h2 className="text-sm font-semibold text-[#1A2726]">
                 Available Reports
               </h2>
             </div>
-            <div className="divide-y divide-[#D4CDB8]/50">
+            <div className="divide-y divide-[#C9BAB0]/50">
               {filteredReports.map((report) => (
                 <button
                   key={report.id}
@@ -678,18 +678,18 @@ export default function ReportsPage() {
                   className={cn(
                     "w-full flex items-center gap-3 px-4 py-3.5 text-left transition-all",
                     selectedReport === report.id
-                      ? "bg-[rgba(156,74,41,0.15)] border-l-2 border-[#9C4A29]"
-                      : "hover:bg-[#DDD7C0]"
+                      ? "bg-[rgba(156,74,41,0.15)] border-l-2 border-[#273B3A]"
+                      : "hover:bg-[#D8CAC0]"
                   )}
                 >
                   <div className={cn("p-2 rounded-lg", report.bgColor)}>
                     <report.icon className={cn("w-4 h-4", report.color)} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-[#2D1810]">
+                    <p className="text-sm font-medium text-[#1A2726]">
                       {report.name}
                     </p>
-                    <p className="text-xs text-[#6B5B4F] truncate">
+                    <p className="text-xs text-[#4A5654] truncate">
                       {report.description}
                     </p>
                   </div>
@@ -697,8 +697,8 @@ export default function ReportsPage() {
                     className={cn(
                       "w-4 h-4 transition-colors",
                       selectedReport === report.id
-                        ? "text-[#9C4A29]"
-                        : "text-[#8B7B6F]"
+                        ? "text-[#273B3A]"
+                        : "text-[#6B7876]"
                     )}
                   />
                 </button>
@@ -716,14 +716,14 @@ export default function ReportsPage() {
               onExportExcel={handleExportExcel}
             />
           ) : (
-            <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl h-[600px] flex flex-col items-center justify-center">
-              <div className="p-4 rounded-full bg-[#DDD7C0] mb-4">
-                <BarChart3 className="w-10 h-10 text-[#8B7B6F]" />
+            <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl h-[600px] flex flex-col items-center justify-center">
+              <div className="p-4 rounded-full bg-[#D8CAC0] mb-4">
+                <BarChart3 className="w-10 h-10 text-[#6B7876]" />
               </div>
-              <p className="text-sm font-medium text-[#2D1810] mb-1">
+              <p className="text-sm font-medium text-[#1A2726] mb-1">
                 Select a report
               </p>
-              <p className="text-xs text-[#6B5B4F] text-center max-w-xs">
+              <p className="text-xs text-[#4A5654] text-center max-w-xs">
                 Choose a report from the list to preview and export
               </p>
             </div>

@@ -167,7 +167,7 @@ export function AIInsights() {
     return (
       <Card className="bg-neutral-900/50 border-neutral-800">
         <CardContent className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-[#9C4A29]" />
+          <Loader2 className="h-8 w-8 animate-spin text-[#273B3A]" />
         </CardContent>
       </Card>
     );
@@ -177,10 +177,10 @@ export function AIInsights() {
     <Card className="bg-neutral-900/50 border-neutral-800">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <div className="flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-[#9C4A29]" />
+          <Sparkles className="h-5 w-5 text-[#273B3A]" />
           <CardTitle className="text-white">AI Insights</CardTitle>
           {visibleInsights.length > 0 && (
-            <Badge className="bg-[#9C4A29]/20 text-[#9C4A29]">
+            <Badge className="bg-[#273B3A]/20 text-[#273B3A]">
               {visibleInsights.length}
             </Badge>
           )}

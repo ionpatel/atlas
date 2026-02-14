@@ -113,12 +113,12 @@ export function GlobalKeyboardShortcuts({ isOpen, onClose }: GlobalKeyboardShort
       />
       
       {/* Modal */}
-      <div className="relative w-full max-w-3xl bg-[#F5F2E8] border border-[#333] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-3xl bg-[#F0E6E0] border border-[#333] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#333]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#9C4A29]/10 flex items-center justify-center">
-              <Keyboard className="w-5 h-5 text-[#9C4A29]" />
+            <div className="w-10 h-10 rounded-xl bg-[#273B3A]/10 flex items-center justify-center">
+              <Keyboard className="w-5 h-5 text-[#273B3A]" />
             </div>
             <div>
               <h2 className="text-lg font-semibold text-white">Keyboard Shortcuts</h2>

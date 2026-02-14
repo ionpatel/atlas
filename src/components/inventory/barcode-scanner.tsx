@@ -199,18 +199,18 @@ export function BarcodeScanner({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="w-full max-w-lg mx-4 bg-[#F5F2E8] border border-[#D4CDB8] rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
+      <div className="w-full max-w-lg mx-4 bg-[#F0E6E0] border border-[#C9BAB0] rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#D4CDB8] flex items-center justify-between flex-shrink-0">
+        <div className="px-6 py-4 border-b border-[#C9BAB0] flex items-center justify-between flex-shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-[rgba(156,74,41,0.15)]">
-              <Scan className="w-5 h-5 text-[#9C4A29]" />
+              <Scan className="w-5 h-5 text-[#273B3A]" />
             </div>
             <div>
-              <h2 className="text-base font-semibold text-[#2D1810]">
+              <h2 className="text-base font-semibold text-[#1A2726]">
                 Barcode Scanner
               </h2>
-              <p className="text-xs text-[#6B5B4F]">
+              <p className="text-xs text-[#4A5654]">
                 Scan or enter barcode manually
               </p>
             </div>
@@ -221,8 +221,8 @@ export function BarcodeScanner({
               className={cn(
                 "p-2 rounded-lg transition-all",
                 soundEnabled
-                  ? "text-[#9C4A29] bg-[rgba(156,74,41,0.15)]"
-                  : "text-[#8B7B6F] hover:text-[#6B5B4F] hover:bg-[#DDD7C0]"
+                  ? "text-[#273B3A] bg-[rgba(156,74,41,0.15)]"
+                  : "text-[#6B7876] hover:text-[#4A5654] hover:bg-[#D8CAC0]"
               )}
               title={soundEnabled ? "Sound on" : "Sound off"}
             >
@@ -237,21 +237,21 @@ export function BarcodeScanner({
               className={cn(
                 "p-2 rounded-lg transition-all relative",
                 showHistory
-                  ? "text-[#9C4A29] bg-[rgba(156,74,41,0.15)]"
-                  : "text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0]"
+                  ? "text-[#273B3A] bg-[rgba(156,74,41,0.15)]"
+                  : "text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0]"
               )}
               title="Scan history"
             >
               <History className="w-4 h-4" />
               {scanHistory.length > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#9C4A29] text-[9px] font-bold text-[#E8E3CC] flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#273B3A] text-[9px] font-bold text-[#E6D4C7] flex items-center justify-center">
                   {scanHistory.length}
                 </span>
               )}
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-all"
+              className="p-2 rounded-lg text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all"
             >
               <X className="w-5 h-5" />
             </button>
@@ -260,13 +260,13 @@ export function BarcodeScanner({
 
         {/* History Panel */}
         {showHistory && (
-          <div className="border-b border-[#D4CDB8] max-h-48 overflow-y-auto">
-            <div className="px-4 py-2 bg-[#E8E3CC] flex items-center justify-between sticky top-0">
-              <span className="text-xs font-medium text-[#6B5B4F]">Recent Scans</span>
+          <div className="border-b border-[#C9BAB0] max-h-48 overflow-y-auto">
+            <div className="px-4 py-2 bg-[#E6D4C7] flex items-center justify-between sticky top-0">
+              <span className="text-xs font-medium text-[#4A5654]">Recent Scans</span>
               {scanHistory.length > 0 && (
                 <button
                   onClick={clearHistory}
-                  className="text-xs text-[#8B7B6F] hover:text-red-400 flex items-center gap-1"
+                  className="text-xs text-[#6B7876] hover:text-red-400 flex items-center gap-1"
                 >
                   <Trash2 className="w-3 h-3" />
                   Clear
@@ -274,16 +274,16 @@ export function BarcodeScanner({
               )}
             </div>
             {scanHistory.length === 0 ? (
-              <div className="px-4 py-6 text-center text-xs text-[#8B7B6F]">
+              <div className="px-4 py-6 text-center text-xs text-[#6B7876]">
                 No scan history yet
               </div>
             ) : (
-              <div className="divide-y divide-[#D4CDB8]/50">
+              <div className="divide-y divide-[#C9BAB0]/50">
                 {scanHistory.map((item, i) => (
                   <button
                     key={i}
                     onClick={() => handleHistorySelect(item)}
-                    className="w-full px-4 py-2.5 flex items-center justify-between hover:bg-[#DDD7C0] transition-colors text-left"
+                    className="w-full px-4 py-2.5 flex items-center justify-between hover:bg-[#D8CAC0] transition-colors text-left"
                   >
                     <div className="flex items-center gap-3">
                       <div
@@ -299,17 +299,17 @@ export function BarcodeScanner({
                         )}
                       </div>
                       <div>
-                        <p className="text-xs font-mono text-[#2D1810]">{item.barcode}</p>
+                        <p className="text-xs font-mono text-[#1A2726]">{item.barcode}</p>
                         {item.productName && (
-                          <p className="text-[10px] text-[#6B5B4F]">{item.productName}</p>
+                          <p className="text-[10px] text-[#4A5654]">{item.productName}</p>
                         )}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] text-[#8B7B6F]">
+                      <span className="text-[10px] text-[#6B7876]">
                         {item.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                       </span>
-                      <ArrowRight className="w-3 h-3 text-[#8B7B6F]" />
+                      <ArrowRight className="w-3 h-3 text-[#6B7876]" />
                     </div>
                   </button>
                 ))}
@@ -319,15 +319,15 @@ export function BarcodeScanner({
         )}
 
         {/* Mode Toggle */}
-        <div className="px-6 py-4 border-b border-[#D4CDB8] flex-shrink-0">
-          <div className="flex items-center gap-2 p-1 bg-[#E8E3CC] rounded-lg">
+        <div className="px-6 py-4 border-b border-[#C9BAB0] flex-shrink-0">
+          <div className="flex items-center gap-2 p-1 bg-[#E6D4C7] rounded-lg">
             <button
               onClick={() => setMode("manual")}
               className={cn(
                 "flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all",
                 mode === "manual"
-                  ? "bg-[#9C4A29] text-[#E8E3CC]"
-                  : "text-[#6B5B4F] hover:text-[#2D1810]"
+                  ? "bg-[#273B3A] text-[#E6D4C7]"
+                  : "text-[#4A5654] hover:text-[#1A2726]"
               )}
             >
               <Keyboard className="w-4 h-4" />
@@ -338,8 +338,8 @@ export function BarcodeScanner({
               className={cn(
                 "flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all",
                 mode === "camera"
-                  ? "bg-[#9C4A29] text-[#E8E3CC]"
-                  : "text-[#6B5B4F] hover:text-[#2D1810]"
+                  ? "bg-[#273B3A] text-[#E6D4C7]"
+                  : "text-[#4A5654] hover:text-[#1A2726]"
               )}
             >
               <Camera className="w-4 h-4" />
@@ -353,7 +353,7 @@ export function BarcodeScanner({
           {mode === "manual" ? (
             <form onSubmit={handleManualSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-[#6B5B4F] uppercase tracking-wider mb-2">
+                <label className="block text-xs font-medium text-[#4A5654] uppercase tracking-wider mb-2">
                   Barcode / SKU
                 </label>
                 <input
@@ -362,14 +362,14 @@ export function BarcodeScanner({
                   value={manualCode}
                   onChange={(e) => setManualCode(e.target.value)}
                   placeholder="Enter or scan barcode..."
-                  className="w-full px-4 py-3 bg-[#DDD7C0] border border-[#D4CDB8] rounded-lg text-sm text-[#2D1810] placeholder-[#8B7B6F] focus:outline-none focus:border-[#9C4A29]/40 font-mono text-lg tracking-wider"
+                  className="w-full px-4 py-3 bg-[#D8CAC0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] placeholder-[#6B7876] focus:outline-none focus:border-[#273B3A]/40 font-mono text-lg tracking-wider"
                   autoComplete="off"
                 />
               </div>
               <button
                 type="submit"
                 disabled={!manualCode.trim()}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Package className="w-4 h-4" />
                 Find Product
@@ -378,7 +378,7 @@ export function BarcodeScanner({
           ) : (
             <div className="space-y-4">
               {/* Camera Preview */}
-              <div className="relative aspect-[4/3] bg-[#E8E3CC] rounded-xl overflow-hidden">
+              <div className="relative aspect-[4/3] bg-[#E6D4C7] rounded-xl overflow-hidden">
                 {error ? (
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
                     <AlertCircle className="w-10 h-10 text-red-400 mb-3" />
@@ -395,21 +395,21 @@ export function BarcodeScanner({
                     />
                     {/* Scan overlay */}
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-64 h-24 border-2 border-[#9C4A29] rounded-lg relative">
-                        <div className="absolute inset-0 bg-[#9C4A29]/5" />
+                      <div className="w-64 h-24 border-2 border-[#273B3A] rounded-lg relative">
+                        <div className="absolute inset-0 bg-[#273B3A]/5" />
                         {/* Corner markers */}
-                        <div className="absolute -top-0.5 -left-0.5 w-4 h-4 border-t-2 border-l-2 border-[#9C4A29]" />
-                        <div className="absolute -top-0.5 -right-0.5 w-4 h-4 border-t-2 border-r-2 border-[#9C4A29]" />
-                        <div className="absolute -bottom-0.5 -left-0.5 w-4 h-4 border-b-2 border-l-2 border-[#9C4A29]" />
-                        <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 border-b-2 border-r-2 border-[#9C4A29]" />
+                        <div className="absolute -top-0.5 -left-0.5 w-4 h-4 border-t-2 border-l-2 border-[#273B3A]" />
+                        <div className="absolute -top-0.5 -right-0.5 w-4 h-4 border-t-2 border-r-2 border-[#273B3A]" />
+                        <div className="absolute -bottom-0.5 -left-0.5 w-4 h-4 border-b-2 border-l-2 border-[#273B3A]" />
+                        <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 border-b-2 border-r-2 border-[#273B3A]" />
                         {/* Scan line animation */}
-                        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#9C4A29] animate-pulse" />
+                        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#273B3A] animate-pulse" />
                       </div>
                     </div>
                     {scanning && (
                       <div className="absolute bottom-4 left-0 right-0 flex justify-center">
-                        <span className="px-3 py-1.5 bg-[#E8E3CC]/80 rounded-full text-xs text-[#9C4A29] flex items-center gap-2">
-                          <span className="w-2 h-2 bg-[#9C4A29] rounded-full animate-pulse" />
+                        <span className="px-3 py-1.5 bg-[#E6D4C7]/80 rounded-full text-xs text-[#273B3A] flex items-center gap-2">
+                          <span className="w-2 h-2 bg-[#273B3A] rounded-full animate-pulse" />
                           Scanning...
                         </span>
                       </div>
@@ -421,7 +421,7 @@ export function BarcodeScanner({
               {/* Demo scan button */}
               <button
                 onClick={simulateScan}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-[#D4CDB8] rounded-lg text-sm font-medium text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-all"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-[#C9BAB0] rounded-lg text-sm font-medium text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all"
               >
                 <RotateCcw className="w-4 h-4" />
                 Simulate Scan (Demo)
@@ -437,19 +437,19 @@ export function BarcodeScanner({
                   <CheckCircle2 className="w-5 h-5 text-emerald-400" />
                   <span className="text-xs font-medium text-emerald-400">Product Found</span>
                 </div>
-                <span className="text-[10px] text-[#8B7B6F] font-mono">{lastScanned}</span>
+                <span className="text-[10px] text-[#6B7876] font-mono">{lastScanned}</span>
               </div>
               
               <div className="mb-4">
-                <h4 className="text-sm font-semibold text-[#2D1810] mb-1">{foundProduct.name}</h4>
-                <p className="text-xs text-[#6B5B4F]">
+                <h4 className="text-sm font-semibold text-[#1A2726] mb-1">{foundProduct.name}</h4>
+                <p className="text-xs text-[#4A5654]">
                   SKU: {foundProduct.sku} · {foundProduct.category || "Uncategorized"}
                 </p>
               </div>
 
               {/* Stock Level */}
-              <div className="flex items-center justify-between p-3 bg-[#F5F2E8] rounded-lg mb-4">
-                <span className="text-xs text-[#6B5B4F]">Current Stock</span>
+              <div className="flex items-center justify-between p-3 bg-[#F0E6E0] rounded-lg mb-4">
+                <span className="text-xs text-[#4A5654]">Current Stock</span>
                 <span className={cn(
                   "text-lg font-bold tabular-nums",
                   foundProduct.stock_quantity === 0
@@ -488,7 +488,7 @@ export function BarcodeScanner({
                 {onViewProduct && (
                   <button
                     onClick={() => onViewProduct(foundProduct)}
-                    className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 border border-[#D4CDB8] rounded-lg text-xs font-medium text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-all"
+                    className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 border border-[#C9BAB0] rounded-lg text-xs font-medium text-[#4A5654] hover:text-[#1A2726] hover:bg-[#D8CAC0] transition-all"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     View
@@ -497,7 +497,7 @@ export function BarcodeScanner({
                 {onEditProduct && (
                   <button
                     onClick={() => onEditProduct(foundProduct)}
-                    className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-xs font-semibold hover:bg-[#B85A35] transition-all"
+                    className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-xs font-semibold hover:bg-[#344948] transition-all"
                   >
                     <Pencil className="w-3.5 h-3.5" />
                     Edit Product
@@ -514,7 +514,7 @@ export function BarcodeScanner({
                 <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
                 <div>
                   <p className="text-xs text-red-400 font-medium">Product Not Found</p>
-                  <p className="text-xs text-[#6B5B4F] font-mono mt-0.5">{lastScanned}</p>
+                  <p className="text-xs text-[#4A5654] font-mono mt-0.5">{lastScanned}</p>
                 </div>
               </div>
             </div>
@@ -522,8 +522,8 @@ export function BarcodeScanner({
         </div>
 
         {/* Footer tip */}
-        <div className="px-6 py-4 bg-[#E8E3CC] border-t border-[#D4CDB8] flex-shrink-0">
-          <p className="text-xs text-[#8B7B6F] text-center">
+        <div className="px-6 py-4 bg-[#E6D4C7] border-t border-[#C9BAB0] flex-shrink-0">
+          <p className="text-xs text-[#6B7876] text-center">
             💡 Tip: Connect a USB barcode scanner for instant input in manual mode
           </p>
         </div>

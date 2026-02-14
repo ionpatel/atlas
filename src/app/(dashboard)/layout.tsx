@@ -68,7 +68,7 @@ export default async function DashboardLayout({
         {/* Skip link for keyboard navigation */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#9C4A29] focus:text-[#111] focus:rounded-lg focus:font-medium focus:text-sm focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#273B3A] focus:text-[#111] focus:rounded-lg focus:font-medium focus:text-sm focus:shadow-lg"
         >
           Skip to main content
         </a>

@@ -25,7 +25,7 @@ const DialogContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTML
     <div
       ref={ref}
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border border-[#D4CDB8] bg-[#F5F2E8] p-6 shadow-2xl rounded-xl",
+        "fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border border-[#C9BAB0] bg-[#F0E6E0] p-6 shadow-2xl rounded-xl",
         className
       )}
       {...props}
@@ -48,14 +48,14 @@ DialogFooter.displayName = "DialogFooter";
 
 const DialogTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
   ({ className, ...props }, ref) => (
-    <h2 ref={ref} className={cn("text-lg font-semibold text-[#2D1810]", className)} {...props} />
+    <h2 ref={ref} className={cn("text-lg font-semibold text-[#1A2726]", className)} {...props} />
   )
 );
 DialogTitle.displayName = "DialogTitle";
 
 const DialogDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
   ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn("text-sm text-[#6B5B4F]", className)} {...props} />
+    <p ref={ref} className={cn("text-sm text-[#4A5654]", className)} {...props} />
   )
 );
 DialogDescription.displayName = "DialogDescription";
@@ -65,7 +65,7 @@ const DialogClose = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttribut
     <button
       ref={ref}
       className={cn(
-        "absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 transition-opacity text-[#6B5B4F] hover:text-[#2D1810]",
+        "absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 transition-opacity text-[#4A5654] hover:text-[#1A2726]",
         className
       )}
       {...props}

@@ -120,7 +120,7 @@ export default function CreditNotesPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-[#9C4A29]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#273B3A]" />
       </div>
     );
   }
@@ -131,18 +131,18 @@ export default function CreditNotesPage() {
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <Link href="/invoices" className="text-[#6B5B4F] hover:text-white">
+            <Link href="/invoices" className="text-[#4A5654] hover:text-white">
               Invoices
             </Link>
-            <span className="text-[#8B7B6F]">/</span>
+            <span className="text-[#6B7876]">/</span>
             <span className="text-white">Credit Notes</span>
           </div>
           <h1 className="text-2xl font-bold text-white mt-1">Credit Notes</h1>
-          <p className="text-[#6B5B4F]">
+          <p className="text-[#4A5654]">
             Issue refunds and credits to customers
           </p>
         </div>
-        <Button className="bg-gradient-to-r from-[#9C4A29] to-[#7D3B21] text-[#E8E3CC]">
+        <Button className="bg-gradient-to-r from-[#273B3A] to-[#1E2E2D] text-[#E6D4C7]">
           <Plus className="h-4 w-4 mr-2" />
           New Credit Note
         </Button>
@@ -150,27 +150,27 @@ export default function CreditNotesPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
-        <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
+        <Card className="bg-[#F0E6E0] border-[#D8CAC0]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#6B5B4F] mb-1">
+            <div className="flex items-center gap-2 text-[#4A5654] mb-1">
               <ReceiptText className="h-4 w-4" />
               <span className="text-sm">Total Credit Notes</span>
             </div>
             <p className="text-2xl font-bold text-white">{creditNotes.length}</p>
           </CardContent>
         </Card>
-        <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
+        <Card className="bg-[#F0E6E0] border-[#D8CAC0]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#6B5B4F] mb-1">
+            <div className="flex items-center gap-2 text-[#4A5654] mb-1">
               <Clock className="h-4 w-4" />
               <span className="text-sm">Outstanding</span>
             </div>
             <p className="text-2xl font-bold text-amber-400">{formatCurrency(totalIssued)}</p>
           </CardContent>
         </Card>
-        <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
+        <Card className="bg-[#F0E6E0] border-[#D8CAC0]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#6B5B4F] mb-1">
+            <div className="flex items-center gap-2 text-[#4A5654] mb-1">
               <CheckCircle className="h-4 w-4" />
               <span className="text-sm">Applied</span>
             </div>
@@ -181,35 +181,35 @@ export default function CreditNotesPage() {
 
       {/* Search */}
       <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8B7B6F]" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#6B7876]" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search credit notes..."
-          className="pl-10 bg-[#F5F2E8] border-[#DDD7C0] text-white"
+          className="pl-10 bg-[#F0E6E0] border-[#D8CAC0] text-white"
         />
       </div>
 
       {/* Table */}
-      <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
+      <Card className="bg-[#F0E6E0] border-[#D8CAC0]">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow className="border-[#DDD7C0] hover:bg-transparent">
-                <TableHead className="text-[#6B5B4F]">Credit Note #</TableHead>
-                <TableHead className="text-[#6B5B4F]">Customer</TableHead>
-                <TableHead className="text-[#6B5B4F]">Status</TableHead>
-                <TableHead className="text-[#6B5B4F]">Date</TableHead>
-                <TableHead className="text-[#6B5B4F]">Reason</TableHead>
-                <TableHead className="text-[#6B5B4F] text-right">Amount</TableHead>
-                <TableHead className="text-[#6B5B4F] text-right">Applied</TableHead>
+              <TableRow className="border-[#D8CAC0] hover:bg-transparent">
+                <TableHead className="text-[#4A5654]">Credit Note #</TableHead>
+                <TableHead className="text-[#4A5654]">Customer</TableHead>
+                <TableHead className="text-[#4A5654]">Status</TableHead>
+                <TableHead className="text-[#4A5654]">Date</TableHead>
+                <TableHead className="text-[#4A5654]">Reason</TableHead>
+                <TableHead className="text-[#4A5654] text-right">Amount</TableHead>
+                <TableHead className="text-[#4A5654] text-right">Applied</TableHead>
                 <TableHead className="w-12"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filtered.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-12 text-[#8B7B6F]">
+                  <TableCell colSpan={8} className="text-center py-12 text-[#6B7876]">
                     <ReceiptText className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>No credit notes</p>
                     <p className="text-sm">Create one to issue a refund</p>
@@ -222,11 +222,11 @@ export default function CreditNotesPage() {
                   const remaining = cn.total - cn.amount_applied;
 
                   return (
-                    <TableRow key={cn.id} className="border-[#DDD7C0] hover:bg-[#DDD7C0]/50">
+                    <TableRow key={cn.id} className="border-[#D8CAC0] hover:bg-[#D8CAC0]/50">
                       <TableCell className="text-white font-medium">
                         {cn.credit_note_number}
                       </TableCell>
-                      <TableCell className="text-[#6B5B4F]">
+                      <TableCell className="text-[#4A5654]">
                         {cn.contact_name}
                       </TableCell>
                       <TableCell>
@@ -235,10 +235,10 @@ export default function CreditNotesPage() {
                           {status.label}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-[#6B5B4F]">
+                      <TableCell className="text-[#4A5654]">
                         {new Date(cn.issue_date).toLocaleDateString()}
                       </TableCell>
-                      <TableCell className="text-[#6B5B4F] max-w-[200px] truncate">
+                      <TableCell className="text-[#4A5654] max-w-[200px] truncate">
                         {cn.reason || '-'}
                       </TableCell>
                       <TableCell className="text-right text-white font-medium">
@@ -247,7 +247,7 @@ export default function CreditNotesPage() {
                       <TableCell className="text-right">
                         <span className="text-green-400">{formatCurrency(cn.amount_applied)}</span>
                         {remaining > 0 && (
-                          <span className="text-[#8B7B6F] text-sm ml-1">
+                          <span className="text-[#6B7876] text-sm ml-1">
                             ({formatCurrency(remaining)} left)
                           </span>
                         )}
@@ -259,7 +259,7 @@ export default function CreditNotesPage() {
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-[#F5F2E8] border-[#DDD7C0]">
+                          <DropdownMenuContent align="end" className="bg-[#F0E6E0] border-[#D8CAC0]">
                             <DropdownMenuItem>
                               <Eye className="h-4 w-4 mr-2" />
                               View
@@ -270,7 +270,7 @@ export default function CreditNotesPage() {
                                 Apply to Invoice
                               </DropdownMenuItem>
                             )}
-                            <DropdownMenuSeparator className="bg-[#DDD7C0]" />
+                            <DropdownMenuSeparator className="bg-[#D8CAC0]" />
                             <DropdownMenuItem
                               onClick={() => deleteCreditNote(cn.id)}
                               className="text-red-400"

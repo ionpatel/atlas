@@ -65,7 +65,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
       return (
         <div className="min-h-[400px] flex items-center justify-center p-8">
-          <div className="max-w-md w-full bg-[#111] rounded-2xl border border-[#D4CDB8] p-8 text-center">
+          <div className="max-w-md w-full bg-[#111] rounded-2xl border border-[#C9BAB0] p-8 text-center">
             <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-6">
               <AlertTriangle className="w-8 h-8 text-red-500" />
             </div>
@@ -97,14 +97,14 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex gap-3 justify-center">
               <button
                 onClick={this.handleReset}
-                className="px-4 py-2 bg-[#9C4A29] text-[#111] rounded-lg font-medium text-sm hover:bg-[#B85A35] transition-colors flex items-center gap-2"
+                className="px-4 py-2 bg-[#273B3A] text-[#111] rounded-lg font-medium text-sm hover:bg-[#344948] transition-colors flex items-center gap-2"
               >
                 <RefreshCw className="w-4 h-4" />
                 Try again
               </button>
               <button
                 onClick={this.handleGoHome}
-                className="px-4 py-2 bg-[#F5F2E8] text-white rounded-lg font-medium text-sm hover:bg-[#222] transition-colors border border-[#333] flex items-center gap-2"
+                className="px-4 py-2 bg-[#F0E6E0] text-white rounded-lg font-medium text-sm hover:bg-[#222] transition-colors border border-[#333] flex items-center gap-2"
               >
                 <Home className="w-4 h-4" />
                 Go to Dashboard

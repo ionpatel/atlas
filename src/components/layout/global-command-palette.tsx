@@ -417,7 +417,7 @@ export function GlobalCommandPalette({
       />
       
       {/* Palette */}
-      <div className="relative w-full max-w-xl mx-4 bg-[#F5F2E8] border border-[#333] rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-4 duration-200">
+      <div className="relative w-full max-w-xl mx-4 bg-[#F0E6E0] border border-[#333] rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-4 duration-200">
         {/* Search Input */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-[#333]">
           <Search className="w-5 h-5 text-[#666]" />
@@ -465,19 +465,19 @@ export function GlobalCommandPalette({
                           onMouseEnter={() => setSelectedIndex(idx)}
                           className={cn(
                             "w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors",
-                            isSelected ? "bg-[#9C4A29]/10" : "hover:bg-[#222]"
+                            isSelected ? "bg-[#273B3A]/10" : "hover:bg-[#222]"
                           )}
                         >
                           <div className={cn(
                             "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
-                            isSelected ? "bg-[#9C4A29]/20 text-[#9C4A29]" : "bg-[#222] text-[#888]"
+                            isSelected ? "bg-[#273B3A]/20 text-[#273B3A]" : "bg-[#222] text-[#888]"
                           )}>
                             <Icon className="w-4 h-4" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className={cn(
                               "text-sm font-medium truncate",
-                              isSelected ? "text-[#9C4A29]" : "text-white"
+                              isSelected ? "text-[#273B3A]" : "text-white"
                             )}>
                               {cmd.label}
                             </div>
@@ -491,7 +491,7 @@ export function GlobalCommandPalette({
                             </div>
                           )}
                           {isSelected && (
-                            <ArrowRight className="w-4 h-4 text-[#9C4A29] shrink-0" />
+                            <ArrowRight className="w-4 h-4 text-[#273B3A] shrink-0" />
                           )}
                         </button>
                       );

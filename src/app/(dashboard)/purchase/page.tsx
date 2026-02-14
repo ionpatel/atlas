@@ -11,11 +11,11 @@ import type { PurchaseOrder, PurchaseOrderLine } from "@/types";
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    draft: "bg-[#DDD7C0] text-[#6B5B4F] border-[#D4CDB8]",
-    sent: "bg-[rgba(156,74,41,0.15)] text-[#9C4A29] border-[#9C4A29]/20",
+    draft: "bg-[#D8CAC0] text-[#4A5654] border-[#C9BAB0]",
+    sent: "bg-[rgba(156,74,41,0.15)] text-[#273B3A] border-[#273B3A]/20",
     received: "bg-blue-500/10 text-blue-400 border-blue-500/20",
     billed: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    cancelled: "bg-[#DDD7C0] text-[#8B7B6F] border-[#D4CDB8]",
+    cancelled: "bg-[#D8CAC0] text-[#6B7876] border-[#C9BAB0]",
   };
   const label = status.charAt(0).toUpperCase() + status.slice(1);
   return (
@@ -77,16 +77,16 @@ export default function PurchasePage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#2D1810]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#1A2726]">
             Purchase Orders
           </h1>
-          <p className="text-[#6B5B4F] text-sm mt-1">
+          <p className="text-[#4A5654] text-sm mt-1">
             {filtered.length} of {orders.length} orders
           </p>
         </div>
         <button
           onClick={() => setModalOpen(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200"
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#344948] transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
           New Purchase Order
@@ -95,17 +95,17 @@ export default function PurchasePage() {
 
       {/* Search & Filters */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#9C4A29]/40 transition-colors duration-200">
-          <Search className="w-4 h-4 text-[#6B5B4F]" />
+        <div className="flex items-center gap-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#273B3A]/40 transition-colors duration-200">
+          <Search className="w-4 h-4 text-[#4A5654]" />
           <input
             type="text"
             placeholder="Search purchase orders..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm w-full text-[#2D1810] placeholder:text-[#6B5B4F]/60"
+            className="bg-transparent border-none outline-none text-sm w-full text-[#1A2726] placeholder:text-[#4A5654]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#6B5B4F] hover:text-[#2D1810]">
+            <button onClick={() => setSearchQuery("")} className="text-[#4A5654] hover:text-[#1A2726]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -114,8 +114,8 @@ export default function PurchasePage() {
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.status
-              ? "border-[#9C4A29]/50 text-[#9C4A29] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#D4CDB8] text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8]"
+              ? "border-[#273B3A]/50 text-[#273B3A] bg-[rgba(156,74,41,0.15)]/50"
+              : "border-[#C9BAB0] text-[#4A5654] hover:text-[#1A2726] hover:bg-[#F0E6E0]"
           }`}
         >
           <Filter className="w-4 h-4" />
@@ -128,7 +128,7 @@ export default function PurchasePage() {
           <select
             value={filters.status}
             onChange={(e) => setFilter("status", e.target.value)}
-            className="px-4 py-2.5 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg text-sm text-[#2D1810] focus:outline-none focus:ring-2 focus:ring-[#9C4A29]/30 focus:border-[#9C4A29]/50 transition-all duration-200"
+            className="px-4 py-2.5 bg-[#F0E6E0] border border-[#C9BAB0] rounded-lg text-sm text-[#1A2726] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
           >
             <option value="">All Status</option>
             <option value="draft">Draft</option>
@@ -141,24 +141,24 @@ export default function PurchasePage() {
       )}
 
       {/* Table */}
-      <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl overflow-hidden">
+      <div className="bg-[#F0E6E0] border border-[#C9BAB0] rounded-xl overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[#D4CDB8]">
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">PO #</th>
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Vendor</th>
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Date</th>
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Expected Date</th>
-              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Amount</th>
-              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Status</th>
-              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest w-16"></th>
+            <tr className="border-b border-[#C9BAB0]">
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">PO #</th>
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Vendor</th>
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Date</th>
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Expected Date</th>
+              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Amount</th>
+              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest">Status</th>
+              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#4A5654] uppercase tracking-widest w-16"></th>
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-6 py-16 text-center text-[#6B5B4F] text-sm">
-                  <Truck className="w-8 h-8 mx-auto mb-3 text-[#6B5B4F]/40" />
+                <td colSpan={7} className="px-6 py-16 text-center text-[#4A5654] text-sm">
+                  <Truck className="w-8 h-8 mx-auto mb-3 text-[#4A5654]/40" />
                   No purchase orders found
                 </td>
               </tr>
@@ -166,29 +166,29 @@ export default function PurchasePage() {
               filtered.map((order, i) => (
                 <tr
                   key={order.id}
-                  className={`hover:bg-[#DDD7C0] transition-colors duration-150 cursor-pointer border-b border-[#D4CDB8]/50 last:border-0 ${
-                    i % 2 === 1 ? "bg-[#E8E3CC]/40" : ""
+                  className={`hover:bg-[#D8CAC0] transition-colors duration-150 cursor-pointer border-b border-[#C9BAB0]/50 last:border-0 ${
+                    i % 2 === 1 ? "bg-[#E6D4C7]/40" : ""
                   }`}
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-[rgba(156,74,41,0.15)] flex items-center justify-center flex-shrink-0">
-                        <Truck className="w-3.5 h-3.5 text-[#9C4A29]" />
+                        <Truck className="w-3.5 h-3.5 text-[#273B3A]" />
                       </div>
-                      <span className="text-sm font-medium text-[#2D1810] font-mono">{order.order_number}</span>
+                      <span className="text-sm font-medium text-[#1A2726] font-mono">{order.order_number}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-[#2D1810]">{getVendorName(order.vendor_id)}</td>
-                  <td className="px-6 py-4 text-sm text-[#6B5B4F]">{formatDate(order.order_date)}</td>
-                  <td className="px-6 py-4 text-sm text-[#6B5B4F]">{order.expected_date ? formatDate(order.expected_date) : "—"}</td>
-                  <td className="px-6 py-4 text-sm text-right font-semibold text-[#9C4A29]">{formatCurrency(order.total)}</td>
+                  <td className="px-6 py-4 text-sm text-[#1A2726]">{getVendorName(order.vendor_id)}</td>
+                  <td className="px-6 py-4 text-sm text-[#4A5654]">{formatDate(order.order_date)}</td>
+                  <td className="px-6 py-4 text-sm text-[#4A5654]">{order.expected_date ? formatDate(order.expected_date) : "—"}</td>
+                  <td className="px-6 py-4 text-sm text-right font-semibold text-[#273B3A]">{formatCurrency(order.total)}</td>
                   <td className="px-6 py-4 text-right">
                     <StatusBadge status={order.status} />
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button
                       onClick={(e) => handleDelete(e, order.id)}
-                      className="p-2 rounded-lg text-[#6B5B4F] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                      className="p-2 rounded-lg text-[#4A5654] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>

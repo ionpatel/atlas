@@ -8,24 +8,24 @@
   Atlas Color Palette — Warm Earth Theme
   Premium, earthy, Canadian
   
-  Background: Dirty White  #E8E3CC (warm cream)
-  Accent:     Cinnamon     #9C4A29 (terracotta)
-  Text:       Dark Brown   #2D1810 (rich brown)
+  Background: Dirty White  #E6D4C7 (warm cream)
+  Accent:     Cinnamon     #273B3A (terracotta)
+  Text:       Dark Brown   #1A2726 (rich brown)
   
   Derived shades:
-  - Background:   #E8E3CC
-  - Card:         #F5F2E8 (lighter cream)
-  - Surface:      #DDD7C0 (slightly darker)
-  - Accent:       #9C4A29
-  - Accent hover: #7D3B21
-  - Text:         #2D1810
-  - Muted text:   #6B5B4F
-  - Border:       #D4CDB8
+  - Background:   #E6D4C7
+  - Card:         #F0E6E0 (lighter cream)
+  - Surface:      #D8CAC0 (slightly darker)
+  - Accent:       #273B3A
+  - Accent hover: #1E2E2D
+  - Text:         #1A2726
+  - Muted text:   #4A5654
+  - Border:       #C9BAB0
 */
 
 @layer base {
   :root {
-    /* Background - Dirty White #E8E3CC */
+    /* Background - Dirty White #E6D4C7 */
     --background: 45 38% 86%;
     --foreground: 15 35% 13%;
     
@@ -33,7 +33,7 @@
     --card: 45 40% 93%;
     --card-foreground: 15 35% 13%;
     
-    /* Primary - Cinnamon #9C4A29 */
+    /* Primary - Cinnamon #273B3A */
     --primary: 17 58% 38%;
     --primary-foreground: 45 38% 95%;
     
@@ -88,13 +88,13 @@
     font-family: 'Inter', system-ui, sans-serif;
     background: linear-gradient(
       135deg,
-      #E8E3CC 0%,
+      #E6D4C7 0%,
       #E2DCBF 20%,
       #D8CEB0 40%,
       #C9B898 60%,
       #B89B78 75%,
       #A87350 88%,
-      #9C4A29 100%
+      #273B3A 100%
     );
     background-attachment: fixed;
     min-height: 100vh;
@@ -106,20 +106,20 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Custom utility classes for the warm earth palette */
-.bg-cream { background-color: #E8E3CC; }
-.bg-cream-light { background-color: #F5F2E8; }
-.bg-cream-dark { background-color: #DDD7C0; }
-.bg-cinnamon { background-color: #9C4A29; }
-.bg-cinnamon-dark { background-color: #7D3B21; }
-.bg-cinnamon-light { background-color: #B85A35; }
+.bg-cream { background-color: #E6D4C7; }
+.bg-cream-light { background-color: #F0E6E0; }
+.bg-cream-dark { background-color: #D8CAC0; }
+.bg-cinnamon { background-color: #273B3A; }
+.bg-cinnamon-dark { background-color: #1E2E2D; }
+.bg-cinnamon-light { background-color: #344948; }
 
-.text-earth { color: #2D1810; }
-.text-earth-muted { color: #6B5B4F; }
-.text-cream { color: #E8E3CC; }
-.text-cinnamon { color: #9C4A29; }
+.text-earth { color: #1A2726; }
+.text-earth-muted { color: #4A5654; }
+.text-cream { color: #E6D4C7; }
+.text-cinnamon { color: #273B3A; }
 
-.border-cream { border-color: #D4CDB8; }
-.border-cinnamon { border-color: #9C4A29; }
+.border-cream { border-color: #C9BAB0; }
+.border-cinnamon { border-color: #273B3A; }
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
@@ -128,27 +128,27 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #E8E3CC;
+  background: #E6D4C7;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D4CDB8;
+  background: #C9BAB0;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9C4A29;
+  background: #273B3A;
 }
 
 /* Selection */
 ::selection {
-  background: #9C4A29;
-  color: #F5F2E8;
+  background: #273B3A;
+  color: #F0E6E0;
 }
 
 /* Focus rings */
 *:focus-visible {
-  outline: 2px solid #9C4A29;
+  outline: 2px solid #273B3A;
   outline-offset: 2px;
 }
 
@@ -175,18 +175,18 @@
 
 /* Input styles */
 input, select, textarea {
-  background-color: #F5F2E8;
-  border-color: #D4CDB8;
-  color: #2D1810;
+  background-color: #F0E6E0;
+  border-color: #C9BAB0;
+  color: #1A2726;
 }
 
 input:focus, select:focus, textarea:focus {
-  border-color: #9C4A29;
+  border-color: #273B3A;
   box-shadow: 0 0 0 3px rgba(156, 74, 41, 0.15);
 }
 
 input::placeholder, textarea::placeholder {
-  color: #6B5B4F;
+  color: #4A5654;
 }
 
 /* Animation keyframes */

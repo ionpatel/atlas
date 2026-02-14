@@ -158,7 +158,7 @@ export default function QuotationsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-[#9C4A29]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#273B3A]" />
       </div>
     );
   }
@@ -169,11 +169,11 @@ export default function QuotationsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Quotations</h1>
-          <p className="text-[#6B5B4F] mt-1">
+          <p className="text-[#4A5654] mt-1">
             Create estimates and convert them to invoices
           </p>
         </div>
-        <Button className="bg-gradient-to-r from-[#9C4A29] to-[#7D3B21] text-[#E8E3CC] hover:opacity-90">
+        <Button className="bg-gradient-to-r from-[#273B3A] to-[#1E2E2D] text-[#E6D4C7] hover:opacity-90">
           <Plus className="h-4 w-4 mr-2" />
           New Quotation
         </Button>
@@ -181,34 +181,34 @@ export default function QuotationsPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
+        <Card className="bg-[#F0E6E0] border-[#D8CAC0]">
           <CardContent className="p-4">
-            <p className="text-sm text-[#6B5B4F]">Total Quotes</p>
+            <p className="text-sm text-[#4A5654]">Total Quotes</p>
             <p className="text-2xl font-bold text-white">{stats.total}</p>
           </CardContent>
         </Card>
-        <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
+        <Card className="bg-[#F0E6E0] border-[#D8CAC0]">
           <CardContent className="p-4">
-            <p className="text-sm text-[#6B5B4F]">Drafts</p>
+            <p className="text-sm text-[#4A5654]">Drafts</p>
             <p className="text-2xl font-bold text-neutral-400">{stats.draft}</p>
           </CardContent>
         </Card>
-        <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
+        <Card className="bg-[#F0E6E0] border-[#D8CAC0]">
           <CardContent className="p-4">
-            <p className="text-sm text-[#6B5B4F]">Sent</p>
+            <p className="text-sm text-[#4A5654]">Sent</p>
             <p className="text-2xl font-bold text-blue-400">{stats.sent}</p>
           </CardContent>
         </Card>
-        <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
+        <Card className="bg-[#F0E6E0] border-[#D8CAC0]">
           <CardContent className="p-4">
-            <p className="text-sm text-[#6B5B4F]">Accepted</p>
+            <p className="text-sm text-[#4A5654]">Accepted</p>
             <p className="text-2xl font-bold text-green-400">{stats.accepted}</p>
           </CardContent>
         </Card>
-        <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
+        <Card className="bg-[#F0E6E0] border-[#D8CAC0]">
           <CardContent className="p-4">
-            <p className="text-sm text-[#6B5B4F]">Total Value</p>
-            <p className="text-2xl font-bold text-[#9C4A29]">{formatCurrency(stats.totalValue)}</p>
+            <p className="text-sm text-[#4A5654]">Total Value</p>
+            <p className="text-2xl font-bold text-[#273B3A]">{formatCurrency(stats.totalValue)}</p>
           </CardContent>
         </Card>
       </div>
@@ -216,24 +216,24 @@ export default function QuotationsPage() {
       {/* Filters */}
       <div className="flex gap-4">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8B7B6F]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#6B7876]" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search quotes..."
-            className="pl-10 bg-[#F5F2E8] border-[#DDD7C0] text-white"
+            className="pl-10 bg-[#F0E6E0] border-[#D8CAC0] text-white"
           />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="border-[#DDD7C0] text-white">
+            <Button variant="outline" className="border-[#D8CAC0] text-white">
               <Filter className="h-4 w-4 mr-2" />
               {statusFilter === 'all' ? 'All Status' : statusConfig[statusFilter as keyof typeof statusConfig]?.label}
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-[#F5F2E8] border-[#DDD7C0]">
+          <DropdownMenuContent className="bg-[#F0E6E0] border-[#D8CAC0]">
             <DropdownMenuItem onClick={() => setStatusFilter('all')}>All Status</DropdownMenuItem>
-            <DropdownMenuSeparator className="bg-[#DDD7C0]" />
+            <DropdownMenuSeparator className="bg-[#D8CAC0]" />
             {Object.entries(statusConfig).map(([key, config]) => (
               <DropdownMenuItem key={key} onClick={() => setStatusFilter(key)}>
                 {config.label}
@@ -244,24 +244,24 @@ export default function QuotationsPage() {
       </div>
 
       {/* Table */}
-      <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
+      <Card className="bg-[#F0E6E0] border-[#D8CAC0]">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow className="border-[#DDD7C0] hover:bg-transparent">
-                <TableHead className="text-[#6B5B4F]">Quote #</TableHead>
-                <TableHead className="text-[#6B5B4F]">Customer</TableHead>
-                <TableHead className="text-[#6B5B4F]">Status</TableHead>
-                <TableHead className="text-[#6B5B4F]">Date</TableHead>
-                <TableHead className="text-[#6B5B4F]">Expiry</TableHead>
-                <TableHead className="text-[#6B5B4F] text-right">Amount</TableHead>
-                <TableHead className="text-[#6B5B4F] w-12"></TableHead>
+              <TableRow className="border-[#D8CAC0] hover:bg-transparent">
+                <TableHead className="text-[#4A5654]">Quote #</TableHead>
+                <TableHead className="text-[#4A5654]">Customer</TableHead>
+                <TableHead className="text-[#4A5654]">Status</TableHead>
+                <TableHead className="text-[#4A5654]">Date</TableHead>
+                <TableHead className="text-[#4A5654]">Expiry</TableHead>
+                <TableHead className="text-[#4A5654] text-right">Amount</TableHead>
+                <TableHead className="text-[#4A5654] w-12"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredQuotations.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-12 text-[#8B7B6F]">
+                  <TableCell colSpan={7} className="text-center py-12 text-[#6B7876]">
                     <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>No quotations found</p>
                   </TableCell>
@@ -272,11 +272,11 @@ export default function QuotationsPage() {
                   const StatusIcon = status.icon;
 
                   return (
-                    <TableRow key={quote.id} className="border-[#DDD7C0] hover:bg-[#DDD7C0]/50">
+                    <TableRow key={quote.id} className="border-[#D8CAC0] hover:bg-[#D8CAC0]/50">
                       <TableCell className="text-white font-medium">
                         {quote.quote_number}
                       </TableCell>
-                      <TableCell className="text-[#6B5B4F]">
+                      <TableCell className="text-[#4A5654]">
                         {quote.contact_name || 'Unknown'}
                       </TableCell>
                       <TableCell>
@@ -285,10 +285,10 @@ export default function QuotationsPage() {
                           {status.label}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-[#6B5B4F]">
+                      <TableCell className="text-[#4A5654]">
                         {new Date(quote.issue_date).toLocaleDateString()}
                       </TableCell>
-                      <TableCell className="text-[#6B5B4F]">
+                      <TableCell className="text-[#4A5654]">
                         {quote.expiry_date 
                           ? new Date(quote.expiry_date).toLocaleDateString()
                           : '-'
@@ -304,7 +304,7 @@ export default function QuotationsPage() {
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-[#F5F2E8] border-[#DDD7C0]">
+                          <DropdownMenuContent align="end" className="bg-[#F0E6E0] border-[#D8CAC0]">
                             <DropdownMenuItem>
                               <Eye className="h-4 w-4 mr-2" />
                               View
@@ -317,7 +317,7 @@ export default function QuotationsPage() {
                               <Download className="h-4 w-4 mr-2" />
                               Download PDF
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-[#DDD7C0]" />
+                            <DropdownMenuSeparator className="bg-[#D8CAC0]" />
                             {quote.status === 'accepted' && (
                               <DropdownMenuItem 
                                 onClick={() => convertToInvoice(quote.id)}

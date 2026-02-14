@@ -36,7 +36,7 @@ interface BrandingConfig {
 }
 
 const COLOR_PRESETS = [
-  { name: 'Gold', primary: '#9C4A29', accent: 'rgba(156,74,41,0.15)' },
+  { name: 'Gold', primary: '#273B3A', accent: 'rgba(156,74,41,0.15)' },
   { name: 'Blue', primary: '#3B82F6', accent: '#1E40AF' },
   { name: 'Green', primary: '#10B981', accent: '#065F46' },
   { name: 'Purple', primary: '#8B5CF6', accent: '#5B21B6' },
@@ -58,7 +58,7 @@ export default function BrandingPage() {
     companyName: 'Atlas Demo',
     logoUrl: '',
     faviconUrl: '',
-    primaryColor: '#9C4A29',
+    primaryColor: '#273B3A',
     accentColor: 'rgba(156,74,41,0.15)',
     fontFamily: 'inter',
     borderRadius: 'md',
@@ -98,7 +98,7 @@ export default function BrandingPage() {
         <Button 
           onClick={handleSave}
           disabled={saving}
-          className="bg-[#9C4A29] hover:bg-[#9C4A29]/90 text-black"
+          className="bg-[#273B3A] hover:bg-[#273B3A]/90 text-black"
         >
           {saving ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -122,7 +122,7 @@ export default function BrandingPage() {
           <Card className="bg-neutral-900/50 border-neutral-800">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Palette className="h-5 w-5 text-[#9C4A29]" />
+                <Palette className="h-5 w-5 text-[#273B3A]" />
                 Colors
               </CardTitle>
               <CardDescription className="text-neutral-400">
@@ -195,7 +195,7 @@ export default function BrandingPage() {
           <Card className="bg-neutral-900/50 border-neutral-800">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Type className="h-5 w-5 text-[#9C4A29]" />
+                <Type className="h-5 w-5 text-[#273B3A]" />
                 Typography
               </CardTitle>
             </CardHeader>
@@ -244,7 +244,7 @@ export default function BrandingPage() {
           <Card className="bg-neutral-900/50 border-neutral-800">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                {config.darkMode ? <Moon className="h-5 w-5 text-[#9C4A29]" /> : <Sun className="h-5 w-5 text-[#9C4A29]" />}
+                {config.darkMode ? <Moon className="h-5 w-5 text-[#273B3A]" /> : <Sun className="h-5 w-5 text-[#273B3A]" />}
                 Theme
               </CardTitle>
             </CardHeader>
@@ -317,7 +317,7 @@ export default function BrandingPage() {
           <Card className="bg-neutral-900/50 border-neutral-800">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Globe className="h-5 w-5 text-[#9C4A29]" />
+                <Globe className="h-5 w-5 text-[#273B3A]" />
                 Custom Domain
               </CardTitle>
               <CardDescription className="text-neutral-400">
@@ -341,7 +341,7 @@ export default function BrandingPage() {
                 <p className="text-sm text-neutral-400">
                   Add a CNAME record pointing to:
                 </p>
-                <code className="text-sm text-[#9C4A29] bg-neutral-900 px-3 py-2 rounded block">
+                <code className="text-sm text-[#273B3A] bg-neutral-900 px-3 py-2 rounded block">
                   atlas-erp.vercel.app
                 </code>
               </div>
