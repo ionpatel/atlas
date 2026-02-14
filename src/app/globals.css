@@ -84,9 +84,20 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply text-foreground antialiased;
     font-family: 'Inter', system-ui, sans-serif;
-    background-color: #E8E3CC;
+    background: linear-gradient(
+      135deg,
+      #E8E3CC 0%,
+      #E2DCBF 20%,
+      #D8CEB0 40%,
+      #C9B898 60%,
+      #B89B78 75%,
+      #A87350 88%,
+      #9C4A29 100%
+    );
+    background-attachment: fixed;
+    min-height: 100vh;
   }
 }
 

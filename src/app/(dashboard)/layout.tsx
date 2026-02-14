@@ -6,7 +6,6 @@ import { KeyboardProvider } from "@/components/layout/keyboard-provider";
 import { ToastProvider } from "@/components/ui/toast-provider";
 import { ErrorBoundaryWrapper } from "./error-wrapper";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
-import { PageBackground } from "@/components/ui/page-background";
 
 export const dynamic = "force-dynamic";
 
@@ -65,8 +64,7 @@ export default async function DashboardLayout({
 
   return (
     <KeyboardProvider>
-      <div className="flex min-h-screen relative">
-        <PageBackground />
+      <div className="flex min-h-screen">
         {/* Skip link for keyboard navigation */}
         <a
           href="#main-content"
