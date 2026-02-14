@@ -1,7 +1,130 @@
 "use client";
 
-import { Bell, User } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import { Bell, User, AlertCircle, AlertTriangle, ShoppingCart, CheckCircle2, Package } from "lucide-react";
 import { SmartSearch } from "./smart-search";
+import { cn } from "@/lib/utils";
+
+// Mock notification data - in real app would come from stores/API
+const notifications = [
+  {
+    id: 1,
+    label: "2 invoices overdue",
+    color: "bg-red-400",
+    href: "/invoices",
+    icon: AlertCircle,
+    type: "warning",
+  },
+  {
+    id: 2,
+    label: "3 products low on stock",
+    color: "bg-amber-400",
+    href: "/inventory",
+    icon: AlertTriangle,
+    type: "warning",
+  },
+  {
+    id: 3,
+    label: "2 new orders today",
+    color: "bg-emerald-400",
+    href: "/sales",
+    icon: ShoppingCart,
+    type: "success",
+  },
+  {
+    id: 4,
+    label: "Invoice #INV-2026-003 paid",
+    color: "bg-emerald-400",
+    href: "/invoices",
+    icon: CheckCircle2,
+    type: "success",
+  },
+];
+
+function NotificationDropdown() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const unreadCount = notifications.length;
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen(!open)}
+        className={cn(
+          "relative p-2 rounded-lg text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-all duration-200",
+          open && "bg-[#DDD7C0] text-[#2D1810]"
+        )}
+      >
+        <Bell className="w-5 h-5" />
+        {unreadCount > 0 && (
+          <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9C4A29] text-[9px] font-bold text-[#E8E3CC] flex items-center justify-center">
+            {unreadCount > 9 ? "9+" : unreadCount}
+          </span>
+        )}
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-11 w-80 bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl shadow-2xl z-50 overflow-hidden">
+          <div className="px-4 py-3 border-b border-[#D4CDB8] flex items-center justify-between">
+            <p className="text-sm font-semibold text-[#2D1810]">Notifications</p>
+            <span className="text-[10px] font-medium text-[#9C4A29] bg-[#9C4A29]/10 px-2 py-0.5 rounded-full">
+              {unreadCount} new
+            </span>
+          </div>
+          
+          <div className="max-h-80 overflow-y-auto">
+            {notifications.map((n, i) => (
+              <Link
+                key={n.id}
+                href={n.href}
+                onClick={() => setOpen(false)}
+                className={cn(
+                  "flex items-center gap-3 px-4 py-3 hover:bg-[#DDD7C0] transition-colors",
+                  i < notifications.length - 1 && "border-b border-[#D4CDB8]/50"
+                )}
+              >
+                <div className={cn(
+                  "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
+                  n.type === "warning" ? "bg-amber-500/10" : "bg-emerald-500/10"
+                )}>
+                  <n.icon className={cn(
+                    "w-4 h-4",
+                    n.type === "warning" ? "text-amber-500" : "text-emerald-500"
+                  )} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-[#2D1810]">{n.label}</p>
+                  <p className="text-[11px] text-[#8B7B6F]">Just now</p>
+                </div>
+                <div className={cn("w-2 h-2 rounded-full flex-shrink-0", n.color)} />
+              </Link>
+            ))}
+          </div>
+
+          <div className="px-4 py-3 border-t border-[#D4CDB8] bg-[#E8E3CC]">
+            <Link
+              href="/notifications"
+              onClick={() => setOpen(false)}
+              className="text-sm text-[#9C4A29] hover:text-[#7D3B21] font-medium transition-colors"
+            >
+              View all notifications →
+            </Link>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function Header() {
   return (
@@ -11,11 +134,8 @@ export function Header() {
 
       {/* Right side */}
       <div className="flex items-center gap-3">
-        <button className="p-2 rounded-lg text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-all duration-200 relative">
-          <Bell className="w-5 h-5" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#9C4A29] rounded-full" />
-        </button>
-        <div className="w-8 h-8 rounded-full bg-[rgba(156,74,41,0.15)] flex items-center justify-center">
+        <NotificationDropdown />
+        <div className="w-8 h-8 rounded-full bg-[rgba(156,74,41,0.15)] flex items-center justify-center cursor-pointer hover:bg-[rgba(156,74,41,0.25)] transition-colors">
           <User className="w-4 h-4 text-[#9C4A29]" />
         </div>
       </div>

@@ -272,83 +272,6 @@ function KpiComparison({ value, label }: { value: number; label: string }) {
   );
 }
 
-/* ─────────────────────── notification bell ─────────────────────── */
-
-function NotificationBell({ overdueCount, lowStockCount }: { overdueCount: number; lowStockCount: number }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
-
-  const totalNotifs = overdueCount + (lowStockCount > 0 ? 1 : 0) + 1; // +1 for "new orders" mock
-
-  const notifications = [
-    {
-      label: `${overdueCount} invoice${overdueCount !== 1 ? "s" : ""} overdue`,
-      color: "bg-red-400",
-      href: "/invoices",
-      icon: AlertCircle,
-    },
-    {
-      label: `${lowStockCount} product${lowStockCount !== 1 ? "s" : ""} low on stock`,
-      color: "bg-amber-400",
-      href: "/inventory",
-      icon: AlertTriangle,
-    },
-    {
-      label: "2 new orders today",
-      color: "bg-emerald-400",
-      href: "/sales",
-      icon: ShoppingCart,
-    },
-  ];
-
-  return (
-    <div className="relative" ref={ref}>
-      <button
-        onClick={() => setOpen(!open)}
-        className="relative p-2.5 rounded-lg border border-[#D4CDB8] text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all duration-200"
-      >
-        <Bell className="w-4 h-4" />
-        {totalNotifs > 0 && (
-          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-400 text-[9px] font-bold text-[#E8E3CC] flex items-center justify-center">
-            {totalNotifs > 9 ? "9+" : totalNotifs}
-          </span>
-        )}
-      </button>
-
-      {open && (
-        <div className="absolute right-0 top-12 w-72 bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl shadow-2xl shadow-black/50 z-50 overflow-hidden">
-          <div className="px-4 py-3 border-b border-[#D4CDB8]">
-            <p className="text-xs font-semibold text-[#2D1810]">Notifications</p>
-          </div>
-          {notifications.map((n, i) => (
-            <Link
-              key={i}
-              href={n.href}
-              onClick={() => setOpen(false)}
-              className={classNames(
-                "flex items-center gap-3 px-4 py-3 hover:bg-[#DDD7C0] transition-colors",
-                i < notifications.length - 1 && "border-b border-[#D4CDB8]/50"
-              )}
-            >
-              <div className={`w-2 h-2 rounded-full ${n.color} flex-shrink-0`} />
-              <n.icon className="w-3.5 h-3.5 text-[#8B7B6F] flex-shrink-0" />
-              <span className="text-xs text-[#6B5B4F]">{n.label}</span>
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 /* ─────────────────────── activity timeline ─────────────────────── */
 
 const TIMELINE_EVENTS = [
@@ -535,7 +458,6 @@ export default function DashboardPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <NotificationBell overdueCount={stats.overdueCount} lowStockCount={stats.lowStockCount} />
           <Link
             href="/invoices"
             className="flex items-center gap-2 px-4 py-2.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200"
