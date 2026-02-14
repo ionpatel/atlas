@@ -382,3 +382,143 @@ export interface AuditLog {
   user_agent: string | null;
   created_at: string;
 }
+
+// =============================================================
+// TIME TRACKING
+// =============================================================
+
+export type TimeEntryStatus = 'running' | 'paused' | 'stopped';
+
+export interface TimeEntry {
+  id: string;
+  org_id: string;
+  user_id: string;
+  user_name?: string;
+  project_id?: string;
+  project_name?: string;
+  task: string;
+  start_time: string;
+  end_time?: string;
+  duration_minutes: number;
+  billable: boolean;
+  notes?: string;
+  status: TimeEntryStatus;
+  created_at: string;
+}
+
+// =============================================================
+// LEAVE MANAGEMENT
+// =============================================================
+
+export type LeaveType = 'vacation' | 'sick' | 'personal' | 'unpaid' | 'bereavement' | 'parental';
+export type LeaveStatus = 'pending' | 'approved' | 'rejected' | 'cancelled';
+
+export interface LeaveRequest {
+  id: string;
+  org_id: string;
+  user_id: string;
+  user_name?: string;
+  leave_type: LeaveType;
+  start_date: string;
+  end_date: string;
+  days_requested: number;
+  status: LeaveStatus;
+  reason?: string;
+  approved_by?: string;
+  approver_name?: string;
+  approved_at?: string;
+  rejection_reason?: string;
+  created_at: string;
+}
+
+export interface LeaveBalance {
+  id: string;
+  org_id: string;
+  user_id: string;
+  user_name?: string;
+  year: number;
+  vacation_days: number;
+  sick_days: number;
+  personal_days: number;
+  used_vacation: number;
+  used_sick: number;
+  used_personal: number;
+  carried_over: number;
+}
+
+export interface LeavePolicy {
+  id: string;
+  org_id: string;
+  leave_type: LeaveType;
+  default_days: number;
+  accrual_rate: number;
+  max_carryover: number;
+  requires_approval: boolean;
+  min_notice_days: number;
+  is_active: boolean;
+}
+
+// =============================================================
+// EXPENSE MANAGEMENT
+// =============================================================
+
+export type ExpenseStatus = 'draft' | 'pending' | 'approved' | 'rejected' | 'reimbursed';
+
+export interface ExpenseCategory {
+  id: string;
+  org_id?: string;
+  name: string;
+  icon: string;
+  default_limit?: number;
+  is_mileage: boolean;
+  mileage_rate: number;
+  is_active: boolean;
+}
+
+export interface Expense {
+  id: string;
+  org_id: string;
+  user_id: string;
+  user_name?: string;
+  category_id?: string;
+  category_name?: string;
+  amount: number;
+  currency: string;
+  expense_date: string;
+  description?: string;
+  receipt_url?: string;
+  receipt_filename?: string;
+  vendor?: string;
+  is_mileage: boolean;
+  mileage_distance?: number;
+  mileage_rate?: number;
+  project_id?: string;
+  project_name?: string;
+  report_id?: string;
+  status: ExpenseStatus;
+  approved_by?: string;
+  approver_name?: string;
+  approved_at?: string;
+  reimbursed_at?: string;
+  rejection_reason?: string;
+  created_at: string;
+}
+
+export interface ExpenseReport {
+  id: string;
+  org_id: string;
+  user_id: string;
+  user_name?: string;
+  report_number: string;
+  title: string;
+  status: 'draft' | 'submitted' | 'approved' | 'rejected' | 'reimbursed';
+  total_amount: number;
+  submitted_at?: string;
+  approved_by?: string;
+  approver_name?: string;
+  approved_at?: string;
+  reimbursed_at?: string;
+  notes?: string;
+  expenses?: Expense[];
+  created_at: string;
+}
