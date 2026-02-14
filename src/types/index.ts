@@ -311,7 +311,9 @@ export type ModuleName =
   | 'website' 
   | 'pos'
   | 'dashboard'
-  | 'apps';
+  | 'apps'
+  | 'contracts'
+  | 'documents';
 
 export type PermissionAction = 'view' | 'create' | 'edit' | 'delete';
 
@@ -704,4 +706,225 @@ export interface BarcodeScanLog {
   location?: string;
   notes?: string;
   scanned_at: string;
+}
+
+// =============================================================
+// CONTRACTS & AGREEMENTS
+// =============================================================
+
+export type ContractStatus = 'draft' | 'pending' | 'active' | 'expired' | 'terminated';
+export type SignatureStatus = 'pending' | 'signed' | 'declined' | 'expired';
+
+export interface ContractParty {
+  name: string;
+  email: string;
+  role: string;
+}
+
+export interface Contract {
+  id: string;
+  org_id: string;
+  title: string;
+  description?: string;
+  parties: ContractParty[];
+  start_date: string;
+  end_date?: string;
+  value: number;
+  currency: string;
+  payment_terms?: string;
+  status: ContractStatus;
+  auto_renew: boolean;
+  renewal_days: number;
+  document_url?: string;
+  tags: string[];
+  notes?: string;
+  created_by?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ContractTemplate {
+  id: string;
+  org_id: string;
+  name: string;
+  description?: string;
+  content: string;
+  variables: Array<{ name: string; type: string; default: string }>;
+  category?: string;
+  is_active: boolean;
+  usage_count: number;
+  created_by?: string;
+  created_at: string;
+}
+
+export interface ContractSignature {
+  id: string;
+  contract_id: string;
+  signer_name: string;
+  signer_email: string;
+  signer_role?: string;
+  status: SignatureStatus;
+  signed_at?: string;
+  ip_address?: string;
+  signature_data?: string;
+  expires_at?: string;
+  created_at: string;
+}
+
+export interface ContractActivity {
+  id: string;
+  contract_id: string;
+  action: string;
+  actor_name?: string;
+  actor_email?: string;
+  details?: Record<string, unknown>;
+  ip_address?: string;
+  created_at: string;
+}
+
+// =============================================================
+// DOCUMENT MANAGEMENT
+// =============================================================
+
+export interface DocumentFolder {
+  id: string;
+  org_id: string;
+  parent_id?: string;
+  name: string;
+  description?: string;
+  color?: string;
+  icon?: string;
+  permissions: Record<string, string>;
+  created_by?: string;
+  created_at: string;
+  updated_at: string;
+  // Computed
+  path?: string;
+  size?: number;
+  document_count?: number;
+}
+
+export interface Document {
+  id: string;
+  org_id: string;
+  folder_id?: string;
+  name: string;
+  description?: string;
+  file_url: string;
+  file_type?: string;
+  file_size: number;
+  version: number;
+  tags: string[];
+  category?: string;
+  is_starred: boolean;
+  uploaded_by?: string;
+  uploader_name?: string;
+  last_accessed_at?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DocumentVersion {
+  id: string;
+  document_id: string;
+  version: number;
+  file_url: string;
+  file_size: number;
+  notes?: string;
+  uploaded_by?: string;
+  uploader_name?: string;
+  created_at: string;
+}
+
+export interface DocumentShare {
+  id: string;
+  document_id: string;
+  share_token: string;
+  permissions: 'view' | 'download' | 'edit';
+  password_hash?: string;
+  expires_at?: string;
+  max_downloads?: number;
+  download_count: number;
+  created_by?: string;
+  accessed_at?: string;
+  created_at: string;
+}
+
+// =============================================================
+// APPROVAL WORKFLOWS
+// =============================================================
+
+export type ApprovalStatus = 'pending' | 'in_progress' | 'approved' | 'rejected' | 'cancelled';
+export type ApproverType = 'user' | 'role' | 'department' | 'manager';
+export type ApprovalActionType = 'approve' | 'reject' | 'escalate' | 'delegate';
+
+export interface ApprovalWorkflow {
+  id: string;
+  org_id: string;
+  name: string;
+  description?: string;
+  applies_to: 'expenses' | 'purchase_orders' | 'contracts' | 'leave' | 'invoices';
+  rules: {
+    amount_min?: number;
+    amount_max?: number;
+    department?: string;
+    categories?: string[];
+  };
+  is_active: boolean;
+  priority: number;
+  created_by?: string;
+  created_at: string;
+  updated_at: string;
+  steps?: ApprovalStep[];
+}
+
+export interface ApprovalStep {
+  id: string;
+  workflow_id: string;
+  step_order: number;
+  name?: string;
+  approver_type: ApproverType;
+  approver_id?: string;
+  approver_name?: string;
+  conditions?: Record<string, unknown>;
+  can_delegate: boolean;
+  auto_approve_after_days?: number;
+  notify_on_pending: boolean;
+  created_at: string;
+}
+
+export interface ApprovalRequest {
+  id: string;
+  org_id: string;
+  workflow_id: string;
+  workflow_name?: string;
+  record_type: string;
+  record_id: string;
+  record_title?: string;
+  record_amount?: number;
+  status: ApprovalStatus;
+  current_step: number;
+  total_steps: number;
+  submitted_by?: string;
+  submitted_by_name?: string;
+  submitted_at: string;
+  completed_at?: string;
+  created_at: string;
+  updated_at: string;
+  actions?: ApprovalAction[];
+}
+
+export interface ApprovalAction {
+  id: string;
+  request_id: string;
+  step_id?: string;
+  step_order?: number;
+  approver_id?: string;
+  approver_name?: string;
+  action: ApprovalActionType;
+  comments?: string;
+  delegated_to?: string;
+  delegated_to_name?: string;
+  ip_address?: string;
+  acted_at: string;
 }

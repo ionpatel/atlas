@@ -24,6 +24,8 @@ import {
   Store,
   Globe,
   BarChart3,
+  FileSignature,
+  FolderOpen,
 } from "lucide-react";
 import { useState, useMemo } from "react";
 import { OrgSwitcher } from "@/components/org-switcher";
@@ -44,6 +46,8 @@ const navItems: NavItem[] = [
   { href: "/sales", label: "Sales", icon: ShoppingCart, module: "sales" },
   { href: "/purchase", label: "Purchase", icon: Truck, module: "purchase" },
   { href: "/accounting", label: "Accounting", icon: Calculator, module: "accounting" },
+  { href: "/contracts", label: "Contracts", icon: FileSignature, module: "contracts" },
+  { href: "/documents", label: "Documents", icon: FolderOpen, module: "documents" },
   { href: "/contacts", label: "Contacts", icon: Users, module: "contacts" },
   { href: "/crm", label: "CRM", icon: Target, module: "crm" },
   { href: "/employees", label: "Employees", icon: UserCircle, module: "employees" },
