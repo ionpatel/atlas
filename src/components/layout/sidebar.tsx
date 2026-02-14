@@ -22,7 +22,6 @@ import {
   FolderKanban,
   Wallet,
   Store,
-  Globe,
   BarChart3,
   FileSignature,
   FolderOpen,
@@ -53,7 +52,6 @@ const navItems: NavItem[] = [
   { href: "/employees", label: "Employees", icon: UserCircle, module: "employees" },
   { href: "/payroll", label: "Payroll", icon: Wallet, module: "payroll" },
   { href: "/projects", label: "Projects", icon: FolderKanban, module: "projects" },
-  { href: "/website", label: "Website", icon: Globe, module: "website" },
   { href: "/reports", label: "Reports", icon: BarChart3, module: "reports" },
   { href: "/ai", label: "AI Assistant", icon: Bot }, // Always visible
   { href: "/settings", label: "Settings", icon: Settings, module: "settings" },
