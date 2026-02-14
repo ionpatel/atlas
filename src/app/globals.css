@@ -5,39 +5,50 @@
 @tailwind utilities;
 
 /*
-  Atlas Color Palette
-  Primary Dark: Charcoal Black #111111 (hsl 0 0% 6.7%)
-  Accent Warm:  Rodeo Dust    #CDB49E (hsl 27 30% 71%)
+  Atlas Color Palette — Ocean Breeze Theme
+  Fresh, modern, professional
+  
+  Primary:    Sky Blue   #38BDF8 (hsl 199 89% 60%)
+  Background: Deep Navy  #0F172A (hsl 222 47% 11%)
+  Surface:    Slate      #1E293B (hsl 217 33% 17%)
   
   Derived shades:
-  - Dark bg:      #111111
-  - Card bg:      #1a1a1a
-  - Elevated:     #222222
-  - Muted text:   #888888
-  - Border:       #2a2a2a
-  - Accent hover: #d4c0ad
-  - Accent muted: #3a3028
+  - Dark bg:      #0F172A
+  - Card bg:      #1E293B
+  - Elevated:     #334155
+  - Muted text:   #94A3B8
+  - Border:       #334155
+  - Primary hover:#0EA5E9
 */
 
 @layer base {
   :root {
-    --background: 0 0% 6.7%;
-    --foreground: 30 15% 90%;
-    --card: 0 0% 10%;
-    --card-foreground: 30 15% 90%;
-    --primary: 27 30% 71%;
-    --primary-foreground: 0 0% 6.7%;
-    --secondary: 0 0% 13%;
-    --secondary-foreground: 30 15% 85%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 53%;
-    --accent: 27 15% 18%;
-    --accent-foreground: 27 30% 71%;
-    --destructive: 0 63% 45%;
-    --border: 0 0% 16.5%;
-    --input: 0 0% 16.5%;
-    --ring: 27 30% 71%;
-    --radius: 0.75rem;
+    --background: 222.2 47.4% 11.2%;
+    --foreground: 210 40% 98%;
+    --card: 217.2 32.6% 17.5%;
+    --card-foreground: 210 40% 98%;
+    --primary: 199 89% 60%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 199 89% 48%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 25%;
+    --input: 217.2 32.6% 25%;
+    --ring: 199 89% 60%;
+    --radius: 0.625rem;
+    
+    /* Extended palette */
+    --success: 142 71% 45%;
+    --success-foreground: 210 40% 98%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 222.2 47.4% 11.2%;
+    --info: 217 91% 60%;
+    --info-foreground: 210 40% 98%;
   }
 }
 
