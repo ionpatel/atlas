@@ -205,18 +205,15 @@ export function SmartSearch({ className }: { className?: string }) {
       <button
         onClick={() => setIsOpen(true)}
         className={cn(
-          "flex items-center gap-2 px-3 py-2 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg hover:border-[#3a3a3a] transition-all",
+          "flex items-center gap-3 px-4 py-2.5 bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl hover:border-[#9C4A29]/30 hover:bg-[#F5F2E8]/80 transition-all duration-200 shadow-sm group",
           className
         )}
       >
-        <Search className="w-4 h-4 text-[#6B5B4F]" />
-        <span className="text-sm text-[#6B5B4F]">Search...</span>
-        <div className="flex items-center gap-0.5 ml-2">
-          <kbd className="px-1.5 py-0.5 bg-[#DDD7C0] border border-[#D4CDB8] rounded text-[10px] text-[#8B7B6F]">
-            ⌘
-          </kbd>
-          <kbd className="px-1.5 py-0.5 bg-[#DDD7C0] border border-[#D4CDB8] rounded text-[10px] text-[#8B7B6F]">
-            K
+        <Search className="w-4 h-4 text-[#8B7B6F] group-hover:text-[#9C4A29] transition-colors" />
+        <span className="text-sm text-[#8B7B6F] group-hover:text-[#6B5B4F] transition-colors flex-1 text-left">Search anything...</span>
+        <div className="flex items-center gap-1 ml-auto">
+          <kbd className="px-2 py-1 bg-[#E8E3CC] border border-[#D4CDB8] rounded-md text-[11px] font-medium text-[#6B5B4F] shadow-sm">
+            ⌘K
           </kbd>
         </div>
       </button>
@@ -335,7 +332,7 @@ export function SmartSearch({ className }: { className?: string }) {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between px-4 py-2 border-t border-[#D4CDB8] bg-[#0d0d0d]">
+          <div className="flex items-center justify-between px-4 py-2.5 border-t border-[#D4CDB8] bg-[#DDD7C0]">
             <div className="flex items-center gap-4 text-[10px] text-[#8B7B6F]">
               <span className="flex items-center gap-1">
                 <kbd className="px-1 py-0.5 bg-[#DDD7C0] rounded">↑↓</kbd> navigate

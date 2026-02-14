@@ -1,22 +1,13 @@
 "use client";
 
-import { Bell, Search, User } from "lucide-react";
+import { Bell, User } from "lucide-react";
+import { SmartSearch } from "./smart-search";
 
 export function Header() {
   return (
-    <header className="h-14 border-b border-[#D4CDB8] bg-[#F5F2E8]/80 backdrop-blur-sm sticky top-0 z-10 flex items-center justify-between px-6">
-      {/* Search */}
-      <div className="flex items-center gap-2.5 bg-[#E8E3CC] border border-[#D4CDB8] rounded-lg px-4 py-2 w-80 focus-within:border-[#9C4A29]/40 transition-colors duration-200">
-        <Search className="w-4 h-4 text-[#6B5B4F]" />
-        <input
-          type="text"
-          placeholder="Search anything..."
-          className="bg-transparent border-none outline-none text-sm w-full text-[#2D1810] placeholder:text-[#6B5B4F]/60"
-        />
-        <kbd className="text-xs text-[#6B5B4F] bg-[#DDD7C0] px-1.5 py-0.5 rounded border border-[#D4CDB8]">
-          ⌘K
-        </kbd>
-      </div>
+    <header className="h-14 border-b border-[#D4CDB8] bg-[#E8E3CC] sticky top-0 z-40 flex items-center justify-between px-6">
+      {/* Smart Search */}
+      <SmartSearch className="w-96" />
 
       {/* Right side */}
       <div className="flex items-center gap-3">
