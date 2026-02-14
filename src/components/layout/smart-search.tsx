@@ -205,17 +205,18 @@ export function SmartSearch({ className }: { className?: string }) {
       <button
         onClick={() => setIsOpen(true)}
         className={cn(
-          "flex items-center gap-3 px-4 py-2.5 bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl hover:border-[#9C4A29]/30 hover:bg-[#F5F2E8]/80 transition-all duration-200 shadow-sm group",
+          "flex items-center gap-3 px-4 py-2.5 bg-[#E8E3CC] border-2 border-[#D4CDB8] rounded-xl",
+          "hover:border-[#9C4A29]/50 hover:shadow-lg hover:shadow-[#9C4A29]/10 hover:-translate-y-0.5",
+          "active:translate-y-0 active:shadow-md active:border-[#9C4A29]",
+          "transition-all duration-200 ease-out group",
           className
         )}
       >
-        <Search className="w-4 h-4 text-[#8B7B6F] group-hover:text-[#9C4A29] transition-colors" />
-        <span className="text-sm text-[#8B7B6F] group-hover:text-[#6B5B4F] transition-colors flex-1 text-left">Search anything...</span>
-        <div className="flex items-center gap-1 ml-auto">
-          <kbd className="px-2 py-1 bg-[#E8E3CC] border border-[#D4CDB8] rounded-md text-[11px] font-medium text-[#6B5B4F] shadow-sm">
-            ⌘K
-          </kbd>
-        </div>
+        <Search className="w-4 h-4 text-[#9C4A29]" />
+        <span className="text-sm text-[#6B5B4F] group-hover:text-[#2D1810] transition-colors flex-1 text-left">Search anything...</span>
+        <kbd className="px-2.5 py-1 bg-[#DDD7C0] border border-[#C4BEA8] rounded-lg text-[11px] font-semibold text-[#9C4A29]">
+          ⌘K
+        </kbd>
       </button>
     );
   }
