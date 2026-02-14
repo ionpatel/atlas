@@ -40,8 +40,6 @@ import { useInventoryStore } from "@/stores/inventory-store";
 import { useInvoicesStore } from "@/stores/invoices-store";
 import { useContactsStore } from "@/stores/contacts-store";
 import { formatCurrency } from "@/lib/utils";
-import { AIInsights } from "@/components/dashboard/ai-insights";
-
 /* ─────────────────────── helpers ─────────────────────── */
 
 function formatCompact(n: number) {
@@ -881,99 +879,6 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── Row 5: AI Insights ── */}
-      <AIInsights />
-
-      {/* ── Row 6: Quick actions + AI teaser ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Quick actions */}
-        <div className="lg:col-span-2 bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl">
-          <div className="px-6 py-5 border-b border-[#D4CDB8]">
-            <h2 className="text-sm font-semibold text-[#2D1810]">
-              Quick Actions
-            </h2>
-          </div>
-          <div className="p-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {[
-              {
-                label: "Add Product",
-                icon: Package,
-                href: "/inventory",
-                color: "bg-violet-500/10",
-                iconColor: "text-violet-400",
-              },
-              {
-                label: "New Invoice",
-                icon: FileText,
-                href: "/invoices",
-                color: "bg-[rgba(156,74,41,0.15)]",
-                iconColor: "text-[#9C4A29]",
-              },
-              {
-                label: "Add Contact",
-                icon: Users,
-                href: "/contacts",
-                color: "bg-blue-500/10",
-                iconColor: "text-blue-400",
-              },
-              {
-                label: "View Reports",
-                icon: BarChart3,
-                href: "/dashboard",
-                color: "bg-emerald-500/10",
-                iconColor: "text-emerald-400",
-              },
-            ].map((action) => (
-              <Link
-                key={action.label}
-                href={action.href}
-                className="flex flex-col items-center gap-3 p-5 rounded-xl hover:bg-[#DDD7C0] transition-all duration-200 group text-center"
-              >
-                <div
-                  className={`p-3 rounded-xl ${action.color} group-hover:scale-110 transition-transform duration-200`}
-                >
-                  <action.icon className={`w-5 h-5 ${action.iconColor}`} />
-                </div>
-                <span className="text-xs font-medium text-[#6B5B4F] group-hover:text-[#2D1810] transition-colors">
-                  {action.label}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* AI Assistant teaser */}
-        <div className="bg-gradient-to-br from-[#F5F2E8] to-[#1e1914] border border-[#D4CDB8] rounded-xl p-6 flex flex-col justify-between relative overflow-hidden">
-          {/* Ambient glow */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[#9C4A29]/5 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="p-2 rounded-lg bg-[rgba(156,74,41,0.15)]">
-                <Sparkles className="w-4 h-4 text-[#9C4A29]" />
-              </div>
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#9C4A29]">
-                Coming Soon
-              </span>
-            </div>
-            <h3 className="text-base font-semibold text-[#2D1810] mb-2">
-              AI Assistant
-            </h3>
-            <p className="text-xs text-[#6B5B4F] leading-relaxed mb-6">
-              Ask anything about your business. &quot;What&apos;s my best-selling
-              product?&quot; &quot;Show overdue invoices.&quot; &quot;Forecast next month&apos;s
-              revenue.&quot;
-            </p>
-          </div>
-          <Link
-            href="/ai"
-            className="relative z-10 flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#9C4A29]/10 text-[#9C4A29] text-sm font-medium hover:bg-[#9C4A29]/20 transition-all duration-200 border border-[#9C4A29]/10"
-          >
-            Try it out
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-      </div>
     </div>
   );
 }
