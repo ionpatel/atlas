@@ -540,7 +540,7 @@ export default function DashboardPage() {
           <NotificationBell overdueCount={stats.overdueCount} lowStockCount={stats.lowStockCount} />
           <Link
             href="/invoices"
-            className="flex items-center gap-2 px-4 py-2.5 border border-[#D4CDB8] rounded-lg text-sm text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all duration-200"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200"
           >
             <FileText className="w-4 h-4" />
             New Invoice
