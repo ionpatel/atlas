@@ -182,7 +182,7 @@ export default function BankReconciliationPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-[#38BDF8]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#9C4A29]" />
       </div>
     );
   }
@@ -193,27 +193,27 @@ export default function BankReconciliationPage() {
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <Link href="/accounting" className="text-[#94A3B8] hover:text-white">
+            <Link href="/accounting" className="text-[#6B5B4F] hover:text-white">
               Accounting
             </Link>
-            <span className="text-[#64748B]">/</span>
+            <span className="text-[#8B7B6F]">/</span>
             <span className="text-white">Bank Reconciliation</span>
           </div>
           <h1 className="text-2xl font-bold text-white mt-1">Bank Reconciliation</h1>
-          <p className="text-[#94A3B8]">
+          <p className="text-[#6B5B4F]">
             Match bank transactions to invoices and expenses
           </p>
         </div>
         <div className="flex gap-2">
           <Button 
             variant="outline" 
-            className="border-[#334155]"
+            className="border-[#DDD7C0]"
             onClick={() => setShowImport(true)}
           >
             <Upload className="h-4 w-4 mr-2" />
             Import Statement
           </Button>
-          <Button className="bg-gradient-to-r from-[#38BDF8] to-[#0EA5E9] text-[#0F172A]">
+          <Button className="bg-gradient-to-r from-[#9C4A29] to-[#7D3B21] text-[#E8E3CC]">
             <Plus className="h-4 w-4 mr-2" />
             Add Account
           </Button>
@@ -231,22 +231,22 @@ export default function BankReconciliationPage() {
               key={account.id}
               className={`cursor-pointer transition-all ${
                 isSelected 
-                  ? 'bg-[#1E293B] border-[#38BDF8] ring-1 ring-[#38BDF8]' 
-                  : 'bg-[#1E293B] border-[#334155] hover:border-[#475569]'
+                  ? 'bg-[#F5F2E8] border-[#9C4A29] ring-1 ring-[#9C4A29]' 
+                  : 'bg-[#F5F2E8] border-[#DDD7C0] hover:border-[#475569]'
               }`}
               onClick={() => setSelectedAccount(account.id)}
             >
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <div className="p-2 rounded-lg bg-[#334155]">
-                    <Icon className="h-4 w-4 text-[#38BDF8]" />
+                  <div className="p-2 rounded-lg bg-[#DDD7C0]">
+                    <Icon className="h-4 w-4 text-[#9C4A29]" />
                   </div>
                   {isSelected && (
-                    <Badge className="bg-[#38BDF8]/20 text-[#38BDF8]">Selected</Badge>
+                    <Badge className="bg-[#9C4A29]/20 text-[#9C4A29]">Selected</Badge>
                   )}
                 </div>
                 <h3 className="text-white font-medium">{account.name}</h3>
-                <p className="text-xs text-[#64748B] mb-2">
+                <p className="text-xs text-[#8B7B6F] mb-2">
                   {account.institution} {account.account_number && `•••${account.account_number.slice(-4)}`}
                 </p>
                 <p className={`text-xl font-bold ${
@@ -260,11 +260,11 @@ export default function BankReconciliationPage() {
         })}
 
         {accounts.length === 0 && (
-          <Card className="bg-[#1E293B] border-[#334155] border-dashed col-span-full">
+          <Card className="bg-[#F5F2E8] border-[#DDD7C0] border-dashed col-span-full">
             <CardContent className="p-8 text-center">
-              <Landmark className="h-12 w-12 mx-auto mb-4 text-[#64748B]" />
-              <p className="text-[#94A3B8]">No bank accounts yet</p>
-              <p className="text-sm text-[#64748B]">Add your first account to start reconciling</p>
+              <Landmark className="h-12 w-12 mx-auto mb-4 text-[#8B7B6F]" />
+              <p className="text-[#6B5B4F]">No bank accounts yet</p>
+              <p className="text-sm text-[#8B7B6F]">Add your first account to start reconciling</p>
             </CardContent>
           </Card>
         )}
@@ -274,44 +274,44 @@ export default function BankReconciliationPage() {
         <>
           {/* Stats */}
           <div className="grid grid-cols-4 gap-4">
-            <Card className="bg-[#1E293B] border-[#334155]">
+            <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
               <CardContent className="p-4">
-                <p className="text-sm text-[#94A3B8]">Transactions</p>
+                <p className="text-sm text-[#6B5B4F]">Transactions</p>
                 <p className="text-2xl font-bold text-white">{transactions.length}</p>
               </CardContent>
             </Card>
-            <Card className="bg-[#1E293B] border-[#334155]">
+            <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
               <CardContent className="p-4">
-                <p className="text-sm text-[#94A3B8]">Pending Match</p>
+                <p className="text-sm text-[#6B5B4F]">Pending Match</p>
                 <p className="text-2xl font-bold text-amber-400">{pendingCount}</p>
               </CardContent>
             </Card>
-            <Card className="bg-[#1E293B] border-[#334155]">
+            <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
               <CardContent className="p-4">
-                <p className="text-sm text-[#94A3B8]">Deposits</p>
+                <p className="text-sm text-[#6B5B4F]">Deposits</p>
                 <p className="text-2xl font-bold text-green-400">{formatCurrency(totalDeposits)}</p>
               </CardContent>
             </Card>
-            <Card className="bg-[#1E293B] border-[#334155]">
+            <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
               <CardContent className="p-4">
-                <p className="text-sm text-[#94A3B8]">Withdrawals</p>
+                <p className="text-sm text-[#6B5B4F]">Withdrawals</p>
                 <p className="text-2xl font-bold text-red-400">{formatCurrency(totalWithdrawals)}</p>
               </CardContent>
             </Card>
           </div>
 
           {/* Transactions Table */}
-          <Card className="bg-[#1E293B] border-[#334155]">
-            <CardHeader className="border-b border-[#334155]">
+          <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
+            <CardHeader className="border-b border-[#DDD7C0]">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-white">Transactions</CardTitle>
                 <div className="relative w-64">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#64748B]" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8B7B6F]" />
                   <Input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search..."
-                    className="pl-10 bg-[#0F172A] border-[#334155] text-white h-9"
+                    className="pl-10 bg-[#E8E3CC] border-[#DDD7C0] text-white h-9"
                   />
                 </div>
               </div>
@@ -319,19 +319,19 @@ export default function BankReconciliationPage() {
             <CardContent className="p-0">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-[#334155] hover:bg-transparent">
-                    <TableHead className="text-[#94A3B8]">Date</TableHead>
-                    <TableHead className="text-[#94A3B8]">Description</TableHead>
-                    <TableHead className="text-[#94A3B8]">Reference</TableHead>
-                    <TableHead className="text-[#94A3B8]">Status</TableHead>
-                    <TableHead className="text-[#94A3B8] text-right">Amount</TableHead>
+                  <TableRow className="border-[#DDD7C0] hover:bg-transparent">
+                    <TableHead className="text-[#6B5B4F]">Date</TableHead>
+                    <TableHead className="text-[#6B5B4F]">Description</TableHead>
+                    <TableHead className="text-[#6B5B4F]">Reference</TableHead>
+                    <TableHead className="text-[#6B5B4F]">Status</TableHead>
+                    <TableHead className="text-[#6B5B4F] text-right">Amount</TableHead>
                     <TableHead className="w-12"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filtered.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={6} className="text-center py-12 text-[#64748B]">
+                      <TableCell colSpan={6} className="text-center py-12 text-[#8B7B6F]">
                         <FileSpreadsheet className="h-12 w-12 mx-auto mb-4 opacity-50" />
                         <p>No transactions</p>
                         <p className="text-sm">Import a bank statement to get started</p>
@@ -343,8 +343,8 @@ export default function BankReconciliationPage() {
                       const isDeposit = txn.amount > 0;
 
                       return (
-                        <TableRow key={txn.id} className="border-[#334155] hover:bg-[#334155]/50">
-                          <TableCell className="text-[#94A3B8]">
+                        <TableRow key={txn.id} className="border-[#DDD7C0] hover:bg-[#DDD7C0]/50">
+                          <TableCell className="text-[#6B5B4F]">
                             {new Date(txn.transaction_date).toLocaleDateString()}
                           </TableCell>
                           <TableCell className="text-white">
@@ -357,7 +357,7 @@ export default function BankReconciliationPage() {
                               {txn.description}
                             </div>
                           </TableCell>
-                          <TableCell className="text-[#64748B]">
+                          <TableCell className="text-[#8B7B6F]">
                             {txn.reference || '-'}
                           </TableCell>
                           <TableCell>
@@ -377,7 +377,7 @@ export default function BankReconciliationPage() {
                                   <MoreHorizontal className="h-4 w-4" />
                                 </Button>
                               </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end" className="bg-[#1E293B] border-[#334155]">
+                              <DropdownMenuContent align="end" className="bg-[#F5F2E8] border-[#DDD7C0]">
                                 {txn.status === 'pending' && (
                                   <>
                                     <DropdownMenuItem>
@@ -388,7 +388,7 @@ export default function BankReconciliationPage() {
                                       <CheckCircle className="h-4 w-4 mr-2" />
                                       Mark Reconciled
                                     </DropdownMenuItem>
-                                    <DropdownMenuSeparator className="bg-[#334155]" />
+                                    <DropdownMenuSeparator className="bg-[#DDD7C0]" />
                                   </>
                                 )}
                                 <DropdownMenuItem className="text-red-400">
@@ -411,22 +411,22 @@ export default function BankReconciliationPage() {
 
       {/* Import Dialog */}
       <Dialog open={showImport} onOpenChange={setShowImport}>
-        <DialogContent className="bg-[#1E293B] border-[#334155]">
+        <DialogContent className="bg-[#F5F2E8] border-[#DDD7C0]">
           <DialogHeader>
             <DialogTitle className="text-white">Import Bank Statement</DialogTitle>
           </DialogHeader>
           <div className="py-6">
-            <div className="border-2 border-dashed border-[#334155] rounded-lg p-8 text-center hover:border-[#38BDF8] transition-colors cursor-pointer">
-              <Upload className="h-10 w-10 mx-auto mb-4 text-[#64748B]" />
+            <div className="border-2 border-dashed border-[#DDD7C0] rounded-lg p-8 text-center hover:border-[#9C4A29] transition-colors cursor-pointer">
+              <Upload className="h-10 w-10 mx-auto mb-4 text-[#8B7B6F]" />
               <p className="text-white font-medium mb-1">Drop your file here</p>
-              <p className="text-sm text-[#64748B]">CSV, OFX, or QIF format</p>
+              <p className="text-sm text-[#8B7B6F]">CSV, OFX, or QIF format</p>
             </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowImport(false)}>
               Cancel
             </Button>
-            <Button className="bg-[#38BDF8] text-[#0F172A]">
+            <Button className="bg-[#9C4A29] text-[#E8E3CC]">
               Import
             </Button>
           </DialogFooter>

@@ -44,7 +44,7 @@ const tagColors: Record<string, string> = {
   Support: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
   Healthcare: "bg-red-500/10 text-red-400 border-red-500/20",
   Mobile: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
-  Development: "bg-[#3a3028] text-[#CDB49E] border-[#CDB49E]/20",
+  Development: "bg-[rgba(156,74,41,0.15)] text-[#9C4A29] border-[#9C4A29]/20",
   Analytics: "bg-teal-500/10 text-teal-400 border-teal-500/20",
   SaaS: "bg-violet-500/10 text-violet-400 border-violet-500/20",
   Productivity: "bg-amber-500/10 text-amber-400 border-amber-500/20",
@@ -78,7 +78,7 @@ function StarRating({ priority }: { priority: number }) {
           key={i}
           className={cn(
             "w-3 h-3",
-            i <= priority ? "fill-[#CDB49E] text-[#CDB49E]" : "text-[#2a2a2a]"
+            i <= priority ? "fill-[#9C4A29] text-[#9C4A29]" : "text-[#D4CDB8]"
           )}
         />
       ))}
@@ -102,25 +102,25 @@ function LeadCard({
   };
 }) {
   return (
-    <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg p-4 hover:border-[#CDB49E]/30 hover:shadow-lg hover:shadow-[#CDB49E]/5 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group">
+    <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg p-4 hover:border-[#9C4A29]/30 hover:shadow-lg hover:shadow-[#9C4A29]/5 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group">
       {/* Top: Name + Amount */}
       <div className="flex items-start justify-between mb-2">
-        <h4 className="text-sm font-semibold text-[#f5f0eb] leading-tight pr-2">
+        <h4 className="text-sm font-semibold text-[#2D1810] leading-tight pr-2">
           {lead.name}
         </h4>
-        <span className="text-sm font-bold text-[#CDB49E] whitespace-nowrap">
+        <span className="text-sm font-bold text-[#9C4A29] whitespace-nowrap">
           ${lead.amount.toLocaleString()}
         </span>
       </div>
 
       {/* Company */}
       <div className="flex items-center gap-1.5 mb-1.5">
-        <Building2 className="w-3 h-3 text-[#555555]" />
-        <span className="text-xs text-[#888888]">{lead.company}</span>
+        <Building2 className="w-3 h-3 text-[#8B7B6F]" />
+        <span className="text-xs text-[#6B5B4F]">{lead.company}</span>
       </div>
 
       {/* Contact */}
-      <p className="text-xs text-[#555555] mb-3">{lead.contact_name}</p>
+      <p className="text-xs text-[#8B7B6F] mb-3">{lead.contact_name}</p>
 
       {/* Tags */}
       {lead.tags.length > 0 && (
@@ -130,7 +130,7 @@ function LeadCard({
               key={tag}
               className={cn(
                 "px-2 py-0.5 rounded-full text-[10px] font-medium border",
-                tagColors[tag] || "bg-[#222222] text-[#888888] border-[#2a2a2a]"
+                tagColors[tag] || "bg-[#DDD7C0] text-[#6B5B4F] border-[#D4CDB8]"
               )}
             >
               {tag}
@@ -140,7 +140,7 @@ function LeadCard({
       )}
 
       {/* Bottom: Stars, Activity icons, Avatar */}
-      <div className="flex items-center justify-between pt-2 border-t border-[#2a2a2a]">
+      <div className="flex items-center justify-between pt-2 border-t border-[#D4CDB8]">
         <div className="flex items-center gap-3">
           <StarRating priority={lead.priority} />
           <div className="flex items-center gap-1.5">
@@ -154,15 +154,15 @@ function LeadCard({
               <Clock className="w-3 h-3 text-[#fbbf24]" />
             )}
             {!lead.next_activity && (
-              <Clock className="w-3 h-3 text-[#2a2a2a]" />
+              <Clock className="w-3 h-3 text-[#D4CDB8]" />
             )}
           </div>
         </div>
         <div
-          className="w-7 h-7 rounded-full bg-[#222222] flex items-center justify-center border border-[#2a2a2a]"
+          className="w-7 h-7 rounded-full bg-[#DDD7C0] flex items-center justify-center border border-[#D4CDB8]"
           title={lead.assigned_to}
         >
-          <span className="text-[9px] font-bold text-[#888888]">
+          <span className="text-[9px] font-bold text-[#6B5B4F]">
             {getInitials(lead.assigned_to)}
           </span>
         </div>
@@ -189,7 +189,7 @@ function KanbanColumn({
   }>;
 }) {
   const totalAmount = leads.reduce((sum, l) => sum + l.amount, 0);
-  const color = stageColors[stage] || "#888888";
+  const color = stageColors[stage] || "#6B5B4F";
 
   return (
     <div className="flex-1 min-w-[280px]">
@@ -197,10 +197,10 @@ function KanbanColumn({
       <div className="mb-3">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-semibold text-[#f5f0eb]">
+            <h3 className="text-sm font-semibold text-[#2D1810]">
               {stageLabels[stage]}
             </h3>
-            <span className="text-[10px] font-medium text-[#555555] bg-[#222222] px-1.5 py-0.5 rounded">
+            <span className="text-[10px] font-medium text-[#8B7B6F] bg-[#DDD7C0] px-1.5 py-0.5 rounded">
               {leads.length}
             </span>
           </div>
@@ -208,13 +208,13 @@ function KanbanColumn({
             <span className="text-xs font-medium" style={{ color }}>
               {formatAmount(totalAmount)}
             </span>
-            <button className="p-1 rounded text-[#555555] hover:text-[#f5f0eb] hover:bg-[#222222] transition-colors">
+            <button className="p-1 rounded text-[#8B7B6F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-colors">
               <Plus className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
         {/* Progress bar */}
-        <div className="h-1 rounded-full bg-[#222222] overflow-hidden">
+        <div className="h-1 rounded-full bg-[#DDD7C0] overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{
@@ -231,8 +231,8 @@ function KanbanColumn({
           <LeadCard key={lead.id} lead={lead} />
         ))}
         {leads.length === 0 && (
-          <div className="border border-dashed border-[#2a2a2a] rounded-lg p-6 text-center">
-            <p className="text-xs text-[#555555]">No leads</p>
+          <div className="border border-dashed border-[#D4CDB8] rounded-lg p-6 text-center">
+            <p className="text-xs text-[#8B7B6F]">No leads</p>
           </div>
         )}
       </div>
@@ -252,10 +252,10 @@ export default function CRMPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#f5f0eb]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#2D1810]">
             CRM Pipeline
           </h1>
-          <p className="text-[#888888] text-sm mt-1">
+          <p className="text-[#6B5B4F] text-sm mt-1">
             Track and manage your sales opportunities
           </p>
         </div>
@@ -266,8 +266,8 @@ export default function CRMPage() {
             className={cn(
               "flex items-center gap-2 px-4 py-2.5 text-sm font-medium border rounded-lg transition-all duration-200",
               showActivityPanel
-                ? "border-[#CDB49E]/30 text-[#CDB49E] bg-[#3a3028]/50"
-                : "border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a]"
+                ? "border-[#9C4A29]/30 text-[#9C4A29] bg-[rgba(156,74,41,0.15)]/50"
+                : "border-[#D4CDB8] text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8]"
             )}
           >
             <Clock className="w-4 h-4" />
@@ -278,7 +278,7 @@ export default function CRMPage() {
           <div className="relative">
             <button
               onClick={() => setShowGenerateMenu(!showGenerateMenu)}
-              className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-[#888888] border border-[#2a2a2a] rounded-lg hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-[#6B5B4F] border border-[#D4CDB8] rounded-lg hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all duration-200"
             >
               <Zap className="w-4 h-4" />
               Generate Leads
@@ -290,13 +290,13 @@ export default function CRMPage() {
                   className="fixed inset-0 z-10"
                   onClick={() => setShowGenerateMenu(false)}
                 />
-                <div className="absolute right-0 top-full mt-1 w-48 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg shadow-xl shadow-black/40 z-20 py-1">
+                <div className="absolute right-0 top-full mt-1 w-48 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg shadow-xl shadow-black/40 z-20 py-1">
                   {["Import from CSV", "LinkedIn Import", "Email Scanner"].map(
                     (item) => (
                       <button
                         key={item}
                         onClick={() => setShowGenerateMenu(false)}
-                        className="w-full text-left px-4 py-2.5 text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] transition-colors"
+                        className="w-full text-left px-4 py-2.5 text-sm text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-colors"
                       >
                         {item}
                       </button>
@@ -308,7 +308,7 @@ export default function CRMPage() {
           </div>
 
           {/* New Button */}
-          <button className="flex items-center gap-2 px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200">
+          <button className="flex items-center gap-2 px-5 py-2.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200">
             <Plus className="w-4 h-4" />
             New
           </button>
@@ -317,19 +317,19 @@ export default function CRMPage() {
 
       {/* Search Bar */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#CDB49E]/40 transition-colors duration-200">
-          <Search className="w-4 h-4 text-[#888888]" />
+        <div className="flex items-center gap-2.5 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#9C4A29]/40 transition-colors duration-200">
+          <Search className="w-4 h-4 text-[#6B5B4F]" />
           <input
             type="text"
             placeholder="Search leads..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm w-full text-[#f5f0eb] placeholder:text-[#888888]/60"
+            className="bg-transparent border-none outline-none text-sm w-full text-[#2D1810] placeholder:text-[#6B5B4F]/60"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="text-[#888888] hover:text-[#f5f0eb]"
+              className="text-[#6B5B4F] hover:text-[#2D1810]"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -355,7 +355,7 @@ export default function CRMPage() {
 
         {/* Activity Timeline Panel */}
         {showActivityPanel && (
-          <div className="w-80 flex-shrink-0 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 h-[calc(100vh-280px)] sticky top-4">
+          <div className="w-80 flex-shrink-0 bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-4 h-[calc(100vh-280px)] sticky top-4">
             <ActivityTimeline
               activities={mockActivities}
               onAddActivity={() => {

@@ -74,10 +74,10 @@ export function InstallPrompt() {
     <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 z-50 animate-in slide-in-from-bottom-4 duration-300">
       <div className="bg-neutral-900 border border-neutral-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#CDB49E]/20 to-transparent px-4 py-3 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-[#9C4A29]/20 to-transparent px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-[#CDB49E]/20">
-              <Download className="h-4 w-4 text-[#CDB49E]" />
+            <div className="p-1.5 rounded-lg bg-[#9C4A29]/20">
+              <Download className="h-4 w-4 text-[#9C4A29]" />
             </div>
             <span className="text-sm font-medium text-white">Install Atlas</span>
           </div>
@@ -120,15 +120,15 @@ export function InstallPrompt() {
               {/* Features */}
               <div className="grid grid-cols-3 gap-2 mb-4">
                 <div className="flex flex-col items-center gap-1 p-2 bg-neutral-800/50 rounded-lg">
-                  <Wifi className="h-4 w-4 text-[#CDB49E]" />
+                  <Wifi className="h-4 w-4 text-[#9C4A29]" />
                   <span className="text-[10px] text-neutral-400">Offline</span>
                 </div>
                 <div className="flex flex-col items-center gap-1 p-2 bg-neutral-800/50 rounded-lg">
-                  <Zap className="h-4 w-4 text-[#CDB49E]" />
+                  <Zap className="h-4 w-4 text-[#9C4A29]" />
                   <span className="text-[10px] text-neutral-400">Fast</span>
                 </div>
                 <div className="flex flex-col items-center gap-1 p-2 bg-neutral-800/50 rounded-lg">
-                  <Bell className="h-4 w-4 text-[#CDB49E]" />
+                  <Bell className="h-4 w-4 text-[#9C4A29]" />
                   <span className="text-[10px] text-neutral-400">Alerts</span>
                 </div>
               </div>
@@ -142,7 +142,7 @@ export function InstallPrompt() {
                   Not now
                 </Button>
                 <Button
-                  className="flex-1 bg-[#CDB49E] hover:bg-[#CDB49E]/90 text-black"
+                  className="flex-1 bg-[#9C4A29] hover:bg-[#9C4A29]/90 text-black"
                   onClick={handleInstall}
                 >
                   <Smartphone className="h-4 w-4 mr-2" />

@@ -223,7 +223,7 @@ export default function IntegrationsPage() {
                 <ul className="space-y-2">
                   {selectedIntegration.features.map((feature, i) => (
                     <li key={i} className="flex items-center gap-2 text-sm text-neutral-400">
-                      <Check className="h-4 w-4 text-[#CDB49E]" />
+                      <Check className="h-4 w-4 text-[#9C4A29]" />
                       {feature}
                     </li>
                   ))}
@@ -247,14 +247,14 @@ export default function IntegrationsPage() {
                 <Button 
                   onClick={() => handleConnect(selectedIntegration)}
                   disabled={connecting}
-                  className="bg-[#CDB49E] hover:bg-[#CDB49E]/90 text-black"
+                  className="bg-[#9C4A29] hover:bg-[#9C4A29]/90 text-black"
                 >
                   {connecting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
                   Connect
                   <ExternalLink className="h-4 w-4 ml-2" />
                 </Button>
               ) : selectedIntegration.status === 'coming_soon' ? (
-                <Button className="bg-[#CDB49E] hover:bg-[#CDB49E]/90 text-black">
+                <Button className="bg-[#9C4A29] hover:bg-[#9C4A29]/90 text-black">
                   Join Waitlist
                 </Button>
               ) : (

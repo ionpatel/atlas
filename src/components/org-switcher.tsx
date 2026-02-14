@@ -139,7 +139,7 @@ export function OrgSwitcher() {
   if (loading) {
     return (
       <div className="flex items-center gap-2 px-3 py-2">
-        <Loader2 className="h-4 w-4 animate-spin text-[#CDB49E]" />
+        <Loader2 className="h-4 w-4 animate-spin text-[#9C4A29]" />
         <span className="text-sm text-neutral-400">Loading...</span>
       </div>
     );
@@ -154,8 +154,8 @@ export function OrgSwitcher() {
           disabled={switching}
         >
           <div className="flex items-center gap-3">
-            <Avatar className="h-8 w-8 bg-[#CDB49E]/10 border border-[#CDB49E]/20">
-              <AvatarFallback className="bg-transparent text-[#CDB49E] text-sm font-medium">
+            <Avatar className="h-8 w-8 bg-[#9C4A29]/10 border border-[#9C4A29]/20">
+              <AvatarFallback className="bg-transparent text-[#9C4A29] text-sm font-medium">
                 {currentOrg?.org_name?.charAt(0).toUpperCase() || 'A'}
               </AvatarFallback>
             </Avatar>
@@ -199,7 +199,7 @@ export function OrgSwitcher() {
               </div>
             </div>
             {org.org_id === currentOrg?.org_id && (
-              <Check className="h-4 w-4 text-[#CDB49E]" />
+              <Check className="h-4 w-4 text-[#9C4A29]" />
             )}
           </DropdownMenuItem>
         ))}
@@ -210,7 +210,7 @@ export function OrgSwitcher() {
             <DropdownMenuLabel className="text-neutral-400 text-xs font-normal flex items-center gap-2">
               <Mail className="h-3 w-3" />
               Pending Invitations
-              <Badge variant="secondary" className="bg-[#CDB49E]/10 text-[#CDB49E] text-xs">
+              <Badge variant="secondary" className="bg-[#9C4A29]/10 text-[#9C4A29] text-xs">
                 {invitations.length}
               </Badge>
             </DropdownMenuLabel>
@@ -222,7 +222,7 @@ export function OrgSwitcher() {
                 className="flex items-center justify-between cursor-pointer hover:bg-neutral-800"
               >
                 <div className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-[#CDB49E]" />
+                  <Users className="h-4 w-4 text-[#9C4A29]" />
                   <div>
                     <p className="text-sm text-white">{inv.org_name}</p>
                     <p className="text-xs text-neutral-500">Join as {inv.role}</p>
@@ -247,8 +247,8 @@ export function OrgSwitcher() {
           onClick={() => window.location.href = '/settings/organizations/new'}
           className="cursor-pointer hover:bg-neutral-800"
         >
-          <Plus className="h-4 w-4 mr-2 text-[#CDB49E]" />
-          <span className="text-[#CDB49E]">Create Organization</span>
+          <Plus className="h-4 w-4 mr-2 text-[#9C4A29]" />
+          <span className="text-[#9C4A29]">Create Organization</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

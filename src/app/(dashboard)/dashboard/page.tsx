@@ -74,7 +74,7 @@ function getFormattedDate(): string {
 
 function Sparkline({
   data,
-  color = "#CDB49E",
+  color = "#9C4A29",
   height = 32,
   width = 80,
 }: {
@@ -171,8 +171,8 @@ function DonutChart({
         })}
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-lg font-bold text-[#f5f0eb]">{total}</span>
-        <span className="text-[10px] text-[#888888] uppercase tracking-wider">
+        <span className="text-lg font-bold text-[#2D1810]">{total}</span>
+        <span className="text-[10px] text-[#6B5B4F] uppercase tracking-wider">
           Total
         </span>
       </div>
@@ -195,7 +195,7 @@ function BarChart({
         const heightPct = (d.value / maxVal) * 100;
         return (
           <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
-            <span className="text-[10px] text-[#888888] opacity-0 group-hover:opacity-100 transition-opacity font-mono">
+            <span className="text-[10px] text-[#6B5B4F] opacity-0 group-hover:opacity-100 transition-opacity font-mono">
               {formatCompact(d.value)}
             </span>
             <div className="w-full relative flex-1 flex items-end">
@@ -203,13 +203,13 @@ function BarChart({
                 className={classNames(
                   "w-full rounded-t-md transition-all duration-500 ease-out",
                   d.accent
-                    ? "bg-[#CDB49E] group-hover:bg-[#d4c0ad]"
-                    : "bg-[#CDB49E]/15 group-hover:bg-[#CDB49E]/30"
+                    ? "bg-[#9C4A29] group-hover:bg-[#B85A35]"
+                    : "bg-[#9C4A29]/15 group-hover:bg-[#9C4A29]/30"
                 )}
                 style={{ height: `${Math.max(heightPct, 3)}%` }}
               />
             </div>
-            <span className="text-[10px] text-[#555555] uppercase tracking-wider whitespace-nowrap">
+            <span className="text-[10px] text-[#8B7B6F] uppercase tracking-wider whitespace-nowrap">
               {d.label}
             </span>
           </div>
@@ -226,22 +226,22 @@ function InvoiceStatusIcon({ status }: { status: string }) {
     case "paid":
       return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />;
     case "sent":
-      return <Send className="w-3.5 h-3.5 text-[#CDB49E]" />;
+      return <Send className="w-3.5 h-3.5 text-[#9C4A29]" />;
     case "overdue":
       return <AlertCircle className="w-3.5 h-3.5 text-red-400" />;
     case "draft":
-      return <CircleDot className="w-3.5 h-3.5 text-[#555555]" />;
+      return <CircleDot className="w-3.5 h-3.5 text-[#8B7B6F]" />;
     default:
-      return <CircleDot className="w-3.5 h-3.5 text-[#555555]" />;
+      return <CircleDot className="w-3.5 h-3.5 text-[#8B7B6F]" />;
   }
 }
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
     paid: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    sent: "bg-[#3a3028] text-[#CDB49E] border-[#CDB49E]/20",
+    sent: "bg-[rgba(156,74,41,0.15)] text-[#9C4A29] border-[#9C4A29]/20",
     overdue: "bg-red-500/10 text-red-400 border-red-500/20",
-    draft: "bg-[#222222] text-[#888888] border-[#2a2a2a]",
+    draft: "bg-[#DDD7C0] text-[#6B5B4F] border-[#D4CDB8]",
   };
   return (
     <span
@@ -315,20 +315,20 @@ function NotificationBell({ overdueCount, lowStockCount }: { overdueCount: numbe
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className="relative p-2.5 rounded-lg border border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+        className="relative p-2.5 rounded-lg border border-[#D4CDB8] text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all duration-200"
       >
         <Bell className="w-4 h-4" />
         {totalNotifs > 0 && (
-          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-400 text-[9px] font-bold text-[#111111] flex items-center justify-center">
+          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-400 text-[9px] font-bold text-[#E8E3CC] flex items-center justify-center">
             {totalNotifs > 9 ? "9+" : totalNotifs}
           </span>
         )}
       </button>
 
       {open && (
-        <div className="absolute right-0 top-12 w-72 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl shadow-2xl shadow-black/50 z-50 overflow-hidden">
-          <div className="px-4 py-3 border-b border-[#2a2a2a]">
-            <p className="text-xs font-semibold text-[#f5f0eb]">Notifications</p>
+        <div className="absolute right-0 top-12 w-72 bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl shadow-2xl shadow-black/50 z-50 overflow-hidden">
+          <div className="px-4 py-3 border-b border-[#D4CDB8]">
+            <p className="text-xs font-semibold text-[#2D1810]">Notifications</p>
           </div>
           {notifications.map((n, i) => (
             <Link
@@ -336,13 +336,13 @@ function NotificationBell({ overdueCount, lowStockCount }: { overdueCount: numbe
               href={n.href}
               onClick={() => setOpen(false)}
               className={classNames(
-                "flex items-center gap-3 px-4 py-3 hover:bg-[#222222] transition-colors",
-                i < notifications.length - 1 && "border-b border-[#2a2a2a]/50"
+                "flex items-center gap-3 px-4 py-3 hover:bg-[#DDD7C0] transition-colors",
+                i < notifications.length - 1 && "border-b border-[#D4CDB8]/50"
               )}
             >
               <div className={`w-2 h-2 rounded-full ${n.color} flex-shrink-0`} />
-              <n.icon className="w-3.5 h-3.5 text-[#555555] flex-shrink-0" />
-              <span className="text-xs text-[#888888]">{n.label}</span>
+              <n.icon className="w-3.5 h-3.5 text-[#8B7B6F] flex-shrink-0" />
+              <span className="text-xs text-[#6B5B4F]">{n.label}</span>
             </Link>
           ))}
         </div>
@@ -388,8 +388,8 @@ const TIMELINE_EVENTS = [
   },
   {
     icon: Send,
-    color: "text-[#CDB49E]",
-    dotColor: "bg-[#CDB49E]",
+    color: "text-[#9C4A29]",
+    dotColor: "bg-[#9C4A29]",
     title: "Invoice #INV-2026-005 sent",
     description: "Emailed to GreenLeaf Pharmacy",
     time: "2 days ago",
@@ -499,9 +499,9 @@ export default function DashboardPage() {
   const invoiceSegments = useMemo(
     () => [
       { value: stats.paidCount, color: "#34d399", label: "Paid" },
-      { value: stats.sentCount, color: "#CDB49E", label: "Sent" },
+      { value: stats.sentCount, color: "#9C4A29", label: "Sent" },
       { value: stats.overdueCount, color: "#f87171", label: "Overdue" },
-      { value: stats.draftCount, color: "#555555", label: "Draft" },
+      { value: stats.draftCount, color: "#8B7B6F", label: "Draft" },
     ],
     [stats]
   );
@@ -514,7 +514,7 @@ export default function DashboardPage() {
   /* ── favorite modules ── */
   const favoriteModules = [
     { label: "Inventory", icon: Package, href: "/inventory", color: "text-violet-400", bg: "bg-violet-500/10" },
-    { label: "Invoices", icon: FileText, href: "/invoices", color: "text-[#CDB49E]", bg: "bg-[#3a3028]" },
+    { label: "Invoices", icon: FileText, href: "/invoices", color: "text-[#9C4A29]", bg: "bg-[rgba(156,74,41,0.15)]" },
     { label: "Contacts", icon: Users, href: "/contacts", color: "text-blue-400", bg: "bg-blue-500/10" },
     { label: "Sales", icon: ShoppingCart, href: "/sales", color: "text-emerald-400", bg: "bg-emerald-500/10" },
     { label: "Purchases", icon: Truck, href: "/purchases", color: "text-amber-400", bg: "bg-amber-500/10" },
@@ -526,13 +526,13 @@ export default function DashboardPage() {
       {/* ── Welcome section + Notification bell ── */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#f5f0eb]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#2D1810]">
             {getGreeting()}, Demo User
           </h1>
-          <p className="text-[#888888] text-sm mt-1">
+          <p className="text-[#6B5B4F] text-sm mt-1">
             {getFormattedDate()}
           </p>
-          <p className="text-[#555555] text-xs mt-1">
+          <p className="text-[#8B7B6F] text-xs mt-1">
             Here&apos;s your business at a glance — stay on top of what matters.
           </p>
         </div>
@@ -540,14 +540,14 @@ export default function DashboardPage() {
           <NotificationBell overdueCount={stats.overdueCount} lowStockCount={stats.lowStockCount} />
           <Link
             href="/invoices"
-            className="flex items-center gap-2 px-4 py-2.5 border border-[#2a2a2a] rounded-lg text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+            className="flex items-center gap-2 px-4 py-2.5 border border-[#D4CDB8] rounded-lg text-sm text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all duration-200"
           >
             <FileText className="w-4 h-4" />
             New Invoice
           </Link>
           <Link
             href="/inventory"
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200"
           >
             <Plus className="w-4 h-4" />
             Add Product
@@ -556,22 +556,22 @@ export default function DashboardPage() {
       </div>
 
       {/* ── Favorites bar ── */}
-      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
-        <div className="px-5 py-3 border-b border-[#2a2a2a] flex items-center gap-2">
-          <Star className="w-3.5 h-3.5 text-[#CDB49E]" />
-          <span className="text-xs font-semibold text-[#888888] uppercase tracking-wider">Favorites</span>
+      <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl">
+        <div className="px-5 py-3 border-b border-[#D4CDB8] flex items-center gap-2">
+          <Star className="w-3.5 h-3.5 text-[#9C4A29]" />
+          <span className="text-xs font-semibold text-[#6B5B4F] uppercase tracking-wider">Favorites</span>
         </div>
         <div className="flex items-center gap-1 px-3 py-2.5 overflow-x-auto">
           {favoriteModules.map((mod) => (
             <Link
               key={mod.label}
               href={mod.href}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-lg hover:bg-[#222222] transition-all duration-200 flex-shrink-0 group"
+              className="flex items-center gap-2 px-3.5 py-2 rounded-lg hover:bg-[#DDD7C0] transition-all duration-200 flex-shrink-0 group"
             >
               <div className={`p-1.5 rounded-md ${mod.bg}`}>
                 <mod.icon className={`w-3.5 h-3.5 ${mod.color}`} />
               </div>
-              <span className="text-xs font-medium text-[#888888] group-hover:text-[#f5f0eb] transition-colors">
+              <span className="text-xs font-medium text-[#6B5B4F] group-hover:text-[#2D1810] transition-colors">
                 {mod.label}
               </span>
             </Link>
@@ -582,18 +582,18 @@ export default function DashboardPage() {
       {/* ── Stat cards with KPI comparisons ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Revenue */}
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#CDB49E]/20 transition-all duration-300 group">
+        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-5 hover:border-[#9C4A29]/20 transition-all duration-300 group">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 rounded-lg bg-emerald-500/10">
               <DollarSign className="w-4 h-4 text-emerald-400" />
             </div>
             <Sparkline data={sparkRevenue} color="#34d399" />
           </div>
-          <p className="text-2xl font-bold text-[#f5f0eb] tracking-tight">
+          <p className="text-2xl font-bold text-[#2D1810] tracking-tight">
             {formatCurrency(stats.totalRevenue)}
           </p>
           <div className="flex items-center justify-between mt-2">
-            <p className="text-xs text-[#888888] uppercase tracking-wider">
+            <p className="text-xs text-[#6B5B4F] uppercase tracking-wider">
               Revenue (Paid)
             </p>
             <KpiComparison value={12} label="vs last month" />
@@ -601,18 +601,18 @@ export default function DashboardPage() {
         </div>
 
         {/* Outstanding */}
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#CDB49E]/20 transition-all duration-300 group">
+        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-5 hover:border-[#9C4A29]/20 transition-all duration-300 group">
           <div className="flex items-center justify-between mb-4">
-            <div className="p-2 rounded-lg bg-[#3a3028]">
-              <Clock className="w-4 h-4 text-[#CDB49E]" />
+            <div className="p-2 rounded-lg bg-[rgba(156,74,41,0.15)]">
+              <Clock className="w-4 h-4 text-[#9C4A29]" />
             </div>
-            <Sparkline data={sparkOutstanding} color="#CDB49E" />
+            <Sparkline data={sparkOutstanding} color="#9C4A29" />
           </div>
-          <p className="text-2xl font-bold text-[#CDB49E] tracking-tight">
+          <p className="text-2xl font-bold text-[#9C4A29] tracking-tight">
             {formatCurrency(stats.totalOutstanding)}
           </p>
           <div className="flex items-center justify-between mt-2">
-            <p className="text-xs text-[#888888] uppercase tracking-wider">
+            <p className="text-xs text-[#6B5B4F] uppercase tracking-wider">
               Outstanding
             </p>
             <KpiComparison value={-8} label="vs last month" />
@@ -620,18 +620,18 @@ export default function DashboardPage() {
         </div>
 
         {/* Products */}
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#CDB49E]/20 transition-all duration-300 group">
+        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-5 hover:border-[#9C4A29]/20 transition-all duration-300 group">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 rounded-lg bg-violet-500/10">
               <Package className="w-4 h-4 text-violet-400" />
             </div>
             <Sparkline data={sparkProducts} color="#a78bfa" />
           </div>
-          <p className="text-2xl font-bold text-[#f5f0eb] tracking-tight">
+          <p className="text-2xl font-bold text-[#2D1810] tracking-tight">
             {stats.totalProducts}
           </p>
           <div className="flex items-center justify-between mt-2">
-            <p className="text-xs text-[#888888] uppercase tracking-wider">
+            <p className="text-xs text-[#6B5B4F] uppercase tracking-wider">
               Products
             </p>
             <KpiComparison value={5} label="vs last month" />
@@ -639,27 +639,27 @@ export default function DashboardPage() {
         </div>
 
         {/* Contacts */}
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 hover:border-[#CDB49E]/20 transition-all duration-300 group">
+        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-5 hover:border-[#9C4A29]/20 transition-all duration-300 group">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 rounded-lg bg-blue-500/10">
               <Users className="w-4 h-4 text-blue-400" />
             </div>
             <div className="flex items-center gap-3 text-[11px]">
-              <span className="text-[#888888]">
+              <span className="text-[#6B5B4F]">
                 {stats.customerCount}{" "}
-                <span className="text-[#555555]">cust</span>
+                <span className="text-[#8B7B6F]">cust</span>
               </span>
-              <span className="text-[#888888]">
+              <span className="text-[#6B5B4F]">
                 {stats.vendorCount}{" "}
-                <span className="text-[#555555]">vend</span>
+                <span className="text-[#8B7B6F]">vend</span>
               </span>
             </div>
           </div>
-          <p className="text-2xl font-bold text-[#f5f0eb] tracking-tight">
+          <p className="text-2xl font-bold text-[#2D1810] tracking-tight">
             {stats.totalContacts}
           </p>
           <div className="flex items-center justify-between mt-2">
-            <p className="text-xs text-[#888888] uppercase tracking-wider">
+            <p className="text-xs text-[#6B5B4F] uppercase tracking-wider">
               Contacts
             </p>
             <KpiComparison value={15} label="vs last month" />
@@ -670,15 +670,15 @@ export default function DashboardPage() {
       {/* ── Row 2: Revenue chart + Invoice breakdown ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Revenue trend chart */}
-        <div className="lg:col-span-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
-          <div className="px-6 py-5 border-b border-[#2a2a2a] flex items-center justify-between">
+        <div className="lg:col-span-2 bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl">
+          <div className="px-6 py-5 border-b border-[#D4CDB8] flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <BarChart3 className="w-4 h-4 text-[#888888]" />
-              <h2 className="text-sm font-semibold text-[#f5f0eb]">
+              <BarChart3 className="w-4 h-4 text-[#6B5B4F]" />
+              <h2 className="text-sm font-semibold text-[#2D1810]">
                 Revenue Trend
               </h2>
             </div>
-            <span className="text-[11px] text-[#555555]">Last 7 months</span>
+            <span className="text-[11px] text-[#8B7B6F]">Last 7 months</span>
           </div>
           <div className="p-6">
             <BarChart data={revenueData} />
@@ -686,14 +686,14 @@ export default function DashboardPage() {
         </div>
 
         {/* Invoice breakdown donut */}
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
-          <div className="px-6 py-5 border-b border-[#2a2a2a] flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-[#f5f0eb]">
+        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl">
+          <div className="px-6 py-5 border-b border-[#D4CDB8] flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-[#2D1810]">
               Invoice Status
             </h2>
             <Link
               href="/invoices"
-              className="text-[11px] text-[#555555] hover:text-[#CDB49E] transition-colors flex items-center gap-1"
+              className="text-[11px] text-[#8B7B6F] hover:text-[#9C4A29] transition-colors flex items-center gap-1"
             >
               View all <ChevronRight className="w-3 h-3" />
             </Link>
@@ -707,8 +707,8 @@ export default function DashboardPage() {
                     className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                     style={{ backgroundColor: seg.color }}
                   />
-                  <span className="text-xs text-[#888888]">{seg.label}</span>
-                  <span className="text-xs font-semibold text-[#f5f0eb] ml-auto">
+                  <span className="text-xs text-[#6B5B4F]">{seg.label}</span>
+                  <span className="text-xs font-semibold text-[#2D1810] ml-auto">
                     {seg.value}
                   </span>
                 </div>
@@ -721,17 +721,17 @@ export default function DashboardPage() {
       {/* ── Row 3: Recent invoices + Activity Timeline ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Recent invoices */}
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
-          <div className="px-6 py-5 border-b border-[#2a2a2a] flex items-center justify-between">
+        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl">
+          <div className="px-6 py-5 border-b border-[#D4CDB8] flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <FileText className="w-4 h-4 text-[#888888]" />
-              <h2 className="text-sm font-semibold text-[#f5f0eb]">
+              <FileText className="w-4 h-4 text-[#6B5B4F]" />
+              <h2 className="text-sm font-semibold text-[#2D1810]">
                 Recent Invoices
               </h2>
             </div>
             <Link
               href="/invoices"
-              className="text-[11px] text-[#555555] hover:text-[#CDB49E] transition-colors flex items-center gap-1"
+              className="text-[11px] text-[#8B7B6F] hover:text-[#9C4A29] transition-colors flex items-center gap-1"
             >
               View all <ChevronRight className="w-3 h-3" />
             </Link>
@@ -739,40 +739,40 @@ export default function DashboardPage() {
           <div>
             {recentInvoices.length === 0 ? (
               <div className="px-6 py-12 text-center">
-                <FileText className="w-8 h-8 mx-auto mb-3 text-[#888888]/30" />
-                <p className="text-sm text-[#888888]">No invoices yet</p>
+                <FileText className="w-8 h-8 mx-auto mb-3 text-[#6B5B4F]/30" />
+                <p className="text-sm text-[#6B5B4F]">No invoices yet</p>
               </div>
             ) : (
               recentInvoices.map((inv, i) => (
                 <div
                   key={inv.id}
                   className={classNames(
-                    "px-6 py-4 flex items-center justify-between transition-colors hover:bg-[#222222]/50 cursor-pointer",
+                    "px-6 py-4 flex items-center justify-between transition-colors hover:bg-[#DDD7C0]/50 cursor-pointer",
                     i < recentInvoices.length - 1 &&
-                      "border-b border-[#2a2a2a]/50"
+                      "border-b border-[#D4CDB8]/50"
                   )}
                 >
                   <div className="flex items-center gap-4 min-w-0">
-                    <div className="w-9 h-9 rounded-lg bg-[#222222] flex items-center justify-center flex-shrink-0">
+                    <div className="w-9 h-9 rounded-lg bg-[#DDD7C0] flex items-center justify-center flex-shrink-0">
                       <InvoiceStatusIcon status={inv.status} />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium text-[#f5f0eb] font-mono">
+                        <p className="text-sm font-medium text-[#2D1810] font-mono">
                           {inv.invoice_number}
                         </p>
                         <StatusBadge status={inv.status} />
                       </div>
-                      <p className="text-xs text-[#888888] mt-0.5 truncate">
+                      <p className="text-xs text-[#6B5B4F] mt-0.5 truncate">
                         {getContactName(inv.contact_id)}
                       </p>
                     </div>
                   </div>
                   <div className="text-right flex-shrink-0 ml-4">
-                    <p className="text-sm font-semibold text-[#f5f0eb]">
+                    <p className="text-sm font-semibold text-[#2D1810]">
                       {formatCurrency(inv.total)}
                     </p>
-                    <p className="text-[11px] text-[#555555] mt-0.5">
+                    <p className="text-[11px] text-[#8B7B6F] mt-0.5">
                       {new Date(inv.issue_date).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
@@ -786,15 +786,15 @@ export default function DashboardPage() {
         </div>
 
         {/* Activity Timeline */}
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
-          <div className="px-6 py-5 border-b border-[#2a2a2a] flex items-center justify-between">
+        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl">
+          <div className="px-6 py-5 border-b border-[#D4CDB8] flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <Activity className="w-4 h-4 text-[#888888]" />
-              <h2 className="text-sm font-semibold text-[#f5f0eb]">
+              <Activity className="w-4 h-4 text-[#6B5B4F]" />
+              <h2 className="text-sm font-semibold text-[#2D1810]">
                 Recent Activity
               </h2>
             </div>
-            <span className="text-[11px] text-[#555555]">Last 7 days</span>
+            <span className="text-[11px] text-[#8B7B6F]">Last 7 days</span>
           </div>
           <div className="p-6">
             <div className="space-y-0">
@@ -802,9 +802,9 @@ export default function DashboardPage() {
                 <div key={i} className="flex gap-4 group">
                   {/* Timeline line + dot */}
                   <div className="flex flex-col items-center">
-                    <div className={`w-2.5 h-2.5 rounded-full ${event.dotColor} flex-shrink-0 mt-1.5 ring-4 ring-[#1a1a1a]`} />
+                    <div className={`w-2.5 h-2.5 rounded-full ${event.dotColor} flex-shrink-0 mt-1.5 ring-4 ring-[#F5F2E8]`} />
                     {i < TIMELINE_EVENTS.length - 1 && (
-                      <div className="w-px flex-1 bg-[#2a2a2a] my-1" />
+                      <div className="w-px flex-1 bg-[#D4CDB8] my-1" />
                     )}
                   </div>
 
@@ -812,10 +812,10 @@ export default function DashboardPage() {
                   <div className={classNames("pb-6 min-w-0 flex-1", i === TIMELINE_EVENTS.length - 1 && "pb-0")}>
                     <div className="flex items-center gap-2 mb-1">
                       <event.icon className={`w-3.5 h-3.5 ${event.color} flex-shrink-0`} />
-                      <p className="text-sm font-medium text-[#f5f0eb] truncate">{event.title}</p>
+                      <p className="text-sm font-medium text-[#2D1810] truncate">{event.title}</p>
                     </div>
-                    <p className="text-xs text-[#888888] mb-1">{event.description}</p>
-                    <p className="text-[11px] text-[#555555]">{event.time}</p>
+                    <p className="text-xs text-[#6B5B4F] mb-1">{event.description}</p>
+                    <p className="text-[11px] text-[#8B7B6F]">{event.time}</p>
                   </div>
                 </div>
               ))}
@@ -825,17 +825,17 @@ export default function DashboardPage() {
       </div>
 
       {/* ── Row 4: Top products by margin ── */}
-      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
-        <div className="px-6 py-5 border-b border-[#2a2a2a] flex items-center justify-between">
+      <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl">
+        <div className="px-6 py-5 border-b border-[#D4CDB8] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <TrendingUp className="w-4 h-4 text-[#888888]" />
-            <h2 className="text-sm font-semibold text-[#f5f0eb]">
+            <TrendingUp className="w-4 h-4 text-[#6B5B4F]" />
+            <h2 className="text-sm font-semibold text-[#2D1810]">
               Top Products by Margin
             </h2>
           </div>
           <Link
             href="/inventory"
-            className="text-[11px] text-[#555555] hover:text-[#CDB49E] transition-colors flex items-center gap-1"
+            className="text-[11px] text-[#8B7B6F] hover:text-[#9C4A29] transition-colors flex items-center gap-1"
           >
             View all <ChevronRight className="w-3 h-3" />
           </Link>
@@ -843,26 +843,26 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2">
           {topProducts.length === 0 ? (
             <div className="px-6 py-12 text-center col-span-2">
-              <Package className="w-8 h-8 mx-auto mb-3 text-[#888888]/30" />
-              <p className="text-sm text-[#888888]">No products yet</p>
+              <Package className="w-8 h-8 mx-auto mb-3 text-[#6B5B4F]/30" />
+              <p className="text-sm text-[#6B5B4F]">No products yet</p>
             </div>
           ) : (
             topProducts.map((p, i) => (
               <div
                 key={p.id}
                 className={classNames(
-                  "px-6 py-4 flex items-center justify-between transition-colors hover:bg-[#222222]/50 cursor-pointer border-b border-[#2a2a2a]/50"
+                  "px-6 py-4 flex items-center justify-between transition-colors hover:bg-[#DDD7C0]/50 cursor-pointer border-b border-[#D4CDB8]/50"
                 )}
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  <div className="w-9 h-9 rounded-lg bg-[#3a3028] flex items-center justify-center flex-shrink-0">
-                    <Package className="w-4 h-4 text-[#CDB49E]" />
+                  <div className="w-9 h-9 rounded-lg bg-[rgba(156,74,41,0.15)] flex items-center justify-center flex-shrink-0">
+                    <Package className="w-4 h-4 text-[#9C4A29]" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-[#f5f0eb] truncate">
+                    <p className="text-sm font-medium text-[#2D1810] truncate">
                       {p.name}
                     </p>
-                    <p className="text-xs text-[#888888] mt-0.5">
+                    <p className="text-xs text-[#6B5B4F] mt-0.5">
                       {p.category || "Uncategorized"} · {p.sku}
                     </p>
                   </div>
@@ -871,7 +871,7 @@ export default function DashboardPage() {
                   <p className="text-sm font-semibold text-emerald-400">
                     +{formatCurrency(p.margin)}
                   </p>
-                  <p className="text-[11px] text-[#555555] mt-0.5">
+                  <p className="text-[11px] text-[#8B7B6F] mt-0.5">
                     {p.marginPct.toFixed(0)}% margin
                   </p>
                 </div>
@@ -887,9 +887,9 @@ export default function DashboardPage() {
       {/* ── Row 6: Quick actions + AI teaser ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Quick actions */}
-        <div className="lg:col-span-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl">
-          <div className="px-6 py-5 border-b border-[#2a2a2a]">
-            <h2 className="text-sm font-semibold text-[#f5f0eb]">
+        <div className="lg:col-span-2 bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl">
+          <div className="px-6 py-5 border-b border-[#D4CDB8]">
+            <h2 className="text-sm font-semibold text-[#2D1810]">
               Quick Actions
             </h2>
           </div>
@@ -906,8 +906,8 @@ export default function DashboardPage() {
                 label: "New Invoice",
                 icon: FileText,
                 href: "/invoices",
-                color: "bg-[#3a3028]",
-                iconColor: "text-[#CDB49E]",
+                color: "bg-[rgba(156,74,41,0.15)]",
+                iconColor: "text-[#9C4A29]",
               },
               {
                 label: "Add Contact",
@@ -927,14 +927,14 @@ export default function DashboardPage() {
               <Link
                 key={action.label}
                 href={action.href}
-                className="flex flex-col items-center gap-3 p-5 rounded-xl hover:bg-[#222222] transition-all duration-200 group text-center"
+                className="flex flex-col items-center gap-3 p-5 rounded-xl hover:bg-[#DDD7C0] transition-all duration-200 group text-center"
               >
                 <div
                   className={`p-3 rounded-xl ${action.color} group-hover:scale-110 transition-transform duration-200`}
                 >
                   <action.icon className={`w-5 h-5 ${action.iconColor}`} />
                 </div>
-                <span className="text-xs font-medium text-[#888888] group-hover:text-[#f5f0eb] transition-colors">
+                <span className="text-xs font-medium text-[#6B5B4F] group-hover:text-[#2D1810] transition-colors">
                   {action.label}
                 </span>
               </Link>
@@ -943,23 +943,23 @@ export default function DashboardPage() {
         </div>
 
         {/* AI Assistant teaser */}
-        <div className="bg-gradient-to-br from-[#1a1a1a] to-[#1e1914] border border-[#2a2a2a] rounded-xl p-6 flex flex-col justify-between relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#F5F2E8] to-[#1e1914] border border-[#D4CDB8] rounded-xl p-6 flex flex-col justify-between relative overflow-hidden">
           {/* Ambient glow */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[#CDB49E]/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#9C4A29]/5 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10">
             <div className="flex items-center gap-2 mb-4">
-              <div className="p-2 rounded-lg bg-[#3a3028]">
-                <Sparkles className="w-4 h-4 text-[#CDB49E]" />
+              <div className="p-2 rounded-lg bg-[rgba(156,74,41,0.15)]">
+                <Sparkles className="w-4 h-4 text-[#9C4A29]" />
               </div>
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#CDB49E]">
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#9C4A29]">
                 Coming Soon
               </span>
             </div>
-            <h3 className="text-base font-semibold text-[#f5f0eb] mb-2">
+            <h3 className="text-base font-semibold text-[#2D1810] mb-2">
               AI Assistant
             </h3>
-            <p className="text-xs text-[#888888] leading-relaxed mb-6">
+            <p className="text-xs text-[#6B5B4F] leading-relaxed mb-6">
               Ask anything about your business. &quot;What&apos;s my best-selling
               product?&quot; &quot;Show overdue invoices.&quot; &quot;Forecast next month&apos;s
               revenue.&quot;
@@ -967,7 +967,7 @@ export default function DashboardPage() {
           </div>
           <Link
             href="/ai"
-            className="relative z-10 flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#CDB49E]/10 text-[#CDB49E] text-sm font-medium hover:bg-[#CDB49E]/20 transition-all duration-200 border border-[#CDB49E]/10"
+            className="relative z-10 flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#9C4A29]/10 text-[#9C4A29] text-sm font-medium hover:bg-[#9C4A29]/20 transition-all duration-200 border border-[#9C4A29]/10"
           >
             Try it out
             <ArrowRight className="w-3.5 h-3.5" />

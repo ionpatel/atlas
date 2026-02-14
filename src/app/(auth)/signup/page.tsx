@@ -35,8 +35,8 @@ export default function SignupPage() {
   return (
     <>
       <div className="text-center mb-8">
-        <h1 className="text-xl font-semibold text-[#f5f0eb]">Create your account</h1>
-        <p className="text-sm text-[#888888] mt-1.5">
+        <h1 className="text-xl font-semibold text-[#2D1810]">Create your account</h1>
+        <p className="text-sm text-[#6B5B4F] mt-1.5">
           Get started with Atlas for your business
         </p>
       </div>
@@ -51,7 +51,7 @@ export default function SignupPage() {
         <div className="space-y-2">
           <label
             htmlFor="fullName"
-            className="block text-sm font-medium text-[#888888]"
+            className="block text-sm font-medium text-[#6B5B4F]"
           >
             Full name
           </label>
@@ -62,14 +62,14 @@ export default function SignupPage() {
             onChange={(e) => setFullName(e.target.value)}
             placeholder="John Doe"
             required
-            className="w-full h-11 px-4 rounded-lg border border-[#2a2a2a] bg-[#111111] text-[#f5f0eb] text-sm placeholder:text-[#888888]/60 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200"
+            className="w-full h-11 px-4 rounded-lg border border-[#D4CDB8] bg-[#E8E3CC] text-[#2D1810] text-sm placeholder:text-[#6B5B4F]/60 focus:outline-none focus:ring-2 focus:ring-[#9C4A29]/30 focus:border-[#9C4A29]/50 transition-all duration-200"
           />
         </div>
 
         <div className="space-y-2">
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-[#888888]"
+            className="block text-sm font-medium text-[#6B5B4F]"
           >
             Email
           </label>
@@ -80,14 +80,14 @@ export default function SignupPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@company.com"
             required
-            className="w-full h-11 px-4 rounded-lg border border-[#2a2a2a] bg-[#111111] text-[#f5f0eb] text-sm placeholder:text-[#888888]/60 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200"
+            className="w-full h-11 px-4 rounded-lg border border-[#D4CDB8] bg-[#E8E3CC] text-[#2D1810] text-sm placeholder:text-[#6B5B4F]/60 focus:outline-none focus:ring-2 focus:ring-[#9C4A29]/30 focus:border-[#9C4A29]/50 transition-all duration-200"
           />
         </div>
 
         <div className="space-y-2">
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-[#888888]"
+            className="block text-sm font-medium text-[#6B5B4F]"
           >
             Password
           </label>
@@ -99,14 +99,14 @@ export default function SignupPage() {
             placeholder="••••••••"
             required
             minLength={6}
-            className="w-full h-11 px-4 rounded-lg border border-[#2a2a2a] bg-[#111111] text-[#f5f0eb] text-sm placeholder:text-[#888888]/60 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200"
+            className="w-full h-11 px-4 rounded-lg border border-[#D4CDB8] bg-[#E8E3CC] text-[#2D1810] text-sm placeholder:text-[#6B5B4F]/60 focus:outline-none focus:ring-2 focus:ring-[#9C4A29]/30 focus:border-[#9C4A29]/50 transition-all duration-200"
           />
         </div>
 
         <div className="space-y-2">
           <label
             htmlFor="orgName"
-            className="block text-sm font-medium text-[#888888]"
+            className="block text-sm font-medium text-[#6B5B4F]"
           >
             Organization name
           </label>
@@ -117,9 +117,9 @@ export default function SignupPage() {
             onChange={(e) => setOrgName(e.target.value)}
             placeholder="Acme Inc."
             required
-            className="w-full h-11 px-4 rounded-lg border border-[#2a2a2a] bg-[#111111] text-[#f5f0eb] text-sm placeholder:text-[#888888]/60 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200"
+            className="w-full h-11 px-4 rounded-lg border border-[#D4CDB8] bg-[#E8E3CC] text-[#2D1810] text-sm placeholder:text-[#6B5B4F]/60 focus:outline-none focus:ring-2 focus:ring-[#9C4A29]/30 focus:border-[#9C4A29]/50 transition-all duration-200"
           />
-          <p className="text-[11px] text-[#888888]/70">
+          <p className="text-[11px] text-[#6B5B4F]/70">
             You&apos;ll be the owner of this organization
           </p>
         </div>
@@ -127,7 +127,7 @@ export default function SignupPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full h-11 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+          className="w-full h-11 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
         >
           {loading ? (
             <>
@@ -140,11 +140,11 @@ export default function SignupPage() {
         </button>
       </form>
 
-      <p className="text-center text-sm text-[#888888] mt-8">
+      <p className="text-center text-sm text-[#6B5B4F] mt-8">
         Already have an account?{" "}
         <Link
           href="/login"
-          className="text-[#CDB49E] hover:text-[#d4c0ad] font-medium transition-colors"
+          className="text-[#9C4A29] hover:text-[#B85A35] font-medium transition-colors"
         >
           Sign in
         </Link>

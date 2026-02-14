@@ -48,7 +48,7 @@ const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string
   "Blood Pressure":{ bg: "bg-blue-500/10",     text: "text-blue-400",    border: "border-blue-500/20" },
   Allergy:         { bg: "bg-pink-500/10",     text: "text-pink-400",    border: "border-pink-500/20" },
   Digestive:       { bg: "bg-teal-500/10",     text: "text-teal-400",    border: "border-teal-500/20" },
-  Other:           { bg: "bg-[#222222]",       text: "text-[#888888]",   border: "border-[#2a2a2a]" },
+  Other:           { bg: "bg-[#DDD7C0]",       text: "text-[#6B5B4F]",   border: "border-[#D4CDB8]" },
 };
 
 const CATEGORY_ICON_COLORS: Record<string, string> = {
@@ -59,7 +59,7 @@ const CATEGORY_ICON_COLORS: Record<string, string> = {
   "Blood Pressure": "#60a5fa",
   Allergy: "#f472b6",
   Digestive: "#2dd4bf",
-  Other: "#888888",
+  Other: "#6B5B4F",
 };
 
 function getCategoryStyle(category?: string) {
@@ -68,8 +68,8 @@ function getCategoryStyle(category?: string) {
 }
 
 function getCategoryIconColor(category?: string) {
-  if (!category) return "#888888";
-  return CATEGORY_ICON_COLORS[category] || "#888888";
+  if (!category) return "#6B5B4F";
+  return CATEGORY_ICON_COLORS[category] || "#6B5B4F";
 }
 
 /* ─── Sort configuration ─── */
@@ -111,14 +111,14 @@ function StockBar({ stock, min }: { stock: number; min: number }) {
   return (
     <div className="flex items-center gap-2">
       <div className="flex-1 min-w-[60px]">
-        <div className="w-full h-1.5 bg-[#222222] rounded-full overflow-hidden">
+        <div className="w-full h-1.5 bg-[#DDD7C0] rounded-full overflow-hidden">
           <div
             className={`h-full rounded-full ${color} transition-all duration-500`}
             style={{ width: `${Math.max(pct, stock > 0 ? 4 : 0)}%` }}
           />
         </div>
       </div>
-      <span className="text-xs text-[#888888] tabular-nums w-8 text-right">{stock}</span>
+      <span className="text-xs text-[#6B5B4F] tabular-nums w-8 text-right">{stock}</span>
       {label && (
         <StockBadge stock={stock} min={min} showLabel />
       )}
@@ -141,7 +141,7 @@ function StatusBadge({ active }: { active: boolean }) {
 
 /* ─── Category badge ─── */
 function CategoryBadge({ category }: { category?: string }) {
-  if (!category) return <span className="text-sm text-[#555555]">—</span>;
+  if (!category) return <span className="text-sm text-[#8B7B6F]">—</span>;
   const style = getCategoryStyle(category);
   return (
     <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium border ${style.bg} ${style.text} ${style.border}`}>
@@ -169,8 +169,8 @@ function ProductGridCard({
   return (
     <div
       className={cn(
-        "bg-[#1a1a1a] border rounded-xl p-5 cursor-pointer hover:border-[#CDB49E]/20 transition-all duration-200 relative group",
-        selected ? "border-[#CDB49E]/50 bg-[#3a3028]/20" : "border-[#2a2a2a]",
+        "bg-[#F5F2E8] border rounded-xl p-5 cursor-pointer hover:border-[#9C4A29]/20 transition-all duration-200 relative group",
+        selected ? "border-[#9C4A29]/50 bg-[rgba(156,74,41,0.15)]/20" : "border-[#D4CDB8]",
         isOutOfStock && "border-red-500/20",
         isLowStock && !isOutOfStock && "border-amber-500/20"
       )}
@@ -192,9 +192,9 @@ function ProductGridCard({
             onChange={onToggle}
             className="sr-only peer"
           />
-          <div className="w-4 h-4 rounded border border-[#2a2a2a] bg-[#111111] peer-checked:bg-[#CDB49E] peer-checked:border-[#CDB49E] flex items-center justify-center transition-all">
+          <div className="w-4 h-4 rounded border border-[#D4CDB8] bg-[#E8E3CC] peer-checked:bg-[#9C4A29] peer-checked:border-[#9C4A29] flex items-center justify-center transition-all">
             {selected && (
-              <svg className="w-2.5 h-2.5 text-[#111111]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+              <svg className="w-2.5 h-2.5 text-[#E8E3CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             )}
@@ -206,15 +206,15 @@ function ProductGridCard({
       <div className="flex justify-center mb-4 mt-2">
         <div className={cn(
           "w-14 h-14 rounded-xl flex items-center justify-center",
-          isOutOfStock ? "bg-red-500/10" : isLowStock ? "bg-amber-500/10" : "bg-[#222222]"
+          isOutOfStock ? "bg-red-500/10" : isLowStock ? "bg-amber-500/10" : "bg-[#DDD7C0]"
         )}>
           <span style={{ color: isOutOfStock ? "#f87171" : isLowStock ? "#fbbf24" : iconColor }}><Package className="w-6 h-6" /></span>
         </div>
       </div>
 
       {/* Info */}
-      <h3 className="text-sm font-semibold text-[#f5f0eb] text-center truncate mb-1">{product.name}</h3>
-      <p className="text-xs text-[#555555] text-center font-mono mb-3">{product.sku}</p>
+      <h3 className="text-sm font-semibold text-[#2D1810] text-center truncate mb-1">{product.name}</h3>
+      <p className="text-xs text-[#8B7B6F] text-center font-mono mb-3">{product.sku}</p>
 
       {/* Category */}
       <div className="flex justify-center mb-3">
@@ -222,7 +222,7 @@ function ProductGridCard({
       </div>
 
       {/* Price */}
-      <p className="text-center text-sm font-semibold text-[#f5f0eb] mb-3">{formatCurrency(product.sell_price)}</p>
+      <p className="text-center text-sm font-semibold text-[#2D1810] mb-3">{formatCurrency(product.sell_price)}</p>
 
       {/* Stock bar */}
       <StockBar stock={product.stock_quantity} min={product.min_quantity} />
@@ -257,16 +257,16 @@ function FilterSection({
   const hasFilters = filters.category || filters.status || filters.stockLevel || priceRange.min || priceRange.max;
 
   return (
-    <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 space-y-4">
+    <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-4 space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <SlidersHorizontal className="w-4 h-4 text-[#CDB49E]" />
-          <span className="text-sm font-medium text-[#f5f0eb]">Filters & Sorting</span>
+          <SlidersHorizontal className="w-4 h-4 text-[#9C4A29]" />
+          <span className="text-sm font-medium text-[#2D1810]">Filters & Sorting</span>
         </div>
         {hasFilters && (
           <button
             onClick={onReset}
-            className="flex items-center gap-1 text-xs text-[#888888] hover:text-[#f5f0eb] transition-colors"
+            className="flex items-center gap-1 text-xs text-[#6B5B4F] hover:text-[#2D1810] transition-colors"
           >
             <RotateCcw className="w-3 h-3" />
             Reset
@@ -277,13 +277,13 @@ function FilterSection({
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         {/* Category Filter */}
         <div>
-          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+          <label className="block text-[10px] font-medium text-[#6B5B4F] uppercase tracking-wider mb-1.5">
             Category
           </label>
           <select
             value={filters.category}
             onChange={(e) => onFilterChange("category", e.target.value)}
-            className="w-full px-3 py-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-xs text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            className="w-full px-3 py-2 bg-[#DDD7C0] border border-[#D4CDB8] rounded-lg text-xs text-[#2D1810] focus:outline-none focus:border-[#9C4A29]/40 transition-colors"
           >
             <option value="">All Categories</option>
             {categories.map((c) => (
@@ -294,13 +294,13 @@ function FilterSection({
 
         {/* Status Filter */}
         <div>
-          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+          <label className="block text-[10px] font-medium text-[#6B5B4F] uppercase tracking-wider mb-1.5">
             Status
           </label>
           <select
             value={filters.status}
             onChange={(e) => onFilterChange("status", e.target.value)}
-            className="w-full px-3 py-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-xs text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+            className="w-full px-3 py-2 bg-[#DDD7C0] border border-[#D4CDB8] rounded-lg text-xs text-[#2D1810] focus:outline-none focus:border-[#9C4A29]/40 transition-colors"
           >
             <option value="">All Status</option>
             <option value="active">Active</option>
@@ -310,18 +310,18 @@ function FilterSection({
 
         {/* Stock Level Filter */}
         <div>
-          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+          <label className="block text-[10px] font-medium text-[#6B5B4F] uppercase tracking-wider mb-1.5">
             Stock Level
           </label>
           <select
             value={filters.stockLevel}
             onChange={(e) => onFilterChange("stockLevel", e.target.value)}
             className={cn(
-              "w-full px-3 py-2 bg-[#222222] border rounded-lg text-xs focus:outline-none focus:border-[#CDB49E]/40 transition-colors",
+              "w-full px-3 py-2 bg-[#DDD7C0] border rounded-lg text-xs focus:outline-none focus:border-[#9C4A29]/40 transition-colors",
               filters.stockLevel === "out" && "border-red-500/40 text-red-400",
               filters.stockLevel === "low" && "border-amber-500/40 text-amber-400",
               filters.stockLevel === "healthy" && "border-emerald-500/40 text-emerald-400",
-              !filters.stockLevel && "border-[#2a2a2a] text-[#f5f0eb]"
+              !filters.stockLevel && "border-[#D4CDB8] text-[#2D1810]"
             )}
           >
             <option value="">All Stock Levels</option>
@@ -333,11 +333,11 @@ function FilterSection({
 
         {/* Price Range Min */}
         <div>
-          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+          <label className="block text-[10px] font-medium text-[#6B5B4F] uppercase tracking-wider mb-1.5">
             Min Price
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#555555]">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#8B7B6F]">$</span>
             <input
               type="number"
               value={priceRange.min}
@@ -345,18 +345,18 @@ function FilterSection({
               placeholder="0"
               min="0"
               step="0.01"
-              className="w-full pl-6 pr-3 py-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-xs text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+              className="w-full pl-6 pr-3 py-2 bg-[#DDD7C0] border border-[#D4CDB8] rounded-lg text-xs text-[#2D1810] focus:outline-none focus:border-[#9C4A29]/40 transition-colors"
             />
           </div>
         </div>
 
         {/* Price Range Max */}
         <div>
-          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+          <label className="block text-[10px] font-medium text-[#6B5B4F] uppercase tracking-wider mb-1.5">
             Max Price
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#555555]">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-[#8B7B6F]">$</span>
             <input
               type="number"
               value={priceRange.max}
@@ -364,21 +364,21 @@ function FilterSection({
               placeholder="∞"
               min="0"
               step="0.01"
-              className="w-full pl-6 pr-3 py-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-xs text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+              className="w-full pl-6 pr-3 py-2 bg-[#DDD7C0] border border-[#D4CDB8] rounded-lg text-xs text-[#2D1810] focus:outline-none focus:border-[#9C4A29]/40 transition-colors"
             />
           </div>
         </div>
 
         {/* Sort By */}
         <div>
-          <label className="block text-[10px] font-medium text-[#888888] uppercase tracking-wider mb-1.5">
+          <label className="block text-[10px] font-medium text-[#6B5B4F] uppercase tracking-wider mb-1.5">
             Sort By
           </label>
           <div className="flex items-center gap-1">
             <select
               value={sort.field}
               onChange={(e) => onSortChange({ ...sort, field: e.target.value as SortField })}
-              className="flex-1 px-3 py-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-xs text-[#f5f0eb] focus:outline-none focus:border-[#CDB49E]/40 transition-colors"
+              className="flex-1 px-3 py-2 bg-[#DDD7C0] border border-[#D4CDB8] rounded-lg text-xs text-[#2D1810] focus:outline-none focus:border-[#9C4A29]/40 transition-colors"
             >
               {SORT_OPTIONS.map((opt) => (
                 <option key={opt.field} value={opt.field}>{opt.label}</option>
@@ -386,7 +386,7 @@ function FilterSection({
             </select>
             <button
               onClick={() => onSortChange({ ...sort, direction: sort.direction === "asc" ? "desc" : "asc" })}
-              className="p-2 bg-[#222222] border border-[#2a2a2a] rounded-lg text-[#888888] hover:text-[#f5f0eb] transition-colors"
+              className="p-2 bg-[#DDD7C0] border border-[#D4CDB8] rounded-lg text-[#6B5B4F] hover:text-[#2D1810] transition-colors"
               title={sort.direction === "asc" ? "Ascending" : "Descending"}
             >
               {sort.direction === "asc" ? (
@@ -619,10 +619,10 @@ export default function InventoryPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#f5f0eb]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#2D1810]">
             Inventory
           </h1>
-          <p className="text-[#888888] text-sm mt-1">
+          <p className="text-[#6B5B4F] text-sm mt-1">
             {filtered.length} of {products.length} products
           </p>
         </div>
@@ -634,7 +634,7 @@ export default function InventoryPage() {
               "relative flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200",
               summary.lowStock + summary.outOfStock > 0
                 ? "border-amber-500/30 text-amber-400 bg-amber-500/5 hover:bg-amber-500/10"
-                : "border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a]"
+                : "border-[#D4CDB8] text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8]"
             )}
           >
             <Bell className="w-4 h-4" />
@@ -642,7 +642,7 @@ export default function InventoryPage() {
             {summary.outOfStock > 0 ? (
               <CriticalAlertPulse count={summary.outOfStock} />
             ) : summary.lowStock > 0 ? (
-              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-amber-400 text-[10px] font-bold text-[#111111] flex items-center justify-center">
+              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-amber-400 text-[10px] font-bold text-[#E8E3CC] flex items-center justify-center">
                 {summary.lowStock}
               </span>
             ) : null}
@@ -651,7 +651,7 @@ export default function InventoryPage() {
           {/* Barcode Scanner Button */}
           <button
             onClick={() => setShowScanner(true)}
-            className="flex items-center gap-2 px-4 py-2.5 border border-[#2a2a2a] rounded-lg text-sm font-medium text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+            className="flex items-center gap-2 px-4 py-2.5 border border-[#D4CDB8] rounded-lg text-sm font-medium text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all duration-200"
           >
             <Scan className="w-4 h-4" />
             Scan
@@ -660,7 +660,7 @@ export default function InventoryPage() {
           <CanCreate module="inventory">
             <button
               onClick={() => setModalOpen(true)}
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#CDB49E] text-[#111111] rounded-lg text-sm font-semibold hover:bg-[#d4c0ad] transition-all duration-200"
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-sm font-semibold hover:bg-[#B85A35] transition-all duration-200"
             >
               <Plus className="w-4 h-4" />
               Add Product
@@ -671,30 +671,30 @@ export default function InventoryPage() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 hover:border-[#CDB49E]/20 transition-all duration-300">
+        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-4 hover:border-[#9C4A29]/20 transition-all duration-300">
           <div className="flex items-center gap-3 mb-3">
             <div className="p-2 rounded-lg bg-violet-500/10">
               <Package className="w-4 h-4 text-violet-400" />
             </div>
           </div>
-          <p className="text-xl font-bold text-[#f5f0eb]">{summary.totalProducts}</p>
-          <p className="text-xs text-[#888888] uppercase tracking-wider mt-1">Total Products</p>
+          <p className="text-xl font-bold text-[#2D1810]">{summary.totalProducts}</p>
+          <p className="text-xs text-[#6B5B4F] uppercase tracking-wider mt-1">Total Products</p>
         </div>
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 hover:border-[#CDB49E]/20 transition-all duration-300">
+        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-4 hover:border-[#9C4A29]/20 transition-all duration-300">
           <div className="flex items-center gap-3 mb-3">
             <div className="p-2 rounded-lg bg-emerald-500/10">
               <DollarSign className="w-4 h-4 text-emerald-400" />
             </div>
           </div>
-          <p className="text-xl font-bold text-[#f5f0eb]">{formatCurrency(summary.totalStockValue)}</p>
-          <p className="text-xs text-[#888888] uppercase tracking-wider mt-1">Stock Value</p>
+          <p className="text-xl font-bold text-[#2D1810]">{formatCurrency(summary.totalStockValue)}</p>
+          <p className="text-xs text-[#6B5B4F] uppercase tracking-wider mt-1">Stock Value</p>
         </div>
         <button
           onClick={() => {
             setStockLevelFilter("low");
             setShowFilters(true);
           }}
-          className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 hover:border-amber-500/30 transition-all duration-300 text-left"
+          className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-4 hover:border-amber-500/30 transition-all duration-300 text-left"
         >
           <div className="flex items-center gap-3 mb-3">
             <div className="p-2 rounded-lg bg-amber-500/10">
@@ -707,14 +707,14 @@ export default function InventoryPage() {
             )}
           </div>
           <p className="text-xl font-bold text-amber-400">{summary.lowStock}</p>
-          <p className="text-xs text-[#888888] uppercase tracking-wider mt-1">Low Stock Alerts</p>
+          <p className="text-xs text-[#6B5B4F] uppercase tracking-wider mt-1">Low Stock Alerts</p>
         </button>
         <button
           onClick={() => {
             setStockLevelFilter("out");
             setShowFilters(true);
           }}
-          className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 hover:border-red-500/30 transition-all duration-300 text-left"
+          className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl p-4 hover:border-red-500/30 transition-all duration-300 text-left"
         >
           <div className="flex items-center gap-3 mb-3">
             <div className="p-2 rounded-lg bg-red-500/10">
@@ -727,23 +727,23 @@ export default function InventoryPage() {
             )}
           </div>
           <p className="text-xl font-bold text-red-400">{summary.outOfStock}</p>
-          <p className="text-xs text-[#888888] uppercase tracking-wider mt-1">Out of Stock</p>
+          <p className="text-xs text-[#6B5B4F] uppercase tracking-wider mt-1">Out of Stock</p>
         </button>
       </div>
 
       {/* Search & Filter Toggle & View Toggle */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#CDB49E]/40 transition-colors duration-200">
-          <Search className="w-4 h-4 text-[#888888]" />
+        <div className="flex items-center gap-2.5 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#9C4A29]/40 transition-colors duration-200">
+          <Search className="w-4 h-4 text-[#6B5B4F]" />
           <input
             type="text"
             placeholder="Search products..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm w-full text-[#f5f0eb] placeholder:text-[#888888]/60"
+            className="bg-transparent border-none outline-none text-sm w-full text-[#2D1810] placeholder:text-[#6B5B4F]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#888888] hover:text-[#f5f0eb]">
+            <button onClick={() => setSearchQuery("")} className="text-[#6B5B4F] hover:text-[#2D1810]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -753,29 +753,29 @@ export default function InventoryPage() {
           className={cn(
             "flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 relative",
             showFilters || activeFilterCount > 0
-              ? "border-[#CDB49E]/50 text-[#CDB49E] bg-[#3a3028]/50"
-              : "border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a]"
+              ? "border-[#9C4A29]/50 text-[#9C4A29] bg-[rgba(156,74,41,0.15)]/50"
+              : "border-[#D4CDB8] text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8]"
           )}
         >
           <Filter className="w-4 h-4" />
           Filter
           {activeFilterCount > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#CDB49E] text-[10px] font-bold text-[#111111] flex items-center justify-center">
+            <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#9C4A29] text-[10px] font-bold text-[#E8E3CC] flex items-center justify-center">
               {activeFilterCount}
             </span>
           )}
         </button>
         {/* Import/Export buttons */}
-        <div className="flex items-center border border-[#2a2a2a] rounded-lg overflow-hidden">
-          <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200">
+        <div className="flex items-center border border-[#D4CDB8] rounded-lg overflow-hidden">
+          <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all duration-200">
             <Download className="w-4 h-4" />
             Export
           </button>
-          <div className="w-px h-6 bg-[#2a2a2a]" />
+          <div className="w-px h-6 bg-[#D4CDB8]" />
           <CanCreate module="inventory">
             <button
               onClick={() => setShowImport(true)}
-              className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#888888] hover:text-[#f5f0eb] hover:bg-[#1a1a1a] transition-all duration-200"
+              className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8] transition-all duration-200"
             >
               <Upload className="w-4 h-4" />
               Import
@@ -784,13 +784,13 @@ export default function InventoryPage() {
         </div>
 
         {/* View toggle */}
-        <div className="flex items-center border border-[#2a2a2a] rounded-lg overflow-hidden ml-auto">
+        <div className="flex items-center border border-[#D4CDB8] rounded-lg overflow-hidden ml-auto">
           <button
             onClick={() => setViewMode("list")}
             className={`p-2.5 transition-all duration-200 ${
               viewMode === "list"
-                ? "bg-[#222222] text-[#f5f0eb]"
-                : "text-[#555555] hover:text-[#888888] hover:bg-[#1a1a1a]"
+                ? "bg-[#DDD7C0] text-[#2D1810]"
+                : "text-[#8B7B6F] hover:text-[#6B5B4F] hover:bg-[#F5F2E8]"
             }`}
           >
             <LayoutList className="w-4 h-4" />
@@ -799,8 +799,8 @@ export default function InventoryPage() {
             onClick={() => setViewMode("grid")}
             className={`p-2.5 transition-all duration-200 ${
               viewMode === "grid"
-                ? "bg-[#222222] text-[#f5f0eb]"
-                : "text-[#555555] hover:text-[#888888] hover:bg-[#1a1a1a]"
+                ? "bg-[#DDD7C0] text-[#2D1810]"
+                : "text-[#8B7B6F] hover:text-[#6B5B4F] hover:bg-[#F5F2E8]"
             }`}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -836,10 +836,10 @@ export default function InventoryPage() {
 
       {/* ═══ LIST VIEW ═══ */}
       {viewMode === "list" && (
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden">
+        <div className="bg-[#F5F2E8] border border-[#D4CDB8] rounded-xl overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[#2a2a2a]">
+              <tr className="border-b border-[#D4CDB8]">
                 <th className="text-left px-4 py-4 w-10">
                   <label className="cursor-pointer">
                     <input
@@ -848,31 +848,31 @@ export default function InventoryPage() {
                       onChange={toggleSelectAll}
                       className="sr-only peer"
                     />
-                    <div className="w-4 h-4 rounded border border-[#2a2a2a] bg-[#111111] peer-checked:bg-[#CDB49E] peer-checked:border-[#CDB49E] flex items-center justify-center transition-all">
+                    <div className="w-4 h-4 rounded border border-[#D4CDB8] bg-[#E8E3CC] peer-checked:bg-[#9C4A29] peer-checked:border-[#9C4A29] flex items-center justify-center transition-all">
                       {selectedIds.size === filtered.length && filtered.length > 0 && (
-                        <svg className="w-2.5 h-2.5 text-[#111111]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <svg className="w-2.5 h-2.5 text-[#E8E3CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
                       )}
                     </div>
                   </label>
                 </th>
-                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Product</th>
-                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">SKU</th>
-                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Barcode</th>
-                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Category</th>
-                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest min-w-[140px]">Stock</th>
-                <th className="text-right px-4 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Cost</th>
-                <th className="text-right px-4 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Price</th>
-                <th className="text-right px-4 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest">Status</th>
-                <th className="text-right px-4 py-4 text-[10px] font-semibold text-[#888888] uppercase tracking-widest w-20"></th>
+                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Product</th>
+                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">SKU</th>
+                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Barcode</th>
+                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Category</th>
+                <th className="text-left px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest min-w-[140px]">Stock</th>
+                <th className="text-right px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Cost</th>
+                <th className="text-right px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Price</th>
+                <th className="text-right px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest">Status</th>
+                <th className="text-right px-4 py-4 text-[10px] font-semibold text-[#6B5B4F] uppercase tracking-widest w-20"></th>
               </tr>
             </thead>
             <tbody>
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="px-6 py-16 text-center text-[#888888] text-sm">
-                    <Package className="w-8 h-8 mx-auto mb-3 text-[#888888]/40" />
+                  <td colSpan={10} className="px-6 py-16 text-center text-[#6B5B4F] text-sm">
+                    <Package className="w-8 h-8 mx-auto mb-3 text-[#6B5B4F]/40" />
                     No products found
                   </td>
                 </tr>
@@ -886,8 +886,8 @@ export default function InventoryPage() {
                       key={p.id}
                       onClick={() => setEditingProduct(p)}
                       className={cn(
-                        "hover:bg-[#222222] transition-colors duration-150 cursor-pointer border-b border-[#2a2a2a]/50 last:border-0",
-                        selectedIds.has(p.id) ? "bg-[#3a3028]/20" : i % 2 === 1 ? "bg-[#111111]/40" : "",
+                        "hover:bg-[#DDD7C0] transition-colors duration-150 cursor-pointer border-b border-[#D4CDB8]/50 last:border-0",
+                        selectedIds.has(p.id) ? "bg-[rgba(156,74,41,0.15)]/20" : i % 2 === 1 ? "bg-[#E8E3CC]/40" : "",
                         isOutOfStock && "bg-red-500/5",
                         isLowStock && !isOutOfStock && "bg-amber-500/5"
                       )}
@@ -900,9 +900,9 @@ export default function InventoryPage() {
                             onChange={() => toggleSelect(p.id)}
                             className="sr-only peer"
                           />
-                          <div className="w-4 h-4 rounded border border-[#2a2a2a] bg-[#111111] peer-checked:bg-[#CDB49E] peer-checked:border-[#CDB49E] flex items-center justify-center transition-all">
+                          <div className="w-4 h-4 rounded border border-[#D4CDB8] bg-[#E8E3CC] peer-checked:bg-[#9C4A29] peer-checked:border-[#9C4A29] flex items-center justify-center transition-all">
                             {selectedIds.has(p.id) && (
-                              <svg className="w-2.5 h-2.5 text-[#111111]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <svg className="w-2.5 h-2.5 text-[#E8E3CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                               </svg>
                             )}
@@ -913,30 +913,30 @@ export default function InventoryPage() {
                         <div className="flex items-center gap-3">
                           <div className={cn(
                             "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
-                            isOutOfStock ? "bg-red-500/10" : isLowStock ? "bg-amber-500/10" : "bg-[#3a3028]"
+                            isOutOfStock ? "bg-red-500/10" : isLowStock ? "bg-amber-500/10" : "bg-[rgba(156,74,41,0.15)]"
                           )}>
                             <Package className={cn(
                               "w-3.5 h-3.5",
-                              isOutOfStock ? "text-red-400" : isLowStock ? "text-amber-400" : "text-[#CDB49E]"
+                              isOutOfStock ? "text-red-400" : isLowStock ? "text-amber-400" : "text-[#9C4A29]"
                             )} />
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-[#f5f0eb]">{p.name}</span>
+                            <span className="text-sm font-medium text-[#2D1810]">{p.name}</span>
                             {(isLowStock || isOutOfStock) && (
                               <StockBadge stock={p.stock_quantity} min={p.min_quantity} showLabel={false} />
                             )}
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-4 text-sm text-[#888888] font-mono text-[13px]">{p.sku}</td>
+                      <td className="px-4 py-4 text-sm text-[#6B5B4F] font-mono text-[13px]">{p.sku}</td>
                       <td className="px-4 py-4">
                         {p.barcode ? (
                           <div className="flex items-center gap-1.5">
-                            <Barcode className="w-3.5 h-3.5 text-[#555555]" />
-                            <span className="text-[13px] text-[#888888] font-mono tracking-wide">{p.barcode}</span>
+                            <Barcode className="w-3.5 h-3.5 text-[#8B7B6F]" />
+                            <span className="text-[13px] text-[#6B5B4F] font-mono tracking-wide">{p.barcode}</span>
                           </div>
                         ) : (
-                          <span className="text-sm text-[#555555]">—</span>
+                          <span className="text-sm text-[#8B7B6F]">—</span>
                         )}
                       </td>
                       <td className="px-4 py-4">
@@ -945,8 +945,8 @@ export default function InventoryPage() {
                       <td className="px-4 py-4">
                         <StockBar stock={p.stock_quantity} min={p.min_quantity} />
                       </td>
-                      <td className="px-4 py-4 text-sm text-right text-[#888888]">{formatCurrency(p.cost_price)}</td>
-                      <td className="px-4 py-4 text-sm text-right font-medium text-[#f5f0eb]">{formatCurrency(p.sell_price)}</td>
+                      <td className="px-4 py-4 text-sm text-right text-[#6B5B4F]">{formatCurrency(p.cost_price)}</td>
+                      <td className="px-4 py-4 text-sm text-right font-medium text-[#2D1810]">{formatCurrency(p.sell_price)}</td>
                       <td className="px-4 py-4 text-right">
                         <StatusBadge active={p.is_active} />
                       </td>
@@ -958,7 +958,7 @@ export default function InventoryPage() {
                                 e.stopPropagation();
                                 setEditingProduct(p);
                               }}
-                              className="p-2 rounded-lg text-[#888888] hover:text-[#CDB49E] hover:bg-[#3a3028] transition-all duration-200"
+                              className="p-2 rounded-lg text-[#6B5B4F] hover:text-[#9C4A29] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                             >
                               <Pencil className="w-3.5 h-3.5" />
                             </button>
@@ -966,7 +966,7 @@ export default function InventoryPage() {
                           <CanDelete module="inventory">
                             <button
                               onClick={(e) => handleDelete(e, p.id)}
-                              className="p-2 rounded-lg text-[#888888] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                              className="p-2 rounded-lg text-[#6B5B4F] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
@@ -986,8 +986,8 @@ export default function InventoryPage() {
       {viewMode === "grid" && (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {filtered.length === 0 ? (
-            <div className="col-span-full flex flex-col items-center justify-center py-16 text-[#888888]">
-              <Package className="w-8 h-8 mb-3 text-[#888888]/40" />
+            <div className="col-span-full flex flex-col items-center justify-center py-16 text-[#6B5B4F]">
+              <Package className="w-8 h-8 mb-3 text-[#6B5B4F]/40" />
               <p className="text-sm">No products found</p>
             </div>
           ) : (
@@ -1006,11 +1006,11 @@ export default function InventoryPage() {
 
       {/* ═══ FLOATING BULK ACTION BAR ═══ */}
       {selectedIds.size > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-3 px-6 py-3 bg-[#1a1a1a] border border-[#2a2a2a] rounded-2xl shadow-2xl shadow-black/50">
-          <span className="text-sm font-medium text-[#f5f0eb] mr-2">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-3 px-6 py-3 bg-[#F5F2E8] border border-[#D4CDB8] rounded-2xl shadow-2xl shadow-black/50">
+          <span className="text-sm font-medium text-[#2D1810] mr-2">
             {selectedIds.size} selected
           </span>
-          <div className="w-px h-5 bg-[#2a2a2a]" />
+          <div className="w-px h-5 bg-[#D4CDB8]" />
           <CanDelete module="inventory">
             <button
               onClick={handleBulkDelete}
@@ -1022,22 +1022,22 @@ export default function InventoryPage() {
           </CanDelete>
           <button
             onClick={handleBulkExport}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#CDB49E] hover:bg-[#3a3028] rounded-lg transition-all duration-200"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#9C4A29] hover:bg-[rgba(156,74,41,0.15)] rounded-lg transition-all duration-200"
           >
             <Download className="w-3.5 h-3.5" />
             Export
           </button>
           <button
             onClick={() => addToast("Category change coming soon", "info")}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#888888] hover:bg-[#222222] rounded-lg transition-all duration-200"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#6B5B4F] hover:bg-[#DDD7C0] rounded-lg transition-all duration-200"
           >
             <Tags className="w-3.5 h-3.5" />
             Category
           </button>
-          <div className="w-px h-5 bg-[#2a2a2a]" />
+          <div className="w-px h-5 bg-[#D4CDB8]" />
           <button
             onClick={clearSelection}
-            className="p-2 text-[#888888] hover:text-[#f5f0eb] rounded-lg hover:bg-[#222222] transition-all duration-200"
+            className="p-2 text-[#6B5B4F] hover:text-[#2D1810] rounded-lg hover:bg-[#DDD7C0] transition-all duration-200"
           >
             <X className="w-4 h-4" />
           </button>

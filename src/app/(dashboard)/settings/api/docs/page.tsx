@@ -303,7 +303,7 @@ export default function ApiDocsPage() {
       <Card className="bg-neutral-900/50 border-neutral-800">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Book className="h-5 w-5 text-[#CDB49E]" />
+            <Book className="h-5 w-5 text-[#9C4A29]" />
             Getting Started
           </CardTitle>
         </CardHeader>
@@ -311,7 +311,7 @@ export default function ApiDocsPage() {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="p-4 bg-neutral-800/50 rounded-lg">
               <div className="flex items-center gap-2 text-white mb-2">
-                <Key className="h-4 w-4 text-[#CDB49E]" />
+                <Key className="h-4 w-4 text-[#9C4A29]" />
                 <span className="font-medium">1. Get an API Key</span>
               </div>
               <p className="text-sm text-neutral-400 mb-2">
@@ -327,13 +327,13 @@ export default function ApiDocsPage() {
 
             <div className="p-4 bg-neutral-800/50 rounded-lg">
               <div className="flex items-center gap-2 text-white mb-2">
-                <Shield className="h-4 w-4 text-[#CDB49E]" />
+                <Shield className="h-4 w-4 text-[#9C4A29]" />
                 <span className="font-medium">2. Authenticate</span>
               </div>
               <p className="text-sm text-neutral-400">
                 Include your API key in the Authorization header:
               </p>
-              <code className="text-xs text-[#CDB49E] mt-2 block">
+              <code className="text-xs text-[#9C4A29] mt-2 block">
                 Authorization: Bearer atlas_xxxxx...
               </code>
             </div>
@@ -341,10 +341,10 @@ export default function ApiDocsPage() {
 
           <div className="p-4 bg-neutral-800/50 rounded-lg">
             <div className="flex items-center gap-2 text-white mb-2">
-              <Zap className="h-4 w-4 text-[#CDB49E]" />
+              <Zap className="h-4 w-4 text-[#9C4A29]" />
               <span className="font-medium">Base URL</span>
             </div>
-            <code className="text-sm text-[#CDB49E] bg-neutral-900 px-3 py-2 rounded block">
+            <code className="text-sm text-[#9C4A29] bg-neutral-900 px-3 py-2 rounded block">
               {BASE_URL}
             </code>
           </div>
@@ -362,7 +362,7 @@ export default function ApiDocsPage() {
       <Card className="bg-neutral-900/50 border-neutral-800">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Code className="h-5 w-5 text-[#CDB49E]" />
+            <Code className="h-5 w-5 text-[#9C4A29]" />
             Code Examples
           </CardTitle>
         </CardHeader>
@@ -526,7 +526,7 @@ export default function ApiDocsPage() {
                             <div className="space-y-1">
                               {endpoint.params.map((p: any) => (
                                 <div key={p.name} className="text-xs">
-                                  <code className="text-[#CDB49E]">{p.name}</code>
+                                  <code className="text-[#9C4A29]">{p.name}</code>
                                   <span className="text-neutral-500"> ({p.type})</span>
                                   <span className="text-neutral-400"> — {p.description}</span>
                                 </div>
@@ -540,7 +540,7 @@ export default function ApiDocsPage() {
                             <div className="space-y-1">
                               {endpoint.body.map((p: any) => (
                                 <div key={p.name} className="text-xs">
-                                  <code className="text-[#CDB49E]">{p.name}</code>
+                                  <code className="text-[#9C4A29]">{p.name}</code>
                                   {p.required && <span className="text-red-400">*</span>}
                                   <span className="text-neutral-500"> ({p.type})</span>
                                   <span className="text-neutral-400"> — {p.description}</span>
@@ -563,7 +563,7 @@ export default function ApiDocsPage() {
       <Card className="bg-neutral-900/50 border-neutral-800">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Webhook className="h-5 w-5 text-[#CDB49E]" />
+            <Webhook className="h-5 w-5 text-[#9C4A29]" />
             Webhooks
           </CardTitle>
         </CardHeader>
@@ -576,7 +576,7 @@ export default function ApiDocsPage() {
             <h4 className="text-white font-medium">Signature Verification</h4>
             <p className="text-sm text-neutral-400">
               All webhook payloads are signed using HMAC-SHA256. Verify the signature using the 
-              <code className="text-[#CDB49E] mx-1">X-Atlas-Signature</code> header:
+              <code className="text-[#9C4A29] mx-1">X-Atlas-Signature</code> header:
             </p>
             <pre className="bg-neutral-950 p-3 rounded text-xs text-neutral-300 overflow-x-auto">
 {`const crypto = require('crypto');

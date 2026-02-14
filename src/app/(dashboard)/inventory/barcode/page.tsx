@@ -120,14 +120,14 @@ function ScanModeToggle({
   batchCount: number;
 }) {
   return (
-    <div className="flex items-center gap-2 p-1 bg-[#1E293B] rounded-lg">
+    <div className="flex items-center gap-2 p-1 bg-[#F5F2E8] rounded-lg">
       <button
         onClick={() => onModeChange("single")}
         className={cn(
           "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all",
           mode === "single"
-            ? "bg-[#38BDF8] text-[#0F172A]"
-            : "text-[#94A3B8] hover:text-[#F8FAFC]"
+            ? "bg-[#9C4A29] text-[#E8E3CC]"
+            : "text-[#6B5B4F] hover:text-[#2D1810]"
         )}
       >
         <Scan className="w-4 h-4" />
@@ -138,8 +138,8 @@ function ScanModeToggle({
         className={cn(
           "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all relative",
           mode === "batch"
-            ? "bg-[#38BDF8] text-[#0F172A]"
-            : "text-[#94A3B8] hover:text-[#F8FAFC]"
+            ? "bg-[#9C4A29] text-[#E8E3CC]"
+            : "text-[#6B5B4F] hover:text-[#2D1810]"
         )}
       >
         <Layers className="w-4 h-4" />
@@ -148,8 +148,8 @@ function ScanModeToggle({
           <span className={cn(
             "px-1.5 py-0.5 rounded text-xs font-bold",
             mode === "batch"
-              ? "bg-[#0F172A]/20 text-[#0F172A]"
-              : "bg-[#38BDF8]/20 text-[#38BDF8]"
+              ? "bg-[#E8E3CC]/20 text-[#E8E3CC]"
+              : "bg-[#9C4A29]/20 text-[#9C4A29]"
           )}>
             {batchCount}
           </span>
@@ -176,27 +176,27 @@ function ProductLookupCard({
   const isOutOfStock = product.stock_quantity === 0;
 
   return (
-    <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-5 space-y-4">
+    <div className="bg-[#F5F2E8] border border-[#DDD7C0] rounded-xl p-5 space-y-4">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
           <div className={cn(
             "w-12 h-12 rounded-lg flex items-center justify-center",
-            isOutOfStock ? "bg-red-500/10" : isLowStock ? "bg-amber-500/10" : "bg-[#38BDF8]/10"
+            isOutOfStock ? "bg-red-500/10" : isLowStock ? "bg-amber-500/10" : "bg-[#9C4A29]/10"
           )}>
             <Package className={cn(
               "w-6 h-6",
-              isOutOfStock ? "text-red-400" : isLowStock ? "text-amber-400" : "text-[#38BDF8]"
+              isOutOfStock ? "text-red-400" : isLowStock ? "text-amber-400" : "text-[#9C4A29]"
             )} />
           </div>
           <div>
-            <h3 className="font-semibold text-[#F8FAFC]">{product.name}</h3>
+            <h3 className="font-semibold text-[#2D1810]">{product.name}</h3>
             <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-xs text-[#64748B] font-mono">{product.sku}</span>
+              <span className="text-xs text-[#8B7B6F] font-mono">{product.sku}</span>
               {product.barcode && (
                 <>
-                  <span className="text-[#64748B]">•</span>
-                  <span className="text-xs text-[#64748B] font-mono">{product.barcode}</span>
+                  <span className="text-[#8B7B6F]">•</span>
+                  <span className="text-xs text-[#8B7B6F] font-mono">{product.barcode}</span>
                 </>
               )}
             </div>
@@ -206,8 +206,8 @@ function ProductLookupCard({
       </div>
 
       {/* Stock Level */}
-      <div className="flex items-center justify-between p-3 bg-[#0F172A] rounded-lg">
-        <span className="text-sm text-[#64748B]">Current Stock</span>
+      <div className="flex items-center justify-between p-3 bg-[#E8E3CC] rounded-lg">
+        <span className="text-sm text-[#8B7B6F]">Current Stock</span>
         <div className="flex items-center gap-3">
           <span className={cn(
             "text-2xl font-bold tabular-nums",
@@ -247,24 +247,24 @@ function ProductLookupCard({
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-2 pt-2 border-t border-[#334155]">
+      <div className="flex items-center gap-2 pt-2 border-t border-[#DDD7C0]">
         <button
           onClick={onPrintLabel}
-          className="flex items-center gap-1.5 px-3 py-2 border border-[#334155] rounded-lg text-xs font-medium text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#334155]/50 transition-all"
+          className="flex items-center gap-1.5 px-3 py-2 border border-[#DDD7C0] rounded-lg text-xs font-medium text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0]/50 transition-all"
         >
           <Printer className="w-3.5 h-3.5" />
           Print Label
         </button>
         <button
           onClick={onView}
-          className="flex items-center gap-1.5 px-3 py-2 border border-[#334155] rounded-lg text-xs font-medium text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#334155]/50 transition-all"
+          className="flex items-center gap-1.5 px-3 py-2 border border-[#DDD7C0] rounded-lg text-xs font-medium text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0]/50 transition-all"
         >
           <Eye className="w-3.5 h-3.5" />
           View
         </button>
         <button
           onClick={onEdit}
-          className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-[#38BDF8] text-[#0F172A] rounded-lg text-xs font-semibold hover:bg-[#0EA5E9] transition-all"
+          className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-xs font-semibold hover:bg-[#7D3B21] transition-all"
         >
           <Pencil className="w-3.5 h-3.5" />
           Edit Product
@@ -284,19 +284,19 @@ function ScanHistoryPanel({
   onClear: () => void;
 }) {
   return (
-    <div className="bg-[#1E293B] border border-[#334155] rounded-xl overflow-hidden">
-      <div className="px-4 py-3 border-b border-[#334155] flex items-center justify-between">
+    <div className="bg-[#F5F2E8] border border-[#DDD7C0] rounded-xl overflow-hidden">
+      <div className="px-4 py-3 border-b border-[#DDD7C0] flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <History className="w-4 h-4 text-[#38BDF8]" />
-          <span className="text-sm font-medium text-[#F8FAFC]">Scan History</span>
-          <span className="px-1.5 py-0.5 bg-[#334155] rounded text-[10px] text-[#94A3B8]">
+          <History className="w-4 h-4 text-[#9C4A29]" />
+          <span className="text-sm font-medium text-[#2D1810]">Scan History</span>
+          <span className="px-1.5 py-0.5 bg-[#DDD7C0] rounded text-[10px] text-[#6B5B4F]">
             {history.length}
           </span>
         </div>
         {history.length > 0 && (
           <button
             onClick={onClear}
-            className="flex items-center gap-1 text-xs text-[#64748B] hover:text-red-400 transition-colors"
+            className="flex items-center gap-1 text-xs text-[#8B7B6F] hover:text-red-400 transition-colors"
           >
             <Trash2 className="w-3 h-3" />
             Clear
@@ -306,17 +306,17 @@ function ScanHistoryPanel({
 
       <div className="max-h-[400px] overflow-y-auto">
         {history.length === 0 ? (
-          <div className="px-4 py-8 text-center text-[#64748B]">
+          <div className="px-4 py-8 text-center text-[#8B7B6F]">
             <ClipboardList className="w-8 h-8 mx-auto mb-2 opacity-40" />
             <p className="text-sm">No scan history yet</p>
           </div>
         ) : (
-          <div className="divide-y divide-[#334155]/50">
+          <div className="divide-y divide-[#DDD7C0]/50">
             {history.map((item) => (
               <button
                 key={item.id}
                 onClick={() => onSelect(item)}
-                className="w-full px-4 py-3 flex items-center justify-between hover:bg-[#334155]/30 transition-colors text-left"
+                className="w-full px-4 py-3 flex items-center justify-between hover:bg-[#DDD7C0]/30 transition-colors text-left"
               >
                 <div className="flex items-center gap-3">
                   <div className={cn(
@@ -330,9 +330,9 @@ function ScanHistoryPanel({
                     )}
                   </div>
                   <div>
-                    <p className="text-xs font-mono text-[#F8FAFC]">{item.barcode}</p>
+                    <p className="text-xs font-mono text-[#2D1810]">{item.barcode}</p>
                     {item.productName && (
-                      <p className="text-[10px] text-[#64748B]">{item.productName}</p>
+                      <p className="text-[10px] text-[#8B7B6F]">{item.productName}</p>
                     )}
                   </div>
                 </div>
@@ -342,8 +342,8 @@ function ScanHistoryPanel({
                       "px-1.5 py-0.5 rounded text-[10px] font-medium",
                       item.action === "stock_in" && "bg-emerald-500/20 text-emerald-400",
                       item.action === "stock_out" && "bg-red-500/20 text-red-400",
-                      item.action === "lookup" && "bg-[#334155] text-[#94A3B8]",
-                      item.action === "batch" && "bg-[#38BDF8]/20 text-[#38BDF8]"
+                      item.action === "lookup" && "bg-[#DDD7C0] text-[#6B5B4F]",
+                      item.action === "batch" && "bg-[#9C4A29]/20 text-[#9C4A29]"
                     )}>
                       {item.action === "stock_in" && `+${item.quantity || 1}`}
                       {item.action === "stock_out" && `-${item.quantity || 1}`}
@@ -351,10 +351,10 @@ function ScanHistoryPanel({
                       {item.action === "batch" && "Batch"}
                     </span>
                   )}
-                  <span className="text-[10px] text-[#64748B]">
+                  <span className="text-[10px] text-[#8B7B6F]">
                     {item.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </span>
-                  <ChevronRight className="w-3 h-3 text-[#64748B]" />
+                  <ChevronRight className="w-3 h-3 text-[#8B7B6F]" />
                 </div>
               </button>
             ))}
@@ -381,12 +381,12 @@ function LabelPrintQueue({
   const totalLabels = labels.reduce((sum, l) => sum + l.quantity, 0);
 
   return (
-    <div className="bg-[#1E293B] border border-[#334155] rounded-xl overflow-hidden">
-      <div className="px-4 py-3 border-b border-[#334155] flex items-center justify-between">
+    <div className="bg-[#F5F2E8] border border-[#DDD7C0] rounded-xl overflow-hidden">
+      <div className="px-4 py-3 border-b border-[#DDD7C0] flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Tag className="w-4 h-4 text-[#38BDF8]" />
-          <span className="text-sm font-medium text-[#F8FAFC]">Print Queue</span>
-          <span className="px-1.5 py-0.5 bg-[#38BDF8]/20 rounded text-[10px] text-[#38BDF8] font-medium">
+          <Tag className="w-4 h-4 text-[#9C4A29]" />
+          <span className="text-sm font-medium text-[#2D1810]">Print Queue</span>
+          <span className="px-1.5 py-0.5 bg-[#9C4A29]/20 rounded text-[10px] text-[#9C4A29] font-medium">
             {totalLabels} labels
           </span>
         </div>
@@ -394,7 +394,7 @@ function LabelPrintQueue({
           {labels.length > 0 && (
             <button
               onClick={onClear}
-              className="text-xs text-[#64748B] hover:text-red-400 transition-colors"
+              className="text-xs text-[#8B7B6F] hover:text-red-400 transition-colors"
             >
               Clear All
             </button>
@@ -403,14 +403,14 @@ function LabelPrintQueue({
       </div>
 
       {labels.length === 0 ? (
-        <div className="px-4 py-8 text-center text-[#64748B]">
+        <div className="px-4 py-8 text-center text-[#8B7B6F]">
           <Printer className="w-8 h-8 mx-auto mb-2 opacity-40" />
           <p className="text-sm">No labels in queue</p>
           <p className="text-xs mt-1">Scan products to add labels</p>
         </div>
       ) : (
         <>
-          <div className="divide-y divide-[#334155]/50 max-h-[300px] overflow-y-auto">
+          <div className="divide-y divide-[#DDD7C0]/50 max-h-[300px] overflow-y-auto">
             {labels.map((label) => (
               <div key={label.productId} className="px-4 py-3 flex items-center gap-3">
                 <div className="w-16 h-12 bg-white rounded flex items-center justify-center overflow-hidden">
@@ -421,29 +421,29 @@ function LabelPrintQueue({
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-[#F8FAFC] truncate">{label.productName}</p>
-                  <p className="text-[10px] text-[#64748B] font-mono">{label.barcode || label.sku}</p>
+                  <p className="text-sm font-medium text-[#2D1810] truncate">{label.productName}</p>
+                  <p className="text-[10px] text-[#8B7B6F] font-mono">{label.barcode || label.sku}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => onUpdateQuantity(label.productId, Math.max(1, label.quantity - 1))}
-                    className="w-6 h-6 rounded bg-[#0F172A] flex items-center justify-center text-[#94A3B8] hover:text-[#F8FAFC] transition-colors"
+                    className="w-6 h-6 rounded bg-[#E8E3CC] flex items-center justify-center text-[#6B5B4F] hover:text-[#2D1810] transition-colors"
                   >
                     <Minus className="w-3 h-3" />
                   </button>
-                  <span className="w-8 text-center text-sm font-medium text-[#F8FAFC]">
+                  <span className="w-8 text-center text-sm font-medium text-[#2D1810]">
                     {label.quantity}
                   </span>
                   <button
                     onClick={() => onUpdateQuantity(label.productId, label.quantity + 1)}
-                    className="w-6 h-6 rounded bg-[#0F172A] flex items-center justify-center text-[#94A3B8] hover:text-[#F8FAFC] transition-colors"
+                    className="w-6 h-6 rounded bg-[#E8E3CC] flex items-center justify-center text-[#6B5B4F] hover:text-[#2D1810] transition-colors"
                   >
                     <Plus className="w-3 h-3" />
                   </button>
                 </div>
                 <button
                   onClick={() => onRemove(label.productId)}
-                  className="p-1 text-[#64748B] hover:text-red-400 transition-colors"
+                  className="p-1 text-[#8B7B6F] hover:text-red-400 transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -451,10 +451,10 @@ function LabelPrintQueue({
             ))}
           </div>
           
-          <div className="px-4 py-3 border-t border-[#334155]">
+          <div className="px-4 py-3 border-t border-[#DDD7C0]">
             <button
               onClick={onPrint}
-              className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#38BDF8] text-[#0F172A] rounded-lg font-semibold hover:bg-[#0EA5E9] transition-all"
+              className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg font-semibold hover:bg-[#7D3B21] transition-all"
             >
               <Printer className="w-4 h-4" />
               Print {totalLabels} Label{totalLabels !== 1 ? "s" : ""}
@@ -525,16 +525,16 @@ function CameraScannerView({
 
   if (!hasCamera) {
     return (
-      <div className="aspect-video bg-[#1E293B] rounded-xl flex flex-col items-center justify-center p-6 text-center">
+      <div className="aspect-video bg-[#F5F2E8] rounded-xl flex flex-col items-center justify-center p-6 text-center">
         <AlertCircle className="w-12 h-12 text-red-400 mb-3" />
         <p className="text-sm text-red-400 font-medium">{cameraError}</p>
-        <p className="text-xs text-[#64748B] mt-1">Use manual entry instead</p>
+        <p className="text-xs text-[#8B7B6F] mt-1">Use manual entry instead</p>
       </div>
     );
   }
 
   return (
-    <div className="relative aspect-video bg-[#0F172A] rounded-xl overflow-hidden">
+    <div className="relative aspect-video bg-[#E8E3CC] rounded-xl overflow-hidden">
       <video
         ref={videoRef}
         autoPlay
@@ -545,20 +545,20 @@ function CameraScannerView({
       
       {/* Scan overlay */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-72 h-24 border-2 border-[#38BDF8] rounded-lg relative">
-          <div className="absolute inset-0 bg-[#38BDF8]/5" />
-          <div className="absolute -top-0.5 -left-0.5 w-4 h-4 border-t-2 border-l-2 border-[#38BDF8]" />
-          <div className="absolute -top-0.5 -right-0.5 w-4 h-4 border-t-2 border-r-2 border-[#38BDF8]" />
-          <div className="absolute -bottom-0.5 -left-0.5 w-4 h-4 border-b-2 border-l-2 border-[#38BDF8]" />
-          <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 border-b-2 border-r-2 border-[#38BDF8]" />
-          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#38BDF8] animate-pulse" />
+        <div className="w-72 h-24 border-2 border-[#9C4A29] rounded-lg relative">
+          <div className="absolute inset-0 bg-[#9C4A29]/5" />
+          <div className="absolute -top-0.5 -left-0.5 w-4 h-4 border-t-2 border-l-2 border-[#9C4A29]" />
+          <div className="absolute -top-0.5 -right-0.5 w-4 h-4 border-t-2 border-r-2 border-[#9C4A29]" />
+          <div className="absolute -bottom-0.5 -left-0.5 w-4 h-4 border-b-2 border-l-2 border-[#9C4A29]" />
+          <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 border-b-2 border-r-2 border-[#9C4A29]" />
+          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#9C4A29] animate-pulse" />
         </div>
       </div>
 
       {/* Status badge */}
       <div className="absolute bottom-4 left-0 right-0 flex justify-center">
-        <span className="px-3 py-1.5 bg-[#0F172A]/80 backdrop-blur-sm rounded-full text-xs text-[#38BDF8] flex items-center gap-2">
-          <span className="w-2 h-2 bg-[#38BDF8] rounded-full animate-pulse" />
+        <span className="px-3 py-1.5 bg-[#E8E3CC]/80 backdrop-blur-sm rounded-full text-xs text-[#9C4A29] flex items-center gap-2">
+          <span className="w-2 h-2 bg-[#9C4A29] rounded-full animate-pulse" />
           Scanning...
         </span>
       </div>
@@ -566,7 +566,7 @@ function CameraScannerView({
       {/* Demo button */}
       <button
         onClick={simulateScan}
-        className="absolute top-4 right-4 px-3 py-1.5 bg-[#0F172A]/80 backdrop-blur-sm rounded-lg text-xs text-[#94A3B8] hover:text-[#F8FAFC] transition-colors flex items-center gap-1.5"
+        className="absolute top-4 right-4 px-3 py-1.5 bg-[#E8E3CC]/80 backdrop-blur-sm rounded-lg text-xs text-[#6B5B4F] hover:text-[#2D1810] transition-colors flex items-center gap-1.5"
       >
         <RefreshCw className="w-3 h-3" />
         Simulate Scan
@@ -790,10 +790,10 @@ export default function BarcodeManagementPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#F8FAFC]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#2D1810]">
             Barcode Scanner
           </h1>
-          <p className="text-[#94A3B8] text-sm mt-1">
+          <p className="text-[#6B5B4F] text-sm mt-1">
             Scan, lookup, and manage product barcodes
           </p>
         </div>
@@ -803,8 +803,8 @@ export default function BarcodeManagementPage() {
             className={cn(
               "p-2.5 rounded-lg transition-all border",
               soundEnabled
-                ? "border-[#38BDF8]/50 text-[#38BDF8] bg-[#38BDF8]/10"
-                : "border-[#334155] text-[#64748B] hover:text-[#F8FAFC]"
+                ? "border-[#9C4A29]/50 text-[#9C4A29] bg-[#9C4A29]/10"
+                : "border-[#DDD7C0] text-[#8B7B6F] hover:text-[#2D1810]"
             )}
             title={soundEnabled ? "Sound on" : "Sound off"}
           >
@@ -822,14 +822,14 @@ export default function BarcodeManagementPage() {
         {/* ═══ LEFT COLUMN: Scanner ═══ */}
         <div className="lg:col-span-2 space-y-6">
           {/* Scan Mode Toggle */}
-          <div className="flex items-center gap-2 p-1 bg-[#1E293B] rounded-lg w-fit">
+          <div className="flex items-center gap-2 p-1 bg-[#F5F2E8] rounded-lg w-fit">
             <button
               onClick={() => setScanMode("manual")}
               className={cn(
                 "flex items-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all",
                 scanMode === "manual"
-                  ? "bg-[#38BDF8] text-[#0F172A]"
-                  : "text-[#94A3B8] hover:text-[#F8FAFC]"
+                  ? "bg-[#9C4A29] text-[#E8E3CC]"
+                  : "text-[#6B5B4F] hover:text-[#2D1810]"
               )}
             >
               <Keyboard className="w-4 h-4" />
@@ -840,8 +840,8 @@ export default function BarcodeManagementPage() {
               className={cn(
                 "flex items-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all",
                 scanMode === "camera"
-                  ? "bg-[#38BDF8] text-[#0F172A]"
-                  : "text-[#94A3B8] hover:text-[#F8FAFC]"
+                  ? "bg-[#9C4A29] text-[#E8E3CC]"
+                  : "text-[#6B5B4F] hover:text-[#2D1810]"
               )}
             >
               <Camera className="w-4 h-4" />
@@ -853,20 +853,20 @@ export default function BarcodeManagementPage() {
           {scanMode === "manual" ? (
             <form onSubmit={handleManualSubmit}>
               <div className="relative">
-                <Scan className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#64748B]" />
+                <Scan className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8B7B6F]" />
                 <input
                   ref={inputRef}
                   type="text"
                   value={manualCode}
                   onChange={(e) => setManualCode(e.target.value)}
                   placeholder="Enter barcode or SKU..."
-                  className="w-full pl-12 pr-24 py-4 bg-[#1E293B] border border-[#334155] rounded-xl text-lg text-[#F8FAFC] placeholder-[#64748B] focus:outline-none focus:border-[#38BDF8] transition-colors font-mono tracking-wider"
+                  className="w-full pl-12 pr-24 py-4 bg-[#F5F2E8] border border-[#DDD7C0] rounded-xl text-lg text-[#2D1810] placeholder-[#8B7B6F] focus:outline-none focus:border-[#9C4A29] transition-colors font-mono tracking-wider"
                   autoComplete="off"
                 />
                 <button
                   type="submit"
                   disabled={!manualCode.trim()}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#38BDF8] text-[#0F172A] rounded-lg font-semibold hover:bg-[#0EA5E9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#9C4A29] text-[#E8E3CC] rounded-lg font-semibold hover:bg-[#7D3B21] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Scan
                 </button>
@@ -889,38 +889,38 @@ export default function BarcodeManagementPage() {
 
           {/* Batch Mode Panel */}
           {operationMode === "batch" && batchItems.size > 0 && (
-            <div className="bg-[#1E293B] border border-[#334155] rounded-xl overflow-hidden">
-              <div className="px-4 py-3 border-b border-[#334155] flex items-center justify-between">
+            <div className="bg-[#F5F2E8] border border-[#DDD7C0] rounded-xl overflow-hidden">
+              <div className="px-4 py-3 border-b border-[#DDD7C0] flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-[#38BDF8]" />
-                  <span className="text-sm font-medium text-[#F8FAFC]">Batch Items</span>
-                  <span className="px-1.5 py-0.5 bg-[#38BDF8]/20 rounded text-[10px] text-[#38BDF8] font-medium">
+                  <Layers className="w-4 h-4 text-[#9C4A29]" />
+                  <span className="text-sm font-medium text-[#2D1810]">Batch Items</span>
+                  <span className="px-1.5 py-0.5 bg-[#9C4A29]/20 rounded text-[10px] text-[#9C4A29] font-medium">
                     {batchItems.size} products
                   </span>
                 </div>
                 <button
                   onClick={() => setBatchItems(new Map())}
-                  className="text-xs text-[#64748B] hover:text-red-400 transition-colors"
+                  className="text-xs text-[#8B7B6F] hover:text-red-400 transition-colors"
                 >
                   Clear
                 </button>
               </div>
 
-              <div className="divide-y divide-[#334155]/50 max-h-[200px] overflow-y-auto">
+              <div className="divide-y divide-[#DDD7C0]/50 max-h-[200px] overflow-y-auto">
                 {Array.from(batchItems.values()).map(({ product, quantity }) => (
                   <div key={product.id} className="px-4 py-2 flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-[#F8FAFC]">{product.name}</p>
-                      <p className="text-[10px] text-[#64748B] font-mono">{product.sku}</p>
+                      <p className="text-sm text-[#2D1810]">{product.name}</p>
+                      <p className="text-[10px] text-[#8B7B6F] font-mono">{product.sku}</p>
                     </div>
-                    <span className="px-2 py-1 bg-[#38BDF8]/20 rounded text-sm text-[#38BDF8] font-medium">
+                    <span className="px-2 py-1 bg-[#9C4A29]/20 rounded text-sm text-[#9C4A29] font-medium">
                       ×{quantity}
                     </span>
                   </div>
                 ))}
               </div>
 
-              <div className="px-4 py-3 border-t border-[#334155] grid grid-cols-2 gap-3">
+              <div className="px-4 py-3 border-t border-[#DDD7C0] grid grid-cols-2 gap-3">
                 <button
                   onClick={() => handleProcessBatch("stock_in")}
                   className="flex items-center justify-center gap-2 py-2.5 bg-emerald-500/10 text-emerald-400 rounded-lg font-medium hover:bg-emerald-500/20 transition-all"

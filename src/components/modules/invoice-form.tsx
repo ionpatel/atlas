@@ -23,12 +23,12 @@ interface LineItem {
 }
 
 const inputClass =
-  "w-full px-4 py-2.5 bg-[#111111] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] placeholder:text-[#888888]/50 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#CDB49E]/50 transition-all duration-200";
+  "w-full px-4 py-2.5 bg-[#E8E3CC] border border-[#D4CDB8] rounded-lg text-sm text-[#2D1810] placeholder:text-[#6B5B4F]/50 focus:outline-none focus:ring-2 focus:ring-[#9C4A29]/30 focus:border-[#9C4A29]/50 transition-all duration-200";
 
 const lineInputClass =
-  "px-3 py-2 bg-[#111111] border border-[#2a2a2a] rounded-lg text-sm text-[#f5f0eb] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 transition-all duration-200";
+  "px-3 py-2 bg-[#E8E3CC] border border-[#D4CDB8] rounded-lg text-sm text-[#2D1810] focus:outline-none focus:ring-2 focus:ring-[#9C4A29]/30 transition-all duration-200";
 
-const labelClass = "block text-sm font-medium text-[#888888] mb-2";
+const labelClass = "block text-sm font-medium text-[#6B5B4F] mb-2";
 
 const PAYMENT_TERMS: Record<string, { label: string; days: number }> = {
   due_on_receipt: { label: "Due on Receipt", days: 0 },
@@ -215,7 +215,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
         <label className={labelClass}>Line Items</label>
         <div className="space-y-2">
           {/* Header */}
-          <div className="hidden sm:grid grid-cols-[1fr_2fr_70px_90px_70px_80px_40px] gap-2 text-[10px] text-[#888888] font-semibold uppercase tracking-widest px-1 pb-1">
+          <div className="hidden sm:grid grid-cols-[1fr_2fr_70px_90px_70px_80px_40px] gap-2 text-[10px] text-[#6B5B4F] font-semibold uppercase tracking-widest px-1 pb-1">
             <span>Product</span>
             <span>Description</span>
             <span className="text-right">Qty</span>
@@ -230,7 +230,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
               return (
                 <div key={line.key} className="flex items-center gap-2">
                   <div className="flex items-center gap-2 flex-1">
-                    <Type className="w-3.5 h-3.5 text-[#CDB49E] flex-shrink-0" />
+                    <Type className="w-3.5 h-3.5 text-[#9C4A29] flex-shrink-0" />
                     <input
                       type="text"
                       value={line.description}
@@ -242,7 +242,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
                   <button
                     type="button"
                     onClick={() => removeLine(line.key)}
-                    className="p-2 text-[#888888] hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
+                    className="p-2 text-[#6B5B4F] hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -254,19 +254,19 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
               return (
                 <div key={line.key} className="flex items-center gap-2">
                   <div className="flex items-center gap-2 flex-1">
-                    <StickyNote className="w-3.5 h-3.5 text-[#888888] flex-shrink-0" />
+                    <StickyNote className="w-3.5 h-3.5 text-[#6B5B4F] flex-shrink-0" />
                     <input
                       type="text"
                       value={line.description}
                       onChange={(e) => updateLine(line.key, "description", e.target.value)}
-                      className={`${lineInputClass} flex-1 italic text-[#888888]`}
+                      className={`${lineInputClass} flex-1 italic text-[#6B5B4F]`}
                       placeholder="Add a note..."
                     />
                   </div>
                   <button
                     type="button"
                     onClick={() => removeLine(line.key)}
-                    className="p-2 text-[#888888] hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
+                    className="p-2 text-[#6B5B4F] hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -331,14 +331,14 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
                   className={`${lineInputClass} text-right`}
                 />
 
-                <div className="text-sm text-right font-medium text-[#CDB49E] px-1" title={`Tax: ${formatCurrency(lineTax, currency)}`}>
+                <div className="text-sm text-right font-medium text-[#9C4A29] px-1" title={`Tax: ${formatCurrency(lineTax, currency)}`}>
                   {formatCurrency(lineTotal + lineTax, currency)}
                 </div>
 
                 <button
                   type="button"
                   onClick={() => removeLine(line.key)}
-                  className="p-2 text-[#888888] hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
+                  className="p-2 text-[#6B5B4F] hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
                   disabled={lines.length <= 1}
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -353,7 +353,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
           <button
             type="button"
             onClick={() => addLine("line")}
-            className="flex items-center gap-2 text-sm text-[#CDB49E] hover:text-[#d4c0ad] transition-colors font-medium"
+            className="flex items-center gap-2 text-sm text-[#9C4A29] hover:text-[#B85A35] transition-colors font-medium"
           >
             <Plus className="w-3.5 h-3.5" />
             Add a line
@@ -361,7 +361,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
           <button
             type="button"
             onClick={() => addLine("section")}
-            className="flex items-center gap-2 text-sm text-[#888888] hover:text-[#f5f0eb] transition-colors font-medium"
+            className="flex items-center gap-2 text-sm text-[#6B5B4F] hover:text-[#2D1810] transition-colors font-medium"
           >
             <Type className="w-3.5 h-3.5" />
             Add a section
@@ -369,7 +369,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
           <button
             type="button"
             onClick={() => addLine("note")}
-            className="flex items-center gap-2 text-sm text-[#888888] hover:text-[#f5f0eb] transition-colors font-medium"
+            className="flex items-center gap-2 text-sm text-[#6B5B4F] hover:text-[#2D1810] transition-colors font-medium"
           >
             <StickyNote className="w-3.5 h-3.5" />
             Add a note
@@ -379,18 +379,18 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
 
       {/* Totals */}
       <div className="flex justify-end">
-        <div className="w-72 space-y-2.5 text-sm bg-[#111111] border border-[#2a2a2a] rounded-xl p-5">
-          <div className="flex justify-between text-[#888888]">
+        <div className="w-72 space-y-2.5 text-sm bg-[#E8E3CC] border border-[#D4CDB8] rounded-xl p-5">
+          <div className="flex justify-between text-[#6B5B4F]">
             <span>Subtotal</span>
-            <span className="text-[#f5f0eb] font-medium">{formatCurrency(subtotal, currency)}</span>
+            <span className="text-[#2D1810] font-medium">{formatCurrency(subtotal, currency)}</span>
           </div>
-          <div className="flex justify-between text-[#888888]">
+          <div className="flex justify-between text-[#6B5B4F]">
             <span>Tax (HST 13%)</span>
-            <span className="text-[#f5f0eb] font-medium">{formatCurrency(totalTax, currency)}</span>
+            <span className="text-[#2D1810] font-medium">{formatCurrency(totalTax, currency)}</span>
           </div>
-          <div className="flex justify-between font-semibold text-base border-t border-[#2a2a2a] pt-3 mt-3">
-            <span className="text-[#f5f0eb]">Total ({currency})</span>
-            <span className="text-[#CDB49E]">{formatCurrency(total, currency)}</span>
+          <div className="flex justify-between font-semibold text-base border-t border-[#D4CDB8] pt-3 mt-3">
+            <span className="text-[#2D1810]">Total ({currency})</span>
+            <span className="text-[#9C4A29]">{formatCurrency(total, currency)}</span>
           </div>
         </div>
       </div>
@@ -407,17 +407,17 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
         />
       </div>
 
-      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#2a2a2a]">
+      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#D4CDB8]">
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 text-sm font-medium text-[#888888] hover:text-[#f5f0eb] bg-[#222222] border border-[#2a2a2a] rounded-lg hover:bg-[#2a2a2a] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-medium text-[#6B5B4F] hover:text-[#2D1810] bg-[#DDD7C0] border border-[#D4CDB8] rounded-lg hover:bg-[#D4CDB8] transition-all duration-200"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-5 py-2.5 text-sm font-semibold bg-[#CDB49E] text-[#111111] rounded-lg hover:bg-[#d4c0ad] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-semibold bg-[#9C4A29] text-[#E8E3CC] rounded-lg hover:bg-[#B85A35] transition-all duration-200"
         >
           Create Invoice
         </button>

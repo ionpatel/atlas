@@ -82,18 +82,18 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "h-screen sticky top-0 bg-[#0F172A] flex flex-col transition-all duration-300 ease-in-out border-r border-[#1E293B]",
+        "h-screen sticky top-0 bg-[#E8E3CC] flex flex-col transition-all duration-300 ease-in-out border-r border-[#F5F2E8]",
         collapsed ? "w-[72px]" : "w-64"
       )}
     >
       {/* Logo */}
-      <div className="h-16 flex items-center px-5 border-b border-[#1E293B]">
+      <div className="h-16 flex items-center px-5 border-b border-[#F5F2E8]">
         <Link href="/dashboard" className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#38BDF8] to-[#0EA5E9] flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#38BDF8]/20">
-            <span className="text-[#0F172A] font-bold text-sm tracking-tight">A</span>
+          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#9C4A29] to-[#7D3B21] flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#9C4A29]/20">
+            <span className="text-[#E8E3CC] font-bold text-sm tracking-tight">A</span>
           </div>
           {!collapsed && (
-            <span className="text-[#F8FAFC] font-semibold text-lg tracking-tight">
+            <span className="text-[#2D1810] font-semibold text-lg tracking-tight">
               Atlas
             </span>
           )}
@@ -102,7 +102,7 @@ export function Sidebar() {
 
       {/* Organization Switcher */}
       {!collapsed && (
-        <div className="px-2 py-3 border-b border-[#1E293B]">
+        <div className="px-2 py-3 border-b border-[#F5F2E8]">
           <OrgSwitcher />
         </div>
       )}
@@ -120,11 +120,11 @@ export function Sidebar() {
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200",
                 isActive
-                  ? "bg-gradient-to-r from-[#38BDF8] to-[#0EA5E9] text-[#0F172A] shadow-md shadow-[#38BDF8]/20"
-                  : "text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#1E293B]"
+                  ? "bg-gradient-to-r from-[#9C4A29] to-[#7D3B21] text-[#E8E3CC] shadow-md shadow-[#9C4A29]/20"
+                  : "text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#F5F2E8]"
               )}
             >
-              <item.icon className={cn("w-[18px] h-[18px] flex-shrink-0", isActive && "text-[#0F172A]")} />
+              <item.icon className={cn("w-[18px] h-[18px] flex-shrink-0", isActive && "text-[#E8E3CC]")} />
               {!collapsed && <span>{item.label}</span>}
             </Link>
           );
@@ -132,10 +132,10 @@ export function Sidebar() {
       </nav>
 
       {/* Collapse toggle */}
-      <div className="p-3 border-t border-[#1E293B]">
+      <div className="p-3 border-t border-[#F5F2E8]">
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="w-full flex items-center justify-center py-2.5 text-[#94A3B8] hover:text-[#F8FAFC] rounded-lg hover:bg-[#1E293B] transition-all duration-200"
+          className="w-full flex items-center justify-center py-2.5 text-[#6B5B4F] hover:text-[#2D1810] rounded-lg hover:bg-[#F5F2E8] transition-all duration-200"
         >
           <ChevronLeft
             className={cn(

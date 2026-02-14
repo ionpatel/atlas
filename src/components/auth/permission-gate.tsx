@@ -131,7 +131,7 @@ export function RequirePermission({
               />
             </svg>
           </div>
-          <p className="text-[#888888] text-sm">{errorMessage}</p>
+          <p className="text-[#6B5B4F] text-sm">{errorMessage}</p>
         </div>
       </div>
     );

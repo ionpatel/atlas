@@ -159,7 +159,7 @@ export function WidgetGrid({
               <div className="relative">
                 <button
                   onClick={() => setShowAddMenu(!showAddMenu)}
-                  className="flex items-center gap-2 px-3 py-1.5 bg-[#CDB49E] text-[#111111] rounded-lg text-xs font-medium hover:bg-[#d4c0ad] transition-all"
+                  className="flex items-center gap-2 px-3 py-1.5 bg-[#9C4A29] text-[#E8E3CC] rounded-lg text-xs font-medium hover:bg-[#B85A35] transition-all"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Add Widget
@@ -170,12 +170,12 @@ export function WidgetGrid({
                       className="fixed inset-0 z-10"
                       onClick={() => setShowAddMenu(false)}
                     />
-                    <div className="absolute left-0 top-full mt-1 w-56 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg shadow-xl z-20 py-1">
+                    <div className="absolute left-0 top-full mt-1 w-56 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg shadow-xl z-20 py-1">
                       {addableWidgets.map((w) => (
                         <button
                           key={w.type}
                           onClick={() => handleAddWidget(w.type)}
-                          className="w-full text-left px-4 py-2.5 text-xs text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] transition-colors"
+                          className="w-full text-left px-4 py-2.5 text-xs text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-colors"
                         >
                           {w.title}
                         </button>
@@ -186,7 +186,7 @@ export function WidgetGrid({
               </div>
               <button
                 onClick={handleResetLayout}
-                className="flex items-center gap-1.5 px-3 py-1.5 border border-[#2a2a2a] rounded-lg text-xs text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222] transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 border border-[#D4CDB8] rounded-lg text-xs text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0] transition-all"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 Reset
@@ -200,7 +200,7 @@ export function WidgetGrid({
             "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
             editMode
               ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-              : "border border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] hover:bg-[#222222]"
+              : "border border-[#D4CDB8] text-[#6B5B4F] hover:text-[#2D1810] hover:bg-[#DDD7C0]"
           )}
         >
           <Settings className="w-3.5 h-3.5" />
@@ -228,7 +228,7 @@ export function WidgetGrid({
               <div className="absolute inset-0 z-10 pointer-events-none">
                 {/* Drag Handle */}
                 <div className="absolute top-2 left-2 pointer-events-auto">
-                  <button className="p-1.5 rounded bg-[#222222] border border-[#2a2a2a] text-[#888888] hover:text-[#f5f0eb] cursor-grab active:cursor-grabbing">
+                  <button className="p-1.5 rounded bg-[#DDD7C0] border border-[#D4CDB8] text-[#6B5B4F] hover:text-[#2D1810] cursor-grab active:cursor-grabbing">
                     <GripVertical className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -241,7 +241,7 @@ export function WidgetGrid({
                     onChange={(e) =>
                       handleSizeChange(widget.id, e.target.value as Widget["size"])
                     }
-                    className="px-2 py-1.5 text-[10px] bg-[#222222] border border-[#2a2a2a] rounded text-[#888888] focus:outline-none cursor-pointer"
+                    className="px-2 py-1.5 text-[10px] bg-[#DDD7C0] border border-[#D4CDB8] rounded text-[#6B5B4F] focus:outline-none cursor-pointer"
                   >
                     <option value="small">Small</option>
                     <option value="medium">Medium</option>
@@ -259,7 +259,7 @@ export function WidgetGrid({
                 </div>
 
                 {/* Edit Mode Border */}
-                <div className="absolute inset-0 border-2 border-dashed border-[#CDB49E]/30 rounded-xl" />
+                <div className="absolute inset-0 border-2 border-dashed border-[#9C4A29]/30 rounded-xl" />
               </div>
             )}
 
@@ -271,8 +271,8 @@ export function WidgetGrid({
 
       {/* Hidden Widgets List (shown in edit mode) */}
       {editMode && hiddenWidgets.length > 0 && (
-        <div className="mt-6 p-4 bg-[#111111] border border-[#2a2a2a] rounded-xl">
-          <p className="text-xs font-medium text-[#888888] mb-3 flex items-center gap-2">
+        <div className="mt-6 p-4 bg-[#E8E3CC] border border-[#D4CDB8] rounded-xl">
+          <p className="text-xs font-medium text-[#6B5B4F] mb-3 flex items-center gap-2">
             <EyeOff className="w-3.5 h-3.5" />
             Hidden Widgets
           </p>
@@ -281,7 +281,7 @@ export function WidgetGrid({
               <button
                 key={widget.id}
                 onClick={() => handleToggleVisibility(widget.id)}
-                className="flex items-center gap-2 px-3 py-1.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg text-xs text-[#888888] hover:text-[#f5f0eb] hover:border-[#CDB49E]/30 transition-all"
+                className="flex items-center gap-2 px-3 py-1.5 bg-[#F5F2E8] border border-[#D4CDB8] rounded-lg text-xs text-[#6B5B4F] hover:text-[#2D1810] hover:border-[#9C4A29]/30 transition-all"
               >
                 <Eye className="w-3.5 h-3.5" />
                 {widget.title}

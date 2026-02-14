@@ -194,7 +194,7 @@ export default function WarehousesPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-[#38BDF8]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#9C4A29]" />
       </div>
     );
   }
@@ -205,26 +205,26 @@ export default function WarehousesPage() {
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <Link href="/inventory" className="text-[#94A3B8] hover:text-white">
+            <Link href="/inventory" className="text-[#6B5B4F] hover:text-white">
               Inventory
             </Link>
-            <span className="text-[#64748B]">/</span>
+            <span className="text-[#8B7B6F]">/</span>
             <span className="text-white">Warehouses</span>
           </div>
           <h1 className="text-2xl font-bold text-white mt-1">Warehouses</h1>
-          <p className="text-[#94A3B8]">
+          <p className="text-[#6B5B4F]">
             Manage multiple locations and track stock per warehouse
           </p>
         </div>
         <div className="flex gap-2">
           <Link href="/inventory/transfers">
-            <Button variant="outline" className="border-[#334155]">
+            <Button variant="outline" className="border-[#DDD7C0]">
               <ArrowRightLeft className="h-4 w-4 mr-2" />
               Stock Transfers
             </Button>
           </Link>
           <Button 
-            className="bg-gradient-to-r from-[#38BDF8] to-[#0EA5E9] text-[#0F172A]"
+            className="bg-gradient-to-r from-[#9C4A29] to-[#7D3B21] text-[#E8E3CC]"
             onClick={() => setShowCreate(true)}
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -235,18 +235,18 @@ export default function WarehousesPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
-        <Card className="bg-[#1E293B] border-[#334155]">
+        <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#94A3B8] mb-1">
+            <div className="flex items-center gap-2 text-[#6B5B4F] mb-1">
               <Warehouse className="h-4 w-4" />
               <span className="text-sm">Total Warehouses</span>
             </div>
             <p className="text-2xl font-bold text-white">{warehouses.length}</p>
           </CardContent>
         </Card>
-        <Card className="bg-[#1E293B] border-[#334155]">
+        <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#94A3B8] mb-1">
+            <div className="flex items-center gap-2 text-[#6B5B4F] mb-1">
               <CheckCircle className="h-4 w-4" />
               <span className="text-sm">Active</span>
             </div>
@@ -255,9 +255,9 @@ export default function WarehousesPage() {
             </p>
           </CardContent>
         </Card>
-        <Card className="bg-[#1E293B] border-[#334155]">
+        <Card className="bg-[#F5F2E8] border-[#DDD7C0]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#94A3B8] mb-1">
+            <div className="flex items-center gap-2 text-[#6B5B4F] mb-1">
               <MapPin className="h-4 w-4" />
               <span className="text-sm">Cities</span>
             </div>
@@ -270,37 +270,37 @@ export default function WarehousesPage() {
 
       {/* Search */}
       <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#64748B]" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8B7B6F]" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search warehouses..."
-          className="pl-10 bg-[#1E293B] border-[#334155] text-white"
+          className="pl-10 bg-[#F5F2E8] border-[#DDD7C0] text-white"
         />
       </div>
 
       {/* Warehouse Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filtered.length === 0 ? (
-          <Card className="bg-[#1E293B] border-[#334155] border-dashed col-span-full">
+          <Card className="bg-[#F5F2E8] border-[#DDD7C0] border-dashed col-span-full">
             <CardContent className="p-8 text-center">
-              <Warehouse className="h-12 w-12 mx-auto mb-4 text-[#64748B]" />
-              <p className="text-[#94A3B8]">No warehouses found</p>
-              <p className="text-sm text-[#64748B]">Create your first warehouse to manage inventory locations</p>
+              <Warehouse className="h-12 w-12 mx-auto mb-4 text-[#8B7B6F]" />
+              <p className="text-[#6B5B4F]">No warehouses found</p>
+              <p className="text-sm text-[#8B7B6F]">Create your first warehouse to manage inventory locations</p>
             </CardContent>
           </Card>
         ) : (
           filtered.map((warehouse) => (
-            <Card key={warehouse.id} className="bg-[#1E293B] border-[#334155]">
+            <Card key={warehouse.id} className="bg-[#F5F2E8] border-[#DDD7C0]">
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-[#334155]">
-                      <Building2 className="h-5 w-5 text-[#38BDF8]" />
+                    <div className="p-2 rounded-lg bg-[#DDD7C0]">
+                      <Building2 className="h-5 w-5 text-[#9C4A29]" />
                     </div>
                     <div>
                       <CardTitle className="text-white text-lg">{warehouse.name}</CardTitle>
-                      <p className="text-xs text-[#64748B]">{warehouse.code}</p>
+                      <p className="text-xs text-[#8B7B6F]">{warehouse.code}</p>
                     </div>
                   </div>
                   <DropdownMenu>
@@ -309,7 +309,7 @@ export default function WarehousesPage() {
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="bg-[#1E293B] border-[#334155]">
+                    <DropdownMenuContent align="end" className="bg-[#F5F2E8] border-[#DDD7C0]">
                       <DropdownMenuItem>
                         <Edit2 className="h-4 w-4 mr-2" />
                         Edit
@@ -320,7 +320,7 @@ export default function WarehousesPage() {
                           Set as Default
                         </DropdownMenuItem>
                       )}
-                      <DropdownMenuSeparator className="bg-[#334155]" />
+                      <DropdownMenuSeparator className="bg-[#DDD7C0]" />
                       <DropdownMenuItem
                         onClick={() => deleteWarehouse(warehouse.id)}
                         className="text-red-400"
@@ -334,16 +334,16 @@ export default function WarehousesPage() {
               </CardHeader>
               <CardContent>
                 {(warehouse.city || warehouse.province) && (
-                  <div className="flex items-center gap-1 text-[#94A3B8] text-sm mb-4">
+                  <div className="flex items-center gap-1 text-[#6B5B4F] text-sm mb-4">
                     <MapPin className="h-3 w-3" />
                     {[warehouse.city, warehouse.province].filter(Boolean).join(', ')}
                   </div>
                 )}
 
-                <div className="flex items-center justify-between pt-3 border-t border-[#334155]">
+                <div className="flex items-center justify-between pt-3 border-t border-[#DDD7C0]">
                   <div className="flex items-center gap-2">
                     {warehouse.is_default && (
-                      <Badge className="bg-[#38BDF8]/20 text-[#38BDF8]">Default</Badge>
+                      <Badge className="bg-[#9C4A29]/20 text-[#9C4A29]">Default</Badge>
                     )}
                     <Badge className={warehouse.is_active 
                       ? 'bg-green-500/20 text-green-400' 
@@ -365,7 +365,7 @@ export default function WarehousesPage() {
 
       {/* Create Dialog */}
       <Dialog open={showCreate} onOpenChange={setShowCreate}>
-        <DialogContent className="bg-[#1E293B] border-[#334155]">
+        <DialogContent className="bg-[#F5F2E8] border-[#DDD7C0]">
           <DialogHeader>
             <DialogTitle className="text-white">Add Warehouse</DialogTitle>
           </DialogHeader>
@@ -377,7 +377,7 @@ export default function WarehousesPage() {
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
                   placeholder="Main Warehouse"
-                  className="bg-[#0F172A] border-[#334155] text-white"
+                  className="bg-[#E8E3CC] border-[#DDD7C0] text-white"
                 />
               </div>
               <div className="space-y-2">
@@ -387,7 +387,7 @@ export default function WarehousesPage() {
                   onChange={(e) => setFormCode(e.target.value.toUpperCase())}
                   placeholder="MAIN"
                   maxLength={10}
-                  className="bg-[#0F172A] border-[#334155] text-white uppercase"
+                  className="bg-[#E8E3CC] border-[#DDD7C0] text-white uppercase"
                 />
               </div>
             </div>
@@ -397,7 +397,7 @@ export default function WarehousesPage() {
                 value={formAddress}
                 onChange={(e) => setFormAddress(e.target.value)}
                 placeholder="123 Industrial Blvd"
-                className="bg-[#0F172A] border-[#334155] text-white"
+                className="bg-[#E8E3CC] border-[#DDD7C0] text-white"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -407,7 +407,7 @@ export default function WarehousesPage() {
                   value={formCity}
                   onChange={(e) => setFormCity(e.target.value)}
                   placeholder="Toronto"
-                  className="bg-[#0F172A] border-[#334155] text-white"
+                  className="bg-[#E8E3CC] border-[#DDD7C0] text-white"
                 />
               </div>
               <div className="space-y-2">
@@ -416,7 +416,7 @@ export default function WarehousesPage() {
                   value={formProvince}
                   onChange={(e) => setFormProvince(e.target.value)}
                   placeholder="ON"
-                  className="bg-[#0F172A] border-[#334155] text-white"
+                  className="bg-[#E8E3CC] border-[#DDD7C0] text-white"
                 />
               </div>
             </div>
@@ -428,7 +428,7 @@ export default function WarehousesPage() {
             <Button 
               onClick={createWarehouse}
               disabled={saving}
-              className="bg-[#38BDF8] text-[#0F172A]"
+              className="bg-[#9C4A29] text-[#E8E3CC]"
             >
               {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
               Create Warehouse
