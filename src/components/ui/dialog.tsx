@@ -14,7 +14,7 @@ const Dialog: React.FC<DialogProps> = ({ open, onOpenChange, children }) => {
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50">
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={() => onOpenChange?.(false)} />
+      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" onClick={() => onOpenChange?.(false)} />
       {children}
     </div>
   );
@@ -25,7 +25,7 @@ const DialogContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTML
     <div
       ref={ref}
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border border-[#262626] bg-[#0A0A0A] p-6 shadow-2xl rounded-xl",
+        "fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border border-[#262626] bg-[#161616] p-6 shadow-2xl shadow-black/60 rounded-xl animate-scale-in",
         className
       )}
       {...props}
@@ -42,7 +42,7 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 DialogHeader.displayName = "DialogHeader";
 
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-4", className)} {...props} />
+  <div className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-6", className)} {...props} />
 );
 DialogFooter.displayName = "DialogFooter";
 
@@ -55,7 +55,7 @@ DialogTitle.displayName = "DialogTitle";
 
 const DialogDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
   ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn("text-sm text-[#FAFAFA]", className)} {...props} />
+    <p ref={ref} className={cn("text-sm text-[#888888]", className)} {...props} />
   )
 );
 DialogDescription.displayName = "DialogDescription";
@@ -65,7 +65,7 @@ const DialogClose = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttribut
     <button
       ref={ref}
       className={cn(
-        "absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 transition-opacity text-[#FAFAFA] hover:text-[#FAFAFA]",
+        "absolute right-4 top-4 rounded-lg p-1 opacity-60 hover:opacity-100 hover:bg-[#1A1A1A] transition-all text-[#999] hover:text-[#FAFAFA]",
         className
       )}
       {...props}
@@ -83,7 +83,6 @@ interface DialogTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const DialogTrigger = React.forwardRef<HTMLButtonElement, DialogTriggerProps>(
   ({ className, children, asChild, ...props }, ref) => {
-    // Simple trigger - parent Dialog controls open state via onOpenChange
     if (asChild && React.isValidElement(children)) {
       return React.cloneElement(children as React.ReactElement<any>, { ref, ...props });
     }

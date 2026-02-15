@@ -187,7 +187,7 @@ function CreateKeyModal({
         <div className="p-6 border-t border-[#262626] flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+            className="px-4 py-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors"
           >
             Cancel
           </button>
@@ -249,7 +249,7 @@ function KeyCreatedModal({
               <span className="text-xs text-[#FAFAFA]">Your API Key</span>
               <button
                 onClick={() => setShowKey(!showKey)}
-                className="text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+                className="text-[#ccc] hover:text-[#FAFAFA] transition-colors"
               >
                 {showKey ? (
                   <EyeOff className="w-4 h-4" />
@@ -356,7 +356,7 @@ function ApiKeyRow({
         <div className="relative">
           <button
             onClick={() => setShowMenu(!showMenu)}
-            className="p-2 text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] rounded-lg transition-all"
+            className="p-2 text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] rounded-lg transition-all"
           >
             <MoreVertical className="w-4 h-4" />
           </button>
@@ -435,7 +435,7 @@ export default function ApiPage() {
       {/* Back link */}
       <Link
         href="/settings"
-        className="inline-flex items-center gap-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors mb-6"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Settings

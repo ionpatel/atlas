@@ -123,7 +123,7 @@ export function OrgSwitcher({
                   window.location.href = "/settings/organization";
                   setIsOpen(false);
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] rounded-lg transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] rounded-lg transition-colors"
               >
                 <Settings className="w-4 h-4" />
                 Organization Settings
@@ -133,7 +133,7 @@ export function OrgSwitcher({
                   window.location.href = "/settings/users";
                   setIsOpen(false);
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] rounded-lg transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] rounded-lg transition-colors"
               >
                 <Users className="w-4 h-4" />
                 Manage Team

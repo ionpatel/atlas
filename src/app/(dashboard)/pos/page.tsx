@@ -233,7 +233,7 @@ function PaymentModal({
           </h2>
           <button
             onClick={onClose}
-            className="p-2 text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+            className="p-2 text-[#ccc] hover:text-[#FAFAFA] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -262,7 +262,7 @@ function PaymentModal({
                   "flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all",
                   paymentType === tab.id
                     ? "bg-[#161616] text-[#0A0A0A]"
-                    : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                    : "text-[#ccc] hover:text-[#FAFAFA]"
                 )}
               >
                 <tab.icon className="w-4 h-4" />
@@ -659,7 +659,7 @@ export default function POSPage() {
                   "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all",
                   selectedCategory === cat.id
                     ? "bg-[#161616] text-[#0A0A0A]"
-                    : "bg-[#0A0A0A] text-[#FAFAFA] hover:text-[#FAFAFA] border border-[#262626]"
+                    : "bg-[#0A0A0A] text-[#ccc] hover:text-[#FAFAFA] border border-[#262626]"
                 )}
               >
                 {cat.name}
@@ -745,7 +745,7 @@ export default function POSPage() {
           {/* Customer Selection */}
           <button
             onClick={() => setCustomer(customer ? null : { id: "walk-in", name: "Walk-in Customer" })}
-            className="mt-3 w-full flex items-center gap-2 px-3 py-2 bg-[#0A0A0A] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+            className="mt-3 w-full flex items-center gap-2 px-3 py-2 bg-[#0A0A0A] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors"
           >
             <User className="w-4 h-4" />
             {customer ? (
@@ -806,7 +806,7 @@ export default function POSPage() {
           <button
             onClick={() => handlePayment("card")}
             disabled={cart.length === 0}
-            className="flex items-center justify-center gap-2 py-4 bg-[#161616] hover:bg-[#161616] text-[#0A0A0A] rounded-xl font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center justify-center gap-2 py-4 bg-[#161616] hover:bg-[#1A1A1A] text-[#0A0A0A] rounded-xl font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <CreditCard className="w-5 h-5" />
             Card

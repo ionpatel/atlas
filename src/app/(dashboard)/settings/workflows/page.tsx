@@ -172,7 +172,7 @@ function WorkflowCard({
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={onEdit}
-            className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#161616]/10"
+            className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#161616]/10"
           >
             <Edit2 className="w-4 h-4" />
           </button>
@@ -475,7 +475,7 @@ function WorkflowBuilderModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+            className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           >
             Cancel
           </button>
@@ -640,7 +640,7 @@ export default function WorkflowsPage() {
         <div className="flex items-center gap-4">
           <Link
             href="/settings"
-            className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+            className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
@@ -689,7 +689,7 @@ export default function WorkflowsPage() {
               "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all",
               activeTab === tab.id
                 ? "bg-[#161616] text-[#0A0A0A]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                : "text-[#ccc] hover:text-[#FAFAFA]"
             )}
           >
             {tab.label}

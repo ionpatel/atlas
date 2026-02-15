@@ -618,7 +618,7 @@ function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors duration-300"
+              className="text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors duration-300"
             >
               {l.label}
             </a>
@@ -629,7 +629,7 @@ function Nav() {
         <div className="hidden md:flex items-center gap-5">
           <Link
             href="/login"
-            className="text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors duration-300"
+            className="text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors duration-300"
           >
             Log in
           </Link>
@@ -658,7 +658,7 @@ function Nav() {
               key={l.href}
               href={l.href}
               onClick={() => setMenuOpen(false)}
-              className="block text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+              className="block text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors"
             >
               {l.label}
             </a>
@@ -1146,7 +1146,7 @@ function Pricing() {
                   className={`block text-center py-3.5 rounded-full font-semibold text-sm transition-all duration-300 ${
                     plan.popular
                       ? "bg-[#161616] text-[#0A0A0A] hover:bg-[#161616] shadow-lg shadow-[#CDB49E]/10"
-                      : "bg-[#0A0A0A] text-[#FAFAFA] hover:bg-[#0A0A0A] border border-[#262626]"
+                      : "bg-[#1A1A1A] text-[#ccc] hover:bg-[#262626] border border-[#262626]"
                   }`}
                 >
                   Start Free Trial
@@ -1373,7 +1373,7 @@ function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors duration-300"
+                      className="text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors duration-300"
                     >
                       {link.label}
                     </a>

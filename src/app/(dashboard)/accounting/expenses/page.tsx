@@ -132,7 +132,7 @@ function ExpenseForm({
           <h2 className="text-xl font-semibold text-[#FAFAFA]">
             {isEditing ? "Edit Expense" : "Add Expense"}
           </h2>
-          <button onClick={onClose} className="text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
+          <button onClick={onClose} className="text-[#ccc] hover:text-[#FAFAFA] transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -253,7 +253,7 @@ function ExpenseForm({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
+              className="flex-1 px-4 py-2.5 bg-[#111111] hover:bg-[#1A1A1A] text-[#FAFAFA] rounded-lg transition-colors"
             >
               Cancel
             </button>
@@ -333,7 +333,7 @@ function ExpenseCard({
           )}
         </div>
         {expense.receipt_url && (
-          <button className="flex items-center gap-1 px-2 py-1 bg-[#0A0A0A] rounded-lg text-xs text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
+          <button className="flex items-center gap-1 px-2 py-1 bg-[#0A0A0A] rounded-lg text-xs text-[#ccc] hover:text-[#FAFAFA] transition-colors">
             <Image className="w-3.5 h-3.5" />
             Receipt
           </button>
@@ -356,7 +356,7 @@ function ExpenseCard({
           <>
             <button
               onClick={onEdit}
-              className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-[#111111] hover:bg-[#1A1A1A] text-[#FAFAFA] rounded-lg transition-colors"
             >
               <Pencil className="w-4 h-4" />
               Edit
@@ -539,7 +539,7 @@ function MileageCalculator({ onClose, onAdd }: {
             </div>
             <h2 className="text-xl font-semibold text-[#FAFAFA]">Mileage Calculator</h2>
           </div>
-          <button onClick={onClose} className="text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
+          <button onClick={onClose} className="text-[#ccc] hover:text-[#FAFAFA] transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -596,7 +596,7 @@ function MileageCalculator({ onClose, onAdd }: {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
+              className="flex-1 px-4 py-2.5 bg-[#111111] hover:bg-[#1A1A1A] text-[#FAFAFA] rounded-lg transition-colors"
             >
               Cancel
             </button>
@@ -731,14 +731,14 @@ export default function ExpensesPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={handleExportPDF}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#111111] hover:bg-[#1A1A1A] text-[#FAFAFA] rounded-lg transition-colors"
           >
             <Download className="w-4 h-4" />
             Export PDF
           </button>
           <button
             onClick={() => setShowMileageCalc(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#111111] hover:bg-[#1A1A1A] text-[#FAFAFA] rounded-lg transition-colors"
           >
             <Car className="w-4 h-4" />
             Mileage
@@ -843,7 +843,7 @@ export default function ExpensesPage() {
             onClick={() => setViewMode("grid")}
             className={cn(
               "p-2 rounded-md transition-colors",
-              viewMode === "grid" ? "bg-[#161616] text-[#0A0A0A]" : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+              viewMode === "grid" ? "bg-[#161616] text-[#0A0A0A]" : "text-[#ccc] hover:text-[#FAFAFA]"
             )}
           >
             <Receipt className="w-4 h-4" />
@@ -852,7 +852,7 @@ export default function ExpensesPage() {
             onClick={() => setViewMode("list")}
             className={cn(
               "p-2 rounded-md transition-colors",
-              viewMode === "list" ? "bg-[#161616] text-[#0A0A0A]" : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+              viewMode === "list" ? "bg-[#161616] text-[#0A0A0A]" : "text-[#ccc] hover:text-[#FAFAFA]"
             )}
           >
             <FileText className="w-4 h-4" />

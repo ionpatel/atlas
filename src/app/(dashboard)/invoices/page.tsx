@@ -232,7 +232,7 @@ function KanbanColumn({
                     e.stopPropagation();
                     onAction(inv);
                   }}
-                  className="mt-3 w-full py-1.5 text-xs font-medium rounded-lg border border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:border-[#262626]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200 opacity-0 group-hover:opacity-100"
+                  className="mt-3 w-full py-1.5 text-xs font-medium rounded-lg border border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:border-[#262626]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200 opacity-0 group-hover:opacity-100"
                 >
                   {inv.status === "draft" && "Send Invoice"}
                   {inv.status === "sent" && "Register Payment"}
@@ -386,7 +386,7 @@ export default function InvoicesPage() {
             className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#FAFAFA] hover:text-[#FAFAFA]">
+            <button onClick={() => setSearchQuery("")} className="text-[#ccc] hover:text-[#FAFAFA]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -396,7 +396,7 @@ export default function InvoicesPage() {
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.status
               ? "border-[#262626]/50 text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+              : "border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           }`}
         >
           <Filter className="w-4 h-4" />
@@ -410,7 +410,7 @@ export default function InvoicesPage() {
             className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               viewMode === "list"
                 ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             }`}
           >
             <List className="w-4 h-4" />
@@ -421,7 +421,7 @@ export default function InvoicesPage() {
             className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               viewMode === "kanban"
                 ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             }`}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -551,7 +551,7 @@ export default function InvoicesPage() {
                             e.stopPropagation();
                             handlePreview(inv);
                           }}
-                          className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                          className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                           title="Preview"
                         >
                           <Eye className="w-3.5 h-3.5" />

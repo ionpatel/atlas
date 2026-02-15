@@ -139,7 +139,7 @@ export default function PortalLoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#ccc] hover:text-[#FAFAFA] transition-colors"
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -160,7 +160,7 @@ export default function PortalLoginPage() {
               </label>
               <button
                 type="button"
-                className="text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+                className="text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors"
               >
                 Forgot password?
               </button>

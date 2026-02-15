@@ -175,7 +175,7 @@ export function WidgetGrid({
                         <button
                           key={w.type}
                           onClick={() => handleAddWidget(w.type)}
-                          className="w-full text-left px-4 py-2.5 text-xs text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-colors"
+                          className="w-full text-left px-4 py-2.5 text-xs text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-colors"
                         >
                           {w.title}
                         </button>
@@ -186,7 +186,7 @@ export function WidgetGrid({
               </div>
               <button
                 onClick={handleResetLayout}
-                className="flex items-center gap-1.5 px-3 py-1.5 border border-[#262626] rounded-lg text-xs text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 border border-[#262626] rounded-lg text-xs text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 Reset
@@ -200,7 +200,7 @@ export function WidgetGrid({
             "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
             editMode
               ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-              : "border border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+              : "border border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           )}
         >
           <Settings className="w-3.5 h-3.5" />
@@ -228,7 +228,7 @@ export function WidgetGrid({
               <div className="absolute inset-0 z-10 pointer-events-none">
                 {/* Drag Handle */}
                 <div className="absolute top-2 left-2 pointer-events-auto">
-                  <button className="p-1.5 rounded bg-[#0A0A0A] border border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] cursor-grab active:cursor-grabbing">
+                  <button className="p-1.5 rounded bg-[#0A0A0A] border border-[#262626] text-[#ccc] hover:text-[#FAFAFA] cursor-grab active:cursor-grabbing">
                     <GripVertical className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -281,7 +281,7 @@ export function WidgetGrid({
               <button
                 key={widget.id}
                 onClick={() => handleToggleVisibility(widget.id)}
-                className="flex items-center gap-2 px-3 py-1.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs text-[#FAFAFA] hover:text-[#FAFAFA] hover:border-[#262626]/30 transition-all"
+                className="flex items-center gap-2 px-3 py-1.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs text-[#ccc] hover:text-[#FAFAFA] hover:border-[#262626]/30 transition-all"
               >
                 <Eye className="w-3.5 h-3.5" />
                 {widget.title}

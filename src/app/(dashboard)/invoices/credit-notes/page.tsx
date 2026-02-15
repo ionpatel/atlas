@@ -44,7 +44,7 @@ interface CreditNote {
 }
 
 const statusConfig = {
-  draft: { label: 'Draft', color: 'bg-neutral-500/20 text-neutral-400', icon: FileText },
+  draft: { label: 'Draft', color: 'bg-[#333]/20 text-[#999]', icon: FileText },
   issued: { label: 'Issued', color: 'bg-blue-500/20 text-blue-400', icon: CheckCircle },
   applied: { label: 'Applied', color: 'bg-green-500/20 text-green-400', icon: ArrowRight },
   voided: { label: 'Voided', color: 'bg-red-500/20 text-red-400', icon: XCircle },

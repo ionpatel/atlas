@@ -360,7 +360,7 @@ export function ImportWizard({
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] rounded-lg transition-colors"
+            className="p-2 text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] rounded-lg transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -849,7 +849,7 @@ export function ImportWizard({
                 "flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors",
                 step === "upload"
                   ? "text-[#FAFAFA] cursor-not-allowed"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                  : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
               )}
             >
               <ChevronLeft className="w-4 h-4" />

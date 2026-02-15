@@ -168,7 +168,7 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
           <h2 className="text-xl font-semibold text-[#FAFAFA]">
             {isEditing ? "Edit Employee" : "Add Employee"}
           </h2>
-          <button onClick={onClose} className="text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
+          <button onClick={onClose} className="text-[#ccc] hover:text-[#FAFAFA] transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -367,7 +367,7 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:border-[#3a3a3a] transition-all"
+              className="px-4 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] hover:border-[#3a3a3a] transition-all"
             >
               Cancel
             </button>
@@ -416,7 +416,7 @@ function DepartmentSidebar({
               "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all duration-200",
               !selected
                 ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             <span>All</span>
@@ -432,7 +432,7 @@ function DepartmentSidebar({
                 "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all duration-200",
                 selected === d.name
                   ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                  : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
               )}
             >
               <span>{d.name}</span>
@@ -454,7 +454,7 @@ function DepartmentSidebar({
               "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all duration-200",
               !statusFilter
                 ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             <span>All</span>
@@ -467,7 +467,7 @@ function DepartmentSidebar({
                 "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all duration-200",
                 statusFilter === s
                   ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                  : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
               )}
             >
               <span>{statusBadge[s].label}</span>
@@ -598,14 +598,14 @@ export default function EmployeesPage() {
         <div className="flex items-center gap-2">
           {/* Import/Export buttons */}
           <div className="flex items-center border border-[#262626] rounded-lg overflow-hidden">
-            <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200">
+            <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200">
               <Download className="w-4 h-4" />
               Export
             </button>
             <div className="w-px h-6 bg-[#0A0A0A]" />
             <button
               onClick={() => setShowImport(true)}
-              className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+              className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
             >
               <Upload className="w-4 h-4" />
               Import
@@ -635,7 +635,7 @@ export default function EmployeesPage() {
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="text-[#FAFAFA] hover:text-[#FAFAFA]"
+              className="text-[#ccc] hover:text-[#FAFAFA]"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -649,7 +649,7 @@ export default function EmployeesPage() {
               "flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200",
               viewMode === "grid"
                 ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -661,7 +661,7 @@ export default function EmployeesPage() {
               "flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200",
               viewMode === "list"
                 ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             <List className="w-4 h-4" />

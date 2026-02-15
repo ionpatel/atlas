@@ -222,7 +222,7 @@ function StartTimerForm({ onStart, onClose }: { onStart: (data: Partial<TimeEntr
       <div className="relative bg-[#0A0A0A] border border-[#262626] rounded-2xl w-full max-w-md shadow-2xl">
         <div className="flex items-center justify-between p-6 border-b border-[#262626]">
           <h2 className="text-xl font-semibold text-[#FAFAFA]">Start Timer</h2>
-          <button onClick={onClose} className="text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
+          <button onClick={onClose} className="text-[#ccc] hover:text-[#FAFAFA] transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -283,7 +283,7 @@ function StartTimerForm({ onStart, onClose }: { onStart: (data: Partial<TimeEntr
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
+              className="flex-1 px-4 py-2.5 bg-[#111111] hover:bg-[#1A1A1A] text-[#FAFAFA] rounded-lg transition-colors"
             >
               Cancel
             </button>
@@ -342,7 +342,7 @@ function ManualEntryForm({ onSave, onClose }: { onSave: (data: Omit<TimeEntry, "
       <div className="relative bg-[#0A0A0A] border border-[#262626] rounded-2xl w-full max-w-md shadow-2xl">
         <div className="flex items-center justify-between p-6 border-b border-[#262626]">
           <h2 className="text-xl font-semibold text-[#FAFAFA]">Add Time Entry</h2>
-          <button onClick={onClose} className="text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
+          <button onClick={onClose} className="text-[#ccc] hover:text-[#FAFAFA] transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -437,7 +437,7 @@ function ManualEntryForm({ onSave, onClose }: { onSave: (data: Omit<TimeEntry, "
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
+              className="flex-1 px-4 py-2.5 bg-[#111111] hover:bg-[#1A1A1A] text-[#FAFAFA] rounded-lg transition-colors"
             >
               Cancel
             </button>
@@ -762,14 +762,14 @@ export default function TimeTrackingPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={handleExportPDF}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#111111] hover:bg-[#1A1A1A] text-[#FAFAFA] rounded-lg transition-colors"
           >
             <Download className="w-4 h-4" />
             Export PDF
           </button>
           <button
             onClick={() => setShowManualEntry(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#111111] hover:bg-[#1A1A1A] text-[#FAFAFA] rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" />
             Manual Entry
@@ -850,7 +850,7 @@ export default function TimeTrackingPage() {
               "px-4 py-2 rounded-md text-sm font-medium transition-colors",
               viewMode === "timesheet"
                 ? "bg-[#161616] text-[#0A0A0A]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                : "text-[#ccc] hover:text-[#FAFAFA]"
             )}
           >
             <Calendar className="w-4 h-4 inline-block mr-2" />
@@ -862,7 +862,7 @@ export default function TimeTrackingPage() {
               "px-4 py-2 rounded-md text-sm font-medium transition-colors",
               viewMode === "list"
                 ? "bg-[#161616] text-[#0A0A0A]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                : "text-[#ccc] hover:text-[#FAFAFA]"
             )}
           >
             <Clock className="w-4 h-4 inline-block mr-2" />

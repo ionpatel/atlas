@@ -146,7 +146,7 @@ function DigestSelector({ value, onChange, disabled }: DigestSelectorProps) {
             "flex flex-col items-center gap-2 p-4 rounded-xl border transition-all",
             value === option.id
               ? "bg-[rgba(156,74,41,0.15)] border-[#262626]/30 text-[#FAFAFA]"
-              : "bg-[#0A0A0A] border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:border-[#3a3a3a]",
+              : "bg-[#0A0A0A] border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:border-[#3a3a3a]",
             disabled && "opacity-50 cursor-not-allowed"
           )}
         >
@@ -243,7 +243,7 @@ function TestEmailModal({ isOpen, onClose }: TestEmailModalProps) {
             <div className="flex items-center gap-3">
               <button
                 onClick={onClose}
-                className="flex-1 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+                className="flex-1 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
                 disabled={status === "sending"}
               >
                 Cancel
@@ -413,7 +413,7 @@ export default function NotificationSettingsPage() {
       {/* Back link */}
       <Link
         href="/settings"
-        className="inline-flex items-center gap-1.5 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors mb-6"
+        className="inline-flex items-center gap-1.5 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors mb-6"
       >
         <ChevronLeft className="w-4 h-4" />
         Back to Settings
@@ -524,7 +524,7 @@ export default function NotificationSettingsPage() {
           </div>
           <button
             onClick={() => setShowTestModal(true)}
-            className="flex items-center gap-2 px-4 py-2 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+            className="flex items-center gap-2 px-4 py-2 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
           >
             <Send className="w-4 h-4" />
             Send Test

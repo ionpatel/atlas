@@ -127,7 +127,7 @@ function ScanModeToggle({
           "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all",
           mode === "single"
             ? "bg-[#161616] text-[#0A0A0A]"
-            : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+            : "text-[#ccc] hover:text-[#FAFAFA]"
         )}
       >
         <Scan className="w-4 h-4" />
@@ -139,7 +139,7 @@ function ScanModeToggle({
           "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all relative",
           mode === "batch"
             ? "bg-[#161616] text-[#0A0A0A]"
-            : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+            : "text-[#ccc] hover:text-[#FAFAFA]"
         )}
       >
         <Layers className="w-4 h-4" />
@@ -250,14 +250,14 @@ function ProductLookupCard({
       <div className="flex items-center gap-2 pt-2 border-t border-[#262626]">
         <button
           onClick={onPrintLabel}
-          className="flex items-center gap-1.5 px-3 py-2 border border-[#262626] rounded-lg text-xs font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]/50 transition-all"
+          className="flex items-center gap-1.5 px-3 py-2 border border-[#262626] rounded-lg text-xs font-medium text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]/50 transition-all"
         >
           <Printer className="w-3.5 h-3.5" />
           Print Label
         </button>
         <button
           onClick={onView}
-          className="flex items-center gap-1.5 px-3 py-2 border border-[#262626] rounded-lg text-xs font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]/50 transition-all"
+          className="flex items-center gap-1.5 px-3 py-2 border border-[#262626] rounded-lg text-xs font-medium text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]/50 transition-all"
         >
           <Eye className="w-3.5 h-3.5" />
           View
@@ -427,7 +427,7 @@ function LabelPrintQueue({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => onUpdateQuantity(label.productId, Math.max(1, label.quantity - 1))}
-                    className="w-6 h-6 rounded bg-[#0A0A0A] flex items-center justify-center text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+                    className="w-6 h-6 rounded bg-[#0A0A0A] flex items-center justify-center text-[#ccc] hover:text-[#FAFAFA] transition-colors"
                   >
                     <Minus className="w-3 h-3" />
                   </button>
@@ -436,7 +436,7 @@ function LabelPrintQueue({
                   </span>
                   <button
                     onClick={() => onUpdateQuantity(label.productId, label.quantity + 1)}
-                    className="w-6 h-6 rounded bg-[#0A0A0A] flex items-center justify-center text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+                    className="w-6 h-6 rounded bg-[#0A0A0A] flex items-center justify-center text-[#ccc] hover:text-[#FAFAFA] transition-colors"
                   >
                     <Plus className="w-3 h-3" />
                   </button>
@@ -566,7 +566,7 @@ function CameraScannerView({
       {/* Demo button */}
       <button
         onClick={simulateScan}
-        className="absolute top-4 right-4 px-3 py-1.5 bg-[#0A0A0A]/80 backdrop-blur-sm rounded-lg text-xs text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors flex items-center gap-1.5"
+        className="absolute top-4 right-4 px-3 py-1.5 bg-[#0A0A0A]/80 backdrop-blur-sm rounded-lg text-xs text-[#ccc] hover:text-[#FAFAFA] transition-colors flex items-center gap-1.5"
       >
         <RefreshCw className="w-3 h-3" />
         Simulate Scan
@@ -804,7 +804,7 @@ export default function BarcodeManagementPage() {
               "p-2.5 rounded-lg transition-all border",
               soundEnabled
                 ? "border-[#262626]/50 text-[#FAFAFA] bg-[#161616]/10"
-                : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA]"
+                : "border-[#262626] text-[#ccc] hover:text-[#FAFAFA]"
             )}
             title={soundEnabled ? "Sound on" : "Sound off"}
           >
@@ -829,7 +829,7 @@ export default function BarcodeManagementPage() {
                 "flex items-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all",
                 scanMode === "manual"
                   ? "bg-[#161616] text-[#0A0A0A]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                  : "text-[#ccc] hover:text-[#FAFAFA]"
               )}
             >
               <Keyboard className="w-4 h-4" />
@@ -841,7 +841,7 @@ export default function BarcodeManagementPage() {
                 "flex items-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all",
                 scanMode === "camera"
                   ? "bg-[#161616] text-[#0A0A0A]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                  : "text-[#ccc] hover:text-[#FAFAFA]"
               )}
             >
               <Camera className="w-4 h-4" />

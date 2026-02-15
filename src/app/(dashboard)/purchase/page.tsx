@@ -6,6 +6,7 @@ import { usePurchaseStore } from "@/stores/purchase-store";
 import { Modal } from "@/components/ui/modal";
 import { PurchaseOrderForm } from "@/components/modules/purchase-order-form";
 import { useToastStore } from "@/components/ui/toast";
+import { usePurchaseInventory } from "@/lib/integrations/use-purchase-inventory";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { PurchaseOrder, PurchaseOrderLine } from "@/types";
 
@@ -105,7 +106,7 @@ export default function PurchasePage() {
             className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#FAFAFA] hover:text-[#FAFAFA]">
+            <button onClick={() => setSearchQuery("")} className="text-[#ccc] hover:text-[#FAFAFA]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -115,7 +116,7 @@ export default function PurchasePage() {
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.status
               ? "border-[#262626]/50 text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+              : "border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           }`}
         >
           <Filter className="w-4 h-4" />

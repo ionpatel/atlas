@@ -109,7 +109,7 @@ export default function ProjectsPage() {
                     <button
                       key={item}
                       onClick={() => setShowNewMenu(false)}
-                      className="w-full text-left px-4 py-2.5 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-colors"
+                      className="w-full text-left px-4 py-2.5 text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-colors"
                     >
                       {item}
                     </button>
@@ -135,7 +135,7 @@ export default function ProjectsPage() {
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="text-[#FAFAFA] hover:text-[#FAFAFA]"
+              className="text-[#ccc] hover:text-[#FAFAFA]"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -163,7 +163,7 @@ export default function ProjectsPage() {
               "flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200",
               viewMode === "grid"
                 ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -175,7 +175,7 @@ export default function ProjectsPage() {
               "flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200",
               viewMode === "list"
                 ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             <List className="w-4 h-4" />

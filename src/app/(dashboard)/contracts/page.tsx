@@ -322,7 +322,7 @@ function ContractForm({
           <button
             type="button"
             onClick={addTag}
-            className="px-4 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA]"
+            className="px-4 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA]"
           >
             Add
           </button>
@@ -345,7 +345,7 @@ function ContractForm({
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+          className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
         >
           Cancel
         </button>
@@ -387,7 +387,7 @@ function ContractDetailModal({
                 "flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all",
                 activeTab === tab
                   ? "bg-[#161616] text-[#0A0A0A]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                  : "text-[#ccc] hover:text-[#FAFAFA]"
               )}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -526,7 +526,7 @@ function ContractDetailModal({
               ))
             )}
 
-            <button className="w-full py-3 border-2 border-dashed border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:border-[#262626]/50 transition-all">
+            <button className="w-full py-3 border-2 border-dashed border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:border-[#262626]/50 transition-all">
               + Request Signature
             </button>
           </div>
@@ -612,7 +612,7 @@ function TemplatesModal({
         </div>
         <button
           onClick={() => onSelect({ id: "", name: "Blank", content: "", variables: [], is_active: true, usage_count: 0, org_id: "", created_at: "" })}
-          className="w-full py-3 border-2 border-dashed border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:border-[#262626]/50 transition-all"
+          className="w-full py-3 border-2 border-dashed border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:border-[#262626]/50 transition-all"
         >
           + Start from Scratch
         </button>
@@ -746,7 +746,7 @@ export default function ContractsPage() {
             className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#FAFAFA] hover:text-[#FAFAFA]">
+            <button onClick={() => setSearchQuery("")} className="text-[#ccc] hover:text-[#FAFAFA]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -757,7 +757,7 @@ export default function ContractsPage() {
             "flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all",
             showFilters || statusFilter
               ? "border-[#262626]/50 text-[#FAFAFA] bg-[#161616]/10"
-              : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+              : "border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           )}
         >
           <Filter className="w-4 h-4" />
@@ -881,7 +881,7 @@ export default function ContractsPage() {
                           e.stopPropagation();
                           setSelectedContract(contract);
                         }}
-                        className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#161616]/10"
+                        className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#161616]/10"
                         title="View"
                       >
                         <Eye className="w-4 h-4" />
@@ -891,7 +891,7 @@ export default function ContractsPage() {
                           e.stopPropagation();
                           setEditingContract(contract);
                         }}
-                        className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#161616]/10"
+                        className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#161616]/10"
                         title="Edit"
                       >
                         <Edit2 className="w-4 h-4" />

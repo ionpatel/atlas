@@ -91,14 +91,14 @@ export default function BrandingPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Branding</h1>
-          <p className="text-neutral-400 mt-1">
+          <p className="text-[#999999] mt-1">
             Customize the look and feel of your Atlas workspace
           </p>
         </div>
         <Button 
           onClick={handleSave}
           disabled={saving}
-          className="bg-[#161616] hover:bg-[#161616]/90 text-black"
+          className="bg-[#161616] hover:bg-[#1A1A1A]/90 text-black"
         >
           {saving ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -110,7 +110,7 @@ export default function BrandingPage() {
       </div>
 
       <Tabs defaultValue="appearance">
-        <TabsList className="bg-neutral-800">
+        <TabsList className="bg-[#1A1A1A]">
           <TabsTrigger value="appearance">Appearance</TabsTrigger>
           <TabsTrigger value="identity">Identity</TabsTrigger>
           <TabsTrigger value="domain">Custom Domain</TabsTrigger>
@@ -119,13 +119,13 @@ export default function BrandingPage() {
 
         <TabsContent value="appearance" className="space-y-6 mt-6">
           {/* Colors */}
-          <Card className="bg-neutral-900/50 border-neutral-800">
+          <Card className="bg-[#111111] border-[#262626]">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Palette className="h-5 w-5 text-[#FAFAFA]" />
                 Colors
               </CardTitle>
-              <CardDescription className="text-neutral-400">
+              <CardDescription className="text-[#999999]">
                 Choose your brand colors
               </CardDescription>
             </CardHeader>
@@ -138,7 +138,7 @@ export default function BrandingPage() {
                     <button
                       key={preset.name}
                       onClick={() => applyColorPreset(preset)}
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg border border-neutral-700 hover:border-neutral-600 transition-colors"
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[#333333] hover:border-[#444444] transition-colors"
                     >
                       <div 
                         className="w-5 h-5 rounded-full"
@@ -159,7 +159,7 @@ export default function BrandingPage() {
                   <Label htmlFor="primary" className="text-white">Primary Color</Label>
                   <div className="flex gap-2">
                     <div 
-                      className="w-10 h-10 rounded-lg border border-neutral-700"
+                      className="w-10 h-10 rounded-lg border border-[#333333]"
                       style={{ backgroundColor: config.primaryColor }}
                     />
                     <Input
@@ -167,7 +167,7 @@ export default function BrandingPage() {
                       type="text"
                       value={config.primaryColor}
                       onChange={(e) => updateConfig('primaryColor', e.target.value)}
-                      className="bg-neutral-800 border-neutral-700 text-white font-mono"
+                      className="bg-[#1A1A1A] border-[#333333] text-white font-mono"
                     />
                   </div>
                 </div>
@@ -175,7 +175,7 @@ export default function BrandingPage() {
                   <Label htmlFor="accent" className="text-white">Accent Color</Label>
                   <div className="flex gap-2">
                     <div 
-                      className="w-10 h-10 rounded-lg border border-neutral-700"
+                      className="w-10 h-10 rounded-lg border border-[#333333]"
                       style={{ backgroundColor: config.accentColor }}
                     />
                     <Input
@@ -183,7 +183,7 @@ export default function BrandingPage() {
                       type="text"
                       value={config.accentColor}
                       onChange={(e) => updateConfig('accentColor', e.target.value)}
-                      className="bg-neutral-800 border-neutral-700 text-white font-mono"
+                      className="bg-[#1A1A1A] border-[#333333] text-white font-mono"
                     />
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export default function BrandingPage() {
           </Card>
 
           {/* Typography */}
-          <Card className="bg-neutral-900/50 border-neutral-800">
+          <Card className="bg-[#111111] border-[#262626]">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Type className="h-5 w-5 text-[#FAFAFA]" />
@@ -206,10 +206,10 @@ export default function BrandingPage() {
                   value={config.fontFamily} 
                   onValueChange={(v) => updateConfig('fontFamily', v)}
                 >
-                  <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
+                  <SelectTrigger className="bg-[#1A1A1A] border-[#333333] text-white">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-neutral-800 border-neutral-700">
+                  <SelectContent className="bg-[#1A1A1A] border-[#333333]">
                     {FONT_OPTIONS.map((font) => (
                       <SelectItem key={font.value} value={font.value}>
                         {font.label}
@@ -225,10 +225,10 @@ export default function BrandingPage() {
                   value={config.borderRadius} 
                   onValueChange={(v) => updateConfig('borderRadius', v)}
                 >
-                  <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
+                  <SelectTrigger className="bg-[#1A1A1A] border-[#333333] text-white">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-neutral-800 border-neutral-700">
+                  <SelectContent className="bg-[#1A1A1A] border-[#333333]">
                     <SelectItem value="none">Sharp (0px)</SelectItem>
                     <SelectItem value="sm">Small (4px)</SelectItem>
                     <SelectItem value="md">Medium (8px)</SelectItem>
@@ -241,7 +241,7 @@ export default function BrandingPage() {
           </Card>
 
           {/* Theme */}
-          <Card className="bg-neutral-900/50 border-neutral-800">
+          <Card className="bg-[#111111] border-[#262626]">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 {config.darkMode ? <Moon className="h-5 w-5 text-[#FAFAFA]" /> : <Sun className="h-5 w-5 text-[#FAFAFA]" />}
@@ -252,7 +252,7 @@ export default function BrandingPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-white font-medium">Dark Mode</p>
-                  <p className="text-sm text-neutral-400">Use dark theme throughout the app</p>
+                  <p className="text-sm text-[#999999]">Use dark theme throughout the app</p>
                 </div>
                 <Switch
                   checked={config.darkMode}
@@ -265,7 +265,7 @@ export default function BrandingPage() {
 
         <TabsContent value="identity" className="space-y-6 mt-6">
           {/* Logo & Favicon */}
-          <Card className="bg-neutral-900/50 border-neutral-800">
+          <Card className="bg-[#111111] border-[#262626]">
             <CardHeader>
               <CardTitle className="text-white">Logo & Identity</CardTitle>
             </CardHeader>
@@ -276,25 +276,25 @@ export default function BrandingPage() {
                   id="companyName"
                   value={config.companyName}
                   onChange={(e) => updateConfig('companyName', e.target.value)}
-                  className="bg-neutral-800 border-neutral-700 text-white"
+                  className="bg-[#1A1A1A] border-[#333333] text-white"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label className="text-white">Logo</Label>
-                  <div className="border-2 border-dashed border-neutral-700 rounded-lg p-8 text-center hover:border-neutral-600 transition-colors cursor-pointer">
-                    <Upload className="h-8 w-8 mx-auto mb-2 text-neutral-500" />
-                    <p className="text-sm text-neutral-400">Click to upload</p>
-                    <p className="text-xs text-neutral-500 mt-1">PNG, SVG up to 1MB</p>
+                  <div className="border-2 border-dashed border-[#333333] rounded-lg p-8 text-center hover:border-[#444444] transition-colors cursor-pointer">
+                    <Upload className="h-8 w-8 mx-auto mb-2 text-[#888888]" />
+                    <p className="text-sm text-[#999999]">Click to upload</p>
+                    <p className="text-xs text-[#888888] mt-1">PNG, SVG up to 1MB</p>
                   </div>
                 </div>
                 <div className="space-y-2">
                   <Label className="text-white">Favicon</Label>
-                  <div className="border-2 border-dashed border-neutral-700 rounded-lg p-8 text-center hover:border-neutral-600 transition-colors cursor-pointer">
-                    <Upload className="h-8 w-8 mx-auto mb-2 text-neutral-500" />
-                    <p className="text-sm text-neutral-400">Click to upload</p>
-                    <p className="text-xs text-neutral-500 mt-1">32x32 or 64x64 PNG</p>
+                  <div className="border-2 border-dashed border-[#333333] rounded-lg p-8 text-center hover:border-[#444444] transition-colors cursor-pointer">
+                    <Upload className="h-8 w-8 mx-auto mb-2 text-[#888888]" />
+                    <p className="text-sm text-[#999999]">Click to upload</p>
+                    <p className="text-xs text-[#888888] mt-1">32x32 or 64x64 PNG</p>
                   </div>
                 </div>
               </div>
@@ -314,13 +314,13 @@ export default function BrandingPage() {
         </TabsContent>
 
         <TabsContent value="domain" className="space-y-6 mt-6">
-          <Card className="bg-neutral-900/50 border-neutral-800">
+          <Card className="bg-[#111111] border-[#262626]">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Globe className="h-5 w-5 text-[#FAFAFA]" />
                 Custom Domain
               </CardTitle>
-              <CardDescription className="text-neutral-400">
+              <CardDescription className="text-[#999999]">
                 Use your own domain for Atlas (Enterprise plan)
               </CardDescription>
             </CardHeader>
@@ -332,16 +332,16 @@ export default function BrandingPage() {
                   value={config.customDomain}
                   onChange={(e) => updateConfig('customDomain', e.target.value)}
                   placeholder="erp.yourcompany.com"
-                  className="bg-neutral-800 border-neutral-700 text-white"
+                  className="bg-[#1A1A1A] border-[#333333] text-white"
                 />
               </div>
 
-              <div className="p-4 bg-neutral-800/50 rounded-lg space-y-2">
+              <div className="p-4 bg-[#161616] rounded-lg space-y-2">
                 <p className="text-sm font-medium text-white">DNS Configuration</p>
-                <p className="text-sm text-neutral-400">
+                <p className="text-sm text-[#999999]">
                   Add a CNAME record pointing to:
                 </p>
-                <code className="text-sm text-[#FAFAFA] bg-neutral-900 px-3 py-2 rounded block">
+                <code className="text-sm text-[#FAFAFA] bg-[#111111] px-3 py-2 rounded block">
                   atlas-erp.vercel.app
                 </code>
               </div>
@@ -350,10 +350,10 @@ export default function BrandingPage() {
         </TabsContent>
 
         <TabsContent value="emails" className="space-y-6 mt-6">
-          <Card className="bg-neutral-900/50 border-neutral-800">
+          <Card className="bg-[#111111] border-[#262626]">
             <CardHeader>
               <CardTitle className="text-white">Email Branding</CardTitle>
-              <CardDescription className="text-neutral-400">
+              <CardDescription className="text-[#999999]">
                 Customize how emails appear to your customers
               </CardDescription>
             </CardHeader>
@@ -365,7 +365,7 @@ export default function BrandingPage() {
                     id="fromName"
                     value={config.emailFromName}
                     onChange={(e) => updateConfig('emailFromName', e.target.value)}
-                    className="bg-neutral-800 border-neutral-700 text-white"
+                    className="bg-[#1A1A1A] border-[#333333] text-white"
                   />
                 </div>
                 <div className="space-y-2">
@@ -374,13 +374,13 @@ export default function BrandingPage() {
                     id="fromDomain"
                     value={config.emailFromDomain}
                     onChange={(e) => updateConfig('emailFromDomain', e.target.value)}
-                    className="bg-neutral-800 border-neutral-700 text-white"
+                    className="bg-[#1A1A1A] border-[#333333] text-white"
                   />
                 </div>
               </div>
 
-              <div className="p-4 bg-neutral-800/50 rounded-lg">
-                <p className="text-sm text-neutral-400 mb-2">Preview:</p>
+              <div className="p-4 bg-[#161616] rounded-lg">
+                <p className="text-sm text-[#999999] mb-2">Preview:</p>
                 <p className="text-white">
                   {config.emailFromName} &lt;noreply@{config.emailFromDomain}&gt;
                 </p>

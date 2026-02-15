@@ -16,6 +16,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { usePayrollStore, type PayRun, type PayPeriod, type PayStub } from "@/stores/payroll-store";
+import { usePayrollAccounting } from "@/lib/integrations/use-payroll-accounting";
 import { cn } from "@/lib/utils";
 
 /* ─────────── PDF Download Helper ─────────── */
@@ -180,7 +181,7 @@ function formatDateShort(dateStr: string): string {
 }
 
 const statusConfig: Record<string, { label: string; style: string; icon: typeof Clock }> = {
-  draft: { label: "Draft", style: "bg-zinc-500/10 text-zinc-400 border-zinc-500/20", icon: FileText },
+  draft: { label: "Draft", style: "bg-zinc-500/10 text-[#999999] border-zinc-500/20", icon: FileText },
   processing: { label: "Processing", style: "bg-blue-500/10 text-blue-400 border-blue-500/20", icon: Clock },
   approved: { label: "Approved", style: "bg-amber-500/10 text-amber-400 border-amber-500/20", icon: CheckCircle2 },
   paid: { label: "Paid", style: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", icon: CheckCircle2 },
@@ -368,7 +369,7 @@ function CreatePayRunModal({
         <div className="flex gap-3 mt-6">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-3 border border-[#262626] rounded-lg text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:border-[#3a3a3a] transition-all duration-200"
+            className="flex-1 px-4 py-3 border border-[#262626] rounded-lg text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] hover:border-[#3a3a3a] transition-all duration-200"
           >
             Cancel
           </button>
@@ -603,7 +604,7 @@ function PayStubDetail({
             </span>
             <button
               onClick={onClose}
-              className="text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+              className="text-[#ccc] hover:text-[#FAFAFA] transition-colors"
             >
               ✕
             </button>
@@ -700,7 +701,7 @@ function PayStubDetail({
           <div className="flex gap-3">
             <button 
               onClick={() => exportPayRunToCSV(payRun)}
-              className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:border-[#3a3a3a] transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] hover:border-[#3a3a3a] transition-all duration-200"
             >
               <Download className="w-4 h-4" />
               Export

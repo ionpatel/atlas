@@ -366,11 +366,11 @@ function ReportPreview({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-1.5 px-3 py-2 border border-[#262626] rounded-lg text-xs text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
+          <button className="flex items-center gap-1.5 px-3 py-2 border border-[#262626] rounded-lg text-xs text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
             <Printer className="w-3.5 h-3.5" />
             Print
           </button>
-          <button className="flex items-center gap-1.5 px-3 py-2 border border-[#262626] rounded-lg text-xs text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
+          <button className="flex items-center gap-1.5 px-3 py-2 border border-[#262626] rounded-lg text-xs text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
             <Share2 className="w-3.5 h-3.5" />
             Share
           </button>
@@ -628,12 +628,12 @@ export default function ReportsPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
+          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
             <Calendar className="w-4 h-4" />
             This Month
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
-          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
+          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
             <RefreshCcw className="w-4 h-4" />
             Refresh
           </button>
@@ -653,7 +653,7 @@ export default function ReportsPage() {
               "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
               categoryFilter === cat
                 ? "bg-[#161616] text-[#0A0A0A]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             {cat.charAt(0).toUpperCase() + cat.slice(1)}

@@ -242,7 +242,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
               className={`px-3.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${
                 billType === "bill"
                   ? "bg-[#161616] text-[#0A0A0A]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                  : "text-[#ccc] hover:text-[#FAFAFA]"
               }`}
             >
               Bill
@@ -253,7 +253,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
               className={`px-3.5 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${
                 billType === "receipt"
                   ? "bg-[#161616] text-[#0A0A0A]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                  : "text-[#ccc] hover:text-[#FAFAFA]"
               }`}
             >
               Receipt
@@ -298,7 +298,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+          className="px-5 py-2 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
         >
           Cancel
         </button>
@@ -392,7 +392,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
               Due Date{" "}
               <button
                 type="button"
-                className="text-[#FAFAFA] hover:text-[#FAFAFA] text-[10px] ml-1"
+                className="text-[#ccc] hover:text-[#FAFAFA] text-[10px] ml-1"
               >
                 or Payment Terms
               </button>
@@ -417,7 +417,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
             className={`px-4 py-2.5 text-sm font-medium transition-all duration-200 border-b-2 -mb-px ${
               activeTab === tab.id
                 ? "border-[#262626] text-[#FAFAFA]"
-                : "border-transparent text-[#FAFAFA] hover:text-[#FAFAFA]"
+                : "border-transparent text-[#ccc] hover:text-[#FAFAFA]"
             }`}
           >
             {tab.label}
@@ -595,7 +595,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
             <button
               type="button"
               onClick={addLine}
-              className="flex items-center gap-1.5 text-xs text-[#FAFAFA] hover:text-[#FAFAFA] font-medium transition-colors"
+              className="flex items-center gap-1.5 text-xs text-[#ccc] hover:text-[#FAFAFA] font-medium transition-colors"
             >
               <Plus className="w-3 h-3" />
               Add a line
@@ -603,7 +603,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
             <button
               type="button"
               onClick={addSection}
-              className="flex items-center gap-1.5 text-xs text-[#FAFAFA] hover:text-[#FAFAFA] font-medium transition-colors"
+              className="flex items-center gap-1.5 text-xs text-[#ccc] hover:text-[#FAFAFA] font-medium transition-colors"
             >
               <LayoutList className="w-3 h-3" />
               Add a section
@@ -611,7 +611,7 @@ export function BillForm({ onSubmit, onCancel }: BillFormProps) {
             <button
               type="button"
               onClick={addNote}
-              className="flex items-center gap-1.5 text-xs text-[#FAFAFA] hover:text-[#FAFAFA] font-medium transition-colors"
+              className="flex items-center gap-1.5 text-xs text-[#ccc] hover:text-[#FAFAFA] font-medium transition-colors"
             >
               <StickyNote className="w-3 h-3" />
               Add a note

@@ -363,7 +363,7 @@ function Filters({ filters, onFilterChange, onReset }: FiltersProps) {
       {hasFilters && (
         <button
           onClick={onReset}
-          className="flex items-center gap-1.5 px-3 py-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+          className="flex items-center gap-1.5 px-3 py-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors"
         >
           <X className="w-3.5 h-3.5" />
           Clear
@@ -485,7 +485,7 @@ export default function AuditLogsPage() {
 
         <button
           onClick={handleExport}
-          className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+          className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
         >
           <Download className="w-4 h-4" />
           Export CSV

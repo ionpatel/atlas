@@ -38,7 +38,7 @@ export const ValidatedInput = forwardRef<HTMLInputElement, ValidatedInputProps>(
             ref={ref}
             id={inputId}
             className={cn(
-              "bg-neutral-800 border-neutral-700 text-white transition-colors",
+              "bg-[#1A1A1A] border-[#333333] text-white transition-colors",
               hasError && "border-red-500 focus-visible:ring-red-500",
               isValid && "border-green-500 pr-10",
               className
@@ -61,7 +61,7 @@ export const ValidatedInput = forwardRef<HTMLInputElement, ValidatedInputProps>(
           </p>
         )}
         {hint && !hasError && (
-          <p id={`${inputId}-hint`} className="text-xs text-neutral-500">
+          <p id={`${inputId}-hint`} className="text-xs text-[#888888]">
             {hint}
           </p>
         )}
@@ -102,7 +102,7 @@ export const ValidatedSelect = forwardRef<HTMLSelectElement, ValidatedSelectProp
           ref={ref}
           id={selectId}
           className={cn(
-            "w-full h-10 px-3 rounded-md bg-neutral-800 border border-neutral-700 text-white text-sm",
+            "w-full h-10 px-3 rounded-md bg-[#1A1A1A] border border-[#333333] text-white text-sm",
             "focus:outline-none focus:ring-2 focus:ring-[#CDB49E] focus:border-transparent",
             hasError && "border-red-500 focus:ring-red-500",
             className
@@ -160,7 +160,7 @@ export const ValidatedTextarea = forwardRef<HTMLTextAreaElement, ValidatedTextar
             {showCount && maxLength && (
               <span className={cn(
                 "text-xs",
-                charCount > maxLength ? "text-red-400" : "text-neutral-500"
+                charCount > maxLength ? "text-red-400" : "text-[#888888]"
               )}>
                 {charCount}/{maxLength}
               </span>
@@ -172,7 +172,7 @@ export const ValidatedTextarea = forwardRef<HTMLTextAreaElement, ValidatedTextar
           id={textareaId}
           value={value}
           className={cn(
-            "w-full min-h-[100px] px-3 py-2 rounded-md bg-neutral-800 border border-neutral-700 text-white text-sm resize-y",
+            "w-full min-h-[100px] px-3 py-2 rounded-md bg-[#1A1A1A] border border-[#333333] text-white text-sm resize-y",
             "focus:outline-none focus:ring-2 focus:ring-[#CDB49E] focus:border-transparent",
             hasError && "border-red-500 focus:ring-red-500",
             className

@@ -50,7 +50,7 @@ interface Quotation {
 }
 
 const statusConfig = {
-  draft: { label: 'Draft', color: 'bg-neutral-500/20 text-neutral-400', icon: FileText },
+  draft: { label: 'Draft', color: 'bg-[#333]/20 text-[#999]', icon: FileText },
   sent: { label: 'Sent', color: 'bg-blue-500/20 text-blue-400', icon: Send },
   accepted: { label: 'Accepted', color: 'bg-green-500/20 text-green-400', icon: CheckCircle },
   rejected: { label: 'Rejected', color: 'bg-red-500/20 text-red-400', icon: XCircle },
@@ -190,7 +190,7 @@ export default function QuotationsPage() {
         <Card className="bg-[#0A0A0A] border-[#262626]">
           <CardContent className="p-4">
             <p className="text-sm text-[#FAFAFA]">Drafts</p>
-            <p className="text-2xl font-bold text-neutral-400">{stats.draft}</p>
+            <p className="text-2xl font-bold text-[#999999]">{stats.draft}</p>
           </CardContent>
         </Card>
         <Card className="bg-[#0A0A0A] border-[#262626]">

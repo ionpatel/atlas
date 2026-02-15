@@ -105,7 +105,7 @@ function PlanCard({
             ? "bg-[#0A0A0A] text-[#FAFAFA] cursor-default"
             : plan.popular
             ? "bg-[#161616] text-[#0A0A0A] hover:bg-[#161616]"
-            : "bg-[#0A0A0A] text-[#FAFAFA] hover:bg-[#0A0A0A]",
+            : "bg-[#1A1A1A] text-[#ccc] hover:bg-[#262626]",
           loading && "opacity-50 cursor-wait"
         )}
       >
@@ -193,7 +193,7 @@ function InvoiceRow({ invoice }: { invoice: BillingInvoice }) {
             href={invoice.invoicePdf}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-1.5 text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+            className="p-1.5 text-[#ccc] hover:text-[#FAFAFA] transition-colors"
           >
             <Download className="w-4 h-4" />
           </a>
@@ -315,7 +315,7 @@ export default function BillingPage() {
       {/* Back link */}
       <Link
         href="/settings"
-        className="inline-flex items-center gap-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors mb-6"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Settings
@@ -418,7 +418,7 @@ export default function BillingPage() {
           {stripeConfigured && (
             <button
               onClick={handleManageBilling}
-              className="text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+              className="text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors"
             >
               Add Payment Method
             </button>

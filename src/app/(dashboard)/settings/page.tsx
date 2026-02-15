@@ -213,7 +213,7 @@ function GeneralSection() {
           <div className="w-20 h-20 rounded-xl bg-[#0A0A0A] border-2 border-dashed border-[#262626] flex items-center justify-center">
             <span className="text-2xl font-bold text-[#FAFAFA]">A</span>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200">
+          <button className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200">
             <Upload className="w-4 h-4" />
             Upload Logo
           </button>
@@ -362,7 +362,7 @@ function BillingSection() {
               $49/month · Billed monthly
             </p>
           </div>
-          <button className="px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200">
+          <button className="px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200">
             Change Plan
           </button>
         </div>
@@ -559,7 +559,7 @@ function IntegrationsSection() {
                 </p>
               </div>
             </div>
-            <button className="flex items-center gap-1.5 px-3 py-1.5 border border-[#262626] rounded-lg text-[11px] font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200 flex-shrink-0 ml-4">
+            <button className="flex items-center gap-1.5 px-3 py-1.5 border border-[#262626] rounded-lg text-[11px] font-medium text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200 flex-shrink-0 ml-4">
               Connect
               <ExternalLink className="w-3 h-3" />
             </button>
@@ -936,7 +936,7 @@ function BrandingSection() {
                 )}
               </div>
               <div className="flex flex-col gap-2">
-                <button className="flex items-center gap-2 px-4 py-2 border border-[#262626] rounded-lg text-xs text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
+                <button className="flex items-center gap-2 px-4 py-2 border border-[#262626] rounded-lg text-xs text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
                   <Upload className="w-3.5 h-3.5" />
                   Upload Logo
                 </button>
@@ -959,7 +959,7 @@ function BrandingSection() {
                 )}
               </div>
               <div className="flex flex-col gap-2">
-                <button className="flex items-center gap-2 px-4 py-2 border border-[#262626] rounded-lg text-xs text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
+                <button className="flex items-center gap-2 px-4 py-2 border border-[#262626] rounded-lg text-xs text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
                   <Upload className="w-3.5 h-3.5" />
                   Upload Favicon
                 </button>
@@ -990,7 +990,7 @@ function BrandingSection() {
                 "flex flex-col items-center gap-2 p-4 rounded-xl border transition-all",
                 theme === t.id
                   ? "bg-[rgba(156,74,41,0.15)] border-[#262626]/30 text-[#FAFAFA]"
-                  : "bg-[#0A0A0A] border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:border-[#262626]"
+                  : "bg-[#0A0A0A] border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:border-[#262626]"
               )}
             >
               <t.icon className="w-5 h-5" />
@@ -1038,7 +1038,7 @@ function BrandingSection() {
                   onChange={(e) => setPrimaryColor(e.target.value)}
                   className="flex-1 px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] font-mono focus:outline-none focus:border-[#262626]/40 transition-colors"
                 />
-                <button className="p-2 border border-[#262626] rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
+                <button className="p-2 border border-[#262626] rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all">
                   <Copy className="w-4 h-4" />
                 </button>
               </div>
@@ -1213,7 +1213,7 @@ export default function SettingsPage() {
                 <Link
                   key={tab.id}
                   href={tab.href as string}
-                  className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 text-left text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                  className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 text-left text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
                 >
                   <tab.icon className="w-[18px] h-[18px] flex-shrink-0" />
                   {tab.label}
@@ -1229,7 +1229,7 @@ export default function SettingsPage() {
                   "w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 text-left",
                   isActive
                     ? "bg-[#161616] text-[#0A0A0A]"
-                    : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                    : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
                 )}
               >
                 <tab.icon

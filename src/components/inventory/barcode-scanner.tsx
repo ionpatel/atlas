@@ -222,7 +222,7 @@ export function BarcodeScanner({
                 "p-2 rounded-lg transition-all",
                 soundEnabled
                   ? "text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                  : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
               )}
               title={soundEnabled ? "Sound on" : "Sound off"}
             >
@@ -238,7 +238,7 @@ export function BarcodeScanner({
                 "p-2 rounded-lg transition-all relative",
                 showHistory
                   ? "text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                  : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
               )}
               title="Scan history"
             >
@@ -251,7 +251,7 @@ export function BarcodeScanner({
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+              className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
             >
               <X className="w-5 h-5" />
             </button>
@@ -327,7 +327,7 @@ export function BarcodeScanner({
                 "flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all",
                 mode === "manual"
                   ? "bg-[#161616] text-[#0A0A0A]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                  : "text-[#ccc] hover:text-[#FAFAFA]"
               )}
             >
               <Keyboard className="w-4 h-4" />
@@ -339,7 +339,7 @@ export function BarcodeScanner({
                 "flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all",
                 mode === "camera"
                   ? "bg-[#161616] text-[#0A0A0A]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                  : "text-[#ccc] hover:text-[#FAFAFA]"
               )}
             >
               <Camera className="w-4 h-4" />
@@ -421,7 +421,7 @@ export function BarcodeScanner({
               {/* Demo scan button */}
               <button
                 onClick={simulateScan}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-[#262626] rounded-lg text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-[#262626] rounded-lg text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
               >
                 <RotateCcw className="w-4 h-4" />
                 Simulate Scan (Demo)
@@ -488,7 +488,7 @@ export function BarcodeScanner({
                 {onViewProduct && (
                   <button
                     onClick={() => onViewProduct(foundProduct)}
-                    className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 border border-[#262626] rounded-lg text-xs font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+                    className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 border border-[#262626] rounded-lg text-xs font-medium text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     View

@@ -347,7 +347,7 @@ export default function WarehousesPage() {
                     )}
                     <Badge className={warehouse.is_active 
                       ? 'bg-green-500/20 text-green-400' 
-                      : 'bg-neutral-500/20 text-neutral-400'
+                      : 'bg-[#333]/20 text-[#999]'
                     }>
                       {warehouse.is_active ? 'Active' : 'Inactive'}
                     </Badge>

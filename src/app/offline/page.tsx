@@ -8,15 +8,15 @@ export default function OfflinePage() {
     <div className="min-h-screen bg-[#111111] flex items-center justify-center p-4">
       <div className="text-center max-w-md">
         {/* Icon */}
-        <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center">
-          <WifiOff className="h-10 w-10 text-neutral-600" />
+        <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#111111] border border-[#262626] flex items-center justify-center">
+          <WifiOff className="h-10 w-10 text-[#666666]" />
         </div>
 
         {/* Title */}
         <h1 className="text-2xl font-bold text-white mb-2">
           You're offline
         </h1>
-        <p className="text-neutral-400 mb-8">
+        <p className="text-[#999999] mb-8">
           Check your internet connection and try again. Some features may be available offline.
         </p>
 
@@ -33,16 +33,16 @@ export default function OfflinePage() {
           <Button
             variant="outline"
             onClick={() => window.history.back()}
-            className="w-full border-neutral-700"
+            className="w-full border-[#333333]"
           >
             Go Back
           </Button>
         </div>
 
         {/* Offline features hint */}
-        <div className="mt-8 p-4 bg-neutral-900/50 border border-neutral-800 rounded-xl text-left">
+        <div className="mt-8 p-4 bg-[#111111] border border-[#262626] rounded-xl text-left">
           <p className="text-sm font-medium text-white mb-2">Available offline:</p>
-          <ul className="text-sm text-neutral-400 space-y-1">
+          <ul className="text-sm text-[#999999] space-y-1">
             <li>• View cached data</li>
             <li>• Draft invoices (sync when online)</li>
             <li>• Scan barcodes</li>

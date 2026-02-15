@@ -233,7 +233,7 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+            className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
           >
             <X className="w-5 h-5" />
           </button>
@@ -301,7 +301,7 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setSelectedForReorder(new Set())}
-                className="text-xs text-[#FAFAFA] hover:text-[#FAFAFA] px-2 py-1"
+                className="text-xs text-[#ccc] hover:text-[#FAFAFA] px-2 py-1"
               >
                 Clear
               </button>
@@ -329,7 +329,7 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
                     "px-3 py-1.5 rounded-md text-xs font-medium transition-all",
                     severityFilter === sev
                       ? "bg-[#161616] text-[#0A0A0A]"
-                      : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                      : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
                   )}
                 >
                   {sev === "all" && "All"}
@@ -459,7 +459,7 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
                       {onViewProduct && (
                         <button
                           onClick={() => onViewProduct(alert)}
-                          className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+                          className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
                           title="View product"
                         >
                           <ExternalLink className="w-4 h-4" />
@@ -474,7 +474,7 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
                       </button>
                       <button
                         onClick={() => dismissAlert(alert.id)}
-                        className="p-1.5 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+                        className="p-1.5 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
                         title="Dismiss"
                       >
                         <BellOff className="w-4 h-4" />
@@ -492,11 +492,11 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
           <div className="px-6 py-4 bg-[#0A0A0A] border-t border-[#262626] flex items-center justify-between flex-shrink-0">
             <button
               onClick={() => setDismissedIds(new Set())}
-              className="text-xs text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+              className="text-xs text-[#ccc] hover:text-[#FAFAFA] transition-colors"
             >
               Reset dismissed alerts
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs font-medium text-[#FAFAFA] hover:text-[#FAFAFA] transition-all">
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs font-medium text-[#ccc] hover:text-[#FAFAFA] transition-all">
               <Bell className="w-3.5 h-3.5" />
               Configure Alert Rules
               <ChevronRight className="w-3.5 h-3.5" />

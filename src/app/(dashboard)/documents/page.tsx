@@ -68,7 +68,7 @@ function BreadcrumbNav({
     <div className="flex items-center gap-1.5 text-sm">
       <button
         onClick={() => onNavigate(null)}
-        className="px-2 py-1 rounded hover:bg-[#0A0A0A] text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+        className="px-2 py-1 rounded hover:bg-[#0A0A0A] text-[#ccc] hover:text-[#FAFAFA] transition-colors"
       >
         Documents
       </button>
@@ -81,7 +81,7 @@ function BreadcrumbNav({
               "px-2 py-1 rounded transition-colors",
               i === path.length - 1
                 ? "text-[#FAFAFA] font-medium"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             {folder.name}
@@ -187,10 +187,10 @@ function DocumentCard({
               <StarOff className="w-4 h-4" />
             )}
           </button>
-          <button className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#161616]/10">
+          <button className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#161616]/10">
             <Download className="w-4 h-4" />
           </button>
-          <button className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#161616]/10">
+          <button className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#161616]/10">
             <Share2 className="w-4 h-4" />
           </button>
         </div>
@@ -226,7 +226,7 @@ function DocumentCard({
               <StarOff className="w-3.5 h-3.5" />
             )}
           </button>
-          <button className="p-1.5 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#161616]/10">
+          <button className="p-1.5 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#161616]/10">
             <MoreHorizontal className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -299,7 +299,7 @@ function DocumentPreviewModal({
                 "flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all",
                 activeTab === tab
                   ? "bg-[#161616] text-[#0A0A0A]"
-                  : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+                  : "text-[#ccc] hover:text-[#FAFAFA]"
               )}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -404,7 +404,7 @@ function DocumentPreviewModal({
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-xs text-[#FAFAFA]">{formatFileSize(version.file_size)}</span>
-                      <button className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#161616]/10">
+                      <button className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#161616]/10">
                         <Download className="w-4 h-4" />
                       </button>
                     </div>
@@ -663,7 +663,7 @@ function NewFolderModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA]"
+            className="px-4 py-2 text-sm text-[#ccc] hover:text-[#FAFAFA]"
           >
             Cancel
           </button>
@@ -730,7 +730,7 @@ export default function DocumentsPage() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setNewFolderModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+            className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           >
             <Folder className="w-4 h-4" />
             New Folder
@@ -765,7 +765,7 @@ export default function DocumentsPage() {
                   "w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors",
                   currentFolderId === null && !searchQuery
                     ? "bg-[#161616]/10 text-[#FAFAFA]"
-                    : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                    : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
                 )}
               >
                 <FolderOpen className="w-4 h-4" />
@@ -775,7 +775,7 @@ export default function DocumentsPage() {
                 onClick={() => {
                   setSearchQuery("is:starred");
                 }}
-                className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
               >
                 <Star className="w-4 h-4" />
                 Starred
@@ -800,7 +800,7 @@ export default function DocumentsPage() {
                   className="bg-transparent border-none outline-none text-sm w-48 text-[#FAFAFA] placeholder:text-[#FAFAFA]"
                 />
                 {searchQuery && (
-                  <button onClick={() => setSearchQuery("")} className="text-[#FAFAFA] hover:text-[#FAFAFA]">
+                  <button onClick={() => setSearchQuery("")} className="text-[#ccc] hover:text-[#FAFAFA]">
                     <X className="w-3.5 h-3.5" />
                   </button>
                 )}
@@ -812,7 +812,7 @@ export default function DocumentsPage() {
                     "p-2 transition-colors",
                     viewMode === "grid"
                       ? "bg-[#161616]/10 text-[#FAFAFA]"
-                      : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                      : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
                   )}
                 >
                   <Grid className="w-4 h-4" />
@@ -823,7 +823,7 @@ export default function DocumentsPage() {
                     "p-2 transition-colors",
                     viewMode === "list"
                       ? "bg-[#161616]/10 text-[#FAFAFA]"
-                      : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                      : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
                   )}
                 >
                   <List className="w-4 h-4" />
@@ -841,7 +841,7 @@ export default function DocumentsPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={clearSelection}
-                  className="px-3 py-1.5 text-sm text-[#FAFAFA] hover:text-[#FAFAFA]"
+                  className="px-3 py-1.5 text-sm text-[#ccc] hover:text-[#FAFAFA]"
                 >
                   Clear
                 </button>

@@ -110,13 +110,13 @@ function ContactDetailPanel({
             <div className="flex items-center gap-2">
               <button
                 onClick={() => onEdit(contact)}
-                className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
               >
                 <Pencil className="w-4 h-4" />
               </button>
               <button
                 onClick={onClose}
-                className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+                className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -128,7 +128,7 @@ function ContactDetailPanel({
             {contact.email && (
               <a
                 href={`mailto:${contact.email}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#FAFAFA] hover:text-[#FAFAFA] border border-[#262626] rounded-lg hover:border-[#262626]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#ccc] hover:text-[#FAFAFA] border border-[#262626] rounded-lg hover:border-[#262626]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200"
               >
                 <Mail className="w-3 h-3" />
                 Email
@@ -137,7 +137,7 @@ function ContactDetailPanel({
             {contact.phone && (
               <a
                 href={`tel:${contact.phone}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#FAFAFA] hover:text-[#FAFAFA] border border-[#262626] rounded-lg hover:border-[#262626]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#ccc] hover:text-[#FAFAFA] border border-[#262626] rounded-lg hover:border-[#262626]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200"
               >
                 <Phone className="w-3 h-3" />
                 Call
@@ -154,7 +154,7 @@ function ContactDetailPanel({
                 className={`px-4 py-2.5 text-sm font-medium rounded-t-lg border-b-2 transition-all duration-200 ${
                   tab === t
                     ? "border-[#262626] text-[#FAFAFA] bg-[#0A0A0A]"
-                    : "border-transparent text-[#FAFAFA] hover:text-[#FAFAFA]"
+                    : "border-transparent text-[#ccc] hover:text-[#FAFAFA]"
                 }`}
               >
                 {t.charAt(0).toUpperCase() + t.slice(1)}
@@ -402,7 +402,7 @@ export default function ContactsPage() {
             <div className="flex items-center border border-[#262626] rounded-lg overflow-hidden">
               <button
                 onClick={handleExportCSV}
-                className="flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
               >
                 <Download className="w-3.5 h-3.5" />
                 Export
@@ -410,7 +410,7 @@ export default function ContactsPage() {
               <div className="w-px h-6 bg-[#0A0A0A]" />
               <button
                 onClick={() => setImportOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
               >
                 <Upload className="w-3.5 h-3.5" />
                 Import
@@ -448,7 +448,7 @@ export default function ContactsPage() {
             className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#FAFAFA] hover:text-[#FAFAFA]">
+            <button onClick={() => setSearchQuery("")} className="text-[#ccc] hover:text-[#FAFAFA]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -458,7 +458,7 @@ export default function ContactsPage() {
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.type
               ? "border-[#262626]/50 text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+              : "border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           }`}
         >
           <Filter className="w-4 h-4" />
@@ -472,7 +472,7 @@ export default function ContactsPage() {
             className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               viewMode === "list"
                 ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             }`}
           >
             <List className="w-4 h-4" />
@@ -483,7 +483,7 @@ export default function ContactsPage() {
             className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               viewMode === "grid"
                 ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             }`}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -535,7 +535,7 @@ export default function ContactsPage() {
                         <a
                           href={`mailto:${c.email}`}
                           onClick={(e) => e.stopPropagation()}
-                          className="p-1.5 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                          className="p-1.5 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                           title="Email"
                         >
                           <Mail className="w-3 h-3" />
@@ -545,7 +545,7 @@ export default function ContactsPage() {
                         <a
                           href={`tel:${c.phone}`}
                           onClick={(e) => e.stopPropagation()}
-                          className="p-1.5 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                          className="p-1.5 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                           title="Call"
                         >
                           <Phone className="w-3 h-3" />
@@ -556,7 +556,7 @@ export default function ContactsPage() {
                           e.stopPropagation();
                           setEditingContact(c);
                         }}
-                        className="p-1.5 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                        className="p-1.5 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                         title="Edit"
                       >
                         <Pencil className="w-3 h-3" />
@@ -651,7 +651,7 @@ export default function ContactsPage() {
                           <a
                             href={`mailto:${c.email}`}
                             onClick={(e) => e.stopPropagation()}
-                            className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                            className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                           >
                             <Mail className="w-3.5 h-3.5" />
                           </a>
@@ -660,7 +660,7 @@ export default function ContactsPage() {
                           <a
                             href={`tel:${c.phone}`}
                             onClick={(e) => e.stopPropagation()}
-                            className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                            className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                           >
                             <Phone className="w-3.5 h-3.5" />
                           </a>
@@ -670,7 +670,7 @@ export default function ContactsPage() {
                             e.stopPropagation();
                             setEditingContact(c);
                           }}
-                          className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                          className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                         >
                           <Pencil className="w-3.5 h-3.5" />
                         </button>

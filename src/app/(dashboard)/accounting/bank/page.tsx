@@ -71,7 +71,7 @@ const statusConfig = {
   pending: { label: 'Pending', color: 'bg-amber-500/20 text-amber-400' },
   matched: { label: 'Matched', color: 'bg-blue-500/20 text-blue-400' },
   reconciled: { label: 'Reconciled', color: 'bg-green-500/20 text-green-400' },
-  excluded: { label: 'Excluded', color: 'bg-neutral-500/20 text-neutral-400' },
+  excluded: { label: 'Excluded', color: 'bg-[#333]/20 text-[#999]' },
 };
 
 export default function BankReconciliationPage() {

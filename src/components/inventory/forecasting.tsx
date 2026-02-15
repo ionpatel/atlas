@@ -29,7 +29,7 @@ import { ForecastResult, forecastInventory } from '@/lib/ai/insights';
 const confidenceColors = {
   high: 'bg-green-500/20 text-green-400',
   medium: 'bg-amber-500/20 text-amber-400',
-  low: 'bg-neutral-500/20 text-neutral-400'
+  low: 'bg-[#333]/20 text-[#999]'
 };
 
 export function InventoryForecasting() {
@@ -107,7 +107,7 @@ export function InventoryForecasting() {
 
   if (loading) {
     return (
-      <Card className="bg-neutral-900/50 border-neutral-800">
+      <Card className="bg-[#111111] border-[#262626]">
         <CardContent className="flex items-center justify-center py-12">
           <Loader2 className="h-8 w-8 animate-spin text-[#FAFAFA]" />
         </CardContent>
@@ -119,14 +119,14 @@ export function InventoryForecasting() {
   const soonCount = forecasts.filter(f => f.daysUntilStockout > 7 && f.daysUntilStockout <= 14).length;
 
   return (
-    <Card className="bg-neutral-900/50 border-neutral-800">
+    <Card className="bg-[#111111] border-[#262626]">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-[#FAFAFA]" />
             <div>
               <CardTitle className="text-white">Inventory Forecasting</CardTitle>
-              <CardDescription className="text-neutral-400">
+              <CardDescription className="text-[#999999]">
                 AI-powered stock predictions based on sales velocity
               </CardDescription>
             </div>
@@ -156,7 +156,7 @@ export function InventoryForecasting() {
       </CardHeader>
       <CardContent>
         {forecasts.length === 0 ? (
-          <div className="text-center py-8 text-neutral-500">
+          <div className="text-center py-8 text-[#888888]">
             <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
             <p>No forecasts available</p>
             <p className="text-sm">Add sales data to enable predictions</p>
@@ -165,8 +165,8 @@ export function InventoryForecasting() {
           <div className="space-y-4">
             {/* Summary Cards */}
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="p-4 bg-neutral-800/50 rounded-lg">
-                <div className="flex items-center gap-2 text-neutral-400 text-sm mb-1">
+              <div className="p-4 bg-[#161616] rounded-lg">
+                <div className="flex items-center gap-2 text-[#999999] text-sm mb-1">
                   <AlertTriangle className="h-4 w-4" />
                   Reorder Soon
                 </div>
@@ -174,8 +174,8 @@ export function InventoryForecasting() {
                   {forecasts.filter(f => f.daysUntilStockout <= 14).length}
                 </p>
               </div>
-              <div className="p-4 bg-neutral-800/50 rounded-lg">
-                <div className="flex items-center gap-2 text-neutral-400 text-sm mb-1">
+              <div className="p-4 bg-[#161616] rounded-lg">
+                <div className="flex items-center gap-2 text-[#999999] text-sm mb-1">
                   <Package className="h-4 w-4" />
                   Total Items
                 </div>
@@ -183,8 +183,8 @@ export function InventoryForecasting() {
                   {forecasts.length}
                 </p>
               </div>
-              <div className="p-4 bg-neutral-800/50 rounded-lg">
-                <div className="flex items-center gap-2 text-neutral-400 text-sm mb-1">
+              <div className="p-4 bg-[#161616] rounded-lg">
+                <div className="flex items-center gap-2 text-[#999999] text-sm mb-1">
                   <ShoppingCart className="h-4 w-4" />
                   Avg Daily Sales
                 </div>
@@ -198,14 +198,14 @@ export function InventoryForecasting() {
             <TooltipProvider>
               <Table>
                 <TableHeader>
-                  <TableRow className="border-neutral-800">
-                    <TableHead className="text-neutral-400">Product</TableHead>
-                    <TableHead className="text-neutral-400">Stock</TableHead>
-                    <TableHead className="text-neutral-400">Daily Sales</TableHead>
-                    <TableHead className="text-neutral-400">Days Left</TableHead>
-                    <TableHead className="text-neutral-400">Reorder By</TableHead>
-                    <TableHead className="text-neutral-400">Suggested Qty</TableHead>
-                    <TableHead className="text-neutral-400">Confidence</TableHead>
+                  <TableRow className="border-[#262626]">
+                    <TableHead className="text-[#999999]">Product</TableHead>
+                    <TableHead className="text-[#999999]">Stock</TableHead>
+                    <TableHead className="text-[#999999]">Daily Sales</TableHead>
+                    <TableHead className="text-[#999999]">Days Left</TableHead>
+                    <TableHead className="text-[#999999]">Reorder By</TableHead>
+                    <TableHead className="text-[#999999]">Suggested Qty</TableHead>
+                    <TableHead className="text-[#999999]">Confidence</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -214,7 +214,7 @@ export function InventoryForecasting() {
                     const stockPercent = Math.min(100, (forecast.currentStock / (forecast.avgDailySales * 30)) * 100);
 
                     return (
-                      <TableRow key={forecast.productId} className="border-neutral-800">
+                      <TableRow key={forecast.productId} className="border-[#262626]">
                         <TableCell className="text-white font-medium">
                           {forecast.productName}
                         </TableCell>
@@ -223,11 +223,11 @@ export function InventoryForecasting() {
                             <span className="text-white">{forecast.currentStock}</span>
                             <Progress 
                               value={stockPercent} 
-                              className="w-16 h-2 bg-neutral-800"
+                              className="w-16 h-2 bg-[#1A1A1A]"
                             />
                           </div>
                         </TableCell>
-                        <TableCell className="text-neutral-400">
+                        <TableCell className="text-[#999999]">
                           {forecast.avgDailySales.toFixed(1)}/day
                         </TableCell>
                         <TableCell>
@@ -235,7 +235,7 @@ export function InventoryForecasting() {
                             {forecast.daysUntilStockout} days
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-neutral-400">
+                        <TableCell className="text-[#999999]">
                           <Tooltip>
                             <TooltipTrigger>
                               <div className="flex items-center gap-1">

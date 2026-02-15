@@ -253,7 +253,7 @@ function RoleCard({
                     e.stopPropagation();
                     onEdit();
                   }}
-                  className="p-1.5 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+                  className="p-1.5 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
                 >
                   <Edit2 className="w-4 h-4" />
                 </button>
@@ -401,7 +401,7 @@ export default function RolesPage() {
       {/* Back link */}
       <Link
         href="/settings"
-        className="inline-flex items-center gap-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors mb-6"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Settings
@@ -431,7 +431,7 @@ export default function RolesPage() {
             "px-4 py-2 rounded-md text-sm font-medium transition-all",
             activeTab === "roles"
               ? "bg-[#161616] text-[#0A0A0A]"
-              : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+              : "text-[#ccc] hover:text-[#FAFAFA]"
           )}
         >
           Roles
@@ -442,7 +442,7 @@ export default function RolesPage() {
             "px-4 py-2 rounded-md text-sm font-medium transition-all",
             activeTab === "users"
               ? "bg-[#161616] text-[#0A0A0A]"
-              : "text-[#FAFAFA] hover:text-[#FAFAFA]"
+              : "text-[#ccc] hover:text-[#FAFAFA]"
           )}
         >
           User Assignments

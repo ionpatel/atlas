@@ -166,7 +166,7 @@ function PortalNav({
                   "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all",
                   activeTab === tab.id
                     ? "bg-[#161616]/10 text-[#FAFAFA]"
-                    : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                    : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
                 )}
               >
                 <tab.icon className="w-4 h-4" />
@@ -354,7 +354,7 @@ function OrdersTab() {
                   <p className="text-lg font-bold text-[#FAFAFA]">
                     ${order.total.toFixed(2)}
                   </p>
-                  <button className="text-xs text-[#FAFAFA] hover:text-[#FAFAFA] mt-1 flex items-center gap-1">
+                  <button className="text-xs text-[#ccc] hover:text-[#FAFAFA] mt-1 flex items-center gap-1">
                     View Details <ChevronRight className="w-3 h-3" />
                   </button>
                 </div>
@@ -442,7 +442,7 @@ function SupportTab() {
             <h3 className="font-semibold text-[#FAFAFA]">Create Support Ticket</h3>
             <button
               onClick={() => setShowNewTicket(false)}
-              className="p-1 text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+              className="p-1 text-[#ccc] hover:text-[#FAFAFA] transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -474,7 +474,7 @@ function SupportTab() {
               <button
                 type="button"
                 onClick={() => setShowNewTicket(false)}
-                className="px-4 py-2 text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+                className="px-4 py-2 text-[#ccc] hover:text-[#FAFAFA] transition-colors"
               >
                 Cancel
               </button>
@@ -555,7 +555,7 @@ function ProfileTab() {
             {!editing ? (
               <button
                 onClick={() => setEditing(true)}
-                className="flex items-center gap-1.5 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+                className="flex items-center gap-1.5 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors"
               >
                 <Pencil className="w-4 h-4" />
                 Edit
@@ -564,7 +564,7 @@ function ProfileTab() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setEditing(false)}
-                  className="text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+                  className="text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors"
                 >
                   Cancel
                 </button>
@@ -638,15 +638,15 @@ function ProfileTab() {
           <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-6">
             <h3 className="font-semibold text-[#FAFAFA] mb-4">Account Actions</h3>
             <div className="space-y-3">
-              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#0A0A0A] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
+              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#0A0A0A] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors">
                 <span>Change Password</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
-              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#0A0A0A] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
+              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#0A0A0A] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors">
                 <span>Notification Preferences</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
-              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#0A0A0A] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
+              <button className="w-full flex items-center justify-between px-4 py-3 bg-[#0A0A0A] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors">
                 <span>Download All Data</span>
                 <ChevronRight className="w-4 h-4" />
               </button>

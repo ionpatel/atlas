@@ -52,7 +52,7 @@ export function Modal({ open, onClose, title, children, className, size = "md" }
       {/* Dialog */}
       <div
         className={cn(
-          "relative w-full bg-[#0A0A0A] border border-[#262626] rounded-2xl shadow-2xl shadow-black/40 animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col",
+          "relative w-full bg-[#161616] border border-[#262626] rounded-2xl shadow-2xl shadow-black/60 animate-scale-in max-h-[90vh] flex flex-col",
           sizeClasses[size],
           className
         )}
@@ -63,7 +63,7 @@ export function Modal({ open, onClose, title, children, className, size = "md" }
             <h2 className="text-base font-semibold text-[#FAFAFA]">{title}</h2>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+              className="p-2 rounded-lg text-[#666] hover:text-[#FAFAFA] hover:bg-[#1A1A1A] transition-all duration-200"
             >
               <X className="w-4 h-4" />
             </button>

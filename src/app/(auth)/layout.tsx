@@ -10,7 +10,7 @@ export default function AuthLayout({
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="flex items-center justify-center gap-3 mb-10">
-          <div className="w-11 h-11 rounded-xl bg-[#161616] flex items-center justify-center">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#CDB49E] to-[#B89B78] flex items-center justify-center shadow-lg shadow-[#CDB49E]/10">
             <span className="text-[#0A0A0A] font-bold text-lg">A</span>
           </div>
           <span className="text-[#FAFAFA] text-2xl font-semibold tracking-tight">

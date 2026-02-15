@@ -40,9 +40,9 @@ const icons = {
 };
 
 const colorClasses = {
-  success: "border-emerald-500/20 bg-[#0A0A0A] text-emerald-400",
-  error: "border-red-500/20 bg-[#0A0A0A] text-red-400",
-  info: "border-[#262626]/20 bg-[#0A0A0A] text-[#FAFAFA]",
+  success: "border-emerald-500/20 bg-[#161616] text-emerald-400",
+  error: "border-red-500/20 bg-[#161616] text-red-400",
+  info: "border-[#333]/20 bg-[#161616] text-[#CDB49E]",
 };
 
 function ToastItem({ toast }: { toast: Toast }) {
@@ -60,7 +60,7 @@ function ToastItem({ toast }: { toast: Toast }) {
       <span className="text-sm font-medium flex-1 text-[#FAFAFA]">{toast.message}</span>
       <button
         onClick={() => removeToast(toast.id)}
-        className="p-1 rounded-lg hover:bg-[#0A0A0A] transition-colors text-[#FAFAFA] hover:text-[#FAFAFA]"
+        className="p-1 rounded-lg hover:bg-[#1A1A1A] transition-colors text-[#666] hover:text-[#FAFAFA]"
       >
         <X className="w-3.5 h-3.5" />
       </button>

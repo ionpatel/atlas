@@ -240,22 +240,22 @@ export function SmartSearch() {
       <Button
         variant="outline"
         onClick={() => setOpen(true)}
-        className="w-64 justify-between text-neutral-400 border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800"
+        className="w-64 justify-between text-[#999999] border-[#262626] bg-[#111111] hover:bg-[#1A1A1A]"
       >
         <div className="flex items-center gap-2">
           <Search className="h-4 w-4" />
           <span>Search anything...</span>
         </div>
-        <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-neutral-700 bg-neutral-800 px-1.5 font-mono text-[10px] font-medium text-neutral-400">
+        <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-[#333333] bg-[#1A1A1A] px-1.5 font-mono text-[10px] font-medium text-[#999999]">
           <Command className="h-3 w-3" />K
         </kbd>
       </Button>
 
       {/* Search dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-2xl p-0 bg-neutral-900 border-neutral-800 overflow-hidden">
+        <DialogContent className="max-w-2xl p-0 bg-[#111111] border-[#262626] overflow-hidden">
           {/* Search input */}
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-neutral-800">
+          <div className="flex items-center gap-3 px-4 py-3 border-b border-[#262626]">
             {loading ? (
               <Loader2 className="h-5 w-5 text-[#FAFAFA] animate-spin" />
             ) : (
@@ -267,7 +267,7 @@ export function SmartSearch() {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Search or ask a question..."
-              className="border-0 bg-transparent text-white placeholder:text-neutral-500 focus-visible:ring-0 text-lg"
+              className="border-0 bg-transparent text-white placeholder:text-[#555555] focus-visible:ring-0 text-lg"
             />
             {query && (
               <Button
@@ -283,11 +283,11 @@ export function SmartSearch() {
 
           {/* Parsed query indicator */}
           {parsedQuery && (
-            <div className="px-4 py-2 border-b border-neutral-800 bg-neutral-800/50">
-              <div className="flex items-center gap-2 text-sm text-neutral-400">
+            <div className="px-4 py-2 border-b border-[#262626] bg-[#161616]">
+              <div className="flex items-center gap-2 text-sm text-[#999999]">
                 <Filter className="h-3 w-3" />
                 <span>Searching</span>
-                <Badge variant="outline" className="border-neutral-700 capitalize">
+                <Badge variant="outline" className="border-[#333333] capitalize">
                   {parsedQuery.entity}
                 </Badge>
                 {parsedQuery.filters.map((f, i) => (
@@ -303,13 +303,13 @@ export function SmartSearch() {
           <div className="max-h-[400px] overflow-y-auto">
             {query.length < 2 ? (
               <div className="p-4 space-y-4">
-                <p className="text-sm text-neutral-500">Try asking:</p>
+                <p className="text-sm text-[#888888]">Try asking:</p>
                 <div className="space-y-2">
                   {EXAMPLE_QUERIES.map((example, i) => (
                     <button
                       key={i}
                       onClick={() => setQuery(example)}
-                      className="flex items-center gap-2 w-full p-2 text-left text-sm text-neutral-400 hover:bg-neutral-800 rounded-lg transition-colors"
+                      className="flex items-center gap-2 w-full p-2 text-left text-sm text-[#999999] hover:bg-[#1A1A1A] rounded-lg transition-colors"
                     >
                       <Sparkles className="h-3 w-3 text-[#FAFAFA]" />
                       {example}
@@ -318,7 +318,7 @@ export function SmartSearch() {
                 </div>
               </div>
             ) : results.length === 0 && !loading ? (
-              <div className="p-8 text-center text-neutral-500">
+              <div className="p-8 text-center text-[#888888]">
                 <Search className="h-8 w-8 mx-auto mb-2 opacity-50" />
                 <p>No results found</p>
                 <p className="text-sm">Try a different search term</p>
@@ -333,8 +333,8 @@ export function SmartSearch() {
                       onClick={() => selectResult(result)}
                       className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors ${
                         index === selectedIndex 
-                          ? 'bg-neutral-800' 
-                          : 'hover:bg-neutral-800/50'
+                          ? 'bg-[#1A1A1A]' 
+                          : 'hover:bg-[#1A1A1A]'
                       }`}
                     >
                       <div className={`p-2 rounded-lg ${typeColors[result.type]}`}>
@@ -342,14 +342,14 @@ export function SmartSearch() {
                       </div>
                       <div className="flex-1 text-left">
                         <p className="text-white font-medium">{result.title}</p>
-                        <p className="text-sm text-neutral-500">{result.subtitle}</p>
+                        <p className="text-sm text-[#888888]">{result.subtitle}</p>
                       </div>
                       {result.badge && (
-                        <Badge variant="outline" className="border-neutral-700 capitalize">
+                        <Badge variant="outline" className="border-[#333333] capitalize">
                           {result.badge}
                         </Badge>
                       )}
-                      <ArrowRight className="h-4 w-4 text-neutral-600" />
+                      <ArrowRight className="h-4 w-4 text-[#666666]" />
                     </button>
                   );
                 })}
@@ -358,18 +358,18 @@ export function SmartSearch() {
           </div>
 
           {/* Footer */}
-          <div className="px-4 py-2 border-t border-neutral-800 flex items-center justify-between text-xs text-neutral-500">
+          <div className="px-4 py-2 border-t border-[#262626] flex items-center justify-between text-xs text-[#888888]">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-neutral-800 rounded">↑↓</kbd>
+                <kbd className="px-1.5 py-0.5 bg-[#1A1A1A] rounded">↑↓</kbd>
                 navigate
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-neutral-800 rounded">↵</kbd>
+                <kbd className="px-1.5 py-0.5 bg-[#1A1A1A] rounded">↵</kbd>
                 select
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-neutral-800 rounded">esc</kbd>
+                <kbd className="px-1.5 py-0.5 bg-[#1A1A1A] rounded">esc</kbd>
                 close
               </span>
             </div>

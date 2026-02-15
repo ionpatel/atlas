@@ -266,7 +266,7 @@ function FilterSection({
         {hasFilters && (
           <button
             onClick={onReset}
-            className="flex items-center gap-1 text-xs text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+            className="flex items-center gap-1 text-xs text-[#ccc] hover:text-[#FAFAFA] transition-colors"
           >
             <RotateCcw className="w-3 h-3" />
             Reset
@@ -386,7 +386,7 @@ function FilterSection({
             </select>
             <button
               onClick={() => onSortChange({ ...sort, direction: sort.direction === "asc" ? "desc" : "asc" })}
-              className="p-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+              className="p-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#ccc] hover:text-[#FAFAFA] transition-colors"
               title={sort.direction === "asc" ? "Ascending" : "Descending"}
             >
               {sort.direction === "asc" ? (
@@ -634,7 +634,7 @@ export default function InventoryPage() {
               "relative flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200",
               summary.lowStock + summary.outOfStock > 0
                 ? "border-amber-500/30 text-amber-400 bg-amber-500/5 hover:bg-amber-500/10"
-                : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             <Bell className="w-4 h-4" />
@@ -651,7 +651,7 @@ export default function InventoryPage() {
           {/* Barcode Scanner Button */}
           <button
             onClick={() => setShowScanner(true)}
-            className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+            className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
           >
             <Scan className="w-4 h-4" />
             Scan
@@ -743,7 +743,7 @@ export default function InventoryPage() {
             className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#FAFAFA] hover:text-[#FAFAFA]">
+            <button onClick={() => setSearchQuery("")} className="text-[#ccc] hover:text-[#FAFAFA]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -754,7 +754,7 @@ export default function InventoryPage() {
             "flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 relative",
             showFilters || activeFilterCount > 0
               ? "border-[#262626]/50 text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+              : "border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           )}
         >
           <Filter className="w-4 h-4" />
@@ -767,7 +767,7 @@ export default function InventoryPage() {
         </button>
         {/* Import/Export buttons */}
         <div className="flex items-center border border-[#262626] rounded-lg overflow-hidden">
-          <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200">
+          <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200">
             <Download className="w-4 h-4" />
             Export
           </button>
@@ -775,7 +775,7 @@ export default function InventoryPage() {
           <CanCreate module="inventory">
             <button
               onClick={() => setShowImport(true)}
-              className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+              className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
             >
               <Upload className="w-4 h-4" />
               Import
@@ -790,7 +790,7 @@ export default function InventoryPage() {
             className={`p-2.5 transition-all duration-200 ${
               viewMode === "list"
                 ? "bg-[#0A0A0A] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             }`}
           >
             <LayoutList className="w-4 h-4" />
@@ -800,7 +800,7 @@ export default function InventoryPage() {
             className={`p-2.5 transition-all duration-200 ${
               viewMode === "grid"
                 ? "bg-[#0A0A0A] text-[#FAFAFA]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             }`}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -958,7 +958,7 @@ export default function InventoryPage() {
                                 e.stopPropagation();
                                 setEditingProduct(p);
                               }}
-                              className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                              className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                             >
                               <Pencil className="w-3.5 h-3.5" />
                             </button>
@@ -1037,7 +1037,7 @@ export default function InventoryPage() {
           <div className="w-px h-5 bg-[#0A0A0A]" />
           <button
             onClick={clearSelection}
-            className="p-2 text-[#FAFAFA] hover:text-[#FAFAFA] rounded-lg hover:bg-[#0A0A0A] transition-all duration-200"
+            className="p-2 text-[#ccc] hover:text-[#FAFAFA] rounded-lg hover:bg-[#0A0A0A] transition-all duration-200"
           >
             <X className="w-4 h-4" />
           </button>

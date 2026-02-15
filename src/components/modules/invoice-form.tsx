@@ -353,7 +353,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
           <button
             type="button"
             onClick={() => addLine("line")}
-            className="flex items-center gap-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors font-medium"
+            className="flex items-center gap-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors font-medium"
           >
             <Plus className="w-3.5 h-3.5" />
             Add a line
@@ -361,7 +361,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
           <button
             type="button"
             onClick={() => addLine("section")}
-            className="flex items-center gap-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors font-medium"
+            className="flex items-center gap-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors font-medium"
           >
             <Type className="w-3.5 h-3.5" />
             Add a section
@@ -369,7 +369,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
           <button
             type="button"
             onClick={() => addLine("note")}
-            className="flex items-center gap-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors font-medium"
+            className="flex items-center gap-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors font-medium"
           >
             <StickyNote className="w-3.5 h-3.5" />
             Add a note
@@ -411,7 +411,7 @@ export function InvoiceForm({ onSubmit, onCancel }: InvoiceFormProps) {
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] bg-[#0A0A0A] border border-[#262626] rounded-lg hover:bg-[#0A0A0A] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] bg-[#1A1A1A] border border-[#333] rounded-lg hover:bg-[#262626] transition-all duration-200"
         >
           Cancel
         </button>

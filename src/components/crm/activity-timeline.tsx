@@ -149,7 +149,7 @@ export function ActivityTimeline({
           <div className="relative">
             <button
               onClick={() => setShowFilterMenu(!showFilterMenu)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 border border-[#262626] rounded-lg text-xs text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 border border-[#262626] rounded-lg text-xs text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
             >
               <Filter className="w-3 h-3" />
               {filterType === "all"
@@ -173,7 +173,7 @@ export function ActivityTimeline({
                       "w-full text-left px-3 py-2 text-xs transition-colors",
                       filterType === "all"
                         ? "text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]"
-                        : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                        : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
                     )}
                   >
                     All Activity
@@ -189,7 +189,7 @@ export function ActivityTimeline({
                         "w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors",
                         filterType === type
                           ? "text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]"
-                          : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                          : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
                       )}
                     >
                       <config.icon className={cn("w-3 h-3", config.color)} />

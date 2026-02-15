@@ -613,7 +613,7 @@ export default function DashboardPage() {
             </h2>
             <Link
               href="/invoices"
-              className="text-[11px] text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors flex items-center gap-1"
+              className="text-[11px] text-[#ccc] hover:text-[#FAFAFA] transition-colors flex items-center gap-1"
             >
               View all <ChevronRight className="w-3 h-3" />
             </Link>
@@ -651,7 +651,7 @@ export default function DashboardPage() {
             </div>
             <Link
               href="/invoices"
-              className="text-[11px] text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors flex items-center gap-1"
+              className="text-[11px] text-[#ccc] hover:text-[#FAFAFA] transition-colors flex items-center gap-1"
             >
               View all <ChevronRight className="w-3 h-3" />
             </Link>
@@ -755,7 +755,7 @@ export default function DashboardPage() {
           </div>
           <Link
             href="/inventory"
-            className="text-[11px] text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors flex items-center gap-1"
+            className="text-[11px] text-[#ccc] hover:text-[#FAFAFA] transition-colors flex items-center gap-1"
           >
             View all <ChevronRight className="w-3 h-3" />
           </Link>

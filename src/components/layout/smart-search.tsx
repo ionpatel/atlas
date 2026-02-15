@@ -53,7 +53,7 @@ function SearchResultItem({
       onClick={onClick}
       className={cn(
         "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors",
-        isSelected ? "bg-[#0A0A0A]" : "hover:bg-[#0A0A0A]"
+        isSelected ? "bg-[#1A1A1A]" : "hover:bg-[#0A0A0A]"
       )}
     >
       <div
@@ -251,7 +251,7 @@ export function SmartSearch({ className }: { className?: string }) {
             {query && (
               <button
                 onClick={() => setQuery("")}
-                className="p-1 text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
+                className="p-1 text-[#ccc] hover:text-[#FAFAFA] transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>

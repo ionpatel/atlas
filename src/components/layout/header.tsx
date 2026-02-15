@@ -61,7 +61,7 @@ function NotificationDropdown() {
       <button
         onClick={() => setOpen(!open)}
         className={cn(
-          "relative p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200",
+          "relative p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200",
           open && "bg-[#0A0A0A] text-[#FAFAFA]"
         )}
       >
@@ -115,7 +115,7 @@ function NotificationDropdown() {
             <Link
               href="/notifications"
               onClick={() => setOpen(false)}
-              className="text-sm text-[#FAFAFA] hover:text-[#FAFAFA] font-medium transition-colors"
+              className="text-sm text-[#ccc] hover:text-[#FAFAFA] font-medium transition-colors"
             >
               View all notifications →
             </Link>

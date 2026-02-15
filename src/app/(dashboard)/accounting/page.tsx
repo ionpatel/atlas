@@ -152,7 +152,7 @@ function AccountForm({
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+          className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
         >
           Cancel
         </button>
@@ -272,7 +272,7 @@ function JournalEntryForm({
           <button
             type="button"
             onClick={addLine}
-            className="flex items-center gap-1 text-xs text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors duration-200"
+            className="flex items-center gap-1 text-xs text-[#ccc] hover:text-[#FAFAFA] transition-colors duration-200"
           >
             <Plus className="w-3 h-3" />
             Add Line
@@ -358,7 +358,7 @@ function JournalEntryForm({
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+          className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
         >
           Cancel
         </button>
@@ -522,7 +522,7 @@ function OverviewTab() {
 
         <button
           onClick={() => setBillModalOpen(true)}
-          className="mt-3 w-full text-center text-sm text-[#FAFAFA] hover:text-[#FAFAFA] font-medium transition-colors duration-200"
+          className="mt-3 w-full text-center text-sm text-[#ccc] hover:text-[#FAFAFA] font-medium transition-colors duration-200"
         >
           Create a bill manually
         </button>
@@ -637,7 +637,7 @@ function InvoiceFormInline({ onClose }: { onClose: () => void }) {
         <button
           type="button"
           onClick={onClose}
-          className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+          className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
         >
           Cancel
         </button>
@@ -716,7 +716,7 @@ function ChartOfAccountsTab() {
             className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#FAFAFA] hover:text-[#FAFAFA]">
+            <button onClick={() => setSearchQuery("")} className="text-[#ccc] hover:text-[#FAFAFA]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -726,7 +726,7 @@ function ChartOfAccountsTab() {
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.accountType
               ? "border-[#262626]/50 text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+              : "border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           }`}
         >
           <Filter className="w-4 h-4" />
@@ -882,7 +882,7 @@ function JournalEntriesTab() {
             className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#FAFAFA] hover:text-[#FAFAFA]">
+            <button onClick={() => setSearchQuery("")} className="text-[#ccc] hover:text-[#FAFAFA]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -892,7 +892,7 @@ function JournalEntriesTab() {
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.entryStatus
               ? "border-[#262626]/50 text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+              : "border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           }`}
         >
           <Filter className="w-4 h-4" />
@@ -1249,7 +1249,7 @@ export default function AccountingPage() {
             className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
               activeTab === tab.id
                 ? "bg-[#161616] text-[#0A0A0A]"
-                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             }`}
           >
             <tab.icon className="w-4 h-4" />
