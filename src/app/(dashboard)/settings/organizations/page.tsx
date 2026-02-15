@@ -62,7 +62,7 @@ interface Invitation {
 }
 
 const roleIcons: Record<string, React.ReactNode> = {
-  owner: <Crown className="h-4 w-4 text-[#273B3A]" />,
+  owner: <Crown className="h-4 w-4 text-[#FAFAFA]" />,
   admin: <Shield className="h-4 w-4 text-blue-400" />,
   manager: <Users className="h-4 w-4 text-green-400" />,
   member: <User className="h-4 w-4 text-neutral-400" />,
@@ -266,7 +266,7 @@ export default function OrganizationsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-[#273B3A]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#FAFAFA]" />
       </div>
     );
   }
@@ -283,7 +283,7 @@ export default function OrganizationsPage() {
         </div>
         <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
           <DialogTrigger asChild>
-            <Button className="bg-[#273B3A] hover:bg-[#273B3A]/90 text-black">
+            <Button className="bg-[#161616] hover:bg-[#161616]/90 text-black">
               <Plus className="h-4 w-4 mr-2" />
               Create Organization
             </Button>
@@ -314,7 +314,7 @@ export default function OrganizationsPage() {
               <Button 
                 onClick={createOrganization} 
                 disabled={creating || !newOrgName.trim()}
-                className="bg-[#273B3A] hover:bg-[#273B3A]/90 text-black"
+                className="bg-[#161616] hover:bg-[#161616]/90 text-black"
               >
                 {creating && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
                 Create
@@ -328,7 +328,7 @@ export default function OrganizationsPage() {
       <Card className="bg-neutral-900/50 border-neutral-800">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Building2 className="h-5 w-5 text-[#273B3A]" />
+            <Building2 className="h-5 w-5 text-[#FAFAFA]" />
             Your Organizations
           </CardTitle>
         </CardHeader>
@@ -340,14 +340,14 @@ export default function OrganizationsPage() {
                 variant={selectedOrg?.org_id === org.org_id ? 'default' : 'outline'}
                 onClick={() => setSelectedOrg(org)}
                 className={selectedOrg?.org_id === org.org_id 
-                  ? 'bg-[#273B3A] text-black hover:bg-[#273B3A]/90' 
+                  ? 'bg-[#161616] text-black hover:bg-[#161616]/90' 
                   : 'border-neutral-700 text-white hover:bg-neutral-800'
                 }
               >
                 {roleIcons[org.role]}
                 <span className="ml-2">{org.org_name}</span>
                 {org.is_owner && (
-                  <Badge variant="secondary" className="ml-2 bg-[#273B3A]/20 text-[#273B3A]">
+                  <Badge variant="secondary" className="ml-2 bg-[#161616]/20 text-[#FAFAFA]">
                     Owner
                   </Badge>
                 )}
@@ -364,7 +364,7 @@ export default function OrganizationsPage() {
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Users className="h-5 w-5 text-[#273B3A]" />
+                  <Users className="h-5 w-5 text-[#FAFAFA]" />
                   Team Members
                 </CardTitle>
                 <CardDescription className="text-neutral-400">
@@ -420,7 +420,7 @@ export default function OrganizationsPage() {
                       <Button 
                         onClick={sendInvitation} 
                         disabled={inviting || !inviteEmail}
-                        className="bg-[#273B3A] hover:bg-[#273B3A]/90 text-black"
+                        className="bg-[#161616] hover:bg-[#161616]/90 text-black"
                       >
                         {inviting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
                         Send Invitation
@@ -477,9 +477,9 @@ export default function OrganizationsPage() {
             <Card className="bg-neutral-900/50 border-neutral-800">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-[#273B3A]" />
+                  <Clock className="h-5 w-5 text-[#FAFAFA]" />
                   Pending Invitations
-                  <Badge className="bg-[#273B3A]/20 text-[#273B3A]">
+                  <Badge className="bg-[#161616]/20 text-[#FAFAFA]">
                     {invitations.length}
                   </Badge>
                 </CardTitle>

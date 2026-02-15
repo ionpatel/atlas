@@ -6,37 +6,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Core palette - Warm Earth Theme
-        cream: {
-          DEFAULT: '#E8E3CC',
-          light: '#F5F2E8',
-          dark: '#DDD7C0',
-          50: '#FAF9F5',
-          100: '#F5F2E8',
-          200: '#E8E3CC',
-          300: '#DDD7C0',
-          400: '#D4CDB8',
-          500: '#C5BDA8',
+        // Core palette — Dark Luxury
+        atlas: {
+          bg: '#0A0A0A',
+          surface: '#111111',
+          card: '#161616',
+          elevated: '#1A1A1A',
+          border: '#262626',
+          'border-light': '#333333',
+          gold: '#CDB49E',
+          'gold-light': '#E8D5B7',
+          'gold-dark': '#B89B78',
+          'gold-muted': '#A89880',
+          text: '#FAFAFA',
+          muted: '#888888',
+          dim: '#666666',
+          subtle: '#444444',
         },
-        cinnamon: {
-          DEFAULT: '#9C4A29',
-          light: '#B85A35',
-          dark: '#7D3B21',
-          50: '#FDF5F2',
-          100: '#F9E8E2',
-          200: '#F0C9BC',
-          300: '#D4856A',
-          400: '#B85A35',
-          500: '#9C4A29',
-          600: '#7D3B21',
-          700: '#5E2C19',
-        },
-        earth: {
-          DEFAULT: '#2D1810',
-          light: '#6B5B4F',
-          dark: '#1A0E09',
-        },
-        // Semantic colors
+        // Semantic colors (shadcn compatibility)
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -76,7 +63,17 @@ const config: Config = {
           '3': 'hsl(var(--chart-3))',
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))'
-        }
+        },
+        sidebar: {
+          DEFAULT: 'hsl(var(--sidebar-background))',
+          foreground: 'hsl(var(--sidebar-foreground))',
+          primary: 'hsl(var(--sidebar-primary))',
+          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+          accent: 'hsl(var(--sidebar-accent))',
+          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+          border: 'hsl(var(--sidebar-border))',
+          ring: 'hsl(var(--sidebar-ring))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -87,10 +84,12 @@ const config: Config = {
         sans: ['Inter', 'system-ui', 'sans-serif']
       },
       boxShadow: {
-        'warm': '0 4px 6px -1px rgba(45, 24, 16, 0.1), 0 2px 4px -1px rgba(45, 24, 16, 0.06)',
-        'warm-lg': '0 10px 15px -3px rgba(45, 24, 16, 0.1), 0 4px 6px -2px rgba(45, 24, 16, 0.05)',
-        'warm-xl': '0 20px 25px -5px rgba(45, 24, 16, 0.1), 0 10px 10px -5px rgba(45, 24, 16, 0.04)',
-        'cinnamon': '0 4px 14px -3px rgba(156, 74, 41, 0.25)',
+        'dark': '0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3)',
+        'dark-lg': '0 10px 25px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3)',
+        'dark-xl': '0 20px 40px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4)',
+        'gold': '0 4px 14px -3px rgba(205, 180, 158, 0.2)',
+        'gold-lg': '0 8px 30px -4px rgba(205, 180, 158, 0.15)',
+        'glow': '0 0 40px rgba(205, 180, 158, 0.12), 0 0 80px rgba(205, 180, 158, 0.06)',
       },
       keyframes: {
         'accordion-down': {
@@ -108,13 +107,23 @@ const config: Config = {
         'slide-up': {
           from: { transform: 'translateY(10px)', opacity: '0' },
           to: { transform: 'translateY(0)', opacity: '1' }
-        }
+        },
+        'slide-down': {
+          from: { transform: 'translateY(-10px)', opacity: '0' },
+          to: { transform: 'translateY(0)', opacity: '1' }
+        },
+        'scale-in': {
+          from: { transform: 'scale(0.95)', opacity: '0' },
+          to: { transform: 'scale(1)', opacity: '1' }
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in': 'fade-in 0.3s ease-out',
-        'slide-up': 'slide-up 0.3s ease-out'
+        'slide-up': 'slide-up 0.3s ease-out',
+        'slide-down': 'slide-down 0.3s ease-out',
+        'scale-in': 'scale-in 0.3s ease-out',
       }
     }
   },

@@ -257,9 +257,9 @@ export function SmartSearch() {
           {/* Search input */}
           <div className="flex items-center gap-3 px-4 py-3 border-b border-neutral-800">
             {loading ? (
-              <Loader2 className="h-5 w-5 text-[#273B3A] animate-spin" />
+              <Loader2 className="h-5 w-5 text-[#FAFAFA] animate-spin" />
             ) : (
-              <Sparkles className="h-5 w-5 text-[#273B3A]" />
+              <Sparkles className="h-5 w-5 text-[#FAFAFA]" />
             )}
             <Input
               ref={inputRef}
@@ -291,7 +291,7 @@ export function SmartSearch() {
                   {parsedQuery.entity}
                 </Badge>
                 {parsedQuery.filters.map((f, i) => (
-                  <Badge key={i} className="bg-[#273B3A]/20 text-[#273B3A]">
+                  <Badge key={i} className="bg-[#161616]/20 text-[#FAFAFA]">
                     {f.field}: {String(f.value)}
                   </Badge>
                 ))}
@@ -311,7 +311,7 @@ export function SmartSearch() {
                       onClick={() => setQuery(example)}
                       className="flex items-center gap-2 w-full p-2 text-left text-sm text-neutral-400 hover:bg-neutral-800 rounded-lg transition-colors"
                     >
-                      <Sparkles className="h-3 w-3 text-[#273B3A]" />
+                      <Sparkles className="h-3 w-3 text-[#FAFAFA]" />
                       {example}
                     </button>
                   ))}
@@ -374,7 +374,7 @@ export function SmartSearch() {
               </span>
             </div>
             <div className="flex items-center gap-1">
-              <Sparkles className="h-3 w-3 text-[#273B3A]" />
+              <Sparkles className="h-3 w-3 text-[#FAFAFA]" />
               AI-powered search
             </div>
           </div>

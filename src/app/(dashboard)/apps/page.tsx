@@ -50,7 +50,7 @@ const apps: AppItem[] = [
     href: "/",
     icon: LayoutDashboard,
     iconBg: "bg-[rgba(156,74,41,0.15)]",
-    iconColor: "text-[#273B3A]",
+    iconColor: "text-[#FAFAFA]",
     available: true,
     category: "Core Business",
   },
@@ -110,7 +110,7 @@ const apps: AppItem[] = [
     href: "/sales",
     icon: ShoppingCart,
     iconBg: "bg-[rgba(156,74,41,0.15)]",
-    iconColor: "text-[#273B3A]",
+    iconColor: "text-[#FAFAFA]",
     available: false,
     category: "Core Business",
   },
@@ -152,7 +152,7 @@ const apps: AppItem[] = [
     href: "/time-off",
     icon: CalendarOff,
     iconBg: "bg-[rgba(156,74,41,0.15)]",
-    iconColor: "text-[#273B3A]",
+    iconColor: "text-[#FAFAFA]",
     available: false,
     category: "Human Resources",
   },
@@ -186,7 +186,7 @@ const apps: AppItem[] = [
     href: "/marketing",
     icon: Mail,
     iconBg: "bg-[rgba(156,74,41,0.15)]",
-    iconColor: "text-[#273B3A]",
+    iconColor: "text-[#FAFAFA]",
     available: false,
     category: "Marketing",
   },
@@ -197,7 +197,7 @@ const apps: AppItem[] = [
     href: "/ai",
     icon: Bot,
     iconBg: "bg-[rgba(156,74,41,0.15)]",
-    iconColor: "text-[#273B3A]",
+    iconColor: "text-[#FAFAFA]",
     available: true,
     category: "Productivity",
   },
@@ -206,8 +206,8 @@ const apps: AppItem[] = [
     description: "Organization, billing & config",
     href: "/settings",
     icon: Settings,
-    iconBg: "bg-[#E6D4C7]",
-    iconColor: "text-[#273B3A]",
+    iconBg: "bg-[#0A0A0A]",
+    iconColor: "text-[#FAFAFA]",
     available: true,
     category: "Productivity",
   },
@@ -251,23 +251,23 @@ export default function AppsPage() {
     <div className="space-y-6 max-w-[1400px]">
       {/* ── Page header ── */}
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-[#273B3A]">
+        <h1 className="text-2xl font-semibold tracking-tight text-[#FAFAFA]">
           Apps
         </h1>
-        <p className="text-[#273B3A] text-sm mt-1">
+        <p className="text-[#FAFAFA] text-sm mt-1">
           Install and manage your business modules.
         </p>
       </div>
 
       {/* ── Search bar ── */}
       <div className="relative max-w-md">
-        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#273B3A]" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#FAFAFA]" />
         <input
           type="text"
           placeholder="Search apps..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A]/40 transition-colors"
+          className="w-full pl-10 pr-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626]/40 transition-colors"
         />
       </div>
 
@@ -289,14 +289,14 @@ export default function AppsPage() {
                 className="flex items-center gap-2 mb-4 group cursor-pointer"
               >
                 {isCollapsed ? (
-                  <ChevronRight className="w-4 h-4 text-[#273B3A] group-hover:text-[#273B3A] transition-colors" />
+                  <ChevronRight className="w-4 h-4 text-[#FAFAFA] group-hover:text-[#FAFAFA] transition-colors" />
                 ) : (
-                  <ChevronDown className="w-4 h-4 text-[#273B3A] group-hover:text-[#273B3A] transition-colors" />
+                  <ChevronDown className="w-4 h-4 text-[#FAFAFA] group-hover:text-[#FAFAFA] transition-colors" />
                 )}
-                <h2 className="text-xs font-semibold uppercase tracking-widest text-[#273B3A] group-hover:text-[#273B3A] transition-colors">
+                <h2 className="text-xs font-semibold uppercase tracking-widest text-[#FAFAFA] group-hover:text-[#FAFAFA] transition-colors">
                   {category}
                 </h2>
-                <span className="text-[11px] text-[#273B3A]">
+                <span className="text-[11px] text-[#FAFAFA]">
                   ({categoryApps.length})
                 </span>
               </button>
@@ -308,17 +308,17 @@ export default function AppsPage() {
                     const CardContent = (
                       <div
                         className={cn(
-                          "relative bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5 flex flex-col items-center text-center gap-3 transition-all duration-200 group",
+                          "relative bg-[#0A0A0A] border border-[#262626] rounded-xl p-5 flex flex-col items-center text-center gap-3 transition-all duration-200 group",
                           app.available
-                            ? "hover:border-[#273B3A]/30 hover:bg-[#E6D4C7] cursor-pointer"
+                            ? "hover:border-[#262626]/30 hover:bg-[#0A0A0A] cursor-pointer"
                             : "opacity-60 cursor-default"
                         )}
                       >
                         {/* Coming soon badge */}
                         {!app.available && (
-                          <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#E6D4C7] border border-[#E6D4C7]">
-                            <Lock className="w-2.5 h-2.5 text-[#273B3A]" />
-                            <span className="text-[9px] font-medium text-[#273B3A] uppercase tracking-wider">
+                          <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0A0A0A] border border-[#262626]">
+                            <Lock className="w-2.5 h-2.5 text-[#FAFAFA]" />
+                            <span className="text-[9px] font-medium text-[#FAFAFA] uppercase tracking-wider">
                               Soon
                             </span>
                           </div>
@@ -339,10 +339,10 @@ export default function AppsPage() {
 
                         {/* Label */}
                         <div>
-                          <p className="text-sm font-medium text-[#273B3A]">
+                          <p className="text-sm font-medium text-[#FAFAFA]">
                             {app.name}
                           </p>
-                          <p className="text-[11px] text-[#273B3A] mt-1 leading-relaxed">
+                          <p className="text-[11px] text-[#FAFAFA] mt-1 leading-relaxed">
                             {app.description}
                           </p>
                         </div>
@@ -370,8 +370,8 @@ export default function AppsPage() {
         {/* Empty state */}
         {filteredApps.length === 0 && (
           <div className="text-center py-16">
-            <Search className="w-8 h-8 mx-auto mb-3 text-[#273B3A]/30" />
-            <p className="text-sm text-[#273B3A]">
+            <Search className="w-8 h-8 mx-auto mb-3 text-[#FAFAFA]/30" />
+            <p className="text-sm text-[#FAFAFA]">
               No apps match &quot;{search}&quot;
             </p>
           </div>

@@ -1,81 +1,87 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /*
-  Atlas Color Palette — Warm Earth Theme
-  Premium, earthy, Canadian
+  Atlas Color Palette — Dark Luxury Theme
+  Premium, powerful, enterprise-grade
   
-  Background: Dirty White  #E6D4C7 (warm cream)
-  Accent:     Cinnamon     #273B3A (terracotta)
-  Text:       Dark Brown   #273B3A (rich brown)
-  
-  Derived shades:
-  - Background:   #E6D4C7
-  - Card:         #E6D4C7 (lighter cream)
-  - Surface:      #E6D4C7 (slightly darker)
-  - Accent:       #273B3A
-  - Accent hover: #273B3A
-  - Text:         #273B3A
-  - Muted text:   #273B3A
-  - Border:       #E6D4C7
+  Background: Deep Black    #0A0A0A
+  Surface:    Charcoal       #111111
+  Card:       Dark Gray      #161616
+  Elevated:   Slate          #1A1A1A
+  Border:     Subtle         #262626
+  Accent:     Gold           #CDB49E
+  Gold Light: Bright Gold    #E8D5B7
+  Text:       Pure White     #FAFAFA
+  Muted:      Silver         #888888
 */
 
 @layer base {
   :root {
-    /* Background - Dirty White #E6D4C7 */
-    --background: 45 38% 86%;
-    --foreground: 15 35% 13%;
+    /* Background - Deep Black */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
     
-    /* Card - Slightly lighter cream */
-    --card: 45 40% 93%;
-    --card-foreground: 15 35% 13%;
+    /* Card - Charcoal */
+    --card: 0 0% 8.5%;
+    --card-foreground: 0 0% 98%;
     
-    /* Primary - Cinnamon #273B3A */
-    --primary: 17 58% 38%;
-    --primary-foreground: 45 38% 95%;
+    /* Primary - Gold #CDB49E */
+    --primary: 30 30% 71%;
+    --primary-foreground: 0 0% 4%;
     
-    /* Secondary - Muted cream */
-    --secondary: 45 30% 80%;
-    --secondary-foreground: 15 35% 13%;
+    /* Secondary - Dark surface */
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 90%;
     
     /* Muted */
-    --muted: 45 25% 82%;
-    --muted-foreground: 20 15% 37%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 55%;
     
-    /* Accent - Cinnamon */
-    --accent: 17 58% 38%;
-    --accent-foreground: 45 38% 95%;
+    /* Accent - Gold */
+    --accent: 30 30% 71%;
+    --accent-foreground: 0 0% 4%;
     
     /* Destructive */
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
     
     /* Border */
-    --border: 45 25% 78%;
-    --input: 45 30% 85%;
-    --ring: 17 58% 38%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 30 30% 71%;
     --radius: 0.625rem;
     
     /* Extended palette */
-    --success: 142 71% 35%;
-    --success-foreground: 45 38% 95%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 98%;
     --warning: 38 92% 50%;
-    --warning-foreground: 15 35% 13%;
-    --info: 217 91% 50%;
-    --info-foreground: 45 38% 95%;
+    --warning-foreground: 0 0% 4%;
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 98%;
     
-    --popover: 45 40% 93%;
-    --popover-foreground: 15 35% 13%;
+    --popover: 0 0% 8.5%;
+    --popover-foreground: 0 0% 98%;
     
     /* Charts */
-    --chart-1: 17 58% 38%;
-    --chart-2: 142 50% 40%;
-    --chart-3: 217 60% 50%;
+    --chart-1: 30 30% 71%;
+    --chart-2: 142 50% 50%;
+    --chart-3: 217 70% 60%;
     --chart-4: 38 80% 55%;
-    --chart-5: 280 50% 50%;
+    --chart-5: 280 50% 60%;
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-primary: 30 30% 71%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 30 30% 71%;
   }
 }
 
@@ -86,69 +92,61 @@
   body {
     @apply text-foreground antialiased;
     font-family: 'Inter', system-ui, sans-serif;
-    background: linear-gradient(
-      135deg,
-      #E6D4C7 0%,
-      #E2DCBF 20%,
-      #D8CEB0 40%,
-      #C9B898 60%,
-      #B89B78 75%,
-      #A87350 88%,
-      #273B3A 100%
-    );
-    background-attachment: fixed;
+    background: #0A0A0A;
     min-height: 100vh;
   }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ATLAS DESIGN TOKENS
+   ATLAS DARK LUXURY DESIGN TOKENS
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Custom utility classes for the warm earth palette */
-.bg-cream { background-color: #E6D4C7; }
-.bg-cream-light { background-color: #E6D4C7; }
-.bg-cream-dark { background-color: #E6D4C7; }
-.bg-cinnamon { background-color: #273B3A; }
-.bg-cinnamon-dark { background-color: #273B3A; }
-.bg-cinnamon-light { background-color: #273B3A; }
+/* Custom utility classes */
+.bg-atlas { background-color: #0A0A0A; }
+.bg-atlas-surface { background-color: #111111; }
+.bg-atlas-card { background-color: #161616; }
+.bg-atlas-elevated { background-color: #1A1A1A; }
+.bg-atlas-gold { background-color: #CDB49E; }
+.bg-atlas-gold-dark { background-color: #B89B78; }
 
-.text-earth { color: #273B3A; }
-.text-earth-muted { color: #273B3A; }
-.text-cream { color: #E6D4C7; }
-.text-cinnamon { color: #273B3A; }
+.text-atlas { color: #FAFAFA; }
+.text-atlas-muted { color: #888888; }
+.text-atlas-dim { color: #666666; }
+.text-atlas-gold { color: #CDB49E; }
+.text-atlas-gold-light { color: #E8D5B7; }
 
-.border-cream { border-color: #E6D4C7; }
-.border-cinnamon { border-color: #273B3A; }
+.border-atlas { border-color: #262626; }
+.border-atlas-subtle { border-color: #1E1E1E; }
+.border-atlas-gold { border-color: #CDB49E; }
 
-/* Scrollbar styling */
+/* Scrollbar styling — dark */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #E6D4C7;
+  background: #0A0A0A;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E6D4C7;
-  border-radius: 4px;
+  background: #333333;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #273B3A;
+  background: #CDB49E;
 }
 
 /* Selection */
 ::selection {
-  background: #273B3A;
-  color: #E6D4C7;
+  background: rgba(205, 180, 158, 0.3);
+  color: #FAFAFA;
 }
 
-/* Focus rings */
+/* Focus rings — gold */
 *:focus-visible {
-  outline: 2px solid #273B3A;
+  outline: 2px solid rgba(205, 180, 158, 0.5);
   outline-offset: 2px;
 }
 
@@ -159,34 +157,125 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Button hover states */
-.btn-cinnamon {
-  @apply bg-cinnamon text-cream hover:bg-cinnamon-dark transition-colors;
+/* Button styles */
+.btn-gold {
+  @apply bg-[#CDB49E] text-[#0A0A0A] font-semibold hover:bg-[#E8D5B7] transition-all duration-200;
+  box-shadow: 0 0 20px rgba(205, 180, 158, 0.15);
 }
 
-.btn-outline-cinnamon {
-  @apply border-2 border-cinnamon text-cinnamon hover:bg-cinnamon hover:text-cream transition-colors;
+.btn-gold:hover {
+  box-shadow: 0 0 30px rgba(205, 180, 158, 0.25);
+}
+
+.btn-outline-gold {
+  @apply border border-[#CDB49E] text-[#CDB49E] hover:bg-[#CDB49E] hover:text-[#0A0A0A] transition-all duration-200;
+}
+
+.btn-ghost {
+  @apply text-[#888888] hover:text-[#FAFAFA] hover:bg-[#1A1A1A] transition-all duration-200;
 }
 
 /* Card styles */
-.card-cream {
-  @apply bg-cream-light border border-cream rounded-xl shadow-sm;
+.card-dark {
+  background: #161616;
+  border: 1px solid #262626;
+  border-radius: 12px;
 }
 
-/* Input styles */
+.card-dark:hover {
+  border-color: #333333;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Glass effect — dark glass */
+.glass-dark {
+  background: rgba(17, 17, 17, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-gold {
+  background: rgba(205, 180, 158, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(205, 180, 158, 0.15);
+}
+
+/* Glow effects */
+.glow-gold {
+  box-shadow: 0 0 40px rgba(205, 180, 158, 0.12), 0 0 80px rgba(205, 180, 158, 0.06);
+}
+
+.glow-gold-sm {
+  box-shadow: 0 0 15px rgba(205, 180, 158, 0.1);
+}
+
+.glow-gold-text {
+  text-shadow: 0 0 30px rgba(205, 180, 158, 0.3);
+}
+
+/* Gradient backgrounds */
+.bg-gradient-dark {
+  background: linear-gradient(180deg, #0A0A0A 0%, #111111 100%);
+}
+
+.bg-gradient-card {
+  background: linear-gradient(135deg, #161616 0%, #111111 100%);
+}
+
+.bg-gradient-gold {
+  background: linear-gradient(135deg, #CDB49E 0%, #B89B78 100%);
+}
+
+.bg-gradient-hero {
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(205, 180, 158, 0.08), transparent),
+              #0A0A0A;
+}
+
+.bg-gradient-mesh {
+  background: 
+    radial-gradient(at 20% 80%, rgba(205, 180, 158, 0.04) 0%, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(205, 180, 158, 0.03) 0%, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(17, 17, 17, 1) 0%, #0A0A0A 100%);
+}
+
+/* Table row styling */
+.table-row-alt:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.table-row-alt:hover {
+  background-color: rgba(205, 180, 158, 0.05);
+}
+
+/* Input styles — dark */
 input, select, textarea {
-  background-color: #E6D4C7;
-  border-color: #E6D4C7;
-  color: #273B3A;
+  background-color: #111111;
+  border-color: #262626;
+  color: #FAFAFA;
 }
 
 input:focus, select:focus, textarea:focus {
-  border-color: #273B3A;
-  box-shadow: 0 0 0 3px rgba(156, 74, 41, 0.15);
+  border-color: #CDB49E;
+  box-shadow: 0 0 0 3px rgba(205, 180, 158, 0.1);
 }
 
 input::placeholder, textarea::placeholder {
-  color: #273B3A;
+  color: #555555;
+}
+
+/* Shadows */
+.shadow-dark {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-dark-lg {
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-dark-xl {
+  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
 }
 
 /* Animation keyframes */
@@ -200,41 +289,86 @@ input::placeholder, textarea::placeholder {
   to { transform: translateY(0); opacity: 1; }
 }
 
-@keyframes pulse-cinnamon {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(156, 74, 41, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(156, 74, 41, 0); }
+@keyframes slideDown {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-.animate-slide-up {
-  animation: slideUp 0.3s ease-out;
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-.animate-pulse-cinnamon {
-  animation: pulse-cinnamon 2s infinite;
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(205, 180, 158, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(205, 180, 158, 0); }
 }
 
-/* Glass effect for cards */
-.glass-cream {
-  background: rgba(245, 242, 232, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(212, 205, 184, 0.5);
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
-/* Shadows */
-.shadow-warm {
-  box-shadow: 0 4px 6px -1px rgba(45, 24, 16, 0.1), 0 2px 4px -1px rgba(45, 24, 16, 0.06);
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.shadow-warm-lg {
-  box-shadow: 0 10px 15px -3px rgba(45, 24, 16, 0.1), 0 4px 6px -2px rgba(45, 24, 16, 0.05);
+.animate-fade-in { animation: fadeIn 0.3s ease-out; }
+.animate-slide-up { animation: slideUp 0.3s ease-out; }
+.animate-slide-down { animation: slideDown 0.3s ease-out; }
+.animate-scale-in { animation: scaleIn 0.3s ease-out; }
+.animate-pulse-gold { animation: pulse-gold 2s infinite; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(205, 180, 158, 0.06), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }
 
-/* Status colors adjusted for light theme */
-.status-success { color: #15803d; background: rgba(21, 128, 61, 0.1); }
-.status-warning { color: #b45309; background: rgba(180, 83, 9, 0.1); }
-.status-error { color: #dc2626; background: rgba(220, 38, 38, 0.1); }
-.status-info { color: #2563eb; background: rgba(37, 99, 235, 0.1); }
+/* Status colors */
+.status-success { color: #34d399; background: rgba(52, 211, 153, 0.1); }
+.status-warning { color: #fbbf24; background: rgba(251, 191, 36, 0.1); }
+.status-error { color: #f87171; background: rgba(248, 113, 113, 0.1); }
+.status-info { color: #60a5fa; background: rgba(96, 165, 250, 0.1); }
+
+/* Grid dot pattern background */
+.bg-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Noise texture overlay */
+.bg-noise::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.015;
+  z-index: 100;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* Divider with gold center dot */
+.divider-gold {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.divider-gold::before,
+.divider-gold::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #262626, transparent);
+}

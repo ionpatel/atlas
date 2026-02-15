@@ -77,20 +77,20 @@ export default function PortalLoginPage() {
         <div className="max-w-md w-full mx-auto">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#273B3A] to-[#273B3A] flex items-center justify-center shadow-lg shadow-[#273B3A]/20">
-              <span className="text-[#E6D4C7] font-bold text-lg">A</span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#CDB49E] to-[#B89B78] flex items-center justify-center shadow-lg shadow-[#273B3A]/20">
+              <span className="text-[#0A0A0A] font-bold text-lg">A</span>
             </div>
-            <span className="text-[#273B3A] font-semibold text-xl tracking-tight">
+            <span className="text-[#FAFAFA] font-semibold text-xl tracking-tight">
               Atlas Portal
             </span>
           </Link>
 
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-[#273B3A]">
+            <h1 className="text-3xl font-bold text-[#FAFAFA]">
               Welcome back
             </h1>
-            <p className="text-[#273B3A] mt-2">
+            <p className="text-[#FAFAFA] mt-2">
               Sign in to access your customer portal
             </p>
           </div>
@@ -106,40 +106,40 @@ export default function PortalLoginPage() {
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-[#273B3A] mb-2">
+              <label className="block text-sm font-medium text-[#FAFAFA] mb-2">
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#273B3A]" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#FAFAFA]" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@company.com"
-                  className="w-full pl-12 pr-4 py-3.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
+                  className="w-full pl-12 pr-4 py-3.5 bg-[#0A0A0A] border border-[#262626] rounded-xl text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#273B3A] mb-2">
+              <label className="block text-sm font-medium text-[#FAFAFA] mb-2">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#273B3A]" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#FAFAFA]" />
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-12 pr-12 py-3.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
+                  className="w-full pl-12 pr-12 py-3.5 bg-[#0A0A0A] border border-[#262626] rounded-xl text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#273B3A] hover:text-[#273B3A] transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -154,13 +154,13 @@ export default function PortalLoginPage() {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 rounded border-[#E6D4C7] bg-[#E6D4C7] text-[#273B3A] focus:ring-[#273B3A] focus:ring-offset-0"
+                  className="w-4 h-4 rounded border-[#262626] bg-[#0A0A0A] text-[#FAFAFA] focus:ring-[#CDB49E] focus:ring-offset-0"
                 />
-                <span className="text-sm text-[#273B3A]">Remember me</span>
+                <span className="text-sm text-[#FAFAFA]">Remember me</span>
               </label>
               <button
                 type="button"
-                className="text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors"
+                className="text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
               >
                 Forgot password?
               </button>
@@ -169,7 +169,7 @@ export default function PortalLoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#273B3A] text-[#E6D4C7] rounded-xl font-semibold hover:bg-[#273B3A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#161616] text-[#0A0A0A] rounded-xl font-semibold hover:bg-[#161616] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>
@@ -186,63 +186,63 @@ export default function PortalLoginPage() {
           </form>
 
           {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-[#E6D4C7]/50 border border-[#E6D4C7]/50 rounded-xl">
-            <p className="text-xs text-[#273B3A] text-center">
-              <strong className="text-[#273B3A]">Demo:</strong> Enter any email and password to sign in
+          <div className="mt-6 p-4 bg-[#0A0A0A]/50 border border-[#262626]/50 rounded-xl">
+            <p className="text-xs text-[#FAFAFA] text-center">
+              <strong className="text-[#FAFAFA]">Demo:</strong> Enter any email and password to sign in
             </p>
           </div>
 
           {/* Footer */}
-          <p className="mt-8 text-center text-sm text-[#273B3A]">
+          <p className="mt-8 text-center text-sm text-[#FAFAFA]">
             Need an account?{" "}
-            <span className="text-[#273B3A]">Contact your vendor</span>
+            <span className="text-[#FAFAFA]">Contact your vendor</span>
           </p>
         </div>
       </div>
 
       {/* Right Panel - Features */}
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-[#E6D4C7] to-[#E6D4C7] flex-col justify-center px-16 xl:px-24 border-l border-[#E6D4C7]">
+      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-[#E6D4C7] to-[#E6D4C7] flex-col justify-center px-16 xl:px-24 border-l border-[#262626]">
         <div className="max-w-lg">
-          <div className="flex items-center gap-2 text-[#273B3A] mb-6">
+          <div className="flex items-center gap-2 text-[#FAFAFA] mb-6">
             <ShieldCheck className="w-5 h-5" />
             <span className="text-sm font-medium">Secure Customer Portal</span>
           </div>
 
-          <h2 className="text-3xl font-bold text-[#273B3A] mb-4">
+          <h2 className="text-3xl font-bold text-[#FAFAFA] mb-4">
             Manage your account in one place
           </h2>
-          <p className="text-[#273B3A] mb-10">
+          <p className="text-[#FAFAFA] mb-10">
             Access invoices, track orders, and get support—all from your personalized customer portal.
           </p>
 
           <div className="space-y-6">
             {features.map((feature, i) => (
               <div key={i} className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#273B3A]/10 flex items-center justify-center flex-shrink-0">
-                  <feature.icon className="w-6 h-6 text-[#273B3A]" />
+                <div className="w-12 h-12 rounded-xl bg-[#161616]/10 flex items-center justify-center flex-shrink-0">
+                  <feature.icon className="w-6 h-6 text-[#FAFAFA]" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#273B3A]">{feature.title}</h3>
-                  <p className="text-sm text-[#273B3A] mt-0.5">{feature.description}</p>
+                  <h3 className="font-semibold text-[#FAFAFA]">{feature.title}</h3>
+                  <p className="text-sm text-[#FAFAFA] mt-0.5">{feature.description}</p>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Trust Badge */}
-          <div className="mt-12 flex items-center gap-4 pt-8 border-t border-[#E6D4C7]">
+          <div className="mt-12 flex items-center gap-4 pt-8 border-t border-[#262626]">
             <div className="flex -space-x-2">
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="w-8 h-8 rounded-full bg-gradient-to-br from-[#273B3A] to-[#273B3A] border-2 border-[#E6D4C7] flex items-center justify-center text-xs font-bold text-[#E6D4C7]"
+                  className="w-8 h-8 rounded-full bg-gradient-to-br from-[#CDB49E] to-[#B89B78] border-2 border-[#262626] flex items-center justify-center text-xs font-bold text-[#0A0A0A]"
                 >
                   {String.fromCharCode(64 + i)}
                 </div>
               ))}
             </div>
-            <p className="text-sm text-[#273B3A]">
-              <strong className="text-[#273B3A]">1,000+</strong> businesses trust Atlas
+            <p className="text-sm text-[#FAFAFA]">
+              <strong className="text-[#FAFAFA]">1,000+</strong> businesses trust Atlas
             </p>
           </div>
         </div>

@@ -25,12 +25,12 @@ interface LineItem {
 }
 
 const inputClass =
-  "w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A]/50 focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200";
+  "w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA]/50 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200";
 
 const lineInputClass =
-  "px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 transition-all duration-200";
+  "px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 transition-all duration-200";
 
-const labelClass = "block text-sm font-medium text-[#273B3A] mb-2";
+const labelClass = "block text-sm font-medium text-[#FAFAFA] mb-2";
 
 export function PurchaseOrderForm({ onSubmit, onCancel }: PurchaseOrderFormProps) {
   const contacts = useContactsStore((s) => s.contacts);
@@ -158,7 +158,7 @@ export function PurchaseOrderForm({ onSubmit, onCancel }: PurchaseOrderFormProps
         <label className={labelClass}>Line Items</label>
         <div className="space-y-2">
           {/* Header */}
-          <div className="hidden sm:grid grid-cols-[1fr_2fr_70px_90px_70px_80px_40px] gap-2 text-[10px] text-[#273B3A] font-semibold uppercase tracking-widest px-1 pb-1">
+          <div className="hidden sm:grid grid-cols-[1fr_2fr_70px_90px_70px_80px_40px] gap-2 text-[10px] text-[#FAFAFA] font-semibold uppercase tracking-widest px-1 pb-1">
             <span>Product</span>
             <span>Description</span>
             <span className="text-right">Qty</span>
@@ -221,14 +221,14 @@ export function PurchaseOrderForm({ onSubmit, onCancel }: PurchaseOrderFormProps
                 className={`${lineInputClass} text-right`}
               />
 
-              <div className="text-sm text-right font-medium text-[#273B3A] px-1">
+              <div className="text-sm text-right font-medium text-[#FAFAFA] px-1">
                 {formatCurrency(line.quantity * line.unit_price)}
               </div>
 
               <button
                 type="button"
                 onClick={() => removeLine(line.key)}
-                className="p-2 text-[#273B3A] hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
+                className="p-2 text-[#FAFAFA] hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
                 disabled={lines.length <= 1}
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -240,7 +240,7 @@ export function PurchaseOrderForm({ onSubmit, onCancel }: PurchaseOrderFormProps
         <button
           type="button"
           onClick={addLine}
-          className="mt-3 flex items-center gap-2 text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors font-medium"
+          className="mt-3 flex items-center gap-2 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors font-medium"
         >
           <Plus className="w-3.5 h-3.5" />
           Add Line
@@ -250,17 +250,17 @@ export function PurchaseOrderForm({ onSubmit, onCancel }: PurchaseOrderFormProps
       {/* Totals */}
       <div className="flex justify-end">
         <div className="w-64 space-y-2 text-sm">
-          <div className="flex justify-between text-[#273B3A]">
+          <div className="flex justify-between text-[#FAFAFA]">
             <span>Subtotal</span>
-            <span className="text-[#273B3A]">{formatCurrency(subtotal)}</span>
+            <span className="text-[#FAFAFA]">{formatCurrency(subtotal)}</span>
           </div>
-          <div className="flex justify-between text-[#273B3A]">
+          <div className="flex justify-between text-[#FAFAFA]">
             <span>Tax</span>
-            <span className="text-[#273B3A]">{formatCurrency(tax)}</span>
+            <span className="text-[#FAFAFA]">{formatCurrency(tax)}</span>
           </div>
-          <div className="flex justify-between font-semibold text-base border-t border-[#E6D4C7] pt-2.5 mt-2.5">
-            <span className="text-[#273B3A]">Total</span>
-            <span className="text-[#273B3A]">{formatCurrency(total)}</span>
+          <div className="flex justify-between font-semibold text-base border-t border-[#262626] pt-2.5 mt-2.5">
+            <span className="text-[#FAFAFA]">Total</span>
+            <span className="text-[#FAFAFA]">{formatCurrency(total)}</span>
           </div>
         </div>
       </div>
@@ -277,17 +277,17 @@ export function PurchaseOrderForm({ onSubmit, onCancel }: PurchaseOrderFormProps
         />
       </div>
 
-      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E6D4C7]">
+      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#262626]">
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 text-sm font-medium text-[#273B3A] hover:text-[#273B3A] bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg hover:bg-[#E6D4C7] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] bg-[#0A0A0A] border border-[#262626] rounded-lg hover:bg-[#0A0A0A] transition-all duration-200"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-5 py-2.5 text-sm font-semibold bg-[#273B3A] text-[#E6D4C7] rounded-lg hover:bg-[#273B3A] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-semibold bg-[#161616] text-[#0A0A0A] rounded-lg hover:bg-[#161616] transition-all duration-200"
         >
           Create Purchase Order
         </button>

@@ -294,7 +294,7 @@ export default function WebhooksPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-[#273B3A]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#FAFAFA]" />
       </div>
     );
   }
@@ -311,7 +311,7 @@ export default function WebhooksPage() {
         </div>
         <Button 
           onClick={openCreateDialog}
-          className="bg-[#273B3A] hover:bg-[#273B3A]/90 text-black"
+          className="bg-[#161616] hover:bg-[#161616]/90 text-black"
         >
           <Plus className="h-4 w-4 mr-2" />
           Create Webhook
@@ -322,7 +322,7 @@ export default function WebhooksPage() {
       <Card className="bg-neutral-900/50 border-neutral-800">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Webhook className="h-5 w-5 text-[#273B3A]" />
+            <Webhook className="h-5 w-5 text-[#FAFAFA]" />
             Configured Webhooks
           </CardTitle>
           <CardDescription className="text-neutral-400">
@@ -543,7 +543,7 @@ export default function WebhooksPage() {
                   }, {} as Record<string, typeof EVENT_TYPES>)
                 ).map(([category, events]) => (
                   <div key={category}>
-                    <p className="text-sm font-medium text-[#273B3A] mb-2">{category}</p>
+                    <p className="text-sm font-medium text-[#FAFAFA] mb-2">{category}</p>
                     <div className="space-y-2">
                       {events.map((event) => (
                         <div key={event.value} className="flex items-center gap-2">
@@ -585,7 +585,7 @@ export default function WebhooksPage() {
             <Button 
               onClick={saveWebhook}
               disabled={saving || !formName || !formUrl || formEvents.length === 0}
-              className="bg-[#273B3A] hover:bg-[#273B3A]/90 text-black"
+              className="bg-[#161616] hover:bg-[#161616]/90 text-black"
             >
               {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
               {editing ? 'Update' : 'Create'} Webhook

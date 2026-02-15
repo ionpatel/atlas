@@ -98,7 +98,7 @@ export default function BrandingPage() {
         <Button 
           onClick={handleSave}
           disabled={saving}
-          className="bg-[#273B3A] hover:bg-[#273B3A]/90 text-black"
+          className="bg-[#161616] hover:bg-[#161616]/90 text-black"
         >
           {saving ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -122,7 +122,7 @@ export default function BrandingPage() {
           <Card className="bg-neutral-900/50 border-neutral-800">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Palette className="h-5 w-5 text-[#273B3A]" />
+                <Palette className="h-5 w-5 text-[#FAFAFA]" />
                 Colors
               </CardTitle>
               <CardDescription className="text-neutral-400">
@@ -195,7 +195,7 @@ export default function BrandingPage() {
           <Card className="bg-neutral-900/50 border-neutral-800">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Type className="h-5 w-5 text-[#273B3A]" />
+                <Type className="h-5 w-5 text-[#FAFAFA]" />
                 Typography
               </CardTitle>
             </CardHeader>
@@ -244,7 +244,7 @@ export default function BrandingPage() {
           <Card className="bg-neutral-900/50 border-neutral-800">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                {config.darkMode ? <Moon className="h-5 w-5 text-[#273B3A]" /> : <Sun className="h-5 w-5 text-[#273B3A]" />}
+                {config.darkMode ? <Moon className="h-5 w-5 text-[#FAFAFA]" /> : <Sun className="h-5 w-5 text-[#FAFAFA]" />}
                 Theme
               </CardTitle>
             </CardHeader>
@@ -317,7 +317,7 @@ export default function BrandingPage() {
           <Card className="bg-neutral-900/50 border-neutral-800">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Globe className="h-5 w-5 text-[#273B3A]" />
+                <Globe className="h-5 w-5 text-[#FAFAFA]" />
                 Custom Domain
               </CardTitle>
               <CardDescription className="text-neutral-400">
@@ -341,7 +341,7 @@ export default function BrandingPage() {
                 <p className="text-sm text-neutral-400">
                   Add a CNAME record pointing to:
                 </p>
-                <code className="text-sm text-[#273B3A] bg-neutral-900 px-3 py-2 rounded block">
+                <code className="text-sm text-[#FAFAFA] bg-neutral-900 px-3 py-2 rounded block">
                   atlas-erp.vercel.app
                 </code>
               </div>

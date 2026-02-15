@@ -67,9 +67,9 @@ function ProductCard({
       onClick={onAdd}
       disabled={isOutOfStock}
       className={cn(
-        "relative bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-4 text-left transition-all duration-200 group",
-        "hover:border-[#273B3A]/50 hover:shadow-lg hover:shadow-[#273B3A]/5",
-        "focus:outline-none focus:ring-2 focus:ring-[#273B3A]/50",
+        "relative bg-[#0A0A0A] border border-[#262626] rounded-xl p-4 text-left transition-all duration-200 group",
+        "hover:border-[#262626]/50 hover:shadow-lg hover:shadow-[#273B3A]/5",
+        "focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/50",
         isOutOfStock && "opacity-50 cursor-not-allowed"
       )}
     >
@@ -86,7 +86,7 @@ function ProductCard({
       )}
 
       {/* Product Image/Icon */}
-      <div className="aspect-square bg-[#E6D4C7] rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
+      <div className="aspect-square bg-[#0A0A0A] rounded-lg mb-3 flex items-center justify-center relative overflow-hidden">
         {product.image_url ? (
           <img 
             src={product.image_url} 
@@ -94,29 +94,29 @@ function ProductCard({
             className="w-full h-full object-cover"
           />
         ) : (
-          <Package className="w-8 h-8 text-[#273B3A]/40" />
+          <Package className="w-8 h-8 text-[#FAFAFA]/40" />
         )}
         
         {/* Quick add overlay */}
-        <div className="absolute inset-0 bg-[#273B3A]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <div className="w-10 h-10 rounded-full bg-[#273B3A] flex items-center justify-center">
-            <Plus className="w-5 h-5 text-[#E6D4C7]" />
+        <div className="absolute inset-0 bg-[#161616]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-[#161616] flex items-center justify-center">
+            <Plus className="w-5 h-5 text-[#0A0A0A]" />
           </div>
         </div>
       </div>
 
       {/* Product Info */}
-      <h3 className="font-medium text-[#273B3A] text-sm truncate group-hover:text-[#273B3A] transition-colors">
+      <h3 className="font-medium text-[#FAFAFA] text-sm truncate group-hover:text-[#FAFAFA] transition-colors">
         {product.name}
       </h3>
-      <p className="text-[10px] text-[#273B3A] mt-0.5 font-mono">{product.sku}</p>
+      <p className="text-[10px] text-[#FAFAFA] mt-0.5 font-mono">{product.sku}</p>
       
       {/* Price & Stock */}
       <div className="flex items-center justify-between mt-3">
-        <span className="text-[#273B3A] font-bold text-lg">
+        <span className="text-[#FAFAFA] font-bold text-lg">
           ${product.sell_price.toFixed(2)}
         </span>
-        <span className="text-xs text-[#273B3A]">
+        <span className="text-xs text-[#FAFAFA]">
           {product.stock_quantity} in stock
         </span>
       </div>
@@ -142,15 +142,15 @@ function CartItem({
   onRemove: () => void;
 }) {
   return (
-    <div className="bg-[#E6D4C7] rounded-lg p-3 space-y-2">
+    <div className="bg-[#0A0A0A] rounded-lg p-3 space-y-2">
       <div className="flex justify-between items-start gap-2">
         <div className="flex-1 min-w-0">
-          <h4 className="text-[#273B3A] font-medium text-sm truncate">{item.name}</h4>
-          <p className="text-[10px] text-[#273B3A] font-mono">{item.sku}</p>
+          <h4 className="text-[#FAFAFA] font-medium text-sm truncate">{item.name}</h4>
+          <p className="text-[10px] text-[#FAFAFA] font-mono">{item.sku}</p>
         </div>
         <button
           onClick={onRemove}
-          className="p-1 text-[#273B3A] hover:text-red-400 transition-colors"
+          className="p-1 text-[#FAFAFA] hover:text-red-400 transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
@@ -160,26 +160,26 @@ function CartItem({
         <div className="flex items-center gap-1">
           <button
             onClick={() => onUpdateQuantity(item.quantity - 1)}
-            className="w-7 h-7 rounded bg-[#E6D4C7] flex items-center justify-center text-[#273B3A] hover:bg-[#273B3A]/20 transition-colors"
+            className="w-7 h-7 rounded bg-[#0A0A0A] flex items-center justify-center text-[#FAFAFA] hover:bg-[#161616]/20 transition-colors"
           >
             <Minus className="w-3.5 h-3.5" />
           </button>
-          <span className="w-10 text-center text-[#273B3A] font-medium text-sm">
+          <span className="w-10 text-center text-[#FAFAFA] font-medium text-sm">
             {item.quantity}
           </span>
           <button
             onClick={() => onUpdateQuantity(item.quantity + 1)}
-            className="w-7 h-7 rounded bg-[#E6D4C7] flex items-center justify-center text-[#273B3A] hover:bg-[#273B3A]/20 transition-colors"
+            className="w-7 h-7 rounded bg-[#0A0A0A] flex items-center justify-center text-[#FAFAFA] hover:bg-[#161616]/20 transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
           </button>
         </div>
         
         <div className="text-right">
-          <span className="text-[#273B3A] font-semibold">
+          <span className="text-[#FAFAFA] font-semibold">
             ${item.total.toFixed(2)}
           </span>
-          <p className="text-[10px] text-[#273B3A]">
+          <p className="text-[10px] text-[#FAFAFA]">
             ${item.unit_price.toFixed(2)} each
           </p>
         </div>
@@ -224,32 +224,32 @@ function PaymentModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-lg mx-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl overflow-hidden shadow-2xl">
+      <div className="w-full max-w-lg mx-4 bg-[#0A0A0A] border border-[#262626] rounded-2xl overflow-hidden shadow-2xl">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#E6D4C7] flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-[#273B3A] flex items-center gap-2">
-            <Wallet className="w-5 h-5 text-[#273B3A]" />
+        <div className="px-6 py-4 border-b border-[#262626] flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-[#FAFAFA] flex items-center gap-2">
+            <Wallet className="w-5 h-5 text-[#FAFAFA]" />
             Payment
           </h2>
           <button
             onClick={onClose}
-            className="p-2 text-[#273B3A] hover:text-[#273B3A] transition-colors"
+            className="p-2 text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Amount Due */}
-        <div className="px-6 py-6 bg-[#E6D4C7] text-center">
-          <p className="text-sm text-[#273B3A]">Amount Due</p>
-          <p className="text-4xl font-bold text-[#273B3A] mt-1">
+        <div className="px-6 py-6 bg-[#0A0A0A] text-center">
+          <p className="text-sm text-[#FAFAFA]">Amount Due</p>
+          <p className="text-4xl font-bold text-[#FAFAFA] mt-1">
             ${totals.total.toFixed(2)}
           </p>
         </div>
 
         {/* Payment Type Tabs */}
         <div className="px-6 py-4">
-          <div className="flex gap-2 p-1 bg-[#E6D4C7] rounded-lg">
+          <div className="flex gap-2 p-1 bg-[#0A0A0A] rounded-lg">
             {[
               { id: "cash", label: "Cash", icon: Banknote },
               { id: "card", label: "Card", icon: CreditCard },
@@ -261,8 +261,8 @@ function PaymentModal({
                 className={cn(
                   "flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-sm font-medium transition-all",
                   paymentType === tab.id
-                    ? "bg-[#273B3A] text-[#E6D4C7]"
-                    : "text-[#273B3A] hover:text-[#273B3A]"
+                    ? "bg-[#161616] text-[#0A0A0A]"
+                    : "text-[#FAFAFA] hover:text-[#FAFAFA]"
                 )}
               >
                 <tab.icon className="w-4 h-4" />
@@ -277,13 +277,13 @@ function PaymentModal({
           {paymentType === "cash" && (
             <>
               <div>
-                <label className="block text-xs text-[#273B3A] mb-2">Cash Received</label>
+                <label className="block text-xs text-[#FAFAFA] mb-2">Cash Received</label>
                 <input
                   type="number"
                   value={cashAmount}
                   onChange={(e) => setCashAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full px-4 py-3 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-2xl text-center text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
+                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-2xl text-center text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
                   autoFocus
                 />
               </div>
@@ -293,7 +293,7 @@ function PaymentModal({
                   <button
                     key={amount}
                     onClick={() => setCashAmount(amount.toString())}
-                    className="flex-1 py-2 border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:bg-[#273B3A]/10 hover:border-[#273B3A]/50 transition-all"
+                    className="flex-1 py-2 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:bg-[#161616]/10 hover:border-[#262626]/50 transition-all"
                   >
                     ${amount}
                   </button>
@@ -302,7 +302,7 @@ function PaymentModal({
 
               {change >= 0 && cashReceived > 0 && (
                 <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-center">
-                  <p className="text-sm text-[#273B3A]">Change Due</p>
+                  <p className="text-sm text-[#FAFAFA]">Change Due</p>
                   <p className="text-2xl font-bold text-emerald-400">
                     ${change.toFixed(2)}
                   </p>
@@ -313,37 +313,37 @@ function PaymentModal({
 
           {paymentType === "card" && (
             <div className="p-8 text-center">
-              <CreditCard className="w-16 h-16 text-[#273B3A] mx-auto mb-4" />
-              <p className="text-[#273B3A] font-medium">Ready for Card Payment</p>
-              <p className="text-sm text-[#273B3A] mt-1">Insert, tap, or swipe card</p>
+              <CreditCard className="w-16 h-16 text-[#FAFAFA] mx-auto mb-4" />
+              <p className="text-[#FAFAFA] font-medium">Ready for Card Payment</p>
+              <p className="text-sm text-[#FAFAFA] mt-1">Insert, tap, or swipe card</p>
             </div>
           )}
 
           {paymentType === "split" && (
             <div className="space-y-4">
               <div>
-                <label className="block text-xs text-[#273B3A] mb-2">Cash Amount</label>
+                <label className="block text-xs text-[#FAFAFA] mb-2">Cash Amount</label>
                 <input
                   type="number"
                   value={splitCash}
                   onChange={(e) => setSplitCash(e.target.value)}
                   placeholder="0.00"
-                  className="w-full px-4 py-3 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-lg text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
+                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
                 />
               </div>
               <div>
-                <label className="block text-xs text-[#273B3A] mb-2">Card Amount</label>
+                <label className="block text-xs text-[#FAFAFA] mb-2">Card Amount</label>
                 <input
                   type="number"
                   value={splitCard}
                   onChange={(e) => setSplitCard(e.target.value)}
                   placeholder="0.00"
-                  className="w-full px-4 py-3 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-lg text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
+                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
                 />
               </div>
-              <div className="p-3 bg-[#E6D4C7] rounded-lg">
+              <div className="p-3 bg-[#0A0A0A] rounded-lg">
                 <div className="flex justify-between text-sm">
-                  <span className="text-[#273B3A]">Total Split</span>
+                  <span className="text-[#FAFAFA]">Total Split</span>
                   <span className={cn(
                     "font-medium",
                     (parseFloat(splitCash || "0") + parseFloat(splitCard || "0")) >= totals.total
@@ -359,10 +359,10 @@ function PaymentModal({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-[#E6D4C7] flex gap-3">
+        <div className="px-6 py-4 border-t border-[#262626] flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 py-3 border border-[#E6D4C7] rounded-lg text-[#273B3A] font-medium hover:bg-[#E6D4C7]/50 transition-colors"
+            className="flex-1 py-3 border border-[#262626] rounded-lg text-[#FAFAFA] font-medium hover:bg-[#0A0A0A]/50 transition-colors"
           >
             Cancel
           </button>
@@ -372,7 +372,7 @@ function PaymentModal({
               (paymentType === "cash" && cashReceived < totals.total) ||
               (paymentType === "split" && (parseFloat(splitCash || "0") + parseFloat(splitCard || "0")) < totals.total)
             }
-            className="flex-1 py-3 bg-[#273B3A] text-[#E6D4C7] rounded-lg font-semibold hover:bg-[#273B3A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 py-3 bg-[#161616] text-[#0A0A0A] rounded-lg font-semibold hover:bg-[#161616] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Complete Sale
           </button>
@@ -395,32 +395,32 @@ function ReceiptModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-sm mx-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl overflow-hidden shadow-2xl">
+      <div className="w-full max-w-sm mx-4 bg-[#0A0A0A] border border-[#262626] rounded-2xl overflow-hidden shadow-2xl">
         {/* Success Header */}
         <div className="px-6 py-6 bg-emerald-500/10 text-center">
           <CheckCircle2 className="w-16 h-16 text-emerald-400 mx-auto mb-3" />
-          <h2 className="text-xl font-semibold text-[#273B3A]">Payment Complete!</h2>
-          <p className="text-sm text-[#273B3A] mt-1">Order #{order.order_number}</p>
+          <h2 className="text-xl font-semibold text-[#FAFAFA]">Payment Complete!</h2>
+          <p className="text-sm text-[#FAFAFA] mt-1">Order #{order.order_number}</p>
         </div>
 
         {/* Order Summary */}
         <div className="px-6 py-4 space-y-3">
           <div className="flex justify-between text-sm">
-            <span className="text-[#273B3A]">Subtotal</span>
-            <span className="text-[#273B3A]">${order.subtotal.toFixed(2)}</span>
+            <span className="text-[#FAFAFA]">Subtotal</span>
+            <span className="text-[#FAFAFA]">${order.subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-[#273B3A]">Tax (13%)</span>
-            <span className="text-[#273B3A]">${order.tax.toFixed(2)}</span>
+            <span className="text-[#FAFAFA]">Tax (13%)</span>
+            <span className="text-[#FAFAFA]">${order.tax.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between text-lg font-bold pt-2 border-t border-[#E6D4C7]">
-            <span className="text-[#273B3A]">Total</span>
-            <span className="text-[#273B3A]">${order.total.toFixed(2)}</span>
+          <div className="flex justify-between text-lg font-bold pt-2 border-t border-[#262626]">
+            <span className="text-[#FAFAFA]">Total</span>
+            <span className="text-[#FAFAFA]">${order.total.toFixed(2)}</span>
           </div>
           
           {order.payment_method === "cash" && order.change_due > 0 && (
-            <div className="flex justify-between text-sm pt-2 border-t border-[#E6D4C7]">
-              <span className="text-[#273B3A]">Change</span>
+            <div className="flex justify-between text-sm pt-2 border-t border-[#262626]">
+              <span className="text-[#FAFAFA]">Change</span>
               <span className="text-emerald-400 font-semibold">
                 ${order.change_due.toFixed(2)}
               </span>
@@ -429,23 +429,23 @@ function ReceiptModal({
         </div>
 
         {/* Actions */}
-        <div className="px-6 py-4 border-t border-[#E6D4C7] space-y-3">
+        <div className="px-6 py-4 border-t border-[#262626] space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <button
               onClick={() => window.print()}
-              className="flex items-center justify-center gap-2 py-2.5 border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:bg-[#E6D4C7]/50 transition-colors"
+              className="flex items-center justify-center gap-2 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:bg-[#0A0A0A]/50 transition-colors"
             >
               <Printer className="w-4 h-4" />
               Print
             </button>
-            <button className="flex items-center justify-center gap-2 py-2.5 border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:bg-[#E6D4C7]/50 transition-colors">
+            <button className="flex items-center justify-center gap-2 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:bg-[#0A0A0A]/50 transition-colors">
               <Mail className="w-4 h-4" />
               Email
             </button>
           </div>
           <button
             onClick={onClose}
-            className="w-full py-3 bg-[#273B3A] text-[#E6D4C7] rounded-lg font-semibold hover:bg-[#273B3A] transition-colors"
+            className="w-full py-3 bg-[#161616] text-[#0A0A0A] rounded-lg font-semibold hover:bg-[#161616] transition-colors"
           >
             New Sale
           </button>
@@ -471,58 +471,58 @@ function SessionStartModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#E6D4C7]">
-      <div className="w-full max-w-md mx-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl overflow-hidden shadow-2xl">
-        <div className="px-6 py-6 border-b border-[#E6D4C7]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A0A0A]">
+      <div className="w-full max-w-md mx-4 bg-[#0A0A0A] border border-[#262626] rounded-2xl overflow-hidden shadow-2xl">
+        <div className="px-6 py-6 border-b border-[#262626]">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#273B3A] to-[#273B3A] flex items-center justify-center">
-              <ShoppingCart className="w-6 h-6 text-[#E6D4C7]" />
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#CDB49E] to-[#B89B78] flex items-center justify-center">
+              <ShoppingCart className="w-6 h-6 text-[#0A0A0A]" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-[#273B3A]">Start POS Session</h2>
-              <p className="text-sm text-[#273B3A]">Open the register to begin</p>
+              <h2 className="text-xl font-semibold text-[#FAFAFA]">Start POS Session</h2>
+              <p className="text-sm text-[#FAFAFA]">Open the register to begin</p>
             </div>
           </div>
         </div>
 
         <div className="px-6 py-6 space-y-4">
           <div>
-            <label className="block text-sm text-[#273B3A] mb-2">Cashier Name</label>
+            <label className="block text-sm text-[#FAFAFA] mb-2">Cashier Name</label>
             <input
               type="text"
               value={form.cashierName}
               onChange={(e) => setForm({ ...form, cashierName: e.target.value })}
-              className="w-full px-4 py-3 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
+              className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
             />
           </div>
           <div>
-            <label className="block text-sm text-[#273B3A] mb-2">Register</label>
+            <label className="block text-sm text-[#FAFAFA] mb-2">Register</label>
             <input
               type="text"
               value={form.registerName}
               onChange={(e) => setForm({ ...form, registerName: e.target.value })}
-              className="w-full px-4 py-3 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
+              className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
             />
           </div>
           <div>
-            <label className="block text-sm text-[#273B3A] mb-2">Opening Cash Balance ($)</label>
+            <label className="block text-sm text-[#FAFAFA] mb-2">Opening Cash Balance ($)</label>
             <input
               type="number"
               value={form.openingBalance}
               onChange={(e) => setForm({ ...form, openingBalance: e.target.value })}
-              className="w-full px-4 py-3 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors"
+              className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
             />
           </div>
         </div>
 
-        <div className="px-6 py-4 border-t border-[#E6D4C7]">
+        <div className="px-6 py-4 border-t border-[#262626]">
           <button
             onClick={() => onStart({
               cashierName: form.cashierName,
               registerName: form.registerName,
               openingBalance: parseFloat(form.openingBalance) || 0,
             })}
-            className="w-full py-3 bg-[#273B3A] text-[#E6D4C7] rounded-lg font-semibold hover:bg-[#273B3A] transition-colors"
+            className="w-full py-3 bg-[#161616] text-[#0A0A0A] rounded-lg font-semibold hover:bg-[#161616] transition-colors"
           >
             Open Register
           </button>
@@ -628,25 +628,25 @@ export default function POSPage() {
   }
 
   return (
-    <div className="fixed inset-0 bg-[#E6D4C7] flex">
+    <div className="fixed inset-0 bg-[#0A0A0A] flex">
       {/* ═══════════════════════════════════════════════════════════════════
           LEFT PANEL - Products
           ═══════════════════════════════════════════════════════════════════ */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Search & Category Bar */}
-        <div className="p-4 border-b border-[#E6D4C7] space-y-4">
+        <div className="p-4 border-b border-[#262626] space-y-4">
           {/* Search with barcode support */}
           <form onSubmit={handleBarcodeSubmit} className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#273B3A]" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#FAFAFA]" />
             <input
               ref={barcodeInputRef}
               type="text"
               placeholder="Search products or scan barcode..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-12 py-3 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl text-[#273B3A] placeholder-[#273B3A] focus:outline-none focus:border-[#273B3A] transition-colors text-lg"
+              className="w-full pl-12 pr-12 py-3 bg-[#0A0A0A] border border-[#262626] rounded-xl text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors text-lg"
             />
-            <Barcode className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#273B3A]" />
+            <Barcode className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#FAFAFA]" />
           </form>
 
           {/* Category Tabs */}
@@ -658,16 +658,16 @@ export default function POSPage() {
                 className={cn(
                   "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all",
                   selectedCategory === cat.id
-                    ? "bg-[#273B3A] text-[#E6D4C7]"
-                    : "bg-[#E6D4C7] text-[#273B3A] hover:text-[#273B3A] border border-[#E6D4C7]"
+                    ? "bg-[#161616] text-[#0A0A0A]"
+                    : "bg-[#0A0A0A] text-[#FAFAFA] hover:text-[#FAFAFA] border border-[#262626]"
                 )}
               >
                 {cat.name}
                 <span className={cn(
                   "px-1.5 py-0.5 rounded text-xs",
                   selectedCategory === cat.id
-                    ? "bg-[#E6D4C7]/20 text-[#E6D4C7]"
-                    : "bg-[#E6D4C7] text-[#273B3A]"
+                    ? "bg-[#0A0A0A]/20 text-[#0A0A0A]"
+                    : "bg-[#0A0A0A] text-[#FAFAFA]"
                 )}>
                   {cat.count}
                 </span>
@@ -689,7 +689,7 @@ export default function POSPage() {
           </div>
           
           {filteredProducts.length === 0 && (
-            <div className="flex flex-col items-center justify-center py-20 text-[#273B3A]">
+            <div className="flex flex-col items-center justify-center py-20 text-[#FAFAFA]">
               <Package className="w-16 h-16 mb-4 opacity-30" />
               <p className="text-lg">No products found</p>
               <p className="text-sm mt-1">Try a different search or category</p>
@@ -698,7 +698,7 @@ export default function POSPage() {
         </div>
 
         {/* Session Info Footer */}
-        <div className="px-4 py-3 border-t border-[#E6D4C7] flex items-center justify-between text-sm text-[#273B3A]">
+        <div className="px-4 py-3 border-t border-[#262626] flex items-center justify-between text-sm text-[#FAFAFA]">
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5">
               <Clock className="w-4 h-4" />
@@ -719,15 +719,15 @@ export default function POSPage() {
       {/* ═══════════════════════════════════════════════════════════════════
           RIGHT PANEL - Cart
           ═══════════════════════════════════════════════════════════════════ */}
-      <div className="w-[400px] bg-[#E6D4C7] border-l border-[#E6D4C7] flex flex-col">
+      <div className="w-[400px] bg-[#0A0A0A] border-l border-[#262626] flex flex-col">
         {/* Cart Header */}
-        <div className="px-4 py-4 border-b border-[#E6D4C7]">
+        <div className="px-4 py-4 border-b border-[#262626]">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-[#273B3A] flex items-center gap-2">
-              <ShoppingCart className="w-5 h-5 text-[#273B3A]" />
+            <h2 className="text-lg font-semibold text-[#FAFAFA] flex items-center gap-2">
+              <ShoppingCart className="w-5 h-5 text-[#FAFAFA]" />
               Current Sale
               {cart.length > 0 && (
-                <span className="px-2 py-0.5 bg-[#273B3A]/20 text-[#273B3A] text-xs rounded-full">
+                <span className="px-2 py-0.5 bg-[#161616]/20 text-[#FAFAFA] text-xs rounded-full">
                   {cart.length}
                 </span>
               )}
@@ -735,7 +735,7 @@ export default function POSPage() {
             {cart.length > 0 && (
               <button
                 onClick={clearCart}
-                className="p-2 text-[#273B3A] hover:text-red-400 transition-colors"
+                className="p-2 text-[#FAFAFA] hover:text-red-400 transition-colors"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -745,11 +745,11 @@ export default function POSPage() {
           {/* Customer Selection */}
           <button
             onClick={() => setCustomer(customer ? null : { id: "walk-in", name: "Walk-in Customer" })}
-            className="mt-3 w-full flex items-center gap-2 px-3 py-2 bg-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:text-[#273B3A] transition-colors"
+            className="mt-3 w-full flex items-center gap-2 px-3 py-2 bg-[#0A0A0A] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors"
           >
             <User className="w-4 h-4" />
             {customer ? (
-              <span className="text-[#273B3A]">{customer.name}</span>
+              <span className="text-[#FAFAFA]">{customer.name}</span>
             ) : (
               "Add Customer (optional)"
             )}
@@ -760,7 +760,7 @@ export default function POSPage() {
         {/* Cart Items */}
         <div className="flex-1 overflow-auto p-4 space-y-3">
           {cart.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 text-[#273B3A]">
+            <div className="flex flex-col items-center justify-center py-16 text-[#FAFAFA]">
               <ShoppingCart className="w-16 h-16 mb-4 opacity-30" />
               <p className="font-medium">Cart is empty</p>
               <p className="text-sm mt-1">Search or scan items to add</p>
@@ -778,23 +778,23 @@ export default function POSPage() {
         </div>
 
         {/* Totals */}
-        <div className="px-4 py-4 border-t border-[#E6D4C7] space-y-2 bg-[#E6D4C7]">
+        <div className="px-4 py-4 border-t border-[#262626] space-y-2 bg-[#0A0A0A]">
           <div className="flex justify-between text-sm">
-            <span className="text-[#273B3A]">Subtotal</span>
-            <span className="text-[#273B3A]">${totals.subtotal.toFixed(2)}</span>
+            <span className="text-[#FAFAFA]">Subtotal</span>
+            <span className="text-[#FAFAFA]">${totals.subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-[#273B3A]">HST (13%)</span>
-            <span className="text-[#273B3A]">${totals.tax.toFixed(2)}</span>
+            <span className="text-[#FAFAFA]">HST (13%)</span>
+            <span className="text-[#FAFAFA]">${totals.tax.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between text-xl font-bold pt-2 border-t border-[#E6D4C7]">
-            <span className="text-[#273B3A]">Total</span>
-            <span className="text-[#273B3A]">${totals.total.toFixed(2)}</span>
+          <div className="flex justify-between text-xl font-bold pt-2 border-t border-[#262626]">
+            <span className="text-[#FAFAFA]">Total</span>
+            <span className="text-[#FAFAFA]">${totals.total.toFixed(2)}</span>
           </div>
         </div>
 
         {/* Payment Buttons */}
-        <div className="p-4 border-t border-[#E6D4C7] grid grid-cols-2 gap-3">
+        <div className="p-4 border-t border-[#262626] grid grid-cols-2 gap-3">
           <button
             onClick={() => setShowPayment(true)}
             disabled={cart.length === 0}
@@ -806,7 +806,7 @@ export default function POSPage() {
           <button
             onClick={() => handlePayment("card")}
             disabled={cart.length === 0}
-            className="flex items-center justify-center gap-2 py-4 bg-[#273B3A] hover:bg-[#273B3A] text-[#E6D4C7] rounded-xl font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center justify-center gap-2 py-4 bg-[#161616] hover:bg-[#161616] text-[#0A0A0A] rounded-xl font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <CreditCard className="w-5 h-5" />
             Card

@@ -84,7 +84,7 @@ function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
     running: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
     paused: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-    stopped: "bg-[#E6D4C7] text-[#273B3A] border-[#E6D4C7]",
+    stopped: "bg-[#0A0A0A] text-[#FAFAFA] border-[#262626]",
   };
   const label = status.charAt(0).toUpperCase() + status.slice(1);
   return (
@@ -129,17 +129,17 @@ function TimerDisplay({ entry, onStop, onPause, onResume }: {
   const seconds = elapsed % 60;
 
   return (
-    <div className="bg-gradient-to-br from-[#273B3A]/10 to-[#273B3A]/10 border border-[#273B3A]/20 rounded-2xl p-6">
+    <div className="bg-gradient-to-br from-[#CDB49E]/10 to-[#B89B78]/10 border border-[#262626]/20 rounded-2xl p-6">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-[#273B3A]">{entry.task || "Untitled Task"}</h3>
-          <p className="text-sm text-[#273B3A]">{entry.project_name || "No project"}</p>
+          <h3 className="text-lg font-semibold text-[#FAFAFA]">{entry.task || "Untitled Task"}</h3>
+          <p className="text-sm text-[#FAFAFA]">{entry.project_name || "No project"}</p>
         </div>
         <StatusBadge status={entry.status} />
       </div>
       
       <div className="flex items-center justify-center py-6">
-        <div className="text-5xl font-mono text-[#273B3A] tracking-wider">
+        <div className="text-5xl font-mono text-[#FAFAFA] tracking-wider">
           {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
         </div>
       </div>
@@ -183,7 +183,7 @@ function TimerDisplay({ entry, onStop, onPause, onResume }: {
       </div>
 
       {entry.billable && (
-        <div className="mt-4 flex items-center justify-center gap-2 text-[#273B3A]">
+        <div className="mt-4 flex items-center justify-center gap-2 text-[#FAFAFA]">
           <DollarSign className="w-4 h-4" />
           <span className="text-sm">Billable</span>
         </div>
@@ -219,33 +219,33 @@ function StartTimerForm({ onStart, onClose }: { onStart: (data: Partial<TimeEntr
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl w-full max-w-md shadow-2xl">
-        <div className="flex items-center justify-between p-6 border-b border-[#E6D4C7]">
-          <h2 className="text-xl font-semibold text-[#273B3A]">Start Timer</h2>
-          <button onClick={onClose} className="text-[#273B3A] hover:text-[#273B3A] transition-colors">
+      <div className="relative bg-[#0A0A0A] border border-[#262626] rounded-2xl w-full max-w-md shadow-2xl">
+        <div className="flex items-center justify-between p-6 border-b border-[#262626]">
+          <h2 className="text-xl font-semibold text-[#FAFAFA]">Start Timer</h2>
+          <button onClick={onClose} className="text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           <div>
-            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Task Description</label>
+            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Task Description</label>
             <input
               type="text"
               value={task}
               onChange={(e) => setTask(e.target.value)}
               placeholder="What are you working on?"
               autoFocus
-              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Project</label>
+            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Project</label>
             <select
               value={projectId}
               onChange={(e) => setProjectId(e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
             >
               <option value="">No project</option>
               {DEMO_PROJECTS.map((p) => (
@@ -255,13 +255,13 @@ function StartTimerForm({ onStart, onClose }: { onStart: (data: Partial<TimeEntr
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Notes (optional)</label>
+            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Notes (optional)</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Add any notes..."
               rows={2}
-              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200 resize-none"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200 resize-none"
             />
           </div>
 
@@ -273,23 +273,23 @@ function StartTimerForm({ onStart, onClose }: { onStart: (data: Partial<TimeEntr
                 onChange={(e) => setBillable(e.target.checked)}
                 className="sr-only peer"
               />
-              <div className="w-10 h-5 bg-[#E6D4C7] rounded-full peer-checked:bg-[#273B3A] transition-colors" />
+              <div className="w-10 h-5 bg-[#0A0A0A] rounded-full peer-checked:bg-[#161616] transition-colors" />
               <div className="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full peer-checked:translate-x-5 transition-transform" />
             </div>
-            <span className="text-sm text-[#273B3A]">Billable time</span>
+            <span className="text-sm text-[#FAFAFA]">Billable time</span>
           </label>
 
           <div className="flex gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#E6D4C7] hover:bg-[#E6D4C7] text-[#273B3A] rounded-lg transition-colors"
+              className="flex-1 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#273B3A] to-[#273B3A] hover:from-[#273B3A]/90 hover:to-[#273B3A]/90 text-[#E6D4C7] font-medium rounded-lg transition-all"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#CDB49E] to-[#B89B78] hover:from-[#CDB49E]/90 hover:to-[#B89B78]/90 text-[#0A0A0A] font-medium rounded-lg transition-all"
             >
               <Play className="w-4 h-4" />
               Start Timer
@@ -339,33 +339,33 @@ function ManualEntryForm({ onSave, onClose }: { onSave: (data: Omit<TimeEntry, "
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl w-full max-w-md shadow-2xl">
-        <div className="flex items-center justify-between p-6 border-b border-[#E6D4C7]">
-          <h2 className="text-xl font-semibold text-[#273B3A]">Add Time Entry</h2>
-          <button onClick={onClose} className="text-[#273B3A] hover:text-[#273B3A] transition-colors">
+      <div className="relative bg-[#0A0A0A] border border-[#262626] rounded-2xl w-full max-w-md shadow-2xl">
+        <div className="flex items-center justify-between p-6 border-b border-[#262626]">
+          <h2 className="text-xl font-semibold text-[#FAFAFA]">Add Time Entry</h2>
+          <button onClick={onClose} className="text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           <div>
-            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Task Description</label>
+            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Task Description</label>
             <input
               type="text"
               value={task}
               onChange={(e) => setTask(e.target.value)}
               placeholder="What did you work on?"
               required
-              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Project</label>
+            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Project</label>
             <select
               value={projectId}
               onChange={(e) => setProjectId(e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
             >
               <option value="">No project</option>
               {DEMO_PROJECTS.map((p) => (
@@ -375,47 +375,47 @@ function ManualEntryForm({ onSave, onClose }: { onSave: (data: Omit<TimeEntry, "
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Date</label>
+            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Date</label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
-              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Start Time</label>
+              <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Start Time</label>
               <input
                 type="time"
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
                 required
-                className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[#273B3A] mb-1.5">End Time</label>
+              <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">End Time</label>
               <input
                 type="time"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
                 required
-                className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Notes (optional)</label>
+            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Notes (optional)</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Add any notes..."
               rows={2}
-              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200 resize-none"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200 resize-none"
             />
           </div>
 
@@ -427,23 +427,23 @@ function ManualEntryForm({ onSave, onClose }: { onSave: (data: Omit<TimeEntry, "
                 onChange={(e) => setBillable(e.target.checked)}
                 className="sr-only peer"
               />
-              <div className="w-10 h-5 bg-[#E6D4C7] rounded-full peer-checked:bg-[#273B3A] transition-colors" />
+              <div className="w-10 h-5 bg-[#0A0A0A] rounded-full peer-checked:bg-[#161616] transition-colors" />
               <div className="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full peer-checked:translate-x-5 transition-transform" />
             </div>
-            <span className="text-sm text-[#273B3A]">Billable time</span>
+            <span className="text-sm text-[#FAFAFA]">Billable time</span>
           </label>
 
           <div className="flex gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#E6D4C7] hover:bg-[#E6D4C7] text-[#273B3A] rounded-lg transition-colors"
+              className="flex-1 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#273B3A] to-[#273B3A] hover:from-[#273B3A]/90 hover:to-[#273B3A]/90 text-[#E6D4C7] font-medium rounded-lg transition-all"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#CDB49E] to-[#B89B78] hover:from-[#CDB49E]/90 hover:to-[#B89B78]/90 text-[#0A0A0A] font-medium rounded-lg transition-all"
             >
               <Plus className="w-4 h-4" />
               Add Entry
@@ -499,31 +499,31 @@ function WeeklyTimesheet({
   const weekTotal = Object.values(dailyTotals).reduce((sum, mins) => sum + mins, 0);
 
   return (
-    <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl overflow-hidden">
+    <div className="bg-[#0A0A0A] border border-[#262626] rounded-2xl overflow-hidden">
       {/* Week Navigation */}
-      <div className="flex items-center justify-between p-4 border-b border-[#E6D4C7]">
+      <div className="flex items-center justify-between p-4 border-b border-[#262626]">
         <button
           onClick={onPrevWeek}
-          className="p-2 hover:bg-[#E6D4C7] rounded-lg transition-colors"
+          className="p-2 hover:bg-[#0A0A0A] rounded-lg transition-colors"
         >
-          <ChevronLeft className="w-5 h-5 text-[#273B3A]" />
+          <ChevronLeft className="w-5 h-5 text-[#FAFAFA]" />
         </button>
         <div className="text-center">
-          <h3 className="text-lg font-semibold text-[#273B3A]">
+          <h3 className="text-lg font-semibold text-[#FAFAFA]">
             {start.toLocaleDateString("en-US", { month: "short", day: "numeric" })} - {end.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
           </h3>
-          <p className="text-sm text-[#273B3A]">Total: {formatDuration(weekTotal)}</p>
+          <p className="text-sm text-[#FAFAFA]">Total: {formatDuration(weekTotal)}</p>
         </div>
         <button
           onClick={onNextWeek}
-          className="p-2 hover:bg-[#E6D4C7] rounded-lg transition-colors"
+          className="p-2 hover:bg-[#0A0A0A] rounded-lg transition-colors"
         >
-          <ChevronRight className="w-5 h-5 text-[#273B3A]" />
+          <ChevronRight className="w-5 h-5 text-[#FAFAFA]" />
         </button>
       </div>
 
       {/* Day Headers */}
-      <div className="grid grid-cols-7 border-b border-[#E6D4C7]">
+      <div className="grid grid-cols-7 border-b border-[#262626]">
         {weekDays.map((day, idx) => {
           const key = day.toISOString().split("T")[0];
           const isToday = key === new Date().toISOString().split("T")[0];
@@ -531,17 +531,17 @@ function WeeklyTimesheet({
             <div
               key={idx}
               className={cn(
-                "p-3 text-center border-r border-[#E6D4C7] last:border-r-0",
-                isToday && "bg-[#273B3A]/5"
+                "p-3 text-center border-r border-[#262626] last:border-r-0",
+                isToday && "bg-[#161616]/5"
               )}
             >
-              <div className={cn("text-xs font-medium", isToday ? "text-[#273B3A]" : "text-[#273B3A]")}>
+              <div className={cn("text-xs font-medium", isToday ? "text-[#FAFAFA]" : "text-[#FAFAFA]")}>
                 {DAYS_OF_WEEK[idx]}
               </div>
-              <div className={cn("text-lg font-semibold", isToday ? "text-[#273B3A]" : "text-[#273B3A]")}>
+              <div className={cn("text-lg font-semibold", isToday ? "text-[#FAFAFA]" : "text-[#FAFAFA]")}>
                 {day.getDate()}
               </div>
-              <div className="text-xs text-[#273B3A] mt-1">
+              <div className="text-xs text-[#FAFAFA] mt-1">
                 {formatDuration(dailyTotals[key] || 0)}
               </div>
             </div>
@@ -559,8 +559,8 @@ function WeeklyTimesheet({
             <div
               key={idx}
               className={cn(
-                "p-2 border-r border-[#E6D4C7] last:border-r-0 space-y-2",
-                isToday && "bg-[#273B3A]/5"
+                "p-2 border-r border-[#262626] last:border-r-0 space-y-2",
+                isToday && "bg-[#161616]/5"
               )}
             >
               {dayEntries.map((entry) => (
@@ -570,18 +570,18 @@ function WeeklyTimesheet({
                   className={cn(
                     "w-full p-2 rounded-lg text-left transition-all hover:scale-[1.02]",
                     entry.billable
-                      ? "bg-[#273B3A]/10 border border-[#273B3A]/20"
-                      : "bg-[#E6D4C7] border border-[#E6D4C7]"
+                      ? "bg-[#161616]/10 border border-[#262626]/20"
+                      : "bg-[#0A0A0A] border border-[#262626]"
                   )}
                 >
-                  <div className="text-xs font-medium text-[#273B3A] line-clamp-1">
+                  <div className="text-xs font-medium text-[#FAFAFA] line-clamp-1">
                     {entry.task || "Untitled"}
                   </div>
-                  <div className="text-[10px] text-[#273B3A] mt-0.5">
+                  <div className="text-[10px] text-[#FAFAFA] mt-0.5">
                     {formatDuration(entry.duration_minutes)}
                   </div>
                   {entry.project_name && (
-                    <div className="text-[10px] text-[#273B3A] mt-0.5 line-clamp-1">
+                    <div className="text-[10px] text-[#FAFAFA] mt-0.5 line-clamp-1">
                       {entry.project_name}
                     </div>
                   )}
@@ -599,15 +599,15 @@ function WeeklyTimesheet({
 
 function EntryRow({ entry, onEdit, onDelete }: { entry: TimeEntry; onEdit: () => void; onDelete: () => void }) {
   return (
-    <div className="flex items-center gap-4 p-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl hover:border-[#273B3A]/20 transition-colors">
+    <div className="flex items-center gap-4 p-4 bg-[#0A0A0A] border border-[#262626] rounded-xl hover:border-[#262626]/20 transition-colors">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <h4 className="font-medium text-[#273B3A] truncate">{entry.task || "Untitled Task"}</h4>
+          <h4 className="font-medium text-[#FAFAFA] truncate">{entry.task || "Untitled Task"}</h4>
           {entry.billable && (
-            <DollarSign className="w-3.5 h-3.5 text-[#273B3A] flex-shrink-0" />
+            <DollarSign className="w-3.5 h-3.5 text-[#FAFAFA] flex-shrink-0" />
           )}
         </div>
-        <div className="flex items-center gap-3 mt-1 text-sm text-[#273B3A]">
+        <div className="flex items-center gap-3 mt-1 text-sm text-[#FAFAFA]">
           {entry.project_name && (
             <span className="flex items-center gap-1">
               <FolderKanban className="w-3.5 h-3.5" />
@@ -626,15 +626,15 @@ function EntryRow({ entry, onEdit, onDelete }: { entry: TimeEntry; onEdit: () =>
 
       <div className="flex items-center gap-4">
         <div className="text-right">
-          <div className="font-semibold text-[#273B3A]">{formatDuration(entry.duration_minutes)}</div>
+          <div className="font-semibold text-[#FAFAFA]">{formatDuration(entry.duration_minutes)}</div>
           <StatusBadge status={entry.status} />
         </div>
         <div className="flex items-center gap-1">
           <button
             onClick={onEdit}
-            className="p-2 hover:bg-[#E6D4C7] rounded-lg transition-colors"
+            className="p-2 hover:bg-[#0A0A0A] rounded-lg transition-colors"
           >
-            <Pencil className="w-4 h-4 text-[#273B3A]" />
+            <Pencil className="w-4 h-4 text-[#FAFAFA]" />
           </button>
           <button
             onClick={onDelete}
@@ -756,20 +756,20 @@ export default function TimeTrackingPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#273B3A]">Time Tracking</h1>
-          <p className="text-[#273B3A] mt-1">Track your work hours and manage timesheets</p>
+          <h1 className="text-2xl font-bold text-[#FAFAFA]">Time Tracking</h1>
+          <p className="text-[#FAFAFA] mt-1">Track your work hours and manage timesheets</p>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={handleExportPDF}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#E6D4C7] hover:bg-[#E6D4C7] text-[#273B3A] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
           >
             <Download className="w-4 h-4" />
             Export PDF
           </button>
           <button
             onClick={() => setShowManualEntry(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#E6D4C7] hover:bg-[#E6D4C7] text-[#273B3A] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] hover:bg-[#0A0A0A] text-[#FAFAFA] rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" />
             Manual Entry
@@ -777,7 +777,7 @@ export default function TimeTrackingPage() {
           {!activeEntry && (
             <button
               onClick={() => setShowStartTimer(true)}
-              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#273B3A] to-[#273B3A] hover:from-[#273B3A]/90 hover:to-[#273B3A]/90 text-[#E6D4C7] font-medium rounded-lg transition-all shadow-lg shadow-[#273B3A]/20"
+              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#CDB49E] to-[#B89B78] hover:from-[#CDB49E]/90 hover:to-[#B89B78]/90 text-[#0A0A0A] font-medium rounded-lg transition-all shadow-lg shadow-[#273B3A]/20"
             >
               <Play className="w-4 h-4" />
               Start Timer
@@ -788,46 +788,46 @@ export default function TimeTrackingPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5">
+        <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-[#273B3A]/10 flex items-center justify-center">
-              <Timer className="w-5 h-5 text-[#273B3A]" />
+            <div className="w-10 h-10 rounded-lg bg-[#161616]/10 flex items-center justify-center">
+              <Timer className="w-5 h-5 text-[#FAFAFA]" />
             </div>
-            <span className="text-sm text-[#273B3A]">This Week</span>
+            <span className="text-sm text-[#FAFAFA]">This Week</span>
           </div>
-          <div className="text-2xl font-bold text-[#273B3A]">{totalHours.toFixed(1)}h</div>
+          <div className="text-2xl font-bold text-[#FAFAFA]">{totalHours.toFixed(1)}h</div>
         </div>
 
-        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5">
+        <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
               <DollarSign className="w-5 h-5 text-emerald-400" />
             </div>
-            <span className="text-sm text-[#273B3A]">Billable</span>
+            <span className="text-sm text-[#FAFAFA]">Billable</span>
           </div>
-          <div className="text-2xl font-bold text-[#273B3A]">{billableHours.toFixed(1)}h</div>
+          <div className="text-2xl font-bold text-[#FAFAFA]">{billableHours.toFixed(1)}h</div>
         </div>
 
-        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5">
+        <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-violet-500/10 flex items-center justify-center">
               <FolderKanban className="w-5 h-5 text-violet-400" />
             </div>
-            <span className="text-sm text-[#273B3A]">Projects</span>
+            <span className="text-sm text-[#FAFAFA]">Projects</span>
           </div>
-          <div className="text-2xl font-bold text-[#273B3A]">
+          <div className="text-2xl font-bold text-[#FAFAFA]">
             {new Set(weekEntries.filter(e => e.project_id).map((e: any) => e.project_id)).size}
           </div>
         </div>
 
-        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5">
+        <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
               <FileText className="w-5 h-5 text-amber-400" />
             </div>
-            <span className="text-sm text-[#273B3A]">Entries</span>
+            <span className="text-sm text-[#FAFAFA]">Entries</span>
           </div>
-          <div className="text-2xl font-bold text-[#273B3A]">{weekEntries.length}</div>
+          <div className="text-2xl font-bold text-[#FAFAFA]">{weekEntries.length}</div>
         </div>
       </div>
 
@@ -843,14 +843,14 @@ export default function TimeTrackingPage() {
 
       {/* View Toggle & Search */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg p-1">
+        <div className="flex items-center gap-2 bg-[#0A0A0A] border border-[#262626] rounded-lg p-1">
           <button
             onClick={() => setViewMode("timesheet")}
             className={cn(
               "px-4 py-2 rounded-md text-sm font-medium transition-colors",
               viewMode === "timesheet"
-                ? "bg-[#273B3A] text-[#E6D4C7]"
-                : "text-[#273B3A] hover:text-[#273B3A]"
+                ? "bg-[#161616] text-[#0A0A0A]"
+                : "text-[#FAFAFA] hover:text-[#FAFAFA]"
             )}
           >
             <Calendar className="w-4 h-4 inline-block mr-2" />
@@ -861,8 +861,8 @@ export default function TimeTrackingPage() {
             className={cn(
               "px-4 py-2 rounded-md text-sm font-medium transition-colors",
               viewMode === "list"
-                ? "bg-[#273B3A] text-[#E6D4C7]"
-                : "text-[#273B3A] hover:text-[#273B3A]"
+                ? "bg-[#161616] text-[#0A0A0A]"
+                : "text-[#FAFAFA] hover:text-[#FAFAFA]"
             )}
           >
             <Clock className="w-4 h-4 inline-block mr-2" />
@@ -871,13 +871,13 @@ export default function TimeTrackingPage() {
         </div>
 
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#273B3A]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#FAFAFA]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search entries..."
-            className="pl-10 pr-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all w-64"
+            className="pl-10 pr-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all w-64"
           />
         </div>
       </div>
@@ -894,7 +894,7 @@ export default function TimeTrackingPage() {
       ) : (
         <div className="space-y-3">
           {filteredEntries.length === 0 ? (
-            <div className="text-center py-12 text-[#273B3A]">
+            <div className="text-center py-12 text-[#FAFAFA]">
               <Clock className="w-12 h-12 mx-auto mb-4 opacity-50" />
               <p>No time entries found</p>
             </div>

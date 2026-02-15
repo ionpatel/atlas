@@ -15,7 +15,7 @@ import { formatDate, formatCurrency, cn } from "@/lib/utils";
 import type { ApprovalWorkflow, ApprovalStep, ApprovalRequest, ApproverType } from "@/types";
 
 const APPLIES_TO_OPTIONS = [
-  { value: "expenses", label: "Expenses", icon: DollarSign, color: "#273B3A" },
+  { value: "expenses", label: "Expenses", icon: DollarSign, color: '#FAFAFA' },
   { value: "purchase_orders", label: "Purchase Orders", icon: FileText, color: "#34D399" },
   { value: "contracts", label: "Contracts", icon: FileText, color: "#A78BFA" },
   { value: "leave", label: "Leave Requests", icon: Calendar, color: "#FBBF24" },
@@ -32,10 +32,10 @@ const APPROVER_TYPE_OPTIONS: { value: ApproverType; label: string; icon: React.E
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, { bg: string; text: string; border: string }> = {
     pending: { bg: "bg-amber-500/10", text: "text-amber-400", border: "border-amber-500/20" },
-    in_progress: { bg: "bg-[#273B3A]/10", text: "text-[#273B3A]", border: "border-[#273B3A]/20" },
+    in_progress: { bg: "bg-[#161616]/10", text: "text-[#FAFAFA]", border: "border-[#262626]/20" },
     approved: { bg: "bg-emerald-500/10", text: "text-emerald-400", border: "border-emerald-500/20" },
     rejected: { bg: "bg-red-500/10", text: "text-red-400", border: "border-red-500/20" },
-    cancelled: { bg: "bg-[#E6D4C7]", text: "text-[#273B3A]", border: "border-[#E6D4C7]" },
+    cancelled: { bg: "bg-[#0A0A0A]", text: "text-[#FAFAFA]", border: "border-[#262626]" },
   };
   const s = styles[status] || styles.pending;
   const label = status.replace("_", " ");
@@ -58,16 +58,16 @@ function StatCard({
   color: "blue" | "green" | "amber" | "red";
 }) {
   const colors = {
-    blue: { bg: "bg-[#273B3A]/10", iconBg: "bg-[#273B3A]/20", text: "text-[#273B3A]" },
+    blue: { bg: "bg-[#161616]/10", iconBg: "bg-[#161616]/20", text: "text-[#FAFAFA]" },
     green: { bg: "bg-emerald-500/10", iconBg: "bg-emerald-500/20", text: "text-emerald-400" },
     amber: { bg: "bg-amber-500/10", iconBg: "bg-amber-500/20", text: "text-amber-400" },
     red: { bg: "bg-red-500/10", iconBg: "bg-red-500/20", text: "text-red-400" },
   };
   const c = colors[color];
   return (
-    <div className={`${c.bg} border border-[#E6D4C7] rounded-xl p-5`}>
+    <div className={`${c.bg} border border-[#262626] rounded-xl p-5`}>
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-medium text-[#273B3A] uppercase tracking-wider">{label}</span>
+        <span className="text-xs font-medium text-[#FAFAFA] uppercase tracking-wider">{label}</span>
         <div className={`w-8 h-8 rounded-lg ${c.iconBg} flex items-center justify-center`}>
           <Icon className={`w-4 h-4 ${c.text}`} />
         </div>
@@ -92,7 +92,7 @@ function WorkflowCard({
   const Icon = appliesTo?.icon || FileText;
 
   return (
-    <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5 hover:border-[#273B3A]/30 transition-all group">
+    <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5 hover:border-[#262626]/30 transition-all group">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           <div
@@ -102,8 +102,8 @@ function WorkflowCard({
             <span style={{ color: appliesTo?.color || "#273B3A" }}><Icon className="w-5 h-5" /></span>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-[#273B3A]">{workflow.name}</h3>
-            <p className="text-xs text-[#273B3A] capitalize">{workflow.applies_to.replace("_", " ")}</p>
+            <h3 className="text-sm font-semibold text-[#FAFAFA]">{workflow.name}</h3>
+            <p className="text-xs text-[#FAFAFA] capitalize">{workflow.applies_to.replace("_", " ")}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -113,35 +113,35 @@ function WorkflowCard({
             title={workflow.is_active ? "Disable" : "Enable"}
           >
             {workflow.is_active ? (
-              <ToggleRight className="w-8 h-8 text-[#273B3A]" />
+              <ToggleRight className="w-8 h-8 text-[#FAFAFA]" />
             ) : (
-              <ToggleLeft className="w-8 h-8 text-[#E6D4C7]" />
+              <ToggleLeft className="w-8 h-8 text-[#0A0A0A]" />
             )}
           </button>
         </div>
       </div>
 
       {workflow.description && (
-        <p className="text-xs text-[#273B3A] mb-4">{workflow.description}</p>
+        <p className="text-xs text-[#FAFAFA] mb-4">{workflow.description}</p>
       )}
 
       {/* Steps preview */}
       <div className="flex items-center gap-2 mb-4">
         {workflow.steps?.map((step, i) => (
           <div key={step.id} className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[#E6D4C7] rounded-lg">
-              <span className="w-4 h-4 rounded-full bg-[#273B3A]/20 text-[#273B3A] text-[10px] font-bold flex items-center justify-center">
+            <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[#0A0A0A] rounded-lg">
+              <span className="w-4 h-4 rounded-full bg-[#161616]/20 text-[#FAFAFA] text-[10px] font-bold flex items-center justify-center">
                 {i + 1}
               </span>
-              <span className="text-xs text-[#273B3A]">{step.approver_name || step.approver_type}</span>
+              <span className="text-xs text-[#FAFAFA]">{step.approver_name || step.approver_type}</span>
             </div>
             {i < (workflow.steps?.length || 0) - 1 && (
-              <ArrowRight className="w-3.5 h-3.5 text-[#E6D4C7]" />
+              <ArrowRight className="w-3.5 h-3.5 text-[#0A0A0A]" />
             )}
           </div>
         ))}
         {(!workflow.steps || workflow.steps.length === 0) && (
-          <span className="text-xs text-[#273B3A]">No steps configured</span>
+          <span className="text-xs text-[#FAFAFA]">No steps configured</span>
         )}
       </div>
 
@@ -149,17 +149,17 @@ function WorkflowCard({
       {Object.keys(workflow.rules).length > 0 && (
         <div className="flex flex-wrap gap-2 mb-4">
           {workflow.rules.amount_min !== undefined && (
-            <span className="px-2 py-1 bg-[#E6D4C7] text-[10px] text-[#273B3A] rounded">
+            <span className="px-2 py-1 bg-[#0A0A0A] text-[10px] text-[#FAFAFA] rounded">
               Min: {formatCurrency(workflow.rules.amount_min)}
             </span>
           )}
           {workflow.rules.amount_max !== undefined && (
-            <span className="px-2 py-1 bg-[#E6D4C7] text-[10px] text-[#273B3A] rounded">
+            <span className="px-2 py-1 bg-[#0A0A0A] text-[10px] text-[#FAFAFA] rounded">
               Max: {formatCurrency(workflow.rules.amount_max)}
             </span>
           )}
           {workflow.rules.department && (
-            <span className="px-2 py-1 bg-[#E6D4C7] text-[10px] text-[#273B3A] rounded capitalize">
+            <span className="px-2 py-1 bg-[#0A0A0A] text-[10px] text-[#FAFAFA] rounded capitalize">
               {workflow.rules.department}
             </span>
           )}
@@ -167,18 +167,18 @@ function WorkflowCard({
       )}
 
       {/* Actions */}
-      <div className="flex items-center justify-between pt-3 border-t border-[#E6D4C7]/50">
-        <span className="text-xs text-[#273B3A]">Priority: {workflow.priority}</span>
+      <div className="flex items-center justify-between pt-3 border-t border-[#262626]/50">
+        <span className="text-xs text-[#FAFAFA]">Priority: {workflow.priority}</span>
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={onEdit}
-            className="p-2 rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[#273B3A]/10"
+            className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#161616]/10"
           >
             <Edit2 className="w-4 h-4" />
           </button>
           <button
             onClick={onDelete}
-            className="p-2 rounded-lg text-[#273B3A] hover:text-red-400 hover:bg-red-500/10"
+            className="p-2 rounded-lg text-[#FAFAFA] hover:text-red-400 hover:bg-red-500/10"
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -265,30 +265,30 @@ function WorkflowBuilderModal({
         {/* Basic Info */}
         <div className="grid grid-cols-2 gap-4">
           <div className="col-span-2">
-            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Workflow Name</label>
+            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Workflow Name</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/50"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:border-[#262626]/50"
               required
             />
           </div>
           <div className="col-span-2">
-            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Description</label>
+            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Description</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               rows={2}
-              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/50"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:border-[#262626]/50"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Applies To</label>
+            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Applies To</label>
             <select
               value={formData.applies_to}
               onChange={(e) => setFormData({ ...formData, applies_to: e.target.value as any })}
-              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/50"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:border-[#262626]/50"
             >
               {APPLIES_TO_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -296,42 +296,42 @@ function WorkflowBuilderModal({
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Priority</label>
+            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Priority</label>
             <input
               type="number"
               min={1}
               value={formData.priority}
               onChange={(e) => setFormData({ ...formData, priority: parseInt(e.target.value) || 1 })}
-              className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/50"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:border-[#262626]/50"
             />
           </div>
         </div>
 
         {/* Rules */}
         <div>
-          <h3 className="text-sm font-semibold text-[#273B3A] mb-3 flex items-center gap-2">
-            <Settings className="w-4 h-4 text-[#273B3A]" />
+          <h3 className="text-sm font-semibold text-[#FAFAFA] mb-3 flex items-center gap-2">
+            <Settings className="w-4 h-4 text-[#FAFAFA]" />
             Conditions (When to apply)
           </h3>
-          <div className="grid grid-cols-2 gap-4 p-4 bg-[#E6D4C7] rounded-lg">
+          <div className="grid grid-cols-2 gap-4 p-4 bg-[#0A0A0A] rounded-lg">
             <div>
-              <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Minimum Amount ($)</label>
+              <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Minimum Amount ($)</label>
               <input
                 type="number"
                 value={amountMin}
                 onChange={(e) => setAmountMin(e.target.value)}
                 placeholder="No minimum"
-                className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/50"
+                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:border-[#262626]/50"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Maximum Amount ($)</label>
+              <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Maximum Amount ($)</label>
               <input
                 type="number"
                 value={amountMax}
                 onChange={(e) => setAmountMax(e.target.value)}
                 placeholder="No maximum"
-                className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/50"
+                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:border-[#262626]/50"
               />
             </div>
           </div>
@@ -340,27 +340,27 @@ function WorkflowBuilderModal({
         {/* Steps */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-[#273B3A] flex items-center gap-2">
-              <Users className="w-4 h-4 text-[#273B3A]" />
+            <h3 className="text-sm font-semibold text-[#FAFAFA] flex items-center gap-2">
+              <Users className="w-4 h-4 text-[#FAFAFA]" />
               Approval Steps
             </h3>
             <button
               type="button"
               onClick={addStep}
-              className="text-xs text-[#273B3A] hover:text-[#7DD3FC]"
+              className="text-xs text-[#FAFAFA] hover:text-[#7DD3FC]"
             >
               + Add Step
             </button>
           </div>
 
           {formData.steps.length === 0 ? (
-            <div className="p-8 bg-[#E6D4C7] rounded-lg text-center">
-              <Users className="w-12 h-12 mx-auto mb-3 text-[#E6D4C7]" />
-              <p className="text-sm text-[#273B3A] mb-3">No approval steps defined</p>
+            <div className="p-8 bg-[#0A0A0A] rounded-lg text-center">
+              <Users className="w-12 h-12 mx-auto mb-3 text-[#0A0A0A]" />
+              <p className="text-sm text-[#FAFAFA] mb-3">No approval steps defined</p>
               <button
                 type="button"
                 onClick={addStep}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-medium"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-medium"
               >
                 <Plus className="w-4 h-4" />
                 Add First Step
@@ -371,26 +371,26 @@ function WorkflowBuilderModal({
               {formData.steps.map((step, i) => (
                 <div
                   key={step.id}
-                  className="flex items-start gap-3 p-4 bg-[#E6D4C7] rounded-lg group"
+                  className="flex items-start gap-3 p-4 bg-[#0A0A0A] rounded-lg group"
                 >
                   <div className="flex items-center gap-2 pt-2">
-                    <GripVertical className="w-4 h-4 text-[#E6D4C7] cursor-grab" />
-                    <div className="w-8 h-8 rounded-full bg-[#273B3A]/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs font-bold text-[#273B3A]">{i + 1}</span>
+                    <GripVertical className="w-4 h-4 text-[#0A0A0A] cursor-grab" />
+                    <div className="w-8 h-8 rounded-full bg-[#161616]/20 flex items-center justify-center flex-shrink-0">
+                      <span className="text-xs font-bold text-[#FAFAFA]">{i + 1}</span>
                     </div>
                   </div>
                   <div className="flex-1 grid grid-cols-3 gap-3">
                     <div>
-                      <label className="block text-[10px] text-[#273B3A] mb-1">Step Name</label>
+                      <label className="block text-[10px] text-[#FAFAFA] mb-1">Step Name</label>
                       <input
                         type="text"
                         value={step.name || ""}
                         onChange={(e) => updateStep(i, { name: e.target.value })}
-                        className="w-full px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-xs text-[#273B3A]"
+                        className="w-full px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs text-[#FAFAFA]"
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] text-[#273B3A] mb-1">Approver Type</label>
+                      <label className="block text-[10px] text-[#FAFAFA] mb-1">Approver Type</label>
                       <select
                         value={step.approver_type}
                         onChange={(e) => {
@@ -401,7 +401,7 @@ function WorkflowBuilderModal({
                             approver_name: option?.label,
                           });
                         }}
-                        className="w-full px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-xs text-[#273B3A]"
+                        className="w-full px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs text-[#FAFAFA]"
                       >
                         {APPROVER_TYPE_OPTIONS.map((opt) => (
                           <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -409,39 +409,39 @@ function WorkflowBuilderModal({
                       </select>
                     </div>
                     <div>
-                      <label className="block text-[10px] text-[#273B3A] mb-1">Auto-approve (days)</label>
+                      <label className="block text-[10px] text-[#FAFAFA] mb-1">Auto-approve (days)</label>
                       <input
                         type="number"
                         value={step.auto_approve_after_days || ""}
                         onChange={(e) => updateStep(i, { auto_approve_after_days: parseInt(e.target.value) || undefined })}
                         placeholder="Never"
-                        className="w-full px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-xs text-[#273B3A]"
+                        className="w-full px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs text-[#FAFAFA]"
                       />
                     </div>
                   </div>
                   <div className="flex items-center gap-2 pt-6">
-                    <label className="flex items-center gap-1.5 text-[10px] text-[#273B3A]">
+                    <label className="flex items-center gap-1.5 text-[10px] text-[#FAFAFA]">
                       <input
                         type="checkbox"
                         checked={step.can_delegate}
                         onChange={(e) => updateStep(i, { can_delegate: e.target.checked })}
-                        className="w-3 h-3 rounded border-[#E6D4C7] bg-[#E6D4C7] text-[#273B3A]"
+                        className="w-3 h-3 rounded border-[#262626] bg-[#0A0A0A] text-[#FAFAFA]"
                       />
                       Delegate
                     </label>
-                    <label className="flex items-center gap-1.5 text-[10px] text-[#273B3A]">
+                    <label className="flex items-center gap-1.5 text-[10px] text-[#FAFAFA]">
                       <input
                         type="checkbox"
                         checked={step.notify_on_pending}
                         onChange={(e) => updateStep(i, { notify_on_pending: e.target.checked })}
-                        className="w-3 h-3 rounded border-[#E6D4C7] bg-[#E6D4C7] text-[#273B3A]"
+                        className="w-3 h-3 rounded border-[#262626] bg-[#0A0A0A] text-[#FAFAFA]"
                       />
                       Notify
                     </label>
                     <button
                       type="button"
                       onClick={() => removeStep(i)}
-                      className="p-1.5 rounded-lg text-[#273B3A] hover:text-red-400 hover:bg-red-500/10 opacity-0 group-hover:opacity-100"
+                      className="p-1.5 rounded-lg text-[#FAFAFA] hover:text-red-400 hover:bg-red-500/10 opacity-0 group-hover:opacity-100"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -453,35 +453,35 @@ function WorkflowBuilderModal({
         </div>
 
         {/* Active toggle */}
-        <div className="flex items-center justify-between p-4 bg-[#E6D4C7] rounded-lg">
+        <div className="flex items-center justify-between p-4 bg-[#0A0A0A] rounded-lg">
           <div>
-            <p className="text-sm font-medium text-[#273B3A]">Workflow Status</p>
-            <p className="text-xs text-[#273B3A]">Enable or disable this workflow</p>
+            <p className="text-sm font-medium text-[#FAFAFA]">Workflow Status</p>
+            <p className="text-xs text-[#FAFAFA]">Enable or disable this workflow</p>
           </div>
           <button
             type="button"
             onClick={() => setFormData({ ...formData, is_active: !formData.is_active })}
           >
             {formData.is_active ? (
-              <ToggleRight className="w-10 h-10 text-[#273B3A]" />
+              <ToggleRight className="w-10 h-10 text-[#FAFAFA]" />
             ) : (
-              <ToggleLeft className="w-10 h-10 text-[#E6D4C7]" />
+              <ToggleLeft className="w-10 h-10 text-[#0A0A0A]" />
             )}
           </button>
         </div>
 
         {/* Actions */}
-        <div className="flex justify-end gap-3 pt-4 border-t border-[#E6D4C7]">
+        <div className="flex justify-end gap-3 pt-4 border-t border-[#262626]">
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2.5 border border-[#E6D4C7] rounded-lg text-sm font-medium text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+            className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#7DD3FC]"
+            className="px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#7DD3FC]"
           >
             {workflow ? "Save Changes" : "Create Workflow"}
           </button>
@@ -503,21 +503,21 @@ function ApprovalRequestCard({
   const isPending = request.status === "pending" || request.status === "in_progress";
 
   return (
-    <div className="flex items-center justify-between p-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl hover:border-[#273B3A]/30 transition-all">
+    <div className="flex items-center justify-between p-4 bg-[#0A0A0A] border border-[#262626] rounded-xl hover:border-[#262626]/30 transition-all">
       <div className="flex items-center gap-4">
-        <div className="w-10 h-10 rounded-lg bg-[#273B3A]/10 flex items-center justify-center flex-shrink-0">
-          <FileText className="w-5 h-5 text-[#273B3A]" />
+        <div className="w-10 h-10 rounded-lg bg-[#161616]/10 flex items-center justify-center flex-shrink-0">
+          <FileText className="w-5 h-5 text-[#FAFAFA]" />
         </div>
         <div>
-          <p className="text-sm font-medium text-[#273B3A]">{request.record_title}</p>
+          <p className="text-sm font-medium text-[#FAFAFA]">{request.record_title}</p>
           <div className="flex items-center gap-2 mt-0.5">
-            <span className="text-xs text-[#273B3A]">{request.submitted_by_name}</span>
-            <span className="text-xs text-[#E6D4C7]">•</span>
-            <span className="text-xs text-[#273B3A] capitalize">{request.record_type.replace("_", " ")}</span>
+            <span className="text-xs text-[#FAFAFA]">{request.submitted_by_name}</span>
+            <span className="text-xs text-[#0A0A0A]">•</span>
+            <span className="text-xs text-[#FAFAFA] capitalize">{request.record_type.replace("_", " ")}</span>
             {request.record_amount && (
               <>
-                <span className="text-xs text-[#E6D4C7]">•</span>
-                <span className="text-xs text-[#273B3A] font-medium">
+                <span className="text-xs text-[#0A0A0A]">•</span>
+                <span className="text-xs text-[#FAFAFA] font-medium">
                   {formatCurrency(request.record_amount)}
                 </span>
               </>
@@ -531,7 +531,7 @@ function ApprovalRequestCard({
           <div className="flex items-center gap-2 mb-1">
             <StatusBadge status={request.status} />
           </div>
-          <p className="text-xs text-[#273B3A]">
+          <p className="text-xs text-[#FAFAFA]">
             Step {request.current_step} of {request.total_steps}
           </p>
         </div>
@@ -640,22 +640,22 @@ export default function WorkflowsPage() {
         <div className="flex items-center gap-4">
           <Link
             href="/settings"
-            className="p-2 rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+            className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-[#273B3A]">
+            <h1 className="text-2xl font-semibold tracking-tight text-[#FAFAFA]">
               Approval Workflows
             </h1>
-            <p className="text-[#273B3A] text-sm mt-1">
+            <p className="text-[#FAFAFA] text-sm mt-1">
               Configure approval rules and manage requests
             </p>
           </div>
         </div>
         <button
           onClick={() => setBuilderOpen(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#7DD3FC]"
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#7DD3FC]"
         >
           <Plus className="w-4 h-4" />
           New Workflow
@@ -676,7 +676,7 @@ export default function WorkflowsPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 p-1 bg-[#E6D4C7] rounded-lg w-fit">
+      <div className="flex gap-1 p-1 bg-[#0A0A0A] rounded-lg w-fit">
         {[
           { id: "workflows", label: "Workflows", count: workflows.length },
           { id: "requests", label: "Pending", count: pendingRequests.length },
@@ -688,8 +688,8 @@ export default function WorkflowsPage() {
             className={cn(
               "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all",
               activeTab === tab.id
-                ? "bg-[#273B3A] text-[#E6D4C7]"
-                : "text-[#273B3A] hover:text-[#273B3A]"
+                ? "bg-[#161616] text-[#0A0A0A]"
+                : "text-[#FAFAFA] hover:text-[#FAFAFA]"
             )}
           >
             {tab.label}
@@ -698,8 +698,8 @@ export default function WorkflowsPage() {
                 className={cn(
                   "px-1.5 py-0.5 rounded-full text-[10px] font-bold",
                   activeTab === tab.id
-                    ? "bg-[#E6D4C7]/20 text-[#E6D4C7]"
-                    : "bg-[#E6D4C7] text-[#273B3A]"
+                    ? "bg-[#0A0A0A]/20 text-[#0A0A0A]"
+                    : "bg-[#0A0A0A] text-[#FAFAFA]"
                 )}
               >
                 {tab.count}
@@ -713,12 +713,12 @@ export default function WorkflowsPage() {
       {activeTab === "workflows" && (
         <div className="space-y-4">
           {workflows.length === 0 ? (
-            <div className="text-center py-16 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl">
-              <Settings className="w-12 h-12 mx-auto mb-4 text-[#E6D4C7]" />
-              <p className="text-sm text-[#273B3A] mb-4">No workflows configured</p>
+            <div className="text-center py-16 bg-[#0A0A0A] border border-[#262626] rounded-xl">
+              <Settings className="w-12 h-12 mx-auto mb-4 text-[#0A0A0A]" />
+              <p className="text-sm text-[#FAFAFA] mb-4">No workflows configured</p>
               <button
                 onClick={() => setBuilderOpen(true)}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold"
               >
                 <Plus className="w-4 h-4" />
                 Create First Workflow
@@ -744,10 +744,10 @@ export default function WorkflowsPage() {
       {activeTab === "requests" && (
         <div className="space-y-4">
           {pendingRequests.length === 0 ? (
-            <div className="text-center py-16 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl">
+            <div className="text-center py-16 bg-[#0A0A0A] border border-[#262626] rounded-xl">
               <CheckCircle2 className="w-12 h-12 mx-auto mb-4 text-emerald-500/50" />
-              <p className="text-lg font-medium text-[#273B3A] mb-2">All caught up!</p>
-              <p className="text-sm text-[#273B3A]">No pending approvals</p>
+              <p className="text-lg font-medium text-[#FAFAFA] mb-2">All caught up!</p>
+              <p className="text-sm text-[#FAFAFA]">No pending approvals</p>
             </div>
           ) : (
             pendingRequests.map((request) => (
@@ -770,7 +770,7 @@ export default function WorkflowsPage() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/50"
+              className="px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:border-[#262626]/50"
             >
               <option value="">All Status</option>
               <option value="approved">Approved</option>
@@ -780,7 +780,7 @@ export default function WorkflowsPage() {
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
-              className="px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:border-[#273B3A]/50"
+              className="px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:border-[#262626]/50"
             >
               <option value="">All Types</option>
               {APPLIES_TO_OPTIONS.map((opt) => (
@@ -790,21 +790,21 @@ export default function WorkflowsPage() {
           </div>
 
           {allRequests.filter((r) => r.status !== "pending" && r.status !== "in_progress").length === 0 ? (
-            <div className="text-center py-16 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl">
-              <Clock className="w-12 h-12 mx-auto mb-4 text-[#E6D4C7]" />
-              <p className="text-sm text-[#273B3A]">No approval history</p>
+            <div className="text-center py-16 bg-[#0A0A0A] border border-[#262626] rounded-xl">
+              <Clock className="w-12 h-12 mx-auto mb-4 text-[#0A0A0A]" />
+              <p className="text-sm text-[#FAFAFA]">No approval history</p>
             </div>
           ) : (
-            <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
+            <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-[#E6D4C7]">
-                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Request</th>
-                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Submitted By</th>
-                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Type</th>
-                    <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Amount</th>
-                    <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Status</th>
-                    <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Completed</th>
+                  <tr className="border-b border-[#262626]">
+                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Request</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Submitted By</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Type</th>
+                    <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Amount</th>
+                    <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Status</th>
+                    <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Completed</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -814,27 +814,27 @@ export default function WorkflowsPage() {
                       <tr
                         key={request.id}
                         className={cn(
-                          "border-b border-[#E6D4C7]/50 last:border-0",
-                          i % 2 === 1 && "bg-[#E6D4C7]/20"
+                          "border-b border-[#262626]/50 last:border-0",
+                          i % 2 === 1 && "bg-[#0A0A0A]/20"
                         )}
                       >
                         <td className="px-6 py-4">
-                          <p className="text-sm font-medium text-[#273B3A]">{request.record_title}</p>
-                          <p className="text-xs text-[#273B3A]">{request.workflow_name}</p>
+                          <p className="text-sm font-medium text-[#FAFAFA]">{request.record_title}</p>
+                          <p className="text-xs text-[#FAFAFA]">{request.workflow_name}</p>
                         </td>
-                        <td className="px-6 py-4 text-sm text-[#273B3A]">
+                        <td className="px-6 py-4 text-sm text-[#FAFAFA]">
                           {request.submitted_by_name}
                         </td>
-                        <td className="px-6 py-4 text-sm text-[#273B3A] capitalize">
+                        <td className="px-6 py-4 text-sm text-[#FAFAFA] capitalize">
                           {request.record_type.replace("_", " ")}
                         </td>
-                        <td className="px-6 py-4 text-sm text-right text-[#273B3A] font-medium">
+                        <td className="px-6 py-4 text-sm text-right text-[#FAFAFA] font-medium">
                           {request.record_amount ? formatCurrency(request.record_amount) : "—"}
                         </td>
                         <td className="px-6 py-4 text-right">
                           <StatusBadge status={request.status} />
                         </td>
-                        <td className="px-6 py-4 text-sm text-right text-[#273B3A]">
+                        <td className="px-6 py-4 text-sm text-right text-[#FAFAFA]">
                           {request.completed_at ? formatDate(request.completed_at) : "—"}
                         </td>
                       </tr>

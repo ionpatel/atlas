@@ -51,7 +51,7 @@ function AccountTypeBadge({ type }: { type: Account["type"] }) {
 function EntryStatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
     posted: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    draft: "bg-[#E6D4C7] text-[#273B3A] border-[#E6D4C7]",
+    draft: "bg-[#0A0A0A] text-[#FAFAFA] border-[#262626]",
     cancelled: "bg-red-500/10 text-red-400 border-red-500/20",
   };
   const label = status.charAt(0).toUpperCase() + status.slice(1);
@@ -102,22 +102,22 @@ function AccountForm({
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Account Code</label>
+          <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Account Code</label>
           <input
             type="text"
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="e.g. 1000"
             required
-            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Type</label>
+          <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Type</label>
           <select
             value={type}
             onChange={(e) => setType(e.target.value as Account["type"])}
-            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
           >
             <option value="asset">Asset</option>
             <option value="liability">Liability</option>
@@ -128,37 +128,37 @@ function AccountForm({
         </div>
       </div>
       <div>
-        <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Account Name</label>
+        <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Account Name</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="e.g. Cash"
           required
-          className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+          className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
         />
       </div>
       <div>
-        <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Opening Balance</label>
+        <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Opening Balance</label>
         <input
           type="number"
           value={balance}
           onChange={(e) => setBalance(e.target.value)}
           step="0.01"
-          className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+          className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
         />
       </div>
       <div className="flex items-center justify-end gap-3 pt-2">
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200"
+          className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200"
+          className="px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all duration-200"
         >
           Add Account
         </button>
@@ -243,24 +243,24 @@ function JournalEntryForm({
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Date</label>
+          <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Date</label>
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
-            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Description</label>
+          <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Description</label>
           <input
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Entry description"
             required
-            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
           />
         </div>
       </div>
@@ -268,11 +268,11 @@ function JournalEntryForm({
       {/* Lines */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <label className="text-xs font-medium text-[#273B3A]">Journal Lines</label>
+          <label className="text-xs font-medium text-[#FAFAFA]">Journal Lines</label>
           <button
             type="button"
             onClick={addLine}
-            className="flex items-center gap-1 text-xs text-[#273B3A] hover:text-[#273B3A] transition-colors duration-200"
+            className="flex items-center gap-1 text-xs text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors duration-200"
           >
             <Plus className="w-3 h-3" />
             Add Line
@@ -281,10 +281,10 @@ function JournalEntryForm({
         <div className="space-y-2">
           {/* Header */}
           <div className="grid grid-cols-[1fr_1fr_100px_100px_32px] gap-2 px-1">
-            <span className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Account</span>
-            <span className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Description</span>
-            <span className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest text-right">Debit</span>
-            <span className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest text-right">Credit</span>
+            <span className="text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Account</span>
+            <span className="text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Description</span>
+            <span className="text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest text-right">Debit</span>
+            <span className="text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest text-right">Credit</span>
             <span />
           </div>
           {lines.map((line, idx) => (
@@ -292,7 +292,7 @@ function JournalEntryForm({
               <select
                 value={line.accountId}
                 onChange={(e) => updateLine(idx, "accountId", e.target.value)}
-                className="px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-xs text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+                className="px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
               >
                 <option value="">Select account</option>
                 {accounts.map((a) => (
@@ -306,7 +306,7 @@ function JournalEntryForm({
                 value={line.description}
                 onChange={(e) => updateLine(idx, "description", e.target.value)}
                 placeholder="Line description"
-                className="px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-xs text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+                className="px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
               />
               <input
                 type="number"
@@ -315,7 +315,7 @@ function JournalEntryForm({
                 placeholder="0.00"
                 step="0.01"
                 min="0"
-                className="px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-xs text-[#273B3A] text-right placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+                className="px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs text-[#FAFAFA] text-right placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
               />
               <input
                 type="number"
@@ -324,12 +324,12 @@ function JournalEntryForm({
                 placeholder="0.00"
                 step="0.01"
                 min="0"
-                className="px-3 py-2 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-xs text-[#273B3A] text-right placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+                className="px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs text-[#FAFAFA] text-right placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
               />
               <button
                 type="button"
                 onClick={() => removeLine(idx)}
-                className="p-2 rounded-lg text-[#273B3A] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200 disabled:opacity-30"
+                className="p-2 rounded-lg text-[#FAFAFA] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200 disabled:opacity-30"
                 disabled={lines.length <= 2}
               >
                 <Minus className="w-3.5 h-3.5" />
@@ -337,9 +337,9 @@ function JournalEntryForm({
             </div>
           ))}
           {/* Totals */}
-          <div className="grid grid-cols-[1fr_1fr_100px_100px_32px] gap-2 pt-2 border-t border-[#E6D4C7]">
+          <div className="grid grid-cols-[1fr_1fr_100px_100px_32px] gap-2 pt-2 border-t border-[#262626]">
             <span />
-            <span className="text-xs font-semibold text-[#273B3A] text-right pr-1">Total</span>
+            <span className="text-xs font-semibold text-[#FAFAFA] text-right pr-1">Total</span>
             <span className={`text-xs font-semibold text-right ${isBalanced ? "text-[#34d399]" : "text-[#f87171]"}`}>
               {formatCurrency(totalDebit)}
             </span>
@@ -358,14 +358,14 @@ function JournalEntryForm({
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200"
+          className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={!isBalanced}
-          className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+          className="px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Create Entry
         </button>
@@ -385,7 +385,7 @@ const invoiceBarData = [
 ];
 
 const bankCards = [
-  { name: "Search 26,000+\nbanks", abbr: "🔍", bg: "bg-[rgba(156,74,41,0.15)]", text: "text-[#273B3A]" },
+  { name: "Search 26,000+\nbanks", abbr: "🔍", bg: "bg-[rgba(156,74,41,0.15)]", text: "text-[#FAFAFA]" },
   { name: "RBC", abbr: "RBC", bg: "bg-[#003DA5]", text: "text-white" },
   { name: "TD Bank", abbr: "TD", bg: "bg-[#2E8B57]", text: "text-white" },
   { name: "BMO", abbr: "BMO", bg: "bg-[#0075BE]", text: "text-white" },
@@ -435,17 +435,17 @@ function OverviewTab() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
       {/* ── Top-Left: Sales ── */}
-      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-6">
         <div className="flex items-start justify-between mb-1">
           <div>
             <h3 className="text-base font-semibold text-[#34d399]">Sales</h3>
-            <p className="text-xs text-[#273B3A] mt-0.5">
+            <p className="text-xs text-[#FAFAFA] mt-0.5">
               Get Paid online. Send electronic invoices.
             </p>
           </div>
           <button
             onClick={() => setInvoiceModalOpen(true)}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-xs font-semibold hover:bg-[#273B3A] transition-all duration-200"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#161616] text-[#0A0A0A] rounded-lg text-xs font-semibold hover:bg-[#161616] transition-all duration-200"
           >
             <Plus className="w-3.5 h-3.5" />
             New
@@ -456,10 +456,10 @@ function OverviewTab() {
         <div className="mt-5 space-y-3">
           {invoiceBarData.map((bar) => (
             <div key={bar.label} className="flex items-center gap-3">
-              <span className="text-[11px] text-[#273B3A] w-20 text-right shrink-0">
+              <span className="text-[11px] text-[#FAFAFA] w-20 text-right shrink-0">
                 {bar.label}
               </span>
-              <div className="flex-1 h-6 bg-[#E6D4C7] rounded-md overflow-hidden relative">
+              <div className="flex-1 h-6 bg-[#0A0A0A] rounded-md overflow-hidden relative">
                 <div
                   className="h-full rounded-md transition-all duration-500"
                   style={{
@@ -469,7 +469,7 @@ function OverviewTab() {
                   }}
                 />
               </div>
-              <span className="text-[11px] font-medium text-[#273B3A] w-16 text-right shrink-0">
+              <span className="text-[11px] font-medium text-[#FAFAFA] w-16 text-right shrink-0">
                 {bar.count} · {formatCurrency(bar.amount)}
               </span>
             </div>
@@ -478,17 +478,17 @@ function OverviewTab() {
       </div>
 
       {/* ── Top-Right: Purchases ── */}
-      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-6">
         <div className="flex items-start justify-between mb-1">
           <div>
-            <h3 className="text-base font-semibold text-[#273B3A]">Purchases</h3>
-            <p className="text-xs text-[#273B3A] mt-0.5">
+            <h3 className="text-base font-semibold text-[#FAFAFA]">Purchases</h3>
+            <p className="text-xs text-[#FAFAFA] mt-0.5">
               Let AI scan your bill. Pay easily.
             </p>
           </div>
           <button
             onClick={handleUpload}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-xs font-semibold hover:bg-[#273B3A] transition-all duration-200"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#161616] text-[#0A0A0A] rounded-lg text-xs font-semibold hover:bg-[#161616] transition-all duration-200"
           >
             <Upload className="w-3.5 h-3.5" />
             Upload
@@ -502,37 +502,37 @@ function OverviewTab() {
           onDrop={handleDrop}
           className={`mt-4 flex flex-col items-center justify-center border-2 border-dashed rounded-xl py-8 transition-all duration-200 ${
             dragOver
-              ? "border-[#273B3A] bg-[rgba(156,74,41,0.15)]/30"
-              : "border-[#E6D4C7] bg-[#E6D4C7]/30 hover:border-[#273B3A]"
+              ? "border-[#262626] bg-[rgba(156,74,41,0.15)]/30"
+              : "border-[#262626] bg-[#0A0A0A]/30 hover:border-[#262626]"
           }`}
         >
           <Upload
             className={`w-8 h-8 mb-2 transition-colors duration-200 ${
-              dragOver ? "text-[#273B3A]" : "text-[#273B3A]"
+              dragOver ? "text-[#FAFAFA]" : "text-[#FAFAFA]"
             }`}
           />
-          <span className="text-sm font-medium text-[#273B3A]">Drag & drop</span>
+          <span className="text-sm font-medium text-[#FAFAFA]">Drag & drop</span>
         </div>
 
         <div className="flex items-center gap-3 mt-3">
-          <div className="flex-1 h-px bg-[#E6D4C7]" />
-          <span className="text-[11px] text-[#273B3A]">or</span>
-          <div className="flex-1 h-px bg-[#E6D4C7]" />
+          <div className="flex-1 h-px bg-[#0A0A0A]" />
+          <span className="text-[11px] text-[#FAFAFA]">or</span>
+          <div className="flex-1 h-px bg-[#0A0A0A]" />
         </div>
 
         <button
           onClick={() => setBillModalOpen(true)}
-          className="mt-3 w-full text-center text-sm text-[#273B3A] hover:text-[#273B3A] font-medium transition-colors duration-200"
+          className="mt-3 w-full text-center text-sm text-[#FAFAFA] hover:text-[#FAFAFA] font-medium transition-colors duration-200"
         >
           Create a bill manually
         </button>
       </div>
 
       {/* ── Bottom-Left: Bank ── */}
-      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-6">
         <div className="mb-4">
           <h3 className="text-base font-semibold text-[#60a5fa]">Bank</h3>
-          <p className="text-xs text-[#273B3A] mt-0.5">
+          <p className="text-xs text-[#FAFAFA] mt-0.5">
             Connect your bank. Match invoices automatically.
           </p>
         </div>
@@ -542,7 +542,7 @@ function OverviewTab() {
             <button
               key={i}
               onClick={() => addToast("Bank connection coming soon", "info")}
-              className="group flex flex-col items-center justify-center aspect-square rounded-xl border border-[#E6D4C7] hover:border-[#273B3A]/40 transition-all duration-200 hover:scale-[1.03]"
+              className="group flex flex-col items-center justify-center aspect-square rounded-xl border border-[#262626] hover:border-[#262626]/40 transition-all duration-200 hover:scale-[1.03]"
               style={{ backgroundColor: i === 0 ? undefined : undefined }}
             >
               <div
@@ -552,7 +552,7 @@ function OverviewTab() {
                   {bank.abbr}
                 </span>
               </div>
-              <span className="text-[10px] text-[#273B3A] text-center leading-tight px-1 whitespace-pre-line">
+              <span className="text-[10px] text-[#FAFAFA] text-center leading-tight px-1 whitespace-pre-line">
                 {bank.name}
               </span>
             </button>
@@ -561,25 +561,25 @@ function OverviewTab() {
       </div>
 
       {/* ── Bottom-Right: Point of Sale ── */}
-      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
+      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-6">
         <div className="mb-4">
           <h3 className="text-base font-semibold text-[#a78bfa]">Point of Sale</h3>
-          <p className="text-xs text-[#273B3A] mt-0.5">
+          <p className="text-xs text-[#FAFAFA] mt-0.5">
             Manage retail transactions
           </p>
         </div>
 
         <div className="flex flex-col items-center justify-center py-10">
-          <div className="w-14 h-14 rounded-2xl bg-[#E6D4C7] border border-[#E6D4C7] flex items-center justify-center mb-4">
-            <MonitorSmartphone className="w-7 h-7 text-[#273B3A]" />
+          <div className="w-14 h-14 rounded-2xl bg-[#0A0A0A] border border-[#262626] flex items-center justify-center mb-4">
+            <MonitorSmartphone className="w-7 h-7 text-[#FAFAFA]" />
           </div>
-          <p className="text-sm font-medium text-[#273B3A] mb-1">Coming Soon</p>
-          <p className="text-xs text-[#273B3A] text-center max-w-xs mb-5">
+          <p className="text-sm font-medium text-[#FAFAFA] mb-1">Coming Soon</p>
+          <p className="text-xs text-[#FAFAFA] text-center max-w-xs mb-5">
             Accept in-person payments, track cash registers, and manage retail operations from one place.
           </p>
           <button
             disabled
-            className="px-5 py-2.5 bg-[#E6D4C7] text-[#273B3A] rounded-lg text-sm font-medium border border-[#E6D4C7] cursor-not-allowed"
+            className="px-5 py-2.5 bg-[#0A0A0A] text-[#FAFAFA] rounded-lg text-sm font-medium border border-[#262626] cursor-not-allowed"
           >
             Set up POS
           </button>
@@ -603,41 +603,41 @@ function InvoiceFormInline({ onClose }: { onClose: () => void }) {
   const addToast = useToastStore((s) => s.addToast);
   return (
     <div className="space-y-5">
-      <p className="text-sm text-[#273B3A]">
+      <p className="text-sm text-[#FAFAFA]">
         Quick invoice creation — fill in the details below.
       </p>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Customer Name</label>
+          <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Customer Name</label>
           <input
             type="text"
             placeholder="e.g. Acme Corp"
-            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Amount</label>
+          <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Amount</label>
           <input
             type="number"
             placeholder="0.00"
             step="0.01"
-            className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
           />
         </div>
       </div>
       <div>
-        <label className="block text-xs font-medium text-[#273B3A] mb-1.5">Description</label>
+        <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Description</label>
         <input
           type="text"
           placeholder="Invoice description"
-          className="w-full px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+          className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
         />
       </div>
       <div className="flex items-center justify-end gap-3 pt-2">
         <button
           type="button"
           onClick={onClose}
-          className="px-5 py-2.5 border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200"
+          className="px-5 py-2.5 border border-[#262626] rounded-lg text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
         >
           Cancel
         </button>
@@ -647,7 +647,7 @@ function InvoiceFormInline({ onClose }: { onClose: () => void }) {
             addToast("Invoice created successfully");
             onClose();
           }}
-          className="px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200"
+          className="px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all duration-200"
         >
           Create Invoice
         </button>
@@ -706,17 +706,17 @@ function ChartOfAccountsTab() {
     <div className="space-y-6">
       {/* Search & Actions */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#273B3A]/40 transition-colors duration-200">
-          <Search className="w-4 h-4 text-[#273B3A]" />
+        <div className="flex items-center gap-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#262626]/40 transition-colors duration-200">
+          <Search className="w-4 h-4 text-[#FAFAFA]" />
           <input
             type="text"
             placeholder="Search accounts..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm w-full text-[#273B3A] placeholder:text-[#273B3A]/60"
+            className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#273B3A] hover:text-[#273B3A]">
+            <button onClick={() => setSearchQuery("")} className="text-[#FAFAFA] hover:text-[#FAFAFA]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -725,8 +725,8 @@ function ChartOfAccountsTab() {
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.accountType
-              ? "border-[#273B3A]/50 text-[#273B3A] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#E6D4C7] text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+              ? "border-[#262626]/50 text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]/50"
+              : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           }`}
         >
           <Filter className="w-4 h-4" />
@@ -734,7 +734,7 @@ function ChartOfAccountsTab() {
         </button>
         <button
           onClick={() => setModalOpen(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200"
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
           Add Account
@@ -746,7 +746,7 @@ function ChartOfAccountsTab() {
           <select
             value={filters.accountType}
             onChange={(e) => setFilter("accountType", e.target.value)}
-            className="px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
           >
             <option value="">All Types</option>
             <option value="asset">Asset</option>
@@ -763,20 +763,20 @@ function ChartOfAccountsTab() {
         const typeAccounts = filtered.filter((a) => a.type === type);
         if (typeAccounts.length === 0) return null;
         return (
-          <div key={type} className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
-            <div className="px-6 py-3 border-b border-[#E6D4C7] bg-[#E6D4C7]">
-              <h3 className="text-xs font-semibold text-[#273B3A] uppercase tracking-widest">
+          <div key={type} className="bg-[#0A0A0A] border border-[#262626] rounded-xl overflow-hidden">
+            <div className="px-6 py-3 border-b border-[#262626] bg-[#0A0A0A]">
+              <h3 className="text-xs font-semibold text-[#FAFAFA] uppercase tracking-widest">
                 {typeLabels[type]}
               </h3>
             </div>
             <table className="w-full">
               <thead>
-                <tr className="border-b border-[#E6D4C7]">
-                  <th className="text-left px-6 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Code</th>
-                  <th className="text-left px-6 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Name</th>
-                  <th className="text-left px-6 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Type</th>
-                  <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Balance</th>
-                  <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest w-16"></th>
+                <tr className="border-b border-[#262626]">
+                  <th className="text-left px-6 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Code</th>
+                  <th className="text-left px-6 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Name</th>
+                  <th className="text-left px-6 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Type</th>
+                  <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Balance</th>
+                  <th className="text-right px-6 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest w-16"></th>
                 </tr>
               </thead>
               <tbody>
@@ -786,16 +786,16 @@ function ChartOfAccountsTab() {
                       ? "text-[#34d399]"
                       : account.type === "expense"
                       ? "text-[#f87171]"
-                      : "text-[#273B3A]";
+                      : "text-[#FAFAFA]";
                   return (
                     <tr
                       key={account.id}
-                      className={`hover:bg-[#E6D4C7] transition-colors duration-150 border-b border-[#E6D4C7]/50 last:border-0 ${
-                        i % 2 === 1 ? "bg-[#E6D4C7]/40" : ""
+                      className={`hover:bg-[#0A0A0A] transition-colors duration-150 border-b border-[#262626]/50 last:border-0 ${
+                        i % 2 === 1 ? "bg-[#0A0A0A]/40" : ""
                       }`}
                     >
-                      <td className="px-6 py-3.5 text-sm font-mono text-[#273B3A]">{account.code}</td>
-                      <td className="px-6 py-3.5 text-sm font-medium text-[#273B3A]">{account.name}</td>
+                      <td className="px-6 py-3.5 text-sm font-mono text-[#FAFAFA]">{account.code}</td>
+                      <td className="px-6 py-3.5 text-sm font-medium text-[#FAFAFA]">{account.name}</td>
                       <td className="px-6 py-3.5">
                         <AccountTypeBadge type={account.type} />
                       </td>
@@ -805,7 +805,7 @@ function ChartOfAccountsTab() {
                       <td className="px-6 py-3.5 text-right">
                         <button
                           onClick={(e) => handleDelete(e, account.id)}
-                          className="p-2 rounded-lg text-[#273B3A] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                          className="p-2 rounded-lg text-[#FAFAFA] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -820,9 +820,9 @@ function ChartOfAccountsTab() {
       })}
 
       {filtered.length === 0 && (
-        <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl px-6 py-16 text-center">
-          <Calculator className="w-8 h-8 mx-auto mb-3 text-[#273B3A]/40" />
-          <p className="text-[#273B3A] text-sm">No accounts found</p>
+        <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl px-6 py-16 text-center">
+          <Calculator className="w-8 h-8 mx-auto mb-3 text-[#FAFAFA]/40" />
+          <p className="text-[#FAFAFA] text-sm">No accounts found</p>
         </div>
       )}
 
@@ -872,17 +872,17 @@ function JournalEntriesTab() {
     <div className="space-y-6">
       {/* Search & Actions */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#273B3A]/40 transition-colors duration-200">
-          <Search className="w-4 h-4 text-[#273B3A]" />
+        <div className="flex items-center gap-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#262626]/40 transition-colors duration-200">
+          <Search className="w-4 h-4 text-[#FAFAFA]" />
           <input
             type="text"
             placeholder="Search entries..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm w-full text-[#273B3A] placeholder:text-[#273B3A]/60"
+            className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#273B3A] hover:text-[#273B3A]">
+            <button onClick={() => setSearchQuery("")} className="text-[#FAFAFA] hover:text-[#FAFAFA]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -891,8 +891,8 @@ function JournalEntriesTab() {
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.entryStatus
-              ? "border-[#273B3A]/50 text-[#273B3A] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#E6D4C7] text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+              ? "border-[#262626]/50 text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]/50"
+              : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           }`}
         >
           <Filter className="w-4 h-4" />
@@ -900,7 +900,7 @@ function JournalEntriesTab() {
         </button>
         <button
           onClick={() => setModalOpen(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200"
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
           New Entry
@@ -912,7 +912,7 @@ function JournalEntriesTab() {
           <select
             value={filters.entryStatus}
             onChange={(e) => setFilter("entryStatus", e.target.value)}
-            className="px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
           >
             <option value="">All Status</option>
             <option value="draft">Draft</option>
@@ -923,24 +923,24 @@ function JournalEntriesTab() {
       )}
 
       {/* Table */}
-      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
+      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[#E6D4C7]">
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest w-8"></th>
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Entry #</th>
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Date</th>
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Description</th>
-              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Amount</th>
-              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Status</th>
-              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest w-16"></th>
+            <tr className="border-b border-[#262626]">
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest w-8"></th>
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Entry #</th>
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Date</th>
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Description</th>
+              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Amount</th>
+              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Status</th>
+              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest w-16"></th>
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-6 py-16 text-center text-[#273B3A] text-sm">
-                  <FileText className="w-8 h-8 mx-auto mb-3 text-[#273B3A]/40" />
+                <td colSpan={7} className="px-6 py-16 text-center text-[#FAFAFA] text-sm">
+                  <FileText className="w-8 h-8 mx-auto mb-3 text-[#FAFAFA]/40" />
                   No journal entries found
                 </td>
               </tr>
@@ -991,28 +991,28 @@ function JournalEntryRow({
     <>
       <tr
         onClick={onToggle}
-        className={`hover:bg-[#E6D4C7] transition-colors duration-150 cursor-pointer border-b border-[#E6D4C7]/50 ${
-          index % 2 === 1 ? "bg-[#E6D4C7]/40" : ""
-        } ${expanded ? "bg-[#E6D4C7]" : ""}`}
+        className={`hover:bg-[#0A0A0A] transition-colors duration-150 cursor-pointer border-b border-[#262626]/50 ${
+          index % 2 === 1 ? "bg-[#0A0A0A]/40" : ""
+        } ${expanded ? "bg-[#0A0A0A]" : ""}`}
       >
         <td className="pl-6 py-4">
           {expanded ? (
-            <ChevronDown className="w-3.5 h-3.5 text-[#273B3A]" />
+            <ChevronDown className="w-3.5 h-3.5 text-[#FAFAFA]" />
           ) : (
-            <ChevronRight className="w-3.5 h-3.5 text-[#273B3A]" />
+            <ChevronRight className="w-3.5 h-3.5 text-[#FAFAFA]" />
           )}
         </td>
         <td className="px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-[rgba(156,74,41,0.15)] flex items-center justify-center flex-shrink-0">
-              <FileText className="w-3.5 h-3.5 text-[#273B3A]" />
+              <FileText className="w-3.5 h-3.5 text-[#FAFAFA]" />
             </div>
-            <span className="text-sm font-medium text-[#273B3A] font-mono">{entry.entry_number}</span>
+            <span className="text-sm font-medium text-[#FAFAFA] font-mono">{entry.entry_number}</span>
           </div>
         </td>
-        <td className="px-6 py-4 text-sm text-[#273B3A]">{formatDate(entry.date)}</td>
-        <td className="px-6 py-4 text-sm text-[#273B3A]">{entry.description}</td>
-        <td className="px-6 py-4 text-sm text-right font-semibold text-[#273B3A]">
+        <td className="px-6 py-4 text-sm text-[#FAFAFA]">{formatDate(entry.date)}</td>
+        <td className="px-6 py-4 text-sm text-[#FAFAFA]">{entry.description}</td>
+        <td className="px-6 py-4 text-sm text-right font-semibold text-[#FAFAFA]">
           {formatCurrency(getEntryTotal(entry))}
         </td>
         <td className="px-6 py-4 text-right">
@@ -1021,34 +1021,34 @@ function JournalEntryRow({
         <td className="px-6 py-4 text-right">
           <button
             onClick={(e) => onDelete(e, entry.id)}
-            className="p-2 rounded-lg text-[#273B3A] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+            className="p-2 rounded-lg text-[#FAFAFA] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
           >
             <Trash2 className="w-3.5 h-3.5" />
           </button>
         </td>
       </tr>
       {expanded && (
-        <tr className="bg-[#E6D4C7]/50">
+        <tr className="bg-[#0A0A0A]/50">
           <td colSpan={7} className="px-12 py-4">
-            <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
+            <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-[#E6D4C7]">
-                    <th className="text-left px-5 py-2.5 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Account</th>
-                    <th className="text-left px-5 py-2.5 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Description</th>
-                    <th className="text-right px-5 py-2.5 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Debit</th>
-                    <th className="text-right px-5 py-2.5 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Credit</th>
+                  <tr className="border-b border-[#262626]">
+                    <th className="text-left px-5 py-2.5 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Account</th>
+                    <th className="text-left px-5 py-2.5 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Description</th>
+                    <th className="text-right px-5 py-2.5 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Debit</th>
+                    <th className="text-right px-5 py-2.5 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Credit</th>
                   </tr>
                 </thead>
                 <tbody>
                   {entry.lines.map((line) => (
-                    <tr key={line.id} className="border-b border-[#E6D4C7]/50 last:border-0">
-                      <td className="px-5 py-2.5 text-xs font-medium text-[#273B3A]">{line.account_name}</td>
-                      <td className="px-5 py-2.5 text-xs text-[#273B3A]">{line.description}</td>
-                      <td className="px-5 py-2.5 text-xs text-right font-mono text-[#273B3A]">
+                    <tr key={line.id} className="border-b border-[#262626]/50 last:border-0">
+                      <td className="px-5 py-2.5 text-xs font-medium text-[#FAFAFA]">{line.account_name}</td>
+                      <td className="px-5 py-2.5 text-xs text-[#FAFAFA]">{line.description}</td>
+                      <td className="px-5 py-2.5 text-xs text-right font-mono text-[#FAFAFA]">
                         {line.debit > 0 ? formatCurrency(line.debit) : ""}
                       </td>
-                      <td className="px-5 py-2.5 text-xs text-right font-mono text-[#273B3A]">
+                      <td className="px-5 py-2.5 text-xs text-right font-mono text-[#FAFAFA]">
                         {line.credit > 0 ? formatCurrency(line.credit) : ""}
                       </td>
                     </tr>
@@ -1074,8 +1074,8 @@ function ReportsTab() {
   return (
     <div className="space-y-6">
       {/* P&L Statement */}
-      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
-        <h3 className="text-base font-semibold text-[#273B3A] mb-5">Profit & Loss Statement</h3>
+      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-6">
+        <h3 className="text-base font-semibold text-[#FAFAFA] mb-5">Profit & Loss Statement</h3>
 
         <div className="space-y-4">
           {/* Revenue */}
@@ -1084,12 +1084,12 @@ function ReportsTab() {
             <div className="space-y-2">
               {pnl.revenue.map((item) => (
                 <div key={item.account.id} className="flex items-center justify-between pl-4">
-                  <span className="text-sm text-[#273B3A]">{item.account.name}</span>
-                  <span className="text-sm font-medium text-[#273B3A]">{formatCurrency(item.amount)}</span>
+                  <span className="text-sm text-[#FAFAFA]">{item.account.name}</span>
+                  <span className="text-sm font-medium text-[#FAFAFA]">{formatCurrency(item.amount)}</span>
                 </div>
               ))}
-              <div className="flex items-center justify-between pl-4 pt-1 border-t border-[#E6D4C7]">
-                <span className="text-sm font-semibold text-[#273B3A]">Total Revenue</span>
+              <div className="flex items-center justify-between pl-4 pt-1 border-t border-[#262626]">
+                <span className="text-sm font-semibold text-[#FAFAFA]">Total Revenue</span>
                 <span className="text-sm font-bold text-[#34d399]">{formatCurrency(pnl.totalRevenue)}</span>
               </div>
             </div>
@@ -1101,20 +1101,20 @@ function ReportsTab() {
             <div className="space-y-2">
               {pnl.expenses.map((item) => (
                 <div key={item.account.id} className="flex items-center justify-between pl-4">
-                  <span className="text-sm text-[#273B3A]">{item.account.name}</span>
-                  <span className="text-sm font-medium text-[#273B3A]">{formatCurrency(item.amount)}</span>
+                  <span className="text-sm text-[#FAFAFA]">{item.account.name}</span>
+                  <span className="text-sm font-medium text-[#FAFAFA]">{formatCurrency(item.amount)}</span>
                 </div>
               ))}
-              <div className="flex items-center justify-between pl-4 pt-1 border-t border-[#E6D4C7]">
-                <span className="text-sm font-semibold text-[#273B3A]">Total Expenses</span>
+              <div className="flex items-center justify-between pl-4 pt-1 border-t border-[#262626]">
+                <span className="text-sm font-semibold text-[#FAFAFA]">Total Expenses</span>
                 <span className="text-sm font-bold text-[#f87171]">{formatCurrency(pnl.totalExpenses)}</span>
               </div>
             </div>
           </div>
 
           {/* Net Income */}
-          <div className="border-t-2 border-[#E6D4C7] pt-4 flex items-center justify-between">
-            <span className="text-base font-bold text-[#273B3A]">Net Income</span>
+          <div className="border-t-2 border-[#262626] pt-4 flex items-center justify-between">
+            <span className="text-base font-bold text-[#FAFAFA]">Net Income</span>
             <span className={`text-base font-bold ${pnl.netIncome >= 0 ? "text-[#34d399]" : "text-[#f87171]"}`}>
               {formatCurrency(pnl.netIncome)}
             </span>
@@ -1123,8 +1123,8 @@ function ReportsTab() {
       </div>
 
       {/* Balance Sheet */}
-      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
-        <h3 className="text-base font-semibold text-[#273B3A] mb-5">Balance Sheet</h3>
+      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-6">
+        <h3 className="text-base font-semibold text-[#FAFAFA] mb-5">Balance Sheet</h3>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Assets */}
@@ -1133,12 +1133,12 @@ function ReportsTab() {
             <div className="space-y-2">
               {bs.assets.map((item) => (
                 <div key={item.account.id} className="flex items-center justify-between pl-4">
-                  <span className="text-sm text-[#273B3A]">{item.account.name}</span>
-                  <span className="text-sm font-medium text-[#273B3A]">{formatCurrency(item.amount)}</span>
+                  <span className="text-sm text-[#FAFAFA]">{item.account.name}</span>
+                  <span className="text-sm font-medium text-[#FAFAFA]">{formatCurrency(item.amount)}</span>
                 </div>
               ))}
-              <div className="flex items-center justify-between pl-4 pt-1 border-t border-[#E6D4C7]">
-                <span className="text-sm font-bold text-[#273B3A]">Total Assets</span>
+              <div className="flex items-center justify-between pl-4 pt-1 border-t border-[#262626]">
+                <span className="text-sm font-bold text-[#FAFAFA]">Total Assets</span>
                 <span className="text-sm font-bold text-blue-400">{formatCurrency(bs.totalAssets)}</span>
               </div>
             </div>
@@ -1151,12 +1151,12 @@ function ReportsTab() {
               <div className="space-y-2">
                 {bs.liabilities.map((item) => (
                   <div key={item.account.id} className="flex items-center justify-between pl-4">
-                    <span className="text-sm text-[#273B3A]">{item.account.name}</span>
-                    <span className="text-sm font-medium text-[#273B3A]">{formatCurrency(item.amount)}</span>
+                    <span className="text-sm text-[#FAFAFA]">{item.account.name}</span>
+                    <span className="text-sm font-medium text-[#FAFAFA]">{formatCurrency(item.amount)}</span>
                   </div>
                 ))}
-                <div className="flex items-center justify-between pl-4 pt-1 border-t border-[#E6D4C7]">
-                  <span className="text-sm font-semibold text-[#273B3A]">Total Liabilities</span>
+                <div className="flex items-center justify-between pl-4 pt-1 border-t border-[#262626]">
+                  <span className="text-sm font-semibold text-[#FAFAFA]">Total Liabilities</span>
                   <span className="text-sm font-bold text-[#f87171]">{formatCurrency(bs.totalLiabilities)}</span>
                 </div>
               </div>
@@ -1166,19 +1166,19 @@ function ReportsTab() {
               <div className="space-y-2">
                 {bs.equity.map((item) => (
                   <div key={item.account.id} className="flex items-center justify-between pl-4">
-                    <span className="text-sm text-[#273B3A]">{item.account.name}</span>
-                    <span className="text-sm font-medium text-[#273B3A]">{formatCurrency(item.amount)}</span>
+                    <span className="text-sm text-[#FAFAFA]">{item.account.name}</span>
+                    <span className="text-sm font-medium text-[#FAFAFA]">{formatCurrency(item.amount)}</span>
                   </div>
                 ))}
-                <div className="flex items-center justify-between pl-4 pt-1 border-t border-[#E6D4C7]">
-                  <span className="text-sm font-semibold text-[#273B3A]">Total Equity</span>
+                <div className="flex items-center justify-between pl-4 pt-1 border-t border-[#262626]">
+                  <span className="text-sm font-semibold text-[#FAFAFA]">Total Equity</span>
                   <span className="text-sm font-bold text-violet-400">{formatCurrency(bs.totalEquity)}</span>
                 </div>
               </div>
             </div>
-            <div className="border-t-2 border-[#E6D4C7] pt-3 flex items-center justify-between">
-              <span className="text-sm font-bold text-[#273B3A]">Liabilities + Equity</span>
-              <span className="text-sm font-bold text-[#273B3A]">
+            <div className="border-t-2 border-[#262626] pt-3 flex items-center justify-between">
+              <span className="text-sm font-bold text-[#FAFAFA]">Liabilities + Equity</span>
+              <span className="text-sm font-bold text-[#FAFAFA]">
                 {formatCurrency(bs.totalLiabilities + bs.totalEquity)}
               </span>
             </div>
@@ -1187,31 +1187,31 @@ function ReportsTab() {
       </div>
 
       {/* Tax Report */}
-      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-6">
-        <h3 className="text-base font-semibold text-[#273B3A] mb-5">Tax Report (GST/HST)</h3>
+      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-6">
+        <h3 className="text-base font-semibold text-[#FAFAFA] mb-5">Tax Report (GST/HST)</h3>
 
         <div className="space-y-4">
           {/* Tax Rates */}
           <div className="grid grid-cols-3 gap-4">
             {taxConfig.map((t) => (
-              <div key={t.id} className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg p-4 text-center">
-                <p className="text-xs text-[#273B3A] mb-1">{t.name}</p>
-                <p className="text-lg font-bold text-[#273B3A]">{(t.rate * 100).toFixed(0)}%</p>
+              <div key={t.id} className="bg-[#0A0A0A] border border-[#262626] rounded-lg p-4 text-center">
+                <p className="text-xs text-[#FAFAFA] mb-1">{t.name}</p>
+                <p className="text-lg font-bold text-[#FAFAFA]">{(t.rate * 100).toFixed(0)}%</p>
               </div>
             ))}
           </div>
 
           <div className="space-y-3 pt-2">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-[#273B3A]">GST/HST Collected on Sales</span>
-              <span className="text-sm font-semibold text-[#273B3A]">{formatCurrency(tax.collected)}</span>
+              <span className="text-sm text-[#FAFAFA]">GST/HST Collected on Sales</span>
+              <span className="text-sm font-semibold text-[#FAFAFA]">{formatCurrency(tax.collected)}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-[#273B3A]">Input Tax Credits (ITC) Paid</span>
-              <span className="text-sm font-semibold text-[#273B3A]">{formatCurrency(tax.paid)}</span>
+              <span className="text-sm text-[#FAFAFA]">Input Tax Credits (ITC) Paid</span>
+              <span className="text-sm font-semibold text-[#FAFAFA]">{formatCurrency(tax.paid)}</span>
             </div>
-            <div className="border-t-2 border-[#E6D4C7] pt-3 flex items-center justify-between">
-              <span className="text-sm font-bold text-[#273B3A]">Net Tax Owing</span>
+            <div className="border-t-2 border-[#262626] pt-3 flex items-center justify-between">
+              <span className="text-sm font-bold text-[#FAFAFA]">Net Tax Owing</span>
               <span className={`text-base font-bold ${tax.netOwing >= 0 ? "text-[#fbbf24]" : "text-[#34d399]"}`}>
                 {formatCurrency(tax.netOwing)}
               </span>
@@ -1232,24 +1232,24 @@ export default function AccountingPage() {
     <div className="space-y-6 max-w-[1400px]">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-[#273B3A]">
+        <h1 className="text-2xl font-semibold tracking-tight text-[#FAFAFA]">
           Accounting
         </h1>
-        <p className="text-[#273B3A] text-sm mt-1">
+        <p className="text-[#FAFAFA] text-sm mt-1">
           Manage your chart of accounts, journal entries, and financial reports
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-1.5">
+      <div className="flex items-center gap-1 bg-[#0A0A0A] border border-[#262626] rounded-xl p-1.5">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
               activeTab === tab.id
-                ? "bg-[#273B3A] text-[#E6D4C7]"
-                : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+                ? "bg-[#161616] text-[#0A0A0A]"
+                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             }`}
           >
             <tab.icon className="w-4 h-4" />

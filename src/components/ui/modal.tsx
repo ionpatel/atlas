@@ -52,18 +52,18 @@ export function Modal({ open, onClose, title, children, className, size = "md" }
       {/* Dialog */}
       <div
         className={cn(
-          "relative w-full bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl shadow-2xl shadow-black/40 animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col",
+          "relative w-full bg-[#0A0A0A] border border-[#262626] rounded-2xl shadow-2xl shadow-black/40 animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col",
           sizeClasses[size],
           className
         )}
       >
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between px-6 py-5 border-b border-[#E6D4C7] flex-shrink-0">
-            <h2 className="text-base font-semibold text-[#273B3A]">{title}</h2>
+          <div className="flex items-center justify-between px-6 py-5 border-b border-[#262626] flex-shrink-0">
+            <h2 className="text-base font-semibold text-[#FAFAFA]">{title}</h2>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200"
+              className="p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
             >
               <X className="w-4 h-4" />
             </button>

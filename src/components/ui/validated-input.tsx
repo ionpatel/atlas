@@ -103,7 +103,7 @@ export const ValidatedSelect = forwardRef<HTMLSelectElement, ValidatedSelectProp
           id={selectId}
           className={cn(
             "w-full h-10 px-3 rounded-md bg-neutral-800 border border-neutral-700 text-white text-sm",
-            "focus:outline-none focus:ring-2 focus:ring-[#273B3A] focus:border-transparent",
+            "focus:outline-none focus:ring-2 focus:ring-[#CDB49E] focus:border-transparent",
             hasError && "border-red-500 focus:ring-red-500",
             className
           )}
@@ -173,7 +173,7 @@ export const ValidatedTextarea = forwardRef<HTMLTextAreaElement, ValidatedTextar
           value={value}
           className={cn(
             "w-full min-h-[100px] px-3 py-2 rounded-md bg-neutral-800 border border-neutral-700 text-white text-sm resize-y",
-            "focus:outline-none focus:ring-2 focus:ring-[#273B3A] focus:border-transparent",
+            "focus:outline-none focus:ring-2 focus:ring-[#CDB49E] focus:border-transparent",
             hasError && "border-red-500 focus:ring-red-500",
             className
           )}

@@ -61,23 +61,23 @@ function NotificationDropdown() {
       <button
         onClick={() => setOpen(!open)}
         className={cn(
-          "relative p-2 rounded-lg text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200",
-          open && "bg-[#E6D4C7] text-[#273B3A]"
+          "relative p-2 rounded-lg text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200",
+          open && "bg-[#0A0A0A] text-[#FAFAFA]"
         )}
       >
         <Bell className="w-5 h-5" />
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#273B3A] text-[9px] font-bold text-[#E6D4C7] flex items-center justify-center">
+          <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#161616] text-[9px] font-bold text-[#0A0A0A] flex items-center justify-center">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
       </button>
 
       {open && (
-        <div className="absolute right-0 top-11 w-80 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl shadow-2xl z-50 overflow-hidden">
-          <div className="px-4 py-3 border-b border-[#E6D4C7] flex items-center justify-between">
-            <p className="text-sm font-semibold text-[#273B3A]">Notifications</p>
-            <span className="text-[10px] font-medium text-[#273B3A] bg-[#273B3A]/10 px-2 py-0.5 rounded-full">
+        <div className="absolute right-0 top-11 w-80 bg-[#0A0A0A] border border-[#262626] rounded-xl shadow-2xl z-50 overflow-hidden">
+          <div className="px-4 py-3 border-b border-[#262626] flex items-center justify-between">
+            <p className="text-sm font-semibold text-[#FAFAFA]">Notifications</p>
+            <span className="text-[10px] font-medium text-[#FAFAFA] bg-[#161616]/10 px-2 py-0.5 rounded-full">
               {unreadCount} new
             </span>
           </div>
@@ -89,8 +89,8 @@ function NotificationDropdown() {
                 href={n.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 hover:bg-[#E6D4C7] transition-colors",
-                  i < notifications.length - 1 && "border-b border-[#E6D4C7]/50"
+                  "flex items-center gap-3 px-4 py-3 hover:bg-[#0A0A0A] transition-colors",
+                  i < notifications.length - 1 && "border-b border-[#262626]/50"
                 )}
               >
                 <div className={cn(
@@ -103,19 +103,19 @@ function NotificationDropdown() {
                   )} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-[#273B3A]">{n.label}</p>
-                  <p className="text-[11px] text-[#273B3A]">Just now</p>
+                  <p className="text-sm text-[#FAFAFA]">{n.label}</p>
+                  <p className="text-[11px] text-[#FAFAFA]">Just now</p>
                 </div>
                 <div className={cn("w-2 h-2 rounded-full flex-shrink-0", n.color)} />
               </Link>
             ))}
           </div>
 
-          <div className="px-4 py-3 border-t border-[#E6D4C7] bg-[#E6D4C7]">
+          <div className="px-4 py-3 border-t border-[#262626] bg-[#0A0A0A]">
             <Link
               href="/notifications"
               onClick={() => setOpen(false)}
-              className="text-sm text-[#273B3A] hover:text-[#273B3A] font-medium transition-colors"
+              className="text-sm text-[#FAFAFA] hover:text-[#FAFAFA] font-medium transition-colors"
             >
               View all notifications →
             </Link>
@@ -128,7 +128,7 @@ function NotificationDropdown() {
 
 export function Header() {
   return (
-    <header className="h-14 border-b border-[#E6D4C7] bg-[#E6D4C7] sticky top-0 z-40 flex items-center justify-between px-6">
+    <header className="h-14 border-b border-[#262626] bg-[#0A0A0A] sticky top-0 z-40 flex items-center justify-between px-6">
       {/* Smart Search */}
       <SmartSearch className="w-96" />
 
@@ -136,7 +136,7 @@ export function Header() {
       <div className="flex items-center gap-3">
         <NotificationDropdown />
         <div className="w-8 h-8 rounded-full bg-[rgba(156,74,41,0.15)] flex items-center justify-center cursor-pointer hover:bg-[rgba(156,74,41,0.25)] transition-colors">
-          <User className="w-4 h-4 text-[#273B3A]" />
+          <User className="w-4 h-4 text-[#FAFAFA]" />
         </div>
       </div>
     </header>

@@ -40,7 +40,7 @@ const DEPARTMENTS = [
 const TAGS = ["Manager", "Employee", "Remote", "Executive", "Contractor", "Part-time"];
 
 const tagStyles: Record<string, string> = {
-  Manager: "bg-[rgba(156,74,41,0.15)] text-[#273B3A] border-[#273B3A]/20",
+  Manager: "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA] border-[#262626]/20",
   Employee: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   Remote: "bg-violet-500/10 text-violet-400 border-violet-500/20",
   Executive: "bg-amber-500/10 text-amber-400 border-amber-500/20",
@@ -162,13 +162,13 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl w-full max-w-lg max-h-[90vh] overflow-auto shadow-2xl">
+      <div className="relative bg-[#0A0A0A] border border-[#262626] rounded-2xl w-full max-w-lg max-h-[90vh] overflow-auto shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-[#E6D4C7]">
-          <h2 className="text-xl font-semibold text-[#273B3A]">
+        <div className="flex items-center justify-between p-6 border-b border-[#262626]">
+          <h2 className="text-xl font-semibold text-[#FAFAFA]">
             {isEditing ? "Edit Employee" : "Add Employee"}
           </h2>
-          <button onClick={onClose} className="text-[#273B3A] hover:text-[#273B3A] transition-colors">
+          <button onClick={onClose} className="text-[#FAFAFA] hover:text-[#FAFAFA] transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -178,7 +178,7 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
           <div className="flex gap-4">
             <div className="flex flex-col items-center gap-2">
               <div
-                className="w-16 h-16 rounded-full flex items-center justify-center border-2 border-[#E6D4C7]"
+                className="w-16 h-16 rounded-full flex items-center justify-center border-2 border-[#262626]"
                 style={{ backgroundColor: formData.avatar_color + "18" }}
               >
                 <span className="text-lg font-bold" style={{ color: formData.avatar_color }}>
@@ -202,27 +202,27 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
             </div>
             <div className="flex-1 space-y-3">
               <div>
-                <label className="text-xs text-[#273B3A] mb-1.5 block">Full Name *</label>
-                <div className="flex items-center gap-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-4 py-3 focus-within:border-[#273B3A]/40 transition-colors">
-                  <User className="w-4 h-4 text-[#273B3A]" />
+                <label className="text-xs text-[#FAFAFA] mb-1.5 block">Full Name *</label>
+                <div className="flex items-center gap-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg px-4 py-3 focus-within:border-[#262626]/40 transition-colors">
+                  <User className="w-4 h-4 text-[#FAFAFA]" />
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
                     placeholder="John Smith"
-                    className="bg-transparent border-none outline-none text-sm w-full text-[#273B3A] placeholder:text-[#273B3A]"
+                    className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]"
                     required
                   />
                 </div>
               </div>
               <div>
-                <label className="text-xs text-[#273B3A] mb-1.5 block">Job Title</label>
+                <label className="text-xs text-[#FAFAFA] mb-1.5 block">Job Title</label>
                 <input
                   type="text"
                   value={formData.job_title}
                   onChange={(e) => setFormData((p) => ({ ...p, job_title: e.target.value }))}
                   placeholder="Software Developer"
-                  className="w-full bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-4 py-3 text-sm text-[#273B3A] placeholder:text-[#273B3A] focus:border-[#273B3A]/40 focus:outline-none transition-colors"
+                  className="w-full bg-[#0A0A0A] border border-[#262626] rounded-lg px-4 py-3 text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:border-[#262626]/40 focus:outline-none transition-colors"
                 />
               </div>
             </div>
@@ -231,13 +231,13 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
           {/* Department & Status */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs text-[#273B3A] mb-1.5 block">Department</label>
+              <label className="text-xs text-[#FAFAFA] mb-1.5 block">Department</label>
               <div className="relative">
-                <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#273B3A]" />
+                <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#FAFAFA]" />
                 <select
                   value={formData.department}
                   onChange={(e) => setFormData((p) => ({ ...p, department: e.target.value }))}
-                  className="w-full bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg pl-10 pr-4 py-3 text-sm text-[#273B3A] focus:border-[#273B3A]/40 focus:outline-none transition-colors appearance-none"
+                  className="w-full bg-[#0A0A0A] border border-[#262626] rounded-lg pl-10 pr-4 py-3 text-sm text-[#FAFAFA] focus:border-[#262626]/40 focus:outline-none transition-colors appearance-none"
                 >
                   {DEPARTMENTS.map((d) => (
                     <option key={d} value={d}>{d}</option>
@@ -246,11 +246,11 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
               </div>
             </div>
             <div>
-              <label className="text-xs text-[#273B3A] mb-1.5 block">Status</label>
+              <label className="text-xs text-[#FAFAFA] mb-1.5 block">Status</label>
               <select
                 value={formData.status}
                 onChange={(e) => setFormData((p) => ({ ...p, status: e.target.value as Employee["status"] }))}
-                className="w-full bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-4 py-3 text-sm text-[#273B3A] focus:border-[#273B3A]/40 focus:outline-none transition-colors appearance-none"
+                className="w-full bg-[#0A0A0A] border border-[#262626] rounded-lg px-4 py-3 text-sm text-[#FAFAFA] focus:border-[#262626]/40 focus:outline-none transition-colors appearance-none"
               >
                 <option value="active">Active</option>
                 <option value="on_leave">On Leave</option>
@@ -262,28 +262,28 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
           {/* Email & Phone */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs text-[#273B3A] mb-1.5 block">Email</label>
-              <div className="flex items-center gap-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-4 py-3 focus-within:border-[#273B3A]/40 transition-colors">
-                <Mail className="w-4 h-4 text-[#273B3A]" />
+              <label className="text-xs text-[#FAFAFA] mb-1.5 block">Email</label>
+              <div className="flex items-center gap-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg px-4 py-3 focus-within:border-[#262626]/40 transition-colors">
+                <Mail className="w-4 h-4 text-[#FAFAFA]" />
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
                   placeholder="john@company.com"
-                  className="bg-transparent border-none outline-none text-sm w-full text-[#273B3A] placeholder:text-[#273B3A]"
+                  className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]"
                 />
               </div>
             </div>
             <div>
-              <label className="text-xs text-[#273B3A] mb-1.5 block">Phone</label>
-              <div className="flex items-center gap-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-4 py-3 focus-within:border-[#273B3A]/40 transition-colors">
-                <Phone className="w-4 h-4 text-[#273B3A]" />
+              <label className="text-xs text-[#FAFAFA] mb-1.5 block">Phone</label>
+              <div className="flex items-center gap-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg px-4 py-3 focus-within:border-[#262626]/40 transition-colors">
+                <Phone className="w-4 h-4 text-[#FAFAFA]" />
                 <input
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData((p) => ({ ...p, phone: e.target.value }))}
                   placeholder="(416) 555-0123"
-                  className="bg-transparent border-none outline-none text-sm w-full text-[#273B3A] placeholder:text-[#273B3A]"
+                  className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]"
                 />
               </div>
             </div>
@@ -291,21 +291,21 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
 
           {/* Start Date */}
           <div>
-            <label className="text-xs text-[#273B3A] mb-1.5 block">Start Date</label>
-            <div className="flex items-center gap-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-4 py-3 focus-within:border-[#273B3A]/40 transition-colors">
-              <Calendar className="w-4 h-4 text-[#273B3A]" />
+            <label className="text-xs text-[#FAFAFA] mb-1.5 block">Start Date</label>
+            <div className="flex items-center gap-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg px-4 py-3 focus-within:border-[#262626]/40 transition-colors">
+              <Calendar className="w-4 h-4 text-[#FAFAFA]" />
               <input
                 type="date"
                 value={formData.start_date}
                 onChange={(e) => setFormData((p) => ({ ...p, start_date: e.target.value }))}
-                className="bg-transparent border-none outline-none text-sm w-full text-[#273B3A]"
+                className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA]"
               />
             </div>
           </div>
 
           {/* Tags */}
           <div>
-            <label className="text-xs text-[#273B3A] mb-2 block flex items-center gap-1.5">
+            <label className="text-xs text-[#FAFAFA] mb-2 block flex items-center gap-1.5">
               <Tag className="w-3 h-3" />
               Tags
             </label>
@@ -318,8 +318,8 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
                   className={cn(
                     "px-3 py-1.5 rounded-full text-xs font-medium border transition-all",
                     formData.tags.includes(tag)
-                      ? tagStyles[tag] || "bg-[rgba(156,74,41,0.15)] text-[#273B3A] border-[#273B3A]/20"
-                      : "bg-[#E6D4C7] text-[#273B3A] border-[#E6D4C7] hover:border-[#3a3a3a]"
+                      ? tagStyles[tag] || "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA] border-[#262626]/20"
+                      : "bg-[#0A0A0A] text-[#FAFAFA] border-[#262626] hover:border-[#3a3a3a]"
                   )}
                 >
                   {tag}
@@ -329,7 +329,7 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-3 pt-4 border-t border-[#E6D4C7]">
+          <div className="flex items-center gap-3 pt-4 border-t border-[#262626]">
             {isEditing && onDelete && (
               <>
                 {showDeleteConfirm ? (
@@ -346,7 +346,7 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
                     <button
                       type="button"
                       onClick={() => setShowDeleteConfirm(false)}
-                      className="px-3 py-1.5 text-[#273B3A] text-xs font-medium hover:text-[#273B3A]"
+                      className="px-3 py-1.5 text-[#FAFAFA] text-xs font-medium hover:text-[#FAFAFA]"
                     >
                       No
                     </button>
@@ -367,14 +367,14 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 border border-[#E6D4C7] rounded-lg text-sm font-medium text-[#273B3A] hover:text-[#273B3A] hover:border-[#3a3a3a] transition-all"
+              className="px-4 py-2.5 border border-[#262626] rounded-lg text-sm font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:border-[#3a3a3a] transition-all"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving || !formData.name.trim()}
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? "Saving..." : isEditing ? "Save Changes" : "Add Employee"}
             </button>
@@ -406,7 +406,7 @@ function DepartmentSidebar({
     <div className="w-56 flex-shrink-0 space-y-6">
       {/* Department filter */}
       <div>
-        <h3 className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest mb-3">
+        <h3 className="text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest mb-3">
           Department
         </h3>
         <div className="space-y-0.5">
@@ -415,12 +415,12 @@ function DepartmentSidebar({
             className={cn(
               "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all duration-200",
               !selected
-                ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
-                : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+                ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
+                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             <span>All</span>
-            <span className="text-xs text-[#273B3A]">
+            <span className="text-xs text-[#FAFAFA]">
               {departments.reduce((s, d) => s + d.count, 0)}
             </span>
           </button>
@@ -431,12 +431,12 @@ function DepartmentSidebar({
               className={cn(
                 "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all duration-200",
                 selected === d.name
-                  ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
-                  : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+                  ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
+                  : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
               )}
             >
               <span>{d.name}</span>
-              <span className="text-xs text-[#273B3A]">{d.count}</span>
+              <span className="text-xs text-[#FAFAFA]">{d.count}</span>
             </button>
           ))}
         </div>
@@ -444,7 +444,7 @@ function DepartmentSidebar({
 
       {/* Status filter */}
       <div>
-        <h3 className="text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest mb-3">
+        <h3 className="text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest mb-3">
           Status
         </h3>
         <div className="space-y-0.5">
@@ -453,8 +453,8 @@ function DepartmentSidebar({
             className={cn(
               "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all duration-200",
               !statusFilter
-                ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
-                : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+                ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
+                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             <span>All</span>
@@ -466,12 +466,12 @@ function DepartmentSidebar({
               className={cn(
                 "w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all duration-200",
                 statusFilter === s
-                  ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
-                  : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+                  ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
+                  : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
               )}
             >
               <span>{statusBadge[s].label}</span>
-              <span className="text-xs text-[#273B3A]">
+              <span className="text-xs text-[#FAFAFA]">
                 {statusCounts[s] || 0}
               </span>
             </button>
@@ -588,24 +588,24 @@ export default function EmployeesPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#273B3A]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#FAFAFA]">
             Employees
           </h1>
-          <p className="text-[#273B3A] text-sm mt-1">
+          <p className="text-[#FAFAFA] text-sm mt-1">
             {filtered.length} of {employees.length} employees
           </p>
         </div>
         <div className="flex items-center gap-2">
           {/* Import/Export buttons */}
-          <div className="flex items-center border border-[#E6D4C7] rounded-lg overflow-hidden">
-            <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200">
+          <div className="flex items-center border border-[#262626] rounded-lg overflow-hidden">
+            <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200">
               <Download className="w-4 h-4" />
               Export
             </button>
-            <div className="w-px h-6 bg-[#E6D4C7]" />
+            <div className="w-px h-6 bg-[#0A0A0A]" />
             <button
               onClick={() => setShowImport(true)}
-              className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] transition-all duration-200"
+              className="flex items-center gap-2 px-3 py-2.5 text-sm text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
             >
               <Upload className="w-4 h-4" />
               Import
@@ -613,7 +613,7 @@ export default function EmployeesPage() {
           </div>
           <button 
             onClick={handleOpenAdd}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200"
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all duration-200"
           >
             <Plus className="w-4 h-4" />
             Add Employee
@@ -623,33 +623,33 @@ export default function EmployeesPage() {
 
       {/* Search + View Toggle */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#273B3A]/40 transition-colors duration-200">
-          <Search className="w-4 h-4 text-[#273B3A]" />
+        <div className="flex items-center gap-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#262626]/40 transition-colors duration-200">
+          <Search className="w-4 h-4 text-[#FAFAFA]" />
           <input
             type="text"
             placeholder="Search employees..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm w-full text-[#273B3A] placeholder:text-[#273B3A]/60"
+            className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]/60"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="text-[#273B3A] hover:text-[#273B3A]"
+              className="text-[#FAFAFA] hover:text-[#FAFAFA]"
             >
               <X className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
 
-        <div className="flex items-center border border-[#E6D4C7] rounded-lg overflow-hidden ml-auto">
+        <div className="flex items-center border border-[#262626] rounded-lg overflow-hidden ml-auto">
           <button
             onClick={() => setViewMode("grid")}
             className={cn(
               "flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200",
               viewMode === "grid"
-                ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
-                : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+                ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
+                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -660,8 +660,8 @@ export default function EmployeesPage() {
             className={cn(
               "flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200",
               viewMode === "list"
-                ? "bg-[rgba(156,74,41,0.15)] text-[#273B3A]"
-                : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+                ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
+                : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
             )}
           >
             <List className="w-4 h-4" />
@@ -687,7 +687,7 @@ export default function EmployeesPage() {
           {viewMode === "grid" ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {filtered.length === 0 ? (
-                <div className="col-span-full text-center py-16 text-[#273B3A] text-sm">
+                <div className="col-span-full text-center py-16 text-[#FAFAFA] text-sm">
                   No employees found
                 </div>
               ) : (
@@ -697,12 +697,12 @@ export default function EmployeesPage() {
                     <div
                       key={emp.id}
                       onClick={() => handleOpenEdit(emp)}
-                      className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl p-5 hover:border-[#273B3A]/25 transition-all duration-200 cursor-pointer group"
+                      className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5 hover:border-[#262626]/25 transition-all duration-200 cursor-pointer group"
                     >
                       <div className="flex gap-4">
                         {/* Avatar */}
                         <div
-                          className="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 border-2 border-[#E6D4C7] group-hover:border-[#273B3A]/30 transition-colors duration-200"
+                          className="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 border-2 border-[#262626] group-hover:border-[#262626]/30 transition-colors duration-200"
                           style={{ backgroundColor: emp.avatar_color + "18" }}
                         >
                           <span
@@ -717,10 +717,10 @@ export default function EmployeesPage() {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between mb-1">
                             <div>
-                              <h3 className="text-sm font-semibold text-[#273B3A]">
+                              <h3 className="text-sm font-semibold text-[#FAFAFA]">
                                 {emp.name}
                               </h3>
-                              <p className="text-xs text-[#273B3A]">
+                              <p className="text-xs text-[#FAFAFA]">
                                 {emp.job_title}
                               </p>
                             </div>
@@ -733,27 +733,27 @@ export default function EmployeesPage() {
                               >
                                 {sb.label}
                               </span>
-                              <Pencil className="w-3.5 h-3.5 text-[#273B3A] opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <Pencil className="w-3.5 h-3.5 text-[#FAFAFA] opacity-0 group-hover:opacity-100 transition-opacity" />
                             </div>
                           </div>
 
                           <div className="mt-2.5 space-y-1.5">
-                            <div className="flex items-center gap-2 text-xs text-[#273B3A]">
-                              <Mail className="w-3 h-3 text-[#273B3A]" />
+                            <div className="flex items-center gap-2 text-xs text-[#FAFAFA]">
+                              <Mail className="w-3 h-3 text-[#FAFAFA]" />
                               <span className="truncate">{emp.email}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-xs text-[#273B3A]">
-                              <Phone className="w-3 h-3 text-[#273B3A]" />
+                            <div className="flex items-center gap-2 text-xs text-[#FAFAFA]">
+                              <Phone className="w-3 h-3 text-[#FAFAFA]" />
                               <span>{emp.phone}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-xs text-[#273B3A]">
-                              <Calendar className="w-3 h-3 text-[#273B3A]" />
+                            <div className="flex items-center gap-2 text-xs text-[#FAFAFA]">
+                              <Calendar className="w-3 h-3 text-[#FAFAFA]" />
                               <span>{formatDate(emp.start_date)}</span>
                             </div>
                           </div>
 
                           {/* Tags */}
-                          <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-[#E6D4C7]">
+                          <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-[#262626]">
                             <div className="flex flex-wrap gap-1">
                               {emp.tags.map((tag) => (
                                 <span
@@ -761,14 +761,14 @@ export default function EmployeesPage() {
                                   className={cn(
                                     "px-2 py-0.5 rounded-full text-[10px] font-medium border",
                                     tagStyles[tag] ||
-                                      "bg-[#E6D4C7] text-[#273B3A] border-[#E6D4C7]"
+                                      "bg-[#0A0A0A] text-[#FAFAFA] border-[#262626]"
                                   )}
                                 >
                                   {tag}
                                 </span>
                               ))}
                             </div>
-                            <Clock className="w-3.5 h-3.5 text-[#273B3A] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                            <Clock className="w-3.5 h-3.5 text-[#FAFAFA] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                           </div>
                         </div>
                       </div>
@@ -779,26 +779,26 @@ export default function EmployeesPage() {
             </div>
           ) : (
             /* List View */
-            <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
+            <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-[#E6D4C7]">
-                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
+                  <tr className="border-b border-[#262626]">
+                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">
                       Employee
                     </th>
-                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
+                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">
                       Department
                     </th>
-                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
+                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">
                       Email
                     </th>
-                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
+                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">
                       Phone
                     </th>
-                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
+                    <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">
                       Start Date
                     </th>
-                    <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">
+                    <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">
                       Status
                     </th>
                   </tr>
@@ -808,7 +808,7 @@ export default function EmployeesPage() {
                     <tr>
                       <td
                         colSpan={6}
-                        className="px-6 py-16 text-center text-[#273B3A] text-sm"
+                        className="px-6 py-16 text-center text-[#FAFAFA] text-sm"
                       >
                         No employees found
                       </td>
@@ -821,8 +821,8 @@ export default function EmployeesPage() {
                           key={emp.id}
                           onClick={() => handleOpenEdit(emp)}
                           className={cn(
-                            "hover:bg-[#E6D4C7] transition-colors duration-150 cursor-pointer border-b border-[#E6D4C7]/50 last:border-0",
-                            i % 2 === 1 && "bg-[#E6D4C7]/40"
+                            "hover:bg-[#0A0A0A] transition-colors duration-150 cursor-pointer border-b border-[#262626]/50 last:border-0",
+                            i % 2 === 1 && "bg-[#0A0A0A]/40"
                           )}
                         >
                           <td className="px-6 py-4">
@@ -841,25 +841,25 @@ export default function EmployeesPage() {
                                 </span>
                               </div>
                               <div>
-                                <span className="text-sm font-medium text-[#273B3A]">
+                                <span className="text-sm font-medium text-[#FAFAFA]">
                                   {emp.name}
                                 </span>
-                                <p className="text-[11px] text-[#273B3A]">
+                                <p className="text-[11px] text-[#FAFAFA]">
                                   {emp.job_title}
                                 </p>
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-sm text-[#273B3A]">
+                          <td className="px-6 py-4 text-sm text-[#FAFAFA]">
                             {emp.department}
                           </td>
-                          <td className="px-6 py-4 text-sm text-[#273B3A]">
+                          <td className="px-6 py-4 text-sm text-[#FAFAFA]">
                             {emp.email}
                           </td>
-                          <td className="px-6 py-4 text-sm text-[#273B3A]">
+                          <td className="px-6 py-4 text-sm text-[#FAFAFA]">
                             {emp.phone}
                           </td>
-                          <td className="px-6 py-4 text-sm text-[#273B3A]">
+                          <td className="px-6 py-4 text-sm text-[#FAFAFA]">
                             {formatDate(emp.start_date)}
                           </td>
                           <td className="px-6 py-4 text-right">

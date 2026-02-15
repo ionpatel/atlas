@@ -351,23 +351,23 @@ export function ImportWizard({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#E6D4C7] border border-[#E6D4C7] rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
+      <div className="relative bg-[#0A0A0A] border border-[#262626] rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#E6D4C7]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#262626]">
           <div>
-            <h2 className="text-lg font-semibold text-[#273B3A]">Import {config.name}</h2>
-            <p className="text-sm text-[#273B3A]">{config.description}</p>
+            <h2 className="text-lg font-semibold text-[#FAFAFA]">Import {config.name}</h2>
+            <p className="text-sm text-[#FAFAFA]">{config.description}</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7] rounded-lg transition-colors"
+            className="p-2 text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] rounded-lg transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Progress Steps */}
-        <div className="px-6 py-4 border-b border-[#E6D4C7]">
+        <div className="px-6 py-4 border-b border-[#262626]">
           <div className="flex items-center justify-between">
             {STEPS.map((s, i) => {
               const isActive = s.key === step;
@@ -380,15 +380,15 @@ export function ImportWizard({
                     className={cn(
                       "flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors",
                       isActive && "bg-[rgba(156,74,41,0.15)]",
-                      isPast && "cursor-pointer hover:bg-[#E6D4C7]"
+                      isPast && "cursor-pointer hover:bg-[#0A0A0A]"
                     )}
                   >
                     <div
                       className={cn(
                         "w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold",
-                        isActive && "bg-[#273B3A] text-[#E6D4C7]",
+                        isActive && "bg-[#161616] text-[#0A0A0A]",
                         isPast && "bg-emerald-500/20 text-emerald-400",
-                        !isActive && !isPast && "bg-[#E6D4C7] text-[#273B3A]"
+                        !isActive && !isPast && "bg-[#0A0A0A] text-[#FAFAFA]"
                       )}
                     >
                       {isPast ? <Check className="w-3.5 h-3.5" /> : i + 1}
@@ -396,16 +396,16 @@ export function ImportWizard({
                     <span
                       className={cn(
                         "text-sm font-medium",
-                        isActive && "text-[#273B3A]",
+                        isActive && "text-[#FAFAFA]",
                         isPast && "text-emerald-400",
-                        !isActive && !isPast && "text-[#273B3A]"
+                        !isActive && !isPast && "text-[#FAFAFA]"
                       )}
                     >
                       {s.label}
                     </span>
                   </button>
                   {i < STEPS.length - 1 && (
-                    <ChevronRight className="w-4 h-4 mx-2 text-[#E6D4C7]" />
+                    <ChevronRight className="w-4 h-4 mx-2 text-[#0A0A0A]" />
                   )}
                 </div>
               );
@@ -422,8 +422,8 @@ export function ImportWizard({
                 className={cn(
                   "border-2 border-dashed rounded-xl p-12 text-center transition-all cursor-pointer",
                   dragOver
-                    ? "border-[#273B3A] bg-[rgba(156,74,41,0.15)]/30"
-                    : "border-[#E6D4C7] hover:border-[#273B3A]/40"
+                    ? "border-[#262626] bg-[rgba(156,74,41,0.15)]/30"
+                    : "border-[#262626] hover:border-[#262626]/40"
                 )}
                 onDragOver={(e) => {
                   e.preventDefault();
@@ -434,14 +434,14 @@ export function ImportWizard({
                 onClick={() => fileInputRef.current?.click()}
               >
                 {isProcessing ? (
-                  <Loader2 className="w-12 h-12 mx-auto mb-4 text-[#273B3A] animate-spin" />
+                  <Loader2 className="w-12 h-12 mx-auto mb-4 text-[#FAFAFA] animate-spin" />
                 ) : (
-                  <Upload className="w-12 h-12 mx-auto mb-4 text-[#273B3A]/60" />
+                  <Upload className="w-12 h-12 mx-auto mb-4 text-[#FAFAFA]/60" />
                 )}
-                <p className="text-base font-medium text-[#273B3A] mb-1">
+                <p className="text-base font-medium text-[#FAFAFA] mb-1">
                   {isProcessing ? "Processing file..." : "Drop your file here or click to browse"}
                 </p>
-                <p className="text-sm text-[#273B3A]">
+                <p className="text-sm text-[#FAFAFA]">
                   Supports CSV, XLSX, and XLS files (up to 10MB)
                 </p>
                 <input
@@ -454,21 +454,21 @@ export function ImportWizard({
               </div>
 
               {/* Template download */}
-              <div className="flex items-center justify-between p-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl">
+              <div className="flex items-center justify-between p-4 bg-[#0A0A0A] border border-[#262626] rounded-xl">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-[#E6D4C7] rounded-lg">
-                    <FileText className="w-5 h-5 text-[#273B3A]" />
+                  <div className="p-2 bg-[#0A0A0A] rounded-lg">
+                    <FileText className="w-5 h-5 text-[#FAFAFA]" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-[#273B3A]">Download Template</p>
-                    <p className="text-xs text-[#273B3A]">
+                    <p className="text-sm font-medium text-[#FAFAFA]">Download Template</p>
+                    <p className="text-xs text-[#FAFAFA]">
                       Get a CSV template with all the correct columns
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={downloadTemplate}
-                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#273B3A] border border-[#273B3A]/30 rounded-lg hover:bg-[rgba(156,74,41,0.15)]/50 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#FAFAFA] border border-[#262626]/30 rounded-lg hover:bg-[rgba(156,74,41,0.15)]/50 transition-colors"
                 >
                   <Download className="w-4 h-4" />
                   Download
@@ -504,18 +504,18 @@ export function ImportWizard({
             <div className="space-y-4">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <FileSpreadsheet className="w-5 h-5 text-[#273B3A]" />
-                  <span className="text-sm text-[#273B3A] font-medium">{file?.name}</span>
-                  <span className="text-xs text-[#273B3A]">({rawData.length} rows)</span>
+                  <FileSpreadsheet className="w-5 h-5 text-[#FAFAFA]" />
+                  <span className="text-sm text-[#FAFAFA] font-medium">{file?.name}</span>
+                  <span className="text-xs text-[#FAFAFA]">({rawData.length} rows)</span>
                 </div>
               </div>
 
-              <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
-                <div className="grid grid-cols-2 gap-4 p-3 border-b border-[#E6D4C7] bg-[#E6D4C7]">
-                  <div className="text-xs font-semibold text-[#273B3A] uppercase tracking-wider">
+              <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl overflow-hidden">
+                <div className="grid grid-cols-2 gap-4 p-3 border-b border-[#262626] bg-[#0A0A0A]">
+                  <div className="text-xs font-semibold text-[#FAFAFA] uppercase tracking-wider">
                     Database Field
                   </div>
-                  <div className="text-xs font-semibold text-[#273B3A] uppercase tracking-wider">
+                  <div className="text-xs font-semibold text-[#FAFAFA] uppercase tracking-wider">
                     CSV Column
                   </div>
                 </div>
@@ -524,10 +524,10 @@ export function ImportWizard({
                   {config.fields.map((field) => (
                     <div
                       key={field.key}
-                      className="grid grid-cols-2 gap-4 p-3 items-center hover:bg-[#E6D4C7]/50 transition-colors"
+                      className="grid grid-cols-2 gap-4 p-3 items-center hover:bg-[#0A0A0A]/50 transition-colors"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="text-sm text-[#273B3A]">{field.label}</span>
+                        <span className="text-sm text-[#FAFAFA]">{field.label}</span>
                         {field.required && (
                           <span className="text-[10px] text-red-400 font-medium">*</span>
                         )}
@@ -546,12 +546,12 @@ export function ImportWizard({
                           }))
                         }
                         className={cn(
-                          "w-full px-3 py-2 bg-[#E6D4C7] border rounded-lg text-sm focus:outline-none focus:border-[#273B3A]/50 transition-colors",
+                          "w-full px-3 py-2 bg-[#0A0A0A] border rounded-lg text-sm focus:outline-none focus:border-[#262626]/50 transition-colors",
                           !columnMapping[field.key] && field.required
                             ? "border-red-500/50 text-red-400"
                             : columnMapping[field.key]
-                            ? "border-emerald-500/30 text-[#273B3A]"
-                            : "border-[#E6D4C7] text-[#273B3A]"
+                            ? "border-emerald-500/30 text-[#FAFAFA]"
+                            : "border-[#262626] text-[#FAFAFA]"
                         )}
                       >
                         <option value="">-- Not Mapped --</option>
@@ -567,18 +567,18 @@ export function ImportWizard({
               </div>
 
               {/* Preview */}
-              <div className="p-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl">
-                <p className="text-xs font-semibold text-[#273B3A] uppercase tracking-wider mb-3">
+              <div className="p-4 bg-[#0A0A0A] border border-[#262626] rounded-xl">
+                <p className="text-xs font-semibold text-[#FAFAFA] uppercase tracking-wider mb-3">
                   Data Preview (first 3 rows)
                 </p>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-[#E6D4C7]">
+                      <tr className="border-b border-[#262626]">
                         {config.fields.slice(0, 5).map((f) => (
                           <th
                             key={f.key}
-                            className="text-left px-3 py-2 text-xs font-medium text-[#273B3A]"
+                            className="text-left px-3 py-2 text-xs font-medium text-[#FAFAFA]"
                           >
                             {f.label}
                           </th>
@@ -587,9 +587,9 @@ export function ImportWizard({
                     </thead>
                     <tbody>
                       {rawData.slice(0, 3).map((row, i) => (
-                        <tr key={i} className="border-b border-[#E6D4C7]/50">
+                        <tr key={i} className="border-b border-[#262626]/50">
                           {config.fields.slice(0, 5).map((f) => (
-                            <td key={f.key} className="px-3 py-2 text-[#273B3A] truncate max-w-[150px]">
+                            <td key={f.key} className="px-3 py-2 text-[#FAFAFA] truncate max-w-[150px]">
                               {row[columnMapping[f.key] || ""] || "—"}
                             </td>
                           ))}
@@ -607,9 +607,9 @@ export function ImportWizard({
             <div className="space-y-4">
               {/* Stats Summary */}
               <div className="grid grid-cols-4 gap-3">
-                <div className="p-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl">
-                  <p className="text-2xl font-bold text-[#273B3A]">{stats.total}</p>
-                  <p className="text-xs text-[#273B3A]">Total Rows</p>
+                <div className="p-4 bg-[#0A0A0A] border border-[#262626] rounded-xl">
+                  <p className="text-2xl font-bold text-[#FAFAFA]">{stats.total}</p>
+                  <p className="text-xs text-[#FAFAFA]">Total Rows</p>
                 </div>
                 <div className="p-4 bg-emerald-500/5 border border-emerald-500/20 rounded-xl">
                   <p className="text-2xl font-bold text-emerald-400">{stats.valid}</p>
@@ -626,7 +626,7 @@ export function ImportWizard({
               </div>
 
               {/* Options */}
-              <div className="flex items-center gap-6 p-4 bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl">
+              <div className="flex items-center gap-6 p-4 bg-[#0A0A0A] border border-[#262626] rounded-xl">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
@@ -634,10 +634,10 @@ export function ImportWizard({
                     onChange={(e) => setSkipDuplicates(e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-5 h-5 rounded border border-[#E6D4C7] bg-[#E6D4C7] peer-checked:bg-[#273B3A] peer-checked:border-[#273B3A] flex items-center justify-center transition-all">
-                    {skipDuplicates && <Check className="w-3 h-3 text-[#E6D4C7]" />}
+                  <div className="w-5 h-5 rounded border border-[#262626] bg-[#0A0A0A] peer-checked:bg-[#161616] peer-checked:border-[#262626] flex items-center justify-center transition-all">
+                    {skipDuplicates && <Check className="w-3 h-3 text-[#0A0A0A]" />}
                   </div>
-                  <span className="text-sm text-[#273B3A]">Skip duplicates</span>
+                  <span className="text-sm text-[#FAFAFA]">Skip duplicates</span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -647,29 +647,29 @@ export function ImportWizard({
                     onChange={(e) => setIsDryRun(e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-5 h-5 rounded border border-[#E6D4C7] bg-[#E6D4C7] peer-checked:bg-[#273B3A] peer-checked:border-[#273B3A] flex items-center justify-center transition-all">
-                    {isDryRun && <Check className="w-3 h-3 text-[#E6D4C7]" />}
+                  <div className="w-5 h-5 rounded border border-[#262626] bg-[#0A0A0A] peer-checked:bg-[#161616] peer-checked:border-[#262626] flex items-center justify-center transition-all">
+                    {isDryRun && <Check className="w-3 h-3 text-[#0A0A0A]" />}
                   </div>
-                  <span className="text-sm text-[#273B3A]">Dry run (preview only)</span>
+                  <span className="text-sm text-[#FAFAFA]">Dry run (preview only)</span>
                 </label>
               </div>
 
               {/* Validation Results Table */}
-              <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
+              <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl overflow-hidden">
                 <div className="max-h-[300px] overflow-y-auto">
                   <table className="w-full text-sm">
-                    <thead className="sticky top-0 bg-[#E6D4C7] z-10">
-                      <tr className="border-b border-[#E6D4C7]">
-                        <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-wider w-16">
+                    <thead className="sticky top-0 bg-[#0A0A0A] z-10">
+                      <tr className="border-b border-[#262626]">
+                        <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-wider w-16">
                           Row
                         </th>
-                        <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-wider w-20">
+                        <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-wider w-20">
                           Status
                         </th>
-                        <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-wider">
+                        <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-wider">
                           Data
                         </th>
-                        <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#273B3A] uppercase tracking-wider">
+                        <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-wider">
                           Issues
                         </th>
                       </tr>
@@ -690,7 +690,7 @@ export function ImportWizard({
                               !hasError && hasWarning && "bg-amber-500/5"
                             )}
                           >
-                            <td className="px-4 py-3 text-xs text-[#273B3A] font-mono">
+                            <td className="px-4 py-3 text-xs text-[#FAFAFA] font-mono">
                               {row.rowNumber}
                             </td>
                             <td className="px-4 py-3">
@@ -711,7 +711,7 @@ export function ImportWizard({
                                 </span>
                               )}
                             </td>
-                            <td className="px-4 py-3 text-xs text-[#273B3A]">
+                            <td className="px-4 py-3 text-xs text-[#FAFAFA]">
                               {Object.values(row.mapped).slice(0, 3).join(" | ")}
                             </td>
                             <td className="px-4 py-3">
@@ -741,7 +741,7 @@ export function ImportWizard({
                   </table>
                 </div>
                 {parsedRows.length > 100 && (
-                  <div className="px-4 py-2 text-xs text-[#273B3A] bg-[#E6D4C7] border-t border-[#E6D4C7]">
+                  <div className="px-4 py-2 text-xs text-[#FAFAFA] bg-[#0A0A0A] border-t border-[#262626]">
                     Showing first 100 rows of {parsedRows.length}
                   </div>
                 )}
@@ -756,31 +756,31 @@ export function ImportWizard({
                 <>
                   {isProcessing ? (
                     <>
-                      <Loader2 className="w-16 h-16 text-[#273B3A] animate-spin mb-6" />
-                      <p className="text-lg font-medium text-[#273B3A] mb-2">
+                      <Loader2 className="w-16 h-16 text-[#FAFAFA] animate-spin mb-6" />
+                      <p className="text-lg font-medium text-[#FAFAFA] mb-2">
                         Importing {stats.valid} records...
                       </p>
-                      <div className="w-64 h-2 bg-[#E6D4C7] rounded-full overflow-hidden">
+                      <div className="w-64 h-2 bg-[#0A0A0A] rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-[#273B3A] transition-all duration-300"
+                          className="h-full bg-[#161616] transition-all duration-300"
                           style={{ width: `${importProgress}%` }}
                         />
                       </div>
-                      <p className="text-sm text-[#273B3A] mt-2">{importProgress}%</p>
+                      <p className="text-sm text-[#FAFAFA] mt-2">{importProgress}%</p>
                     </>
                   ) : (
                     <>
-                      <FileSpreadsheet className="w-16 h-16 text-[#273B3A]/40 mb-6" />
-                      <p className="text-lg font-medium text-[#273B3A] mb-2">
+                      <FileSpreadsheet className="w-16 h-16 text-[#FAFAFA]/40 mb-6" />
+                      <p className="text-lg font-medium text-[#FAFAFA] mb-2">
                         Ready to import {stats.valid} records
                       </p>
-                      <p className="text-sm text-[#273B3A] mb-6">
+                      <p className="text-sm text-[#FAFAFA] mb-6">
                         {stats.skipped > 0 && `${stats.skipped} rows will be skipped`}
                         {isDryRun && " (Dry run - no data will be saved)"}
                       </p>
                       <button
                         onClick={executeImport}
-                        className="flex items-center gap-2 px-6 py-3 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-colors"
+                        className="flex items-center gap-2 px-6 py-3 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-colors"
                       >
                         {isDryRun ? "Complete Dry Run" : "Start Import"}
                         <ArrowRight className="w-4 h-4" />
@@ -795,17 +795,17 @@ export function ImportWizard({
                   <div className="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center mb-6">
                     <CheckCircle2 className="w-10 h-10 text-emerald-400" />
                   </div>
-                  <p className="text-xl font-semibold text-[#273B3A] mb-2">
+                  <p className="text-xl font-semibold text-[#FAFAFA] mb-2">
                     {isDryRun ? "Dry Run Complete" : "Import Complete!"}
                   </p>
-                  <p className="text-sm text-[#273B3A] mb-6">
+                  <p className="text-sm text-[#FAFAFA] mb-6">
                     {isDryRun
                       ? `${stats.valid} records would be imported`
                       : `Successfully imported ${stats.valid} records`}
                   </p>
                   <button
                     onClick={onClose}
-                    className="px-6 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-colors"
+                    className="px-6 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-colors"
                   >
                     Done
                   </button>
@@ -817,14 +817,14 @@ export function ImportWizard({
                   <div className="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center mb-6">
                     <XCircle className="w-10 h-10 text-red-400" />
                   </div>
-                  <p className="text-xl font-semibold text-[#273B3A] mb-2">Import Failed</p>
+                  <p className="text-xl font-semibold text-[#FAFAFA] mb-2">Import Failed</p>
                   <p className="text-sm text-red-400 mb-6">{importError}</p>
                   <button
                     onClick={() => {
                       setImportError(null);
                       setStep("validation");
                     }}
-                    className="px-6 py-2.5 border border-[#E6D4C7] text-[#273B3A] rounded-lg text-sm font-medium hover:bg-[#E6D4C7] transition-colors"
+                    className="px-6 py-2.5 border border-[#262626] text-[#FAFAFA] rounded-lg text-sm font-medium hover:bg-[#0A0A0A] transition-colors"
                   >
                     Go Back
                   </button>
@@ -836,7 +836,7 @@ export function ImportWizard({
 
         {/* Footer */}
         {!importComplete && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-[#E6D4C7] bg-[#E6D4C7]">
+          <div className="flex items-center justify-between px-6 py-4 border-t border-[#262626] bg-[#0A0A0A]">
             <button
               onClick={() => {
                 const currentIndex = STEPS.findIndex((s) => s.key === step);
@@ -848,8 +848,8 @@ export function ImportWizard({
               className={cn(
                 "flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors",
                 step === "upload"
-                  ? "text-[#273B3A] cursor-not-allowed"
-                  : "text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+                  ? "text-[#FAFAFA] cursor-not-allowed"
+                  : "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
               )}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -868,8 +868,8 @@ export function ImportWizard({
               className={cn(
                 "flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors",
                 canProceed && step !== "import"
-                  ? "bg-[#273B3A] text-[#E6D4C7] hover:bg-[#273B3A]"
-                  : "bg-[#E6D4C7] text-[#273B3A] cursor-not-allowed"
+                  ? "bg-[#161616] text-[#0A0A0A] hover:bg-[#161616]"
+                  : "bg-[#0A0A0A] text-[#FAFAFA] cursor-not-allowed"
               )}
             >
               {step === "mapping" ? "Validate Data" : step === "validation" ? "Continue to Import" : "..."}

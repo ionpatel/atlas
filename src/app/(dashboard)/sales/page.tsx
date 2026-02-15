@@ -11,10 +11,10 @@ import type { SalesOrder, SalesOrderLine } from "@/types";
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    draft: "bg-[#E6D4C7] text-[#273B3A] border-[#E6D4C7]",
+    draft: "bg-[#0A0A0A] text-[#FAFAFA] border-[#262626]",
     confirmed: "bg-blue-500/10 text-blue-400 border-blue-500/20",
     invoiced: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    cancelled: "bg-[#E6D4C7] text-[#273B3A] border-[#E6D4C7]",
+    cancelled: "bg-[#0A0A0A] text-[#FAFAFA] border-[#262626]",
   };
   const label = status.charAt(0).toUpperCase() + status.slice(1);
   return (
@@ -76,16 +76,16 @@ export default function SalesPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#273B3A]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#FAFAFA]">
             Sales Orders
           </h1>
-          <p className="text-[#273B3A] text-sm mt-1">
+          <p className="text-[#FAFAFA] text-sm mt-1">
             {filtered.length} of {orders.length} orders
           </p>
         </div>
         <button
           onClick={() => setModalOpen(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#273B3A] text-[#E6D4C7] rounded-lg text-sm font-semibold hover:bg-[#273B3A] transition-all duration-200"
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
           New Sales Order
@@ -94,17 +94,17 @@ export default function SalesPage() {
 
       {/* Search & Filters */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#273B3A]/40 transition-colors duration-200">
-          <Search className="w-4 h-4 text-[#273B3A]" />
+        <div className="flex items-center gap-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#262626]/40 transition-colors duration-200">
+          <Search className="w-4 h-4 text-[#FAFAFA]" />
           <input
             type="text"
             placeholder="Search sales orders..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm w-full text-[#273B3A] placeholder:text-[#273B3A]/60"
+            className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#273B3A] hover:text-[#273B3A]">
+            <button onClick={() => setSearchQuery("")} className="text-[#FAFAFA] hover:text-[#FAFAFA]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -113,8 +113,8 @@ export default function SalesPage() {
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.status
-              ? "border-[#273B3A]/50 text-[#273B3A] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#E6D4C7] text-[#273B3A] hover:text-[#273B3A] hover:bg-[#E6D4C7]"
+              ? "border-[#262626]/50 text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]/50"
+              : "border-[#262626] text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
           }`}
         >
           <Filter className="w-4 h-4" />
@@ -127,7 +127,7 @@ export default function SalesPage() {
           <select
             value={filters.status}
             onChange={(e) => setFilter("status", e.target.value)}
-            className="px-4 py-2.5 bg-[#E6D4C7] border border-[#E6D4C7] rounded-lg text-sm text-[#273B3A] focus:outline-none focus:ring-2 focus:ring-[#273B3A]/30 focus:border-[#273B3A]/50 transition-all duration-200"
+            className="px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
           >
             <option value="">All Status</option>
             <option value="draft">Draft</option>
@@ -139,24 +139,24 @@ export default function SalesPage() {
       )}
 
       {/* Table */}
-      <div className="bg-[#E6D4C7] border border-[#E6D4C7] rounded-xl overflow-hidden">
+      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[#E6D4C7]">
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Order #</th>
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Customer</th>
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Date</th>
-              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Delivery Date</th>
-              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Amount</th>
-              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest">Status</th>
-              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#273B3A] uppercase tracking-widest w-16"></th>
+            <tr className="border-b border-[#262626]">
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Order #</th>
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Customer</th>
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Date</th>
+              <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Delivery Date</th>
+              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Amount</th>
+              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Status</th>
+              <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest w-16"></th>
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-6 py-16 text-center text-[#273B3A] text-sm">
-                  <ShoppingCart className="w-8 h-8 mx-auto mb-3 text-[#273B3A]/40" />
+                <td colSpan={7} className="px-6 py-16 text-center text-[#FAFAFA] text-sm">
+                  <ShoppingCart className="w-8 h-8 mx-auto mb-3 text-[#FAFAFA]/40" />
                   No sales orders found
                 </td>
               </tr>
@@ -164,29 +164,29 @@ export default function SalesPage() {
               filtered.map((order, i) => (
                 <tr
                   key={order.id}
-                  className={`hover:bg-[#E6D4C7] transition-colors duration-150 cursor-pointer border-b border-[#E6D4C7]/50 last:border-0 ${
-                    i % 2 === 1 ? "bg-[#E6D4C7]/40" : ""
+                  className={`hover:bg-[#0A0A0A] transition-colors duration-150 cursor-pointer border-b border-[#262626]/50 last:border-0 ${
+                    i % 2 === 1 ? "bg-[#0A0A0A]/40" : ""
                   }`}
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-[rgba(156,74,41,0.15)] flex items-center justify-center flex-shrink-0">
-                        <ShoppingCart className="w-3.5 h-3.5 text-[#273B3A]" />
+                        <ShoppingCart className="w-3.5 h-3.5 text-[#FAFAFA]" />
                       </div>
-                      <span className="text-sm font-medium text-[#273B3A] font-mono">{order.order_number}</span>
+                      <span className="text-sm font-medium text-[#FAFAFA] font-mono">{order.order_number}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-[#273B3A]">{getContactName(order.contact_id)}</td>
-                  <td className="px-6 py-4 text-sm text-[#273B3A]">{formatDate(order.order_date)}</td>
-                  <td className="px-6 py-4 text-sm text-[#273B3A]">{order.delivery_date ? formatDate(order.delivery_date) : "—"}</td>
-                  <td className="px-6 py-4 text-sm text-right font-semibold text-[#273B3A]">{formatCurrency(order.total)}</td>
+                  <td className="px-6 py-4 text-sm text-[#FAFAFA]">{getContactName(order.contact_id)}</td>
+                  <td className="px-6 py-4 text-sm text-[#FAFAFA]">{formatDate(order.order_date)}</td>
+                  <td className="px-6 py-4 text-sm text-[#FAFAFA]">{order.delivery_date ? formatDate(order.delivery_date) : "—"}</td>
+                  <td className="px-6 py-4 text-sm text-right font-semibold text-[#FAFAFA]">{formatCurrency(order.total)}</td>
                   <td className="px-6 py-4 text-right">
                     <StatusBadge status={order.status} />
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button
                       onClick={(e) => handleDelete(e, order.id)}
-                      className="p-2 rounded-lg text-[#273B3A] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                      className="p-2 rounded-lg text-[#FAFAFA] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
