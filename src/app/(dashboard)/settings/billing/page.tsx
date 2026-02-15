@@ -60,30 +60,30 @@ function PlanCard({
   return (
     <div
       className={cn(
-        "relative bg-[#0A0A0A] border rounded-xl p-6 transition-all",
+        "relative bg-[#F8F9FA] border rounded-xl p-6 transition-all",
         plan.popular
-          ? "border-[#262626] ring-1 ring-[#CDB49E]/20"
-          : "border-[#262626] hover:border-[#3a3a3a]",
+          ? "border-[#E5E7EB] ring-1 ring-red-100"
+          : "border-[#E5E7EB] hover:border-[#3a3a3a]",
         isCurrent && "bg-[#1f1f1f]"
       )}
     >
       {plan.popular && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-[#161616] text-[#0A0A0A] text-xs font-semibold rounded-full">
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white text-white text-xs font-semibold rounded-full">
           Most Popular
         </div>
       )}
 
       <div className="mb-4">
-        <h3 className="text-lg font-semibold text-[#FAFAFA]">{plan.name}</h3>
-        <p className="text-sm text-[#FAFAFA] mt-1">{plan.description}</p>
+        <h3 className="text-lg font-semibold text-[#111827]">{plan.name}</h3>
+        <p className="text-sm text-[#111827] mt-1">{plan.description}</p>
       </div>
 
       <div className="mb-6">
-        <span className="text-3xl font-bold text-[#FAFAFA]">
+        <span className="text-3xl font-bold text-[#111827]">
           {plan.price === 0 ? "Free" : formatPrice(plan.price)}
         </span>
         {plan.price > 0 && (
-          <span className="text-[#FAFAFA] text-sm">/{plan.interval}</span>
+          <span className="text-[#111827] text-sm">/{plan.interval}</span>
         )}
       </div>
 
@@ -91,7 +91,7 @@ function PlanCard({
         {plan.features.map((feature, i) => (
           <li key={i} className="flex items-start gap-2 text-sm">
             <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-            <span className="text-[#cccccc]">{feature}</span>
+            <span className="text-[#374151]">{feature}</span>
           </li>
         ))}
       </ul>
@@ -102,10 +102,10 @@ function PlanCard({
         className={cn(
           "w-full py-2.5 rounded-lg text-sm font-semibold transition-all",
           isCurrent
-            ? "bg-[#0A0A0A] text-[#FAFAFA] cursor-default"
+            ? "bg-[#F8F9FA] text-[#111827] cursor-default"
             : plan.popular
-            ? "bg-[#161616] text-[#0A0A0A] hover:bg-[#161616]"
-            : "bg-[#1A1A1A] text-[#ccc] hover:bg-[#262626]",
+            ? "bg-white text-white hover:bg-white"
+            : "bg-[#F1F3F5] text-[#374151] hover:bg-[#E5E7EB]",
           loading && "opacity-50 cursor-wait"
         )}
       >
@@ -133,22 +133,22 @@ function PaymentMethodCard({ method }: { method: PaymentMethod }) {
   };
 
   return (
-    <div className="flex items-center justify-between p-4 bg-[#0A0A0A] border border-[#262626] rounded-lg">
+    <div className="flex items-center justify-between p-4 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-lg bg-[#0A0A0A] flex items-center justify-center">
-          <CreditCard className="w-5 h-5 text-[#FAFAFA]" />
+        <div className="w-10 h-10 rounded-lg bg-[#F8F9FA] flex items-center justify-center">
+          <CreditCard className="w-5 h-5 text-[#111827]" />
         </div>
         <div>
-          <p className="text-sm font-medium text-[#FAFAFA]">
+          <p className="text-sm font-medium text-[#111827]">
             {method.cardBrand?.toUpperCase()} •••• {method.cardLast4}
           </p>
-          <p className="text-xs text-[#FAFAFA]">
+          <p className="text-xs text-[#111827]">
             Expires {method.cardExpMonth}/{method.cardExpYear}
           </p>
         </div>
       </div>
       {method.isDefault && (
-        <span className="px-2 py-1 bg-[#161616]/10 text-[#FAFAFA] text-xs font-medium rounded">
+        <span className="px-2 py-1 bg-white/10 text-[#111827] text-xs font-medium rounded">
           Default
         </span>
       )}
@@ -162,19 +162,19 @@ function InvoiceRow({ invoice }: { invoice: BillingInvoice }) {
   const statusColors: Record<string, string> = {
     paid: "text-emerald-400 bg-emerald-500/10",
     open: "text-amber-400 bg-amber-500/10",
-    draft: "text-[#FAFAFA] bg-[#0A0A0A]",
-    void: "text-[#FAFAFA] bg-[#0A0A0A]",
+    draft: "text-[#111827] bg-[#F8F9FA]",
+    void: "text-[#111827] bg-[#F8F9FA]",
     uncollectible: "text-red-400 bg-red-500/10",
   };
 
   return (
-    <div className="flex items-center justify-between py-3 border-b border-[#262626]/50 last:border-0">
+    <div className="flex items-center justify-between py-3 border-b border-[#E5E7EB]/50 last:border-0">
       <div className="flex items-center gap-4">
         <div>
-          <p className="text-sm text-[#FAFAFA]">
+          <p className="text-sm text-[#111827]">
             {formatPrice(centsToAmount(invoice.amountDue), invoice.currency)}
           </p>
-          <p className="text-xs text-[#FAFAFA]">
+          <p className="text-xs text-[#111827]">
             {new Date(invoice.createdAt).toLocaleDateString()}
           </p>
         </div>
@@ -193,7 +193,7 @@ function InvoiceRow({ invoice }: { invoice: BillingInvoice }) {
             href={invoice.invoicePdf}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-1.5 text-[#ccc] hover:text-[#FAFAFA] transition-colors"
+            className="p-1.5 text-[#374151] hover:text-[#111827] transition-colors"
           >
             <Download className="w-4 h-4" />
           </a>
@@ -305,7 +305,7 @@ export default function BillingPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin text-[#FAFAFA]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#111827]" />
       </div>
     );
   }
@@ -315,7 +315,7 @@ export default function BillingPage() {
       {/* Back link */}
       <Link
         href="/settings"
-        className="inline-flex items-center gap-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#374151] hover:text-[#111827] transition-colors mb-6"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Settings
@@ -324,10 +324,10 @@ export default function BillingPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#FAFAFA]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#111827]">
             Billing & Subscription
           </h1>
-          <p className="text-[#FAFAFA] text-sm mt-1">
+          <p className="text-[#111827] text-sm mt-1">
             Manage your subscription and payment methods
           </p>
         </div>
@@ -335,7 +335,7 @@ export default function BillingPage() {
           <button
             onClick={handleManageBilling}
             disabled={portalLoading}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#0A0A0A] text-[#FAFAFA] rounded-lg text-sm font-medium hover:bg-[#0A0A0A] transition-all"
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#F8F9FA] text-[#111827] rounded-lg text-sm font-medium hover:bg-[#F8F9FA] transition-all"
           >
             {portalLoading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -363,21 +363,21 @@ export default function BillingPage() {
       )}
 
       {/* Current Plan */}
-      <div className="mb-8 p-6 bg-[#0A0A0A] border border-[#262626] rounded-xl">
+      <div className="mb-8 p-6 bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#CDB49E] to-[#a08c75] flex items-center justify-center">
-              <Crown className="w-6 h-6 text-[#0A0A0A]" />
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#DC2626] to-[#a08c75] flex items-center justify-center">
+              <Crown className="w-6 h-6 text-white" />
             </div>
             <div>
-              <p className="text-sm text-[#FAFAFA]">Current Plan</p>
-              <p className="text-xl font-semibold text-[#FAFAFA] capitalize">
+              <p className="text-sm text-[#111827]">Current Plan</p>
+              <p className="text-xl font-semibold text-[#111827] capitalize">
                 {subscription?.plan || "Free"}
               </p>
             </div>
           </div>
           <div className="text-right">
-            <p className="text-sm text-[#FAFAFA]">Status</p>
+            <p className="text-sm text-[#111827]">Status</p>
             <p className={cn(
               "text-sm font-medium capitalize",
               subscription?.status === "active" ? "text-emerald-400" : "text-amber-400"
@@ -387,7 +387,7 @@ export default function BillingPage() {
           </div>
         </div>
         {subscription?.currentPeriodEnd && (
-          <p className="text-xs text-[#FAFAFA] mt-4">
+          <p className="text-xs text-[#111827] mt-4">
             {subscription.cancelAtPeriodEnd
               ? `Your subscription will end on ${new Date(subscription.currentPeriodEnd).toLocaleDateString()}`
               : `Next billing date: ${new Date(subscription.currentPeriodEnd).toLocaleDateString()}`}
@@ -397,7 +397,7 @@ export default function BillingPage() {
 
       {/* Pricing Plans */}
       <div className="mb-8">
-        <h2 className="text-lg font-semibold text-[#FAFAFA] mb-4">Available Plans</h2>
+        <h2 className="text-lg font-semibold text-[#111827] mb-4">Available Plans</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {PRICING_PLANS.map((plan) => (
             <PlanCard
@@ -414,11 +414,11 @@ export default function BillingPage() {
       {/* Payment Methods */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-[#FAFAFA]">Payment Methods</h2>
+          <h2 className="text-lg font-semibold text-[#111827]">Payment Methods</h2>
           {stripeConfigured && (
             <button
               onClick={handleManageBilling}
-              className="text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors"
+              className="text-sm text-[#374151] hover:text-[#111827] transition-colors"
             >
               Add Payment Method
             </button>
@@ -431,10 +431,10 @@ export default function BillingPage() {
             ))}
           </div>
         ) : (
-          <div className="p-8 bg-[#0A0A0A] border border-[#262626] rounded-xl text-center">
-            <CreditCard className="w-10 h-10 text-[#FAFAFA] mx-auto mb-3" />
-            <p className="text-[#FAFAFA] text-sm">No payment methods on file</p>
-            <p className="text-[#FAFAFA] text-xs mt-1">
+          <div className="p-8 bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl text-center">
+            <CreditCard className="w-10 h-10 text-[#111827] mx-auto mb-3" />
+            <p className="text-[#111827] text-sm">No payment methods on file</p>
+            <p className="text-[#111827] text-xs mt-1">
               Add a payment method to upgrade your plan
             </p>
           </div>
@@ -443,18 +443,18 @@ export default function BillingPage() {
 
       {/* Billing History */}
       <div>
-        <h2 className="text-lg font-semibold text-[#FAFAFA] mb-4">Billing History</h2>
+        <h2 className="text-lg font-semibold text-[#111827] mb-4">Billing History</h2>
         {invoices.length > 0 ? (
-          <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-4">
+          <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-4">
             {invoices.map((invoice) => (
               <InvoiceRow key={invoice.id} invoice={invoice} />
             ))}
           </div>
         ) : (
-          <div className="p-8 bg-[#0A0A0A] border border-[#262626] rounded-xl text-center">
-            <FileText className="w-10 h-10 text-[#FAFAFA] mx-auto mb-3" />
-            <p className="text-[#FAFAFA] text-sm">No invoices yet</p>
-            <p className="text-[#FAFAFA] text-xs mt-1">
+          <div className="p-8 bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl text-center">
+            <FileText className="w-10 h-10 text-[#111827] mx-auto mb-3" />
+            <p className="text-[#111827] text-sm">No invoices yet</p>
+            <p className="text-[#111827] text-xs mt-1">
               Your billing history will appear here
             </p>
           </div>
@@ -462,38 +462,38 @@ export default function BillingPage() {
       </div>
 
       {/* Features Comparison */}
-      <div className="mt-8 p-6 bg-[#0A0A0A] border border-[#262626] rounded-xl">
-        <h2 className="text-lg font-semibold text-[#FAFAFA] mb-4">Why Upgrade?</h2>
+      <div className="mt-8 p-6 bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl">
+        <h2 className="text-lg font-semibold text-[#111827] mb-4">Why Upgrade?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-[#161616]/10">
-              <Users className="w-4 h-4 text-[#FAFAFA]" />
+            <div className="p-2 rounded-lg bg-white/10">
+              <Users className="w-4 h-4 text-[#111827]" />
             </div>
             <div>
-              <p className="text-sm font-medium text-[#FAFAFA]">Unlimited Users</p>
-              <p className="text-xs text-[#FAFAFA] mt-1">
+              <p className="text-sm font-medium text-[#111827]">Unlimited Users</p>
+              <p className="text-xs text-[#111827] mt-1">
                 Add your entire team without per-seat fees
               </p>
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-[#161616]/10">
-              <Code className="w-4 h-4 text-[#FAFAFA]" />
+            <div className="p-2 rounded-lg bg-white/10">
+              <Code className="w-4 h-4 text-[#111827]" />
             </div>
             <div>
-              <p className="text-sm font-medium text-[#FAFAFA]">API Access</p>
-              <p className="text-xs text-[#FAFAFA] mt-1">
+              <p className="text-sm font-medium text-[#111827]">API Access</p>
+              <p className="text-xs text-[#111827] mt-1">
                 Connect Atlas to your other tools
               </p>
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-[#161616]/10">
-              <Shield className="w-4 h-4 text-[#FAFAFA]" />
+            <div className="p-2 rounded-lg bg-white/10">
+              <Shield className="w-4 h-4 text-[#111827]" />
             </div>
             <div>
-              <p className="text-sm font-medium text-[#FAFAFA]">Priority Support</p>
-              <p className="text-xs text-[#FAFAFA] mt-1">
+              <p className="text-sm font-medium text-[#111827]">Priority Support</p>
+              <p className="text-xs text-[#111827] mt-1">
                 Get help when you need it most
               </p>
             </div>

@@ -44,7 +44,7 @@ interface CreditNote {
 }
 
 const statusConfig = {
-  draft: { label: 'Draft', color: 'bg-[#333]/20 text-[#999]', icon: FileText },
+  draft: { label: 'Draft', color: 'bg-gray-100 text-[#6B7280]', icon: FileText },
   issued: { label: 'Issued', color: 'bg-blue-500/20 text-blue-400', icon: CheckCircle },
   applied: { label: 'Applied', color: 'bg-green-500/20 text-green-400', icon: ArrowRight },
   voided: { label: 'Voided', color: 'bg-red-500/20 text-red-400', icon: XCircle },
@@ -120,7 +120,7 @@ export default function CreditNotesPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-[#FAFAFA]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#111827]" />
       </div>
     );
   }
@@ -131,18 +131,18 @@ export default function CreditNotesPage() {
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <Link href="/invoices" className="text-[#FAFAFA] hover:text-white">
+            <Link href="/invoices" className="text-[#111827] hover:text-white">
               Invoices
             </Link>
-            <span className="text-[#FAFAFA]">/</span>
+            <span className="text-[#111827]">/</span>
             <span className="text-white">Credit Notes</span>
           </div>
           <h1 className="text-2xl font-bold text-white mt-1">Credit Notes</h1>
-          <p className="text-[#FAFAFA]">
+          <p className="text-[#111827]">
             Issue refunds and credits to customers
           </p>
         </div>
-        <Button className="bg-gradient-to-r from-[#CDB49E] to-[#B89B78] text-[#0A0A0A]">
+        <Button className="bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white">
           <Plus className="h-4 w-4 mr-2" />
           New Credit Note
         </Button>
@@ -150,27 +150,27 @@ export default function CreditNotesPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
-        <Card className="bg-[#0A0A0A] border-[#262626]">
+        <Card className="bg-[#F8F9FA] border-[#E5E7EB]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#FAFAFA] mb-1">
+            <div className="flex items-center gap-2 text-[#111827] mb-1">
               <ReceiptText className="h-4 w-4" />
               <span className="text-sm">Total Credit Notes</span>
             </div>
             <p className="text-2xl font-bold text-white">{creditNotes.length}</p>
           </CardContent>
         </Card>
-        <Card className="bg-[#0A0A0A] border-[#262626]">
+        <Card className="bg-[#F8F9FA] border-[#E5E7EB]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#FAFAFA] mb-1">
+            <div className="flex items-center gap-2 text-[#111827] mb-1">
               <Clock className="h-4 w-4" />
               <span className="text-sm">Outstanding</span>
             </div>
             <p className="text-2xl font-bold text-amber-400">{formatCurrency(totalIssued)}</p>
           </CardContent>
         </Card>
-        <Card className="bg-[#0A0A0A] border-[#262626]">
+        <Card className="bg-[#F8F9FA] border-[#E5E7EB]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#FAFAFA] mb-1">
+            <div className="flex items-center gap-2 text-[#111827] mb-1">
               <CheckCircle className="h-4 w-4" />
               <span className="text-sm">Applied</span>
             </div>
@@ -181,35 +181,35 @@ export default function CreditNotesPage() {
 
       {/* Search */}
       <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#FAFAFA]" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#111827]" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search credit notes..."
-          className="pl-10 bg-[#0A0A0A] border-[#262626] text-white"
+          className="pl-10 bg-[#F8F9FA] border-[#E5E7EB] text-white"
         />
       </div>
 
       {/* Table */}
-      <Card className="bg-[#0A0A0A] border-[#262626]">
+      <Card className="bg-[#F8F9FA] border-[#E5E7EB]">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow className="border-[#262626] hover:bg-transparent">
-                <TableHead className="text-[#FAFAFA]">Credit Note #</TableHead>
-                <TableHead className="text-[#FAFAFA]">Customer</TableHead>
-                <TableHead className="text-[#FAFAFA]">Status</TableHead>
-                <TableHead className="text-[#FAFAFA]">Date</TableHead>
-                <TableHead className="text-[#FAFAFA]">Reason</TableHead>
-                <TableHead className="text-[#FAFAFA] text-right">Amount</TableHead>
-                <TableHead className="text-[#FAFAFA] text-right">Applied</TableHead>
+              <TableRow className="border-[#E5E7EB] hover:bg-transparent">
+                <TableHead className="text-[#111827]">Credit Note #</TableHead>
+                <TableHead className="text-[#111827]">Customer</TableHead>
+                <TableHead className="text-[#111827]">Status</TableHead>
+                <TableHead className="text-[#111827]">Date</TableHead>
+                <TableHead className="text-[#111827]">Reason</TableHead>
+                <TableHead className="text-[#111827] text-right">Amount</TableHead>
+                <TableHead className="text-[#111827] text-right">Applied</TableHead>
                 <TableHead className="w-12"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filtered.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-12 text-[#FAFAFA]">
+                  <TableCell colSpan={8} className="text-center py-12 text-[#111827]">
                     <ReceiptText className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>No credit notes</p>
                     <p className="text-sm">Create one to issue a refund</p>
@@ -222,11 +222,11 @@ export default function CreditNotesPage() {
                   const remaining = cn.total - cn.amount_applied;
 
                   return (
-                    <TableRow key={cn.id} className="border-[#262626] hover:bg-[#0A0A0A]/50">
+                    <TableRow key={cn.id} className="border-[#E5E7EB] hover:bg-[#F8F9FA]/50">
                       <TableCell className="text-white font-medium">
                         {cn.credit_note_number}
                       </TableCell>
-                      <TableCell className="text-[#FAFAFA]">
+                      <TableCell className="text-[#111827]">
                         {cn.contact_name}
                       </TableCell>
                       <TableCell>
@@ -235,10 +235,10 @@ export default function CreditNotesPage() {
                           {status.label}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-[#FAFAFA]">
+                      <TableCell className="text-[#111827]">
                         {new Date(cn.issue_date).toLocaleDateString()}
                       </TableCell>
-                      <TableCell className="text-[#FAFAFA] max-w-[200px] truncate">
+                      <TableCell className="text-[#111827] max-w-[200px] truncate">
                         {cn.reason || '-'}
                       </TableCell>
                       <TableCell className="text-right text-white font-medium">
@@ -247,7 +247,7 @@ export default function CreditNotesPage() {
                       <TableCell className="text-right">
                         <span className="text-green-400">{formatCurrency(cn.amount_applied)}</span>
                         {remaining > 0 && (
-                          <span className="text-[#FAFAFA] text-sm ml-1">
+                          <span className="text-[#111827] text-sm ml-1">
                             ({formatCurrency(remaining)} left)
                           </span>
                         )}
@@ -259,7 +259,7 @@ export default function CreditNotesPage() {
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-[#0A0A0A] border-[#262626]">
+                          <DropdownMenuContent align="end" className="bg-[#F8F9FA] border-[#E5E7EB]">
                             <DropdownMenuItem>
                               <Eye className="h-4 w-4 mr-2" />
                               View
@@ -270,7 +270,7 @@ export default function CreditNotesPage() {
                                 Apply to Invoice
                               </DropdownMenuItem>
                             )}
-                            <DropdownMenuSeparator className="bg-[#0A0A0A]" />
+                            <DropdownMenuSeparator className="bg-[#F8F9FA]" />
                             <DropdownMenuItem
                               onClick={() => deleteCreditNote(cn.id)}
                               className="text-red-400"

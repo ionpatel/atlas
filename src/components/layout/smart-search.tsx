@@ -53,30 +53,30 @@ function SearchResultItem({
       onClick={onClick}
       className={cn(
         "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors",
-        isSelected ? "bg-[#1A1A1A]" : "hover:bg-[#0A0A0A]"
+        isSelected ? "bg-[#F1F3F5]" : "hover:bg-[#F8F9FA]"
       )}
     >
       <div
         className={cn(
           "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
           result.type === "action"
-            ? "bg-[#161616]/10"
-            : "bg-[#0A0A0A]"
+            ? "bg-white/10"
+            : "bg-[#F8F9FA]"
         )}
       >
         <Icon
           className={cn(
             "w-4 h-4",
-            result.type === "action" ? "text-[#FAFAFA]" : "text-[#FAFAFA]"
+            result.type === "action" ? "text-[#111827]" : "text-[#111827]"
           )}
         />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-[#FAFAFA] truncate">
+        <p className="text-sm font-medium text-[#111827] truncate">
           {result.title}
         </p>
         {(result.subtitle || result.description) && (
-          <p className="text-xs text-[#FAFAFA] truncate">
+          <p className="text-xs text-[#111827] truncate">
             {result.subtitle}
             {result.subtitle && result.description && " • "}
             {result.description}
@@ -84,7 +84,7 @@ function SearchResultItem({
         )}
       </div>
       {result.type === "action" && (
-        <ArrowRight className="w-4 h-4 text-[#FAFAFA]" />
+        <ArrowRight className="w-4 h-4 text-[#111827]" />
       )}
     </button>
   );
@@ -205,16 +205,16 @@ export function SmartSearch({ className }: { className?: string }) {
       <button
         onClick={() => setIsOpen(true)}
         className={cn(
-          "flex items-center gap-3 px-4 py-2.5 bg-[#0A0A0A] border-2 border-[#262626] rounded-xl",
-          "hover:border-[#262626]/50 hover:shadow-lg hover:shadow-[#CDB49E]/10 hover:-translate-y-0.5",
-          "active:translate-y-0 active:shadow-md active:border-[#262626]",
+          "flex items-center gap-3 px-4 py-2.5 bg-[#F8F9FA] border-2 border-[#E5E7EB] rounded-xl",
+          "hover:border-[#E5E7EB]/50 hover:shadow-lg hover:shadow-soft hover:-translate-y-0.5",
+          "active:translate-y-0 active:shadow-md active:border-[#E5E7EB]",
           "transition-all duration-200 ease-out group",
           className
         )}
       >
-        <Search className="w-4 h-4 text-[#FAFAFA]" />
-        <span className="text-sm text-[#FAFAFA] group-hover:text-[#FAFAFA] transition-colors flex-1 text-left">Search anything...</span>
-        <kbd className="px-2.5 py-1 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[11px] font-semibold text-[#FAFAFA]">
+        <Search className="w-4 h-4 text-[#111827]" />
+        <span className="text-sm text-[#111827] group-hover:text-[#111827] transition-colors flex-1 text-left">Search anything...</span>
+        <kbd className="px-2.5 py-1 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-[11px] font-semibold text-[#111827]">
           ⌘K
         </kbd>
       </button>
@@ -225,19 +225,19 @@ export function SmartSearch({ className }: { className?: string }) {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 z-50"
+        className="fixed inset-0 bg-black/20 z-50"
         onClick={() => setIsOpen(false)}
       />
 
       {/* Search Modal */}
       <div className="fixed top-[20%] left-1/2 -translate-x-1/2 w-full max-w-2xl z-50">
-        <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl shadow-2xl overflow-hidden">
+        <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl shadow-2xl overflow-hidden">
           {/* Search Input */}
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-[#262626]">
+          <div className="flex items-center gap-3 px-4 py-3 border-b border-[#E5E7EB]">
             {loading ? (
-              <Loader2 className="w-5 h-5 text-[#FAFAFA] animate-spin" />
+              <Loader2 className="w-5 h-5 text-[#111827] animate-spin" />
             ) : (
-              <Sparkles className="w-5 h-5 text-[#FAFAFA]" />
+              <Sparkles className="w-5 h-5 text-[#111827]" />
             )}
             <input
               ref={inputRef}
@@ -246,17 +246,17 @@ export function SmartSearch({ className }: { className?: string }) {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Search anything... try 'overdue invoices' or 'low stock'"
-              className="flex-1 bg-transparent text-[#FAFAFA] text-sm placeholder-[#555555] focus:outline-none"
+              className="flex-1 bg-transparent text-[#111827] text-sm placeholder-[#9CA3AF] focus:outline-none"
             />
             {query && (
               <button
                 onClick={() => setQuery("")}
-                className="p-1 text-[#ccc] hover:text-[#FAFAFA] transition-colors"
+                className="p-1 text-[#374151] hover:text-[#111827] transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
             )}
-            <kbd className="px-2 py-1 bg-[#0A0A0A] border border-[#262626] rounded text-xs text-[#FAFAFA]">
+            <kbd className="px-2 py-1 bg-[#F8F9FA] border border-[#E5E7EB] rounded text-xs text-[#111827]">
               ESC
             </kbd>
           </div>
@@ -265,7 +265,7 @@ export function SmartSearch({ className }: { className?: string }) {
           <div className="max-h-[400px] overflow-y-auto">
             {results.length > 0 ? (
               <div className="py-2">
-                <p className="px-4 py-2 text-[10px] font-medium text-[#FAFAFA] uppercase tracking-wider">
+                <p className="px-4 py-2 text-[10px] font-medium text-[#111827] uppercase tracking-wider">
                   Results
                 </p>
                 {results.map((result, index) => (
@@ -279,9 +279,9 @@ export function SmartSearch({ className }: { className?: string }) {
               </div>
             ) : query ? (
               <div className="py-8 text-center">
-                <Search className="w-10 h-10 text-[#FAFAFA] mx-auto mb-3" />
-                <p className="text-sm text-[#FAFAFA]">No results found</p>
-                <p className="text-xs text-[#FAFAFA] mt-1">
+                <Search className="w-10 h-10 text-[#111827] mx-auto mb-3" />
+                <p className="text-sm text-[#111827]">No results found</p>
+                <p className="text-xs text-[#111827] mt-1">
                   Try a different search term
                 </p>
               </div>
@@ -289,8 +289,8 @@ export function SmartSearch({ className }: { className?: string }) {
               <>
                 {/* Recent Searches */}
                 {recentSearches.length > 0 && (
-                  <div className="py-2 border-b border-[#262626]">
-                    <p className="px-4 py-2 text-[10px] font-medium text-[#FAFAFA] uppercase tracking-wider">
+                  <div className="py-2 border-b border-[#E5E7EB]">
+                    <p className="px-4 py-2 text-[10px] font-medium text-[#111827] uppercase tracking-wider">
                       Recent
                     </p>
                     {recentSearches.map((search, index) => (
@@ -299,11 +299,11 @@ export function SmartSearch({ className }: { className?: string }) {
                         onClick={() => setQuery(search)}
                         className={cn(
                           "w-full flex items-center gap-3 px-4 py-2 text-left transition-colors",
-                          "hover:bg-[#0A0A0A]"
+                          "hover:bg-[#F8F9FA]"
                         )}
                       >
-                        <Clock className="w-4 h-4 text-[#FAFAFA]" />
-                        <span className="text-sm text-[#FAFAFA]">{search}</span>
+                        <Clock className="w-4 h-4 text-[#111827]" />
+                        <span className="text-sm text-[#111827]">{search}</span>
                       </button>
                     ))}
                   </div>
@@ -311,7 +311,7 @@ export function SmartSearch({ className }: { className?: string }) {
 
                 {/* Suggestions */}
                 <div className="py-2">
-                  <p className="px-4 py-2 text-[10px] font-medium text-[#FAFAFA] uppercase tracking-wider">
+                  <p className="px-4 py-2 text-[10px] font-medium text-[#111827] uppercase tracking-wider">
                     Try searching for
                   </p>
                   {suggestions.map((suggestion, index) => (
@@ -320,11 +320,11 @@ export function SmartSearch({ className }: { className?: string }) {
                       onClick={() => setQuery(suggestion)}
                       className={cn(
                         "w-full flex items-center gap-3 px-4 py-2 text-left transition-colors",
-                        index === selectedIndex ? "bg-[#0A0A0A]" : "hover:bg-[#0A0A0A]"
+                        index === selectedIndex ? "bg-[#F8F9FA]" : "hover:bg-[#F8F9FA]"
                       )}
                     >
-                      <Search className="w-4 h-4 text-[#FAFAFA]" />
-                      <span className="text-sm text-[#FAFAFA]">{suggestion}</span>
+                      <Search className="w-4 h-4 text-[#111827]" />
+                      <span className="text-sm text-[#111827]">{suggestion}</span>
                     </button>
                   ))}
                 </div>
@@ -333,20 +333,20 @@ export function SmartSearch({ className }: { className?: string }) {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between px-4 py-2.5 border-t border-[#262626] bg-[#0A0A0A]">
-            <div className="flex items-center gap-4 text-[10px] text-[#FAFAFA]">
+          <div className="flex items-center justify-between px-4 py-2.5 border-t border-[#E5E7EB] bg-[#F8F9FA]">
+            <div className="flex items-center gap-4 text-[10px] text-[#111827]">
               <span className="flex items-center gap-1">
-                <kbd className="px-1 py-0.5 bg-[#0A0A0A] rounded">↑↓</kbd> navigate
+                <kbd className="px-1 py-0.5 bg-[#F8F9FA] rounded">↑↓</kbd> navigate
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1 py-0.5 bg-[#0A0A0A] rounded">↵</kbd> select
+                <kbd className="px-1 py-0.5 bg-[#F8F9FA] rounded">↵</kbd> select
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1 py-0.5 bg-[#0A0A0A] rounded">esc</kbd> close
+                <kbd className="px-1 py-0.5 bg-[#F8F9FA] rounded">esc</kbd> close
               </span>
             </div>
-            <div className="flex items-center gap-1 text-[10px] text-[#FAFAFA]">
-              <Sparkles className="w-3 h-3 text-[#FAFAFA]" />
+            <div className="flex items-center gap-1 text-[10px] text-[#111827]">
+              <Sparkles className="w-3 h-3 text-[#111827]" />
               AI-powered search
             </div>
           </div>
@@ -380,12 +380,12 @@ export function MiniSearch({ className }: { className?: string }) {
     <button
       onClick={() => setIsOpen(true)}
       className={cn(
-        "flex items-center gap-2 px-3 py-1.5 bg-[#0A0A0A] border border-[#262626] rounded-lg hover:border-[#3a3a3a] transition-all",
+        "flex items-center gap-2 px-3 py-1.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg hover:border-[#3a3a3a] transition-all",
         className
       )}
     >
-      <Search className="w-3.5 h-3.5 text-[#FAFAFA]" />
-      <span className="text-xs text-[#FAFAFA] hidden sm:inline">⌘K</span>
+      <Search className="w-3.5 h-3.5 text-[#111827]" />
+      <span className="text-xs text-[#111827] hidden sm:inline">⌘K</span>
     </button>
   );
 }

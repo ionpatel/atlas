@@ -38,7 +38,7 @@ export const ValidatedInput = forwardRef<HTMLInputElement, ValidatedInputProps>(
             ref={ref}
             id={inputId}
             className={cn(
-              "bg-[#1A1A1A] border-[#333333] text-white transition-colors",
+              "bg-[#F1F3F5] border-[#D1D5DB] text-white transition-colors",
               hasError && "border-red-500 focus-visible:ring-red-500",
               isValid && "border-green-500 pr-10",
               className
@@ -61,7 +61,7 @@ export const ValidatedInput = forwardRef<HTMLInputElement, ValidatedInputProps>(
           </p>
         )}
         {hint && !hasError && (
-          <p id={`${inputId}-hint`} className="text-xs text-[#888888]">
+          <p id={`${inputId}-hint`} className="text-xs text-[#9CA3AF]">
             {hint}
           </p>
         )}
@@ -102,8 +102,8 @@ export const ValidatedSelect = forwardRef<HTMLSelectElement, ValidatedSelectProp
           ref={ref}
           id={selectId}
           className={cn(
-            "w-full h-10 px-3 rounded-md bg-[#1A1A1A] border border-[#333333] text-white text-sm",
-            "focus:outline-none focus:ring-2 focus:ring-[#CDB49E] focus:border-transparent",
+            "w-full h-10 px-3 rounded-md bg-[#F1F3F5] border border-[#D1D5DB] text-white text-sm",
+            "focus:outline-none focus:ring-2 focus:ring-[#DC2626] focus:border-transparent",
             hasError && "border-red-500 focus:ring-red-500",
             className
           )}
@@ -160,7 +160,7 @@ export const ValidatedTextarea = forwardRef<HTMLTextAreaElement, ValidatedTextar
             {showCount && maxLength && (
               <span className={cn(
                 "text-xs",
-                charCount > maxLength ? "text-red-400" : "text-[#888888]"
+                charCount > maxLength ? "text-red-400" : "text-[#9CA3AF]"
               )}>
                 {charCount}/{maxLength}
               </span>
@@ -172,8 +172,8 @@ export const ValidatedTextarea = forwardRef<HTMLTextAreaElement, ValidatedTextar
           id={textareaId}
           value={value}
           className={cn(
-            "w-full min-h-[100px] px-3 py-2 rounded-md bg-[#1A1A1A] border border-[#333333] text-white text-sm resize-y",
-            "focus:outline-none focus:ring-2 focus:ring-[#CDB49E] focus:border-transparent",
+            "w-full min-h-[100px] px-3 py-2 rounded-md bg-[#F1F3F5] border border-[#D1D5DB] text-white text-sm resize-y",
+            "focus:outline-none focus:ring-2 focus:ring-[#DC2626] focus:border-transparent",
             hasError && "border-red-500 focus:ring-red-500",
             className
           )}

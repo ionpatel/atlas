@@ -51,8 +51,8 @@ function ToggleSwitch({
       onClick={onToggle}
       disabled={disabled}
       className={cn(
-        "relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/50 focus:ring-offset-2 focus:ring-offset-[#0A0A0A]",
-        enabled ? "bg-[#161616]" : "bg-[#0A0A0A]",
+        "relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#DC2626]/50 focus:ring-offset-2 focus:ring-offset-white",
+        enabled ? "bg-white" : "bg-[#F8F9FA]",
         disabled && "opacity-50 cursor-not-allowed"
       )}
     >
@@ -90,14 +90,14 @@ function NotificationRow({
   disabled,
 }: NotificationRowProps) {
   return (
-    <div className="flex items-center justify-between py-4 border-b border-[#262626]/50 last:border-0">
+    <div className="flex items-center justify-between py-4 border-b border-[#E5E7EB]/50 last:border-0">
       <div className="flex items-center gap-4">
         <div className={cn("p-2.5 rounded-lg", iconBg)}>
           <Icon className={cn("w-5 h-5", iconColor)} />
         </div>
         <div>
-          <h3 className="text-sm font-medium text-[#FAFAFA]">{title}</h3>
-          <p className="text-xs text-[#FAFAFA] mt-0.5">{description}</p>
+          <h3 className="text-sm font-medium text-[#111827]">{title}</h3>
+          <p className="text-xs text-[#111827] mt-0.5">{description}</p>
         </div>
       </div>
       <ToggleSwitch enabled={enabled} onToggle={onToggle} disabled={disabled} />
@@ -145,8 +145,8 @@ function DigestSelector({ value, onChange, disabled }: DigestSelectorProps) {
           className={cn(
             "flex flex-col items-center gap-2 p-4 rounded-xl border transition-all",
             value === option.id
-              ? "bg-[rgba(156,74,41,0.15)] border-[#262626]/30 text-[#FAFAFA]"
-              : "bg-[#0A0A0A] border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:border-[#3a3a3a]",
+              ? "bg-[rgba(156,74,41,0.15)] border-[#E5E7EB]/30 text-[#111827]"
+              : "bg-[#F8F9FA] border-[#E5E7EB] text-[#374151] hover:text-[#111827] hover:border-[#3a3a3a]",
             disabled && "opacity-50 cursor-not-allowed"
           )}
         >
@@ -199,28 +199,28 @@ function TestEmailModal({ isOpen, onClose }: TestEmailModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl w-full max-w-md p-6 shadow-2xl">
+    <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50 p-4">
+      <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl w-full max-w-md p-6 shadow-2xl">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-2 rounded-lg bg-blue-500/10">
             <Send className="w-5 h-5 text-blue-400" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-[#FAFAFA]">Send Test Email</h3>
-            <p className="text-xs text-[#FAFAFA]">Verify your email configuration</p>
+            <h3 className="text-lg font-semibold text-[#111827]">Send Test Email</h3>
+            <p className="text-xs text-[#111827]">Verify your email configuration</p>
           </div>
         </div>
 
         {status === "success" ? (
           <div className="flex flex-col items-center py-8">
             <CheckCircle2 className="w-12 h-12 text-emerald-400 mb-3" />
-            <p className="text-sm text-[#FAFAFA]">Test email sent successfully!</p>
-            <p className="text-xs text-[#FAFAFA] mt-1">Check your inbox</p>
+            <p className="text-sm text-[#111827]">Test email sent successfully!</p>
+            <p className="text-xs text-[#111827] mt-1">Check your inbox</p>
           </div>
         ) : (
           <>
             <div className="mb-4">
-              <label className="block text-xs font-medium text-[#FAFAFA] uppercase tracking-wider mb-2">
+              <label className="block text-xs font-medium text-[#111827] uppercase tracking-wider mb-2">
                 Email Address
               </label>
               <input
@@ -228,7 +228,7 @@ function TestEmailModal({ isOpen, onClose }: TestEmailModalProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626]/40 transition-colors"
+                className="w-full px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] placeholder-[#9CA3AF] focus:outline-none focus:border-[#E5E7EB]/40 transition-colors"
                 disabled={status === "sending"}
               />
             </div>
@@ -243,7 +243,7 @@ function TestEmailModal({ isOpen, onClose }: TestEmailModalProps) {
             <div className="flex items-center gap-3">
               <button
                 onClick={onClose}
-                className="flex-1 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+                className="flex-1 px-4 py-2.5 border border-[#E5E7EB] rounded-lg text-sm text-[#374151] hover:text-[#111827] hover:bg-[#F8F9FA] transition-all"
                 disabled={status === "sending"}
               >
                 Cancel
@@ -251,7 +251,7 @@ function TestEmailModal({ isOpen, onClose }: TestEmailModalProps) {
               <button
                 onClick={handleSend}
                 disabled={!email || status === "sending"}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-white text-white rounded-lg text-sm font-semibold hover:bg-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {status === "sending" ? (
                   <>
@@ -403,7 +403,7 @@ export default function NotificationSettingsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin text-[#FAFAFA]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#111827]" />
       </div>
     );
   }
@@ -413,7 +413,7 @@ export default function NotificationSettingsPage() {
       {/* Back link */}
       <Link
         href="/settings"
-        className="inline-flex items-center gap-1.5 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors mb-6"
+        className="inline-flex items-center gap-1.5 text-sm text-[#374151] hover:text-[#111827] transition-colors mb-6"
       >
         <ChevronLeft className="w-4 h-4" />
         Back to Settings
@@ -423,13 +423,13 @@ export default function NotificationSettingsPage() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <div className="p-2 rounded-lg bg-[rgba(156,74,41,0.15)]">
-            <Bell className="w-5 h-5 text-[#FAFAFA]" />
+            <Bell className="w-5 h-5 text-[#111827]" />
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#FAFAFA]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#111827]">
             Email Notifications
           </h1>
         </div>
-        <p className="text-[#FAFAFA] text-sm">
+        <p className="text-[#111827] text-sm">
           Choose which email notifications you'd like to receive.
         </p>
       </div>
@@ -448,13 +448,13 @@ export default function NotificationSettingsPage() {
       )}
 
       {/* Alert Types */}
-      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl mb-6">
-        <div className="px-6 py-4 border-b border-[#262626]">
-          <h2 className="text-sm font-semibold text-[#FAFAFA] flex items-center gap-2">
+      <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl mb-6">
+        <div className="px-6 py-4 border-b border-[#E5E7EB]">
+          <h2 className="text-sm font-semibold text-[#111827] flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-amber-400" />
             Alert Notifications
           </h2>
-          <p className="text-xs text-[#FAFAFA] mt-1">
+          <p className="text-xs text-[#111827] mt-1">
             Get notified about important events in your business.
           </p>
         </div>
@@ -490,13 +490,13 @@ export default function NotificationSettingsPage() {
       </div>
 
       {/* Digest Frequency */}
-      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl mb-6">
-        <div className="px-6 py-4 border-b border-[#262626]">
-          <h2 className="text-sm font-semibold text-[#FAFAFA] flex items-center gap-2">
+      <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl mb-6">
+        <div className="px-6 py-4 border-b border-[#E5E7EB]">
+          <h2 className="text-sm font-semibold text-[#111827] flex items-center gap-2">
             <Clock className="w-4 h-4 text-violet-400" />
             Email Digest Frequency
           </h2>
-          <p className="text-xs text-[#FAFAFA] mt-1">
+          <p className="text-xs text-[#111827] mt-1">
             How often should we send you summary emails?
           </p>
         </div>
@@ -509,22 +509,22 @@ export default function NotificationSettingsPage() {
       </div>
 
       {/* Test Email */}
-      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl mb-6">
+      <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl mb-6">
         <div className="px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-[#0A0A0A]">
-              <Mail className="w-5 h-5 text-[#FAFAFA]" />
+            <div className="p-2 rounded-lg bg-[#F8F9FA]">
+              <Mail className="w-5 h-5 text-[#111827]" />
             </div>
             <div>
-              <h3 className="text-sm font-medium text-[#FAFAFA]">Test Email Configuration</h3>
-              <p className="text-xs text-[#FAFAFA] mt-0.5">
+              <h3 className="text-sm font-medium text-[#111827]">Test Email Configuration</h3>
+              <p className="text-xs text-[#111827] mt-0.5">
                 Send a test email to verify your setup is working
               </p>
             </div>
           </div>
           <button
             onClick={() => setShowTestModal(true)}
-            className="flex items-center gap-2 px-4 py-2 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+            className="flex items-center gap-2 px-4 py-2 border border-[#E5E7EB] rounded-lg text-sm text-[#374151] hover:text-[#111827] hover:bg-[#F8F9FA] transition-all"
           >
             <Send className="w-4 h-4" />
             Send Test
@@ -533,7 +533,7 @@ export default function NotificationSettingsPage() {
       </div>
 
       {/* Save Button */}
-      <div className="flex items-center justify-between pt-4 border-t border-[#262626]">
+      <div className="flex items-center justify-between pt-4 border-t border-[#E5E7EB]">
         <div className="flex items-center gap-2">
           {saveStatus === "saved" && (
             <span className="flex items-center gap-1.5 text-sm text-emerald-400">
@@ -551,7 +551,7 @@ export default function NotificationSettingsPage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-2 px-5 py-2.5 bg-white text-white rounded-lg text-sm font-semibold hover:bg-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {saving ? (
             <>

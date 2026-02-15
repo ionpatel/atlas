@@ -83,7 +83,7 @@ export const LEAVE_STATUS_STYLES: Record<LeaveStatus, { label: string; bgColor: 
   pending: { label: "Pending", bgColor: "bg-amber-500/10", textColor: "text-amber-400", borderColor: "border-amber-500/20" },
   approved: { label: "Approved", bgColor: "bg-emerald-500/10", textColor: "text-emerald-400", borderColor: "border-emerald-500/20" },
   rejected: { label: "Rejected", bgColor: "bg-red-500/10", textColor: "text-red-400", borderColor: "border-red-500/20" },
-  cancelled: { label: "Cancelled", bgColor: "bg-[#222222]", textColor: "text-[#888888]", borderColor: "border-[#2a2a2a]" },
+  cancelled: { label: "Cancelled", bgColor: "bg-[#222222]", textColor: "text-[#9CA3AF]", borderColor: "border-[#2a2a2a]" },
 };
 
 export const useLeaveStore = create<LeaveState>((set, get) => ({

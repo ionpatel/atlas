@@ -294,7 +294,7 @@ export default function WebhooksPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-[#FAFAFA]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#111827]" />
       </div>
     );
   }
@@ -305,13 +305,13 @@ export default function WebhooksPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Webhooks</h1>
-          <p className="text-[#999999] mt-1">
+          <p className="text-[#6B7280] mt-1">
             Receive real-time notifications when events happen in your account
           </p>
         </div>
         <Button 
           onClick={openCreateDialog}
-          className="bg-[#161616] hover:bg-[#1A1A1A]/90 text-black"
+          className="bg-white hover:bg-[#F1F3F5]/90 text-black"
         >
           <Plus className="h-4 w-4 mr-2" />
           Create Webhook
@@ -319,19 +319,19 @@ export default function WebhooksPage() {
       </div>
 
       {/* Webhooks List */}
-      <Card className="bg-[#111111] border-[#262626]">
+      <Card className="bg-white border-[#E5E7EB]">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Webhook className="h-5 w-5 text-[#FAFAFA]" />
+            <Webhook className="h-5 w-5 text-[#111827]" />
             Configured Webhooks
           </CardTitle>
-          <CardDescription className="text-[#999999]">
+          <CardDescription className="text-[#6B7280]">
             {webhooks.length} webhook{webhooks.length !== 1 ? 's' : ''} configured
           </CardDescription>
         </CardHeader>
         <CardContent>
           {webhooks.length === 0 ? (
-            <div className="text-center py-8 text-[#888888]">
+            <div className="text-center py-8 text-[#9CA3AF]">
               <Webhook className="h-12 w-12 mx-auto mb-4 opacity-50" />
               <p>No webhooks configured yet</p>
               <p className="text-sm">Create your first webhook to receive event notifications</p>
@@ -347,7 +347,7 @@ export default function WebhooksPage() {
                     if (open) loadDeliveries(webhook.id);
                   }}
                 >
-                  <div className="border border-[#262626] rounded-lg p-4">
+                  <div className="border border-[#E5E7EB] rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         <Switch
@@ -356,7 +356,7 @@ export default function WebhooksPage() {
                         />
                         <div>
                           <h3 className="text-white font-medium">{webhook.name}</h3>
-                          <p className="text-sm text-[#888888] truncate max-w-md">
+                          <p className="text-sm text-[#9CA3AF] truncate max-w-md">
                             {webhook.url}
                           </p>
                         </div>
@@ -370,12 +370,12 @@ export default function WebhooksPage() {
                         )}
                         <div className="flex gap-1">
                           {webhook.events.slice(0, 2).map(event => (
-                            <Badge key={event} variant="outline" className="border-[#333333] text-xs">
+                            <Badge key={event} variant="outline" className="border-[#D1D5DB] text-xs">
                               {event}
                             </Badge>
                           ))}
                           {webhook.events.length > 2 && (
-                            <Badge variant="outline" className="border-[#333333] text-xs">
+                            <Badge variant="outline" className="border-[#D1D5DB] text-xs">
                               +{webhook.events.length - 2}
                             </Badge>
                           )}
@@ -418,21 +418,21 @@ export default function WebhooksPage() {
                     </div>
 
                     <CollapsibleContent className="mt-4">
-                      <div className="border-t border-[#262626] pt-4">
+                      <div className="border-t border-[#E5E7EB] pt-4">
                         <h4 className="text-sm font-medium text-white mb-2">Recent Deliveries</h4>
                         {deliveries[webhook.id]?.length ? (
                           <Table>
                             <TableHeader>
-                              <TableRow className="border-[#262626]">
-                                <TableHead className="text-[#999999]">Event</TableHead>
-                                <TableHead className="text-[#999999]">Status</TableHead>
-                                <TableHead className="text-[#999999]">Time</TableHead>
-                                <TableHead className="text-[#999999]">Attempts</TableHead>
+                              <TableRow className="border-[#E5E7EB]">
+                                <TableHead className="text-[#6B7280]">Event</TableHead>
+                                <TableHead className="text-[#6B7280]">Status</TableHead>
+                                <TableHead className="text-[#6B7280]">Time</TableHead>
+                                <TableHead className="text-[#6B7280]">Attempts</TableHead>
                               </TableRow>
                             </TableHeader>
                             <TableBody>
                               {deliveries[webhook.id].map((delivery) => (
-                                <TableRow key={delivery.id} className="border-[#262626]">
+                                <TableRow key={delivery.id} className="border-[#E5E7EB]">
                                   <TableCell className="text-white">{delivery.event_type}</TableCell>
                                   <TableCell>
                                     {delivery.success ? (
@@ -447,10 +447,10 @@ export default function WebhooksPage() {
                                       </Badge>
                                     )}
                                   </TableCell>
-                                  <TableCell className="text-[#999999]">
+                                  <TableCell className="text-[#6B7280]">
                                     {new Date(delivery.created_at).toLocaleString()}
                                   </TableCell>
-                                  <TableCell className="text-[#999999]">
+                                  <TableCell className="text-[#6B7280]">
                                     {delivery.attempt_count}
                                   </TableCell>
                                 </TableRow>
@@ -458,7 +458,7 @@ export default function WebhooksPage() {
                             </TableBody>
                           </Table>
                         ) : (
-                          <p className="text-[#888888] text-sm">No deliveries yet</p>
+                          <p className="text-[#9CA3AF] text-sm">No deliveries yet</p>
                         )}
                       </div>
                     </CollapsibleContent>
@@ -472,12 +472,12 @@ export default function WebhooksPage() {
 
       {/* Create/Edit Dialog */}
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="bg-[#111111] border-[#262626] max-w-2xl">
+        <DialogContent className="bg-white border-[#E5E7EB] max-w-2xl">
           <DialogHeader>
             <DialogTitle className="text-white">
               {editing ? 'Edit Webhook' : 'Create Webhook'}
             </DialogTitle>
-            <DialogDescription className="text-[#999999]">
+            <DialogDescription className="text-[#6B7280]">
               {editing 
                 ? 'Update your webhook configuration'
                 : 'Configure a new webhook endpoint to receive event notifications'
@@ -494,7 +494,7 @@ export default function WebhooksPage() {
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
                   placeholder="My Webhook"
-                  className="bg-[#1A1A1A] border-[#333333] text-white"
+                  className="bg-[#F1F3F5] border-[#D1D5DB] text-white"
                 />
               </div>
               <div className="space-y-2">
@@ -504,7 +504,7 @@ export default function WebhooksPage() {
                   value={formUrl}
                   onChange={(e) => setFormUrl(e.target.value)}
                   placeholder="https://api.example.com/webhooks"
-                  className="bg-[#1A1A1A] border-[#333333] text-white"
+                  className="bg-[#F1F3F5] border-[#D1D5DB] text-white"
                 />
               </div>
             </div>
@@ -516,12 +516,12 @@ export default function WebhooksPage() {
                   <Input
                     value={generatedSecret}
                     readOnly
-                    className="bg-[#1A1A1A] border-[#333333] text-white font-mono text-sm"
+                    className="bg-[#F1F3F5] border-[#D1D5DB] text-white font-mono text-sm"
                   />
                   <Button
                     variant="outline"
                     onClick={() => copySecret(generatedSecret)}
-                    className="border-[#333333]"
+                    className="border-[#D1D5DB]"
                   >
                     <Copy className="h-4 w-4" />
                   </Button>
@@ -534,7 +534,7 @@ export default function WebhooksPage() {
 
             <div className="space-y-2">
               <Label className="text-white">Events to subscribe</Label>
-              <div className="grid grid-cols-2 gap-4 p-4 bg-[#161616] rounded-lg max-h-64 overflow-y-auto">
+              <div className="grid grid-cols-2 gap-4 p-4 bg-white rounded-lg max-h-64 overflow-y-auto">
                 {Object.entries(
                   EVENT_TYPES.reduce((acc, event) => {
                     if (!acc[event.category]) acc[event.category] = [];
@@ -543,7 +543,7 @@ export default function WebhooksPage() {
                   }, {} as Record<string, typeof EVENT_TYPES>)
                 ).map(([category, events]) => (
                   <div key={category}>
-                    <p className="text-sm font-medium text-[#FAFAFA] mb-2">{category}</p>
+                    <p className="text-sm font-medium text-[#111827] mb-2">{category}</p>
                     <div className="space-y-2">
                       {events.map((event) => (
                         <div key={event.value} className="flex items-center gap-2">
@@ -554,7 +554,7 @@ export default function WebhooksPage() {
                           />
                           <label 
                             htmlFor={event.value}
-                            className="text-sm text-[#cccccc] cursor-pointer"
+                            className="text-sm text-[#374151] cursor-pointer"
                           >
                             {event.label}
                           </label>
@@ -585,7 +585,7 @@ export default function WebhooksPage() {
             <Button 
               onClick={saveWebhook}
               disabled={saving || !formName || !formUrl || formEvents.length === 0}
-              className="bg-[#161616] hover:bg-[#1A1A1A]/90 text-black"
+              className="bg-white hover:bg-[#F1F3F5]/90 text-black"
             >
               {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
               {editing ? 'Update' : 'Create'} Webhook

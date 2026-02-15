@@ -30,7 +30,7 @@ const categoryLabels = {
 
 const statusConfig = {
   available: { label: 'Available', class: 'bg-green-500/20 text-green-400', icon: Check },
-  coming_soon: { label: 'Coming Soon', class: 'bg-[#333]/20 text-[#999]', icon: Clock },
+  coming_soon: { label: 'Coming Soon', class: 'bg-gray-100 text-[#6B7280]', icon: Clock },
   connected: { label: 'Connected', class: 'bg-blue-500/20 text-blue-400', icon: Check }
 };
 
@@ -63,14 +63,14 @@ export default function IntegrationsPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-white">Integrations</h1>
-        <p className="text-[#999999] mt-1">
+        <p className="text-[#6B7280] mt-1">
           Connect Atlas with your favorite tools and services
         </p>
       </div>
 
       {/* Connected integrations */}
       {connectedIntegrations.length > 0 && (
-        <Card className="bg-[#111111] border-[#262626]">
+        <Card className="bg-white border-[#E5E7EB]">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
               <Check className="h-5 w-5 text-green-400" />
@@ -82,7 +82,7 @@ export default function IntegrationsPage() {
               {connectedIntegrations.map((integration) => (
                 <div 
                   key={integration.id}
-                  className="flex items-center justify-between p-4 bg-[#161616] rounded-lg border border-[#333333]"
+                  className="flex items-center justify-between p-4 bg-white rounded-lg border border-[#D1D5DB]"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
@@ -118,16 +118,16 @@ export default function IntegrationsPage() {
       {/* Search and filters */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#888888]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9CA3AF]" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search integrations..."
-            className="pl-10 bg-[#111111] border-[#262626] text-white"
+            className="pl-10 bg-white border-[#E5E7EB] text-white"
           />
         </div>
         <Tabs value={category} onValueChange={setCategory}>
-          <TabsList className="bg-[#1A1A1A]">
+          <TabsList className="bg-[#F1F3F5]">
             <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="accounting">Accounting</TabsTrigger>
             <TabsTrigger value="ecommerce">E-commerce</TabsTrigger>
@@ -146,13 +146,13 @@ export default function IntegrationsPage() {
           return (
             <Card 
               key={integration.id}
-              className="bg-[#111111] border-[#262626] hover:border-[#333333] transition-colors cursor-pointer"
+              className="bg-white border-[#E5E7EB] hover:border-[#D1D5DB] transition-colors cursor-pointer"
               onClick={() => setSelectedIntegration(integration)}
             >
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center">
-                    <Plug className="h-6 w-6 text-[#666666]" />
+                    <Plug className="h-6 w-6 text-[#9CA3AF]" />
                   </div>
                   <Badge className={status.class}>
                     <StatusIcon className="h-3 w-3 mr-1" />
@@ -163,18 +163,18 @@ export default function IntegrationsPage() {
                 <h3 className="text-lg font-semibold text-white mb-1">
                   {integration.name}
                 </h3>
-                <p className="text-sm text-[#999999] mb-4">
+                <p className="text-sm text-[#6B7280] mb-4">
                   {integration.description}
                 </p>
 
                 <div className="flex flex-wrap gap-1">
                   {integration.features.slice(0, 2).map((feature, i) => (
-                    <Badge key={i} variant="outline" className="border-[#333333] text-xs">
+                    <Badge key={i} variant="outline" className="border-[#D1D5DB] text-xs">
                       {feature}
                     </Badge>
                   ))}
                   {integration.features.length > 2 && (
-                    <Badge variant="outline" className="border-[#333333] text-xs">
+                    <Badge variant="outline" className="border-[#D1D5DB] text-xs">
                       +{integration.features.length - 2} more
                     </Badge>
                   )}
@@ -186,7 +186,7 @@ export default function IntegrationsPage() {
       </div>
 
       {filteredIntegrations.length === 0 && (
-        <div className="text-center py-12 text-[#888888]">
+        <div className="text-center py-12 text-[#9CA3AF]">
           <Plug className="h-12 w-12 mx-auto mb-4 opacity-50" />
           <p>No integrations found</p>
           <p className="text-sm">Try a different search term</p>
@@ -196,17 +196,17 @@ export default function IntegrationsPage() {
       {/* Integration detail dialog */}
       <Dialog open={!!selectedIntegration} onOpenChange={() => setSelectedIntegration(null)}>
         {selectedIntegration && (
-          <DialogContent className="bg-[#111111] border-[#262626] max-w-lg">
+          <DialogContent className="bg-white border-[#E5E7EB] max-w-lg">
             <DialogHeader>
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center">
-                  <Plug className="h-7 w-7 text-[#666666]" />
+                  <Plug className="h-7 w-7 text-[#9CA3AF]" />
                 </div>
                 <div>
                   <DialogTitle className="text-white text-xl">
                     {selectedIntegration.name}
                   </DialogTitle>
-                  <DialogDescription className="text-[#999999]">
+                  <DialogDescription className="text-[#6B7280]">
                     {categoryLabels[selectedIntegration.category]}
                   </DialogDescription>
                 </div>
@@ -214,7 +214,7 @@ export default function IntegrationsPage() {
             </DialogHeader>
 
             <div className="space-y-4 py-4">
-              <p className="text-[#cccccc]">
+              <p className="text-[#374151]">
                 {selectedIntegration.description}
               </p>
 
@@ -222,8 +222,8 @@ export default function IntegrationsPage() {
                 <h4 className="text-sm font-medium text-white mb-2">Features</h4>
                 <ul className="space-y-2">
                   {selectedIntegration.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-[#999999]">
-                      <Check className="h-4 w-4 text-[#FAFAFA]" />
+                    <li key={i} className="flex items-center gap-2 text-sm text-[#6B7280]">
+                      <Check className="h-4 w-4 text-[#111827]" />
                       {feature}
                     </li>
                   ))}
@@ -247,18 +247,18 @@ export default function IntegrationsPage() {
                 <Button 
                   onClick={() => handleConnect(selectedIntegration)}
                   disabled={connecting}
-                  className="bg-[#161616] hover:bg-[#1A1A1A]/90 text-black"
+                  className="bg-white hover:bg-[#F1F3F5]/90 text-black"
                 >
                   {connecting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
                   Connect
                   <ExternalLink className="h-4 w-4 ml-2" />
                 </Button>
               ) : selectedIntegration.status === 'coming_soon' ? (
-                <Button className="bg-[#161616] hover:bg-[#1A1A1A]/90 text-black">
+                <Button className="bg-white hover:bg-[#F1F3F5]/90 text-black">
                   Join Waitlist
                 </Button>
               ) : (
-                <Button variant="outline" className="border-[#333333]">
+                <Button variant="outline" className="border-[#D1D5DB]">
                   <Settings className="h-4 w-4 mr-2" />
                   Configure
                 </Button>

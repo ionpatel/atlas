@@ -116,10 +116,10 @@ function BalanceCard({ balance }: { balance: LeaveBalance }) {
     return (
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-[#FAFAFA]">{label}</span>
-          <span className="text-sm font-medium text-[#FAFAFA]">{remaining} / {total} days</span>
+          <span className="text-sm text-[#111827]">{label}</span>
+          <span className="text-sm font-medium text-[#111827]">{remaining} / {total} days</span>
         </div>
-        <div className="h-2 bg-[#0A0A0A] rounded-full overflow-hidden">
+        <div className="h-2 bg-[#F8F9FA] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{ width: `${pct}%`, backgroundColor: color }}
@@ -130,13 +130,13 @@ function BalanceCard({ balance }: { balance: LeaveBalance }) {
   };
 
   return (
-    <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5 space-y-4">
-      <h3 className="text-lg font-semibold text-[#FAFAFA]">Leave Balance ({balance.year})</h3>
+    <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-5 space-y-4">
+      <h3 className="text-lg font-semibold text-[#111827]">Leave Balance ({balance.year})</h3>
       <BalanceItem label="Vacation" used={balance.used_vacation} total={balance.vacation_days + balance.carried_over} color="#CDB49E" />
       <BalanceItem label="Sick Leave" used={balance.used_sick} total={balance.sick_days} color="#f87171" />
       <BalanceItem label="Personal" used={balance.used_personal} total={balance.personal_days} color="#a78bfa" />
       {balance.carried_over > 0 && (
-        <p className="text-xs text-[#FAFAFA]">
+        <p className="text-xs text-[#111827]">
           Includes {balance.carried_over} days carried over from previous year
         </p>
       )}
@@ -174,18 +174,18 @@ function LeaveRequestForm({ onSubmit, onClose }: {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#0A0A0A] border border-[#262626] rounded-2xl w-full max-w-md shadow-2xl">
-        <div className="flex items-center justify-between p-6 border-b border-[#262626]">
-          <h2 className="text-xl font-semibold text-[#FAFAFA]">Request Leave</h2>
-          <button onClick={onClose} className="text-[#ccc] hover:text-[#FAFAFA] transition-colors">
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative bg-[#F8F9FA] border border-[#E5E7EB] rounded-2xl w-full max-w-md shadow-2xl">
+        <div className="flex items-center justify-between p-6 border-b border-[#E5E7EB]">
+          <h2 className="text-xl font-semibold text-[#111827]">Request Leave</h2>
+          <button onClick={onClose} className="text-[#374151] hover:text-[#111827] transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           <div>
-            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Leave Type</label>
+            <label className="block text-xs font-medium text-[#111827] mb-1.5">Leave Type</label>
             <div className="grid grid-cols-3 gap-2">
               {(Object.keys(LEAVE_TYPE_LABELS) as LeaveType[]).map((type) => {
                 const { label, color } = LEAVE_TYPE_LABELS[type];
@@ -198,12 +198,12 @@ function LeaveRequestForm({ onSubmit, onClose }: {
                     className={cn(
                       "flex flex-col items-center gap-1 p-3 rounded-lg border transition-all",
                       leaveType === type
-                        ? "border-[#262626] bg-[#161616]/10"
-                        : "border-[#262626] bg-[#0A0A0A] hover:border-[#262626]/50"
+                        ? "border-[#E5E7EB] bg-white/10"
+                        : "border-[#E5E7EB] bg-[#F8F9FA] hover:border-[#E5E7EB]/50"
                     )}
                   >
                     <span style={{ color: leaveType === type ? color : "#CDB49E" }}><Icon className="w-5 h-5" /></span>
-                    <span className={cn("text-xs", leaveType === type ? "text-[#FAFAFA]" : "text-[#FAFAFA]")}>
+                    <span className={cn("text-xs", leaveType === type ? "text-[#111827]" : "text-[#111827]")}>
                       {label.split(" ")[0]}
                     </span>
                   </button>
@@ -214,7 +214,7 @@ function LeaveRequestForm({ onSubmit, onClose }: {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Start Date</label>
+              <label className="block text-xs font-medium text-[#111827] mb-1.5">Start Date</label>
               <input
                 type="date"
                 value={startDate}
@@ -223,35 +223,35 @@ function LeaveRequestForm({ onSubmit, onClose }: {
                   if (e.target.value > endDate) setEndDate(e.target.value);
                 }}
                 required
-                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
+                className="w-full px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-[#E5E7EB]/50 transition-all duration-200"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">End Date</label>
+              <label className="block text-xs font-medium text-[#111827] mb-1.5">End Date</label>
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
                 min={startDate}
                 required
-                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
+                className="w-full px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-[#E5E7EB]/50 transition-all duration-200"
               />
             </div>
           </div>
 
-          <div className="bg-[#0A0A0A] border border-[#262626] rounded-lg p-3 text-center">
-            <span className="text-2xl font-bold text-[#FAFAFA]">{daysRequested}</span>
-            <span className="text-sm text-[#FAFAFA] ml-2">day{daysRequested !== 1 ? "s" : ""} requested</span>
+          <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg p-3 text-center">
+            <span className="text-2xl font-bold text-[#111827]">{daysRequested}</span>
+            <span className="text-sm text-[#111827] ml-2">day{daysRequested !== 1 ? "s" : ""} requested</span>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-[#FAFAFA] mb-1.5">Reason (optional)</label>
+            <label className="block text-xs font-medium text-[#111827] mb-1.5">Reason (optional)</label>
             <textarea
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="Add a reason for your leave request..."
               rows={3}
-              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200 resize-none"
+              className="w-full px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] placeholder:text-[#111827] focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-[#E5E7EB]/50 transition-all duration-200 resize-none"
             />
           </div>
 
@@ -259,13 +259,13 @@ function LeaveRequestForm({ onSubmit, onClose }: {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-[#111111] hover:bg-[#1A1A1A] text-[#FAFAFA] rounded-lg transition-colors"
+              className="flex-1 px-4 py-2.5 bg-white hover:bg-[#F1F3F5] text-[#111827] rounded-lg transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#CDB49E] to-[#B89B78] hover:from-[#CDB49E]/90 hover:to-[#B89B78]/90 text-[#0A0A0A] font-medium rounded-lg transition-all"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#DC2626] to-[#B91C1C] hover:from-[#DC2626]/90 hover:to-[#B91C1C]/90 text-white font-medium rounded-lg transition-all"
             >
               <Plus className="w-4 h-4" />
               Submit Request
@@ -289,7 +289,7 @@ function RequestCard({ request, onApprove, onReject, onCancel, isManager }: {
   const Icon = LEAVE_TYPE_ICONS[request.leave_type];
 
   return (
-    <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5 hover:border-[#262626]/20 transition-colors">
+    <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-5 hover:border-[#E5E7EB]/20 transition-colors">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           <div
@@ -299,7 +299,7 @@ function RequestCard({ request, onApprove, onReject, onCancel, isManager }: {
             <span style={{ color: LEAVE_TYPE_LABELS[request.leave_type].color }}><Icon className="w-5 h-5" /></span>
           </div>
           <div>
-            <h4 className="font-medium text-[#FAFAFA]">{request.user_name}</h4>
+            <h4 className="font-medium text-[#111827]">{request.user_name}</h4>
             <LeaveTypeBadge type={request.leave_type} />
           </div>
         </div>
@@ -308,26 +308,26 @@ function RequestCard({ request, onApprove, onReject, onCancel, isManager }: {
 
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
-          <span className="text-xs text-[#FAFAFA]">Dates</span>
-          <p className="text-sm text-[#FAFAFA]">
+          <span className="text-xs text-[#111827]">Dates</span>
+          <p className="text-sm text-[#111827]">
             {formatDateShort(request.start_date)} - {formatDateShort(request.end_date)}
           </p>
         </div>
         <div>
-          <span className="text-xs text-[#FAFAFA]">Duration</span>
-          <p className="text-sm text-[#FAFAFA]">{request.days_requested} day{request.days_requested !== 1 ? "s" : ""}</p>
+          <span className="text-xs text-[#111827]">Duration</span>
+          <p className="text-sm text-[#111827]">{request.days_requested} day{request.days_requested !== 1 ? "s" : ""}</p>
         </div>
       </div>
 
       {request.reason && (
         <div className="mb-4">
-          <span className="text-xs text-[#FAFAFA]">Reason</span>
-          <p className="text-sm text-[#FAFAFA]">{request.reason}</p>
+          <span className="text-xs text-[#111827]">Reason</span>
+          <p className="text-sm text-[#111827]">{request.reason}</p>
         </div>
       )}
 
       {request.status === "approved" && request.approver_name && (
-        <p className="text-xs text-[#FAFAFA]">
+        <p className="text-xs text-[#111827]">
           Approved by {request.approver_name} on {formatDate(request.approved_at!)}
         </p>
       )}
@@ -340,7 +340,7 @@ function RequestCard({ request, onApprove, onReject, onCancel, isManager }: {
 
       {/* Action Buttons */}
       {request.status === "pending" && (
-        <div className="flex gap-2 mt-4 pt-4 border-t border-[#262626]">
+        <div className="flex gap-2 mt-4 pt-4 border-t border-[#E5E7EB]">
           {isManager ? (
             <>
               <button
@@ -361,7 +361,7 @@ function RequestCard({ request, onApprove, onReject, onCancel, isManager }: {
           ) : (
             <button
               onClick={onCancel}
-              className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-[#111111] hover:bg-[#1A1A1A] text-[#FAFAFA] rounded-lg transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-white hover:bg-[#F1F3F5] text-[#111827] rounded-lg transition-colors"
             >
               Cancel Request
             </button>
@@ -397,30 +397,30 @@ function TeamCalendar({ requests, selectedMonth, onPrevMonth, onNextMonth }: {
   };
 
   return (
-    <div className="bg-[#0A0A0A] border border-[#262626] rounded-2xl overflow-hidden">
+    <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-2xl overflow-hidden">
       {/* Month Navigation */}
-      <div className="flex items-center justify-between p-4 border-b border-[#262626]">
+      <div className="flex items-center justify-between p-4 border-b border-[#E5E7EB]">
         <button
           onClick={onPrevMonth}
-          className="p-2 hover:bg-[#0A0A0A] rounded-lg transition-colors"
+          className="p-2 hover:bg-[#F8F9FA] rounded-lg transition-colors"
         >
-          <ChevronLeft className="w-5 h-5 text-[#FAFAFA]" />
+          <ChevronLeft className="w-5 h-5 text-[#111827]" />
         </button>
-        <h3 className="text-lg font-semibold text-[#FAFAFA]">
+        <h3 className="text-lg font-semibold text-[#111827]">
           {selectedMonth.toLocaleDateString("en-US", { month: "long", year: "numeric" })}
         </h3>
         <button
           onClick={onNextMonth}
-          className="p-2 hover:bg-[#0A0A0A] rounded-lg transition-colors"
+          className="p-2 hover:bg-[#F8F9FA] rounded-lg transition-colors"
         >
-          <ChevronRight className="w-5 h-5 text-[#FAFAFA]" />
+          <ChevronRight className="w-5 h-5 text-[#111827]" />
         </button>
       </div>
 
       {/* Day Headers */}
-      <div className="grid grid-cols-7 border-b border-[#262626]">
+      <div className="grid grid-cols-7 border-b border-[#E5E7EB]">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-          <div key={day} className="p-3 text-center text-xs font-medium text-[#FAFAFA]">
+          <div key={day} className="p-3 text-center text-xs font-medium text-[#111827]">
             {day}
           </div>
         ))}
@@ -429,7 +429,7 @@ function TeamCalendar({ requests, selectedMonth, onPrevMonth, onNextMonth }: {
       {/* Calendar Grid */}
       <div className="grid grid-cols-7">
         {blanks.map((i) => (
-          <div key={`blank-${i}`} className="p-2 min-h-[100px] border-r border-b border-[#262626]" />
+          <div key={`blank-${i}`} className="p-2 min-h-[100px] border-r border-b border-[#E5E7EB]" />
         ))}
         {days.map((day) => {
           const dayRequests = getRequestsForDay(day);
@@ -442,14 +442,14 @@ function TeamCalendar({ requests, selectedMonth, onPrevMonth, onNextMonth }: {
             <div
               key={day}
               className={cn(
-                "p-2 min-h-[100px] border-r border-b border-[#262626] last:border-r-0",
-                isToday && "bg-[#161616]/5"
+                "p-2 min-h-[100px] border-r border-b border-[#E5E7EB] last:border-r-0",
+                isToday && "bg-white/5"
               )}
             >
               <div
                 className={cn(
                   "text-sm font-medium mb-1",
-                  isToday ? "text-[#FAFAFA]" : "text-[#FAFAFA]"
+                  isToday ? "text-[#111827]" : "text-[#111827]"
                 )}
               >
                 {day}
@@ -468,7 +468,7 @@ function TeamCalendar({ requests, selectedMonth, onPrevMonth, onNextMonth }: {
                   </div>
                 ))}
                 {dayRequests.length > 3 && (
-                  <div className="text-[10px] text-[#FAFAFA]">
+                  <div className="text-[10px] text-[#111827]">
                     +{dayRequests.length - 3} more
                   </div>
                 )}
@@ -488,14 +488,14 @@ function PolicySettings({ policies, onUpdate }: {
   onUpdate: (id: string, data: Partial<LeavePolicy>) => void;
 }) {
   return (
-    <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5">
-      <h3 className="text-lg font-semibold text-[#FAFAFA] mb-4">Leave Policies</h3>
+    <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-5">
+      <h3 className="text-lg font-semibold text-[#111827] mb-4">Leave Policies</h3>
       <div className="space-y-4">
         {policies.map((policy) => {
           const { label, color } = LEAVE_TYPE_LABELS[policy.leave_type];
           const Icon = LEAVE_TYPE_ICONS[policy.leave_type];
           return (
-            <div key={policy.id} className="flex items-center justify-between p-3 bg-[#0A0A0A] rounded-lg">
+            <div key={policy.id} className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
               <div className="flex items-center gap-3">
                 <div
                   className="w-8 h-8 rounded-lg flex items-center justify-center"
@@ -504,8 +504,8 @@ function PolicySettings({ policies, onUpdate }: {
                   <span style={{ color }}><Icon className="w-4 h-4" /></span>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-[#FAFAFA]">{label}</p>
-                  <p className="text-xs text-[#FAFAFA]">
+                  <p className="text-sm font-medium text-[#111827]">{label}</p>
+                  <p className="text-xs text-[#111827]">
                     {policy.default_days} days • {policy.requires_approval ? "Requires approval" : "Auto-approved"}
                   </p>
                 </div>
@@ -519,7 +519,7 @@ function PolicySettings({ policies, onUpdate }: {
                       onChange={(e) => onUpdate(policy.id, { is_active: e.target.checked })}
                       className="sr-only peer"
                     />
-                    <div className="w-9 h-5 bg-[#0A0A0A] rounded-full peer-checked:bg-[#161616] transition-colors" />
+                    <div className="w-9 h-5 bg-[#F8F9FA] rounded-full peer-checked:bg-white transition-colors" />
                     <div className="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full peer-checked:translate-x-4 transition-transform" />
                   </div>
                 </label>
@@ -645,12 +645,12 @@ export default function LeavePage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#FAFAFA]">Leave Management</h1>
-          <p className="text-[#FAFAFA] mt-1">Request time off and manage leave balances</p>
+          <h1 className="text-2xl font-bold text-[#111827]">Leave Management</h1>
+          <p className="text-[#111827] mt-1">Request time off and manage leave balances</p>
         </div>
         <button
           onClick={() => setShowRequestForm(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#CDB49E] to-[#B89B78] hover:from-[#CDB49E]/90 hover:to-[#B89B78]/90 text-[#0A0A0A] font-medium rounded-lg transition-all shadow-lg shadow-[#CDB49E]/20"
+          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#DC2626] to-[#B91C1C] hover:from-[#DC2626]/90 hover:to-[#B91C1C]/90 text-white font-medium rounded-lg transition-all shadow-lg shadow-[#CDB49E]/20"
         >
           <Plus className="w-4 h-4" />
           Request Leave
@@ -659,55 +659,55 @@ export default function LeavePage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5">
+        <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-[#161616]/10 flex items-center justify-center">
-              <Palmtree className="w-5 h-5 text-[#FAFAFA]" />
+            <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
+              <Palmtree className="w-5 h-5 text-[#111827]" />
             </div>
-            <span className="text-sm text-[#FAFAFA]">Vacation Left</span>
+            <span className="text-sm text-[#111827]">Vacation Left</span>
           </div>
-          <div className="text-2xl font-bold text-[#FAFAFA]">
+          <div className="text-2xl font-bold text-[#111827]">
             {userBalance ? (userBalance.vacation_days + userBalance.carried_over - userBalance.used_vacation).toFixed(1) : "--"} days
           </div>
         </div>
 
-        <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5">
+        <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
               <Stethoscope className="w-5 h-5 text-red-400" />
             </div>
-            <span className="text-sm text-[#FAFAFA]">Sick Leave Left</span>
+            <span className="text-sm text-[#111827]">Sick Leave Left</span>
           </div>
-          <div className="text-2xl font-bold text-[#FAFAFA]">
+          <div className="text-2xl font-bold text-[#111827]">
             {userBalance ? (userBalance.sick_days - userBalance.used_sick).toFixed(1) : "--"} days
           </div>
         </div>
 
-        <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5">
+        <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
               <Clock className="w-5 h-5 text-amber-400" />
             </div>
-            <span className="text-sm text-[#FAFAFA]">Pending</span>
+            <span className="text-sm text-[#111827]">Pending</span>
           </div>
-          <div className="text-2xl font-bold text-[#FAFAFA]">{pendingCount}</div>
+          <div className="text-2xl font-bold text-[#111827]">{pendingCount}</div>
         </div>
 
-        <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5">
+        <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
               <CalendarDays className="w-5 h-5 text-emerald-400" />
             </div>
-            <span className="text-sm text-[#FAFAFA]">Days Taken</span>
+            <span className="text-sm text-[#111827]">Days Taken</span>
           </div>
-          <div className="text-2xl font-bold text-[#FAFAFA]">
+          <div className="text-2xl font-bold text-[#111827]">
             {userBalance ? (userBalance.used_vacation + userBalance.used_sick + userBalance.used_personal).toFixed(1) : "--"}
           </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 bg-[#0A0A0A] border border-[#262626] rounded-lg p-1">
+      <div className="flex items-center gap-2 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg p-1">
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -715,8 +715,8 @@ export default function LeavePage() {
             className={cn(
               "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors",
               activeTab === tab.id
-                ? "bg-[#161616] text-[#0A0A0A]"
-                : "text-[#ccc] hover:text-[#FAFAFA]"
+                ? "bg-white text-white"
+                : "text-[#374151] hover:text-[#111827]"
             )}
           >
             <tab.icon className="w-4 h-4" />
@@ -736,19 +736,19 @@ export default function LeavePage() {
           {/* Filters */}
           <div className="flex items-center gap-4">
             <div className="relative flex-1 max-w-xs">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#FAFAFA]" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827]" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search requests..."
-                className="w-full pl-10 pr-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] placeholder:text-[#111827] focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-[#E5E7EB]/50 transition-all"
               />
             </div>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30"
+              className="px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-red-200"
             >
               <option value="">All Status</option>
               <option value="pending">Pending</option>
@@ -759,7 +759,7 @@ export default function LeavePage() {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30"
+              className="px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-red-200"
             >
               <option value="">All Types</option>
               {(Object.keys(LEAVE_TYPE_LABELS) as LeaveType[]).map((type) => (
@@ -770,7 +770,7 @@ export default function LeavePage() {
 
           {/* Request List */}
           {displayedRequests.length === 0 ? (
-            <div className="text-center py-12 text-[#FAFAFA]">
+            <div className="text-center py-12 text-[#111827]">
               <Calendar className="w-12 h-12 mx-auto mb-4 opacity-50" />
               <p>No leave requests found</p>
             </div>

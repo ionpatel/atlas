@@ -80,7 +80,7 @@ function ModuleBadge({ tableName }: { tableName: string }) {
   const Icon = MODULE_ICONS[moduleName] || FileText;
 
   return (
-    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0A0A0A] text-[#FAFAFA] text-[11px] font-medium border border-[#262626]">
+    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F8F9FA] text-[#111827] text-[11px] font-medium border border-[#E5E7EB]">
       <Icon className="w-3 h-3" />
       {moduleName}
     </span>
@@ -131,12 +131,12 @@ function AuditLogRow({ log }: { log: AuditLog }) {
   const hasChanges = diff.changed.length > 0 || diff.added.length > 0 || diff.removed.length > 0;
 
   return (
-    <div className="border-b border-[#262626]/50 last:border-b-0">
+    <div className="border-b border-[#E5E7EB]/50 last:border-b-0">
       {/* Main Row */}
       <div
         className={cn(
           "px-6 py-4 flex items-center gap-4 transition-colors",
-          hasChanges && "cursor-pointer hover:bg-[#0A0A0A]/50"
+          hasChanges && "cursor-pointer hover:bg-[#F8F9FA]/50"
         )}
         onClick={() => hasChanges && setExpanded(!expanded)}
       >
@@ -144,17 +144,17 @@ function AuditLogRow({ log }: { log: AuditLog }) {
         <div className="w-5 flex-shrink-0">
           {hasChanges ? (
             expanded ? (
-              <ChevronDown className="w-4 h-4 text-[#FAFAFA]" />
+              <ChevronDown className="w-4 h-4 text-[#111827]" />
             ) : (
-              <ChevronRight className="w-4 h-4 text-[#FAFAFA]" />
+              <ChevronRight className="w-4 h-4 text-[#111827]" />
             )
           ) : null}
         </div>
 
         {/* Date */}
         <div className="w-28 flex-shrink-0">
-          <p className="text-sm text-[#FAFAFA]">{formatDate(log.created_at)}</p>
-          <p className="text-[10px] text-[#FAFAFA] mt-0.5">
+          <p className="text-sm text-[#111827]">{formatDate(log.created_at)}</p>
+          <p className="text-[10px] text-[#111827] mt-0.5">
             {new Date(log.created_at).toLocaleTimeString("en-CA", {
               hour: "2-digit",
               minute: "2-digit",
@@ -164,10 +164,10 @@ function AuditLogRow({ log }: { log: AuditLog }) {
 
         {/* User */}
         <div className="w-40 flex-shrink-0">
-          <p className="text-sm text-[#FAFAFA] truncate">
+          <p className="text-sm text-[#111827] truncate">
             {log.user_email?.split("@")[0] || "System"}
           </p>
-          <p className="text-[10px] text-[#FAFAFA] truncate mt-0.5">
+          <p className="text-[10px] text-[#111827] truncate mt-0.5">
             {log.user_email || "Automated"}
           </p>
         </div>
@@ -184,7 +184,7 @@ function AuditLogRow({ log }: { log: AuditLog }) {
 
         {/* Record ID */}
         <div className="flex-1 min-w-0">
-          <p className="text-sm text-[#FAFAFA] font-mono truncate">
+          <p className="text-sm text-[#111827] font-mono truncate">
             {log.record_id.substring(0, 8)}...
           </p>
         </div>
@@ -212,8 +212,8 @@ function AuditLogRow({ log }: { log: AuditLog }) {
       {/* Expanded Details */}
       {expanded && hasChanges && (
         <div className="px-6 pb-4 ml-11">
-          <div className="bg-[#0A0A0A] border border-[#262626] rounded-lg p-4">
-            <p className="text-[10px] text-[#FAFAFA] uppercase tracking-wider mb-3">
+          <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg p-4">
+            <p className="text-[10px] text-[#111827] uppercase tracking-wider mb-3">
               Changes
             </p>
 
@@ -224,13 +224,13 @@ function AuditLogRow({ log }: { log: AuditLog }) {
                   key={field}
                   className="flex items-center gap-3 text-sm"
                 >
-                  <span className="w-32 text-[#FAFAFA] font-medium truncate">
+                  <span className="w-32 text-[#111827] font-medium truncate">
                     {field}
                   </span>
                   <span className="text-red-400/70 line-through">
                     {formatValue(log.old_values?.[field])}
                   </span>
-                  <ArrowRight className="w-3 h-3 text-[#FAFAFA]" />
+                  <ArrowRight className="w-3 h-3 text-[#111827]" />
                   <span className="text-emerald-400">
                     {formatValue(log.new_values?.[field])}
                   </span>
@@ -243,7 +243,7 @@ function AuditLogRow({ log }: { log: AuditLog }) {
                   key={field}
                   className="flex items-center gap-3 text-sm"
                 >
-                  <span className="w-32 text-[#FAFAFA] font-medium truncate">
+                  <span className="w-32 text-[#111827] font-medium truncate">
                     {field}
                   </span>
                   <span className="text-emerald-400">
@@ -261,7 +261,7 @@ function AuditLogRow({ log }: { log: AuditLog }) {
                   key={field}
                   className="flex items-center gap-3 text-sm"
                 >
-                  <span className="w-32 text-[#FAFAFA] font-medium truncate">
+                  <span className="w-32 text-[#111827] font-medium truncate">
                     {field}
                   </span>
                   <span className="text-red-400/70 line-through">
@@ -275,7 +275,7 @@ function AuditLogRow({ log }: { log: AuditLog }) {
             </div>
 
             {/* Metadata */}
-            <div className="mt-4 pt-3 border-t border-[#262626] flex items-center gap-6 text-[10px] text-[#FAFAFA]">
+            <div className="mt-4 pt-3 border-t border-[#E5E7EB] flex items-center gap-6 text-[10px] text-[#111827]">
               <span>Record: {log.record_id}</span>
               <span>Table: {log.table_name}</span>
               <span>{formatFullDate(log.created_at)}</span>
@@ -308,13 +308,13 @@ function Filters({ filters, onFilterChange, onReset }: FiltersProps) {
     <div className="flex items-center gap-3 flex-wrap">
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#FAFAFA]" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827]" />
         <input
           type="text"
           placeholder="Search logs..."
           value={filters.search}
           onChange={(e) => onFilterChange("search", e.target.value)}
-          className="pl-9 pr-4 py-2 w-56 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626]/40 transition-colors"
+          className="pl-9 pr-4 py-2 w-56 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] placeholder-[#9CA3AF] focus:outline-none focus:border-[#E5E7EB]/40 transition-colors"
         />
       </div>
 
@@ -322,7 +322,7 @@ function Filters({ filters, onFilterChange, onReset }: FiltersProps) {
       <select
         value={filters.action}
         onChange={(e) => onFilterChange("action", e.target.value)}
-        className="px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:border-[#262626]/40 transition-colors"
+        className="px-3 py-2 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] focus:outline-none focus:border-[#E5E7EB]/40 transition-colors"
       >
         <option value="">All Actions</option>
         <option value="create">Created</option>
@@ -334,7 +334,7 @@ function Filters({ filters, onFilterChange, onReset }: FiltersProps) {
       <select
         value={filters.module}
         onChange={(e) => onFilterChange("module", e.target.value)}
-        className="px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:border-[#262626]/40 transition-colors"
+        className="px-3 py-2 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] focus:outline-none focus:border-[#E5E7EB]/40 transition-colors"
       >
         <option value="">All Modules</option>
         <option value="products">Inventory</option>
@@ -350,7 +350,7 @@ function Filters({ filters, onFilterChange, onReset }: FiltersProps) {
       <select
         value={filters.dateRange}
         onChange={(e) => onFilterChange("dateRange", e.target.value)}
-        className="px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:border-[#262626]/40 transition-colors"
+        className="px-3 py-2 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] focus:outline-none focus:border-[#E5E7EB]/40 transition-colors"
       >
         <option value="">All Time</option>
         <option value="today">Today</option>
@@ -363,7 +363,7 @@ function Filters({ filters, onFilterChange, onReset }: FiltersProps) {
       {hasFilters && (
         <button
           onClick={onReset}
-          className="flex items-center gap-1.5 px-3 py-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors"
+          className="flex items-center gap-1.5 px-3 py-2 text-sm text-[#374151] hover:text-[#111827] transition-colors"
         >
           <X className="w-3.5 h-3.5" />
           Clear
@@ -470,13 +470,13 @@ export default function AuditLogsPage() {
         <div>
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-[rgba(156,74,41,0.15)]">
-              <History className="w-5 h-5 text-[#FAFAFA]" />
+              <History className="w-5 h-5 text-[#111827]" />
             </div>
             <div>
-              <h1 className="text-2xl font-semibold tracking-tight text-[#FAFAFA]">
+              <h1 className="text-2xl font-semibold tracking-tight text-[#111827]">
                 Audit Logs
               </h1>
-              <p className="text-[#FAFAFA] text-sm mt-0.5">
+              <p className="text-[#111827] text-sm mt-0.5">
                 Track all changes made to your organization&apos;s data
               </p>
             </div>
@@ -485,7 +485,7 @@ export default function AuditLogsPage() {
 
         <button
           onClick={handleExport}
-          className="flex items-center gap-2 px-4 py-2.5 border border-[#262626] rounded-lg text-sm text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all duration-200"
+          className="flex items-center gap-2 px-4 py-2.5 border border-[#E5E7EB] rounded-lg text-sm text-[#374151] hover:text-[#111827] hover:bg-[#F8F9FA] transition-all duration-200"
         >
           <Download className="w-4 h-4" />
           Export CSV
@@ -504,7 +504,7 @@ export default function AuditLogsPage() {
       {/* Stats */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         {[
-          { label: "Total Logs", value: totalCount, color: "text-[#FAFAFA]" },
+          { label: "Total Logs", value: totalCount, color: "text-[#111827]" },
           {
             label: "Creates",
             value: logs.filter((l) => l.action === "create").length,
@@ -523,9 +523,9 @@ export default function AuditLogsPage() {
         ].map((stat) => (
           <div
             key={stat.label}
-            className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-4"
+            className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-4"
           >
-            <p className="text-[10px] text-[#FAFAFA] uppercase tracking-wider mb-1">
+            <p className="text-[10px] text-[#111827] uppercase tracking-wider mb-1">
               {stat.label}
             </p>
             <p className={cn("text-2xl font-bold", stat.color)}>{stat.value}</p>
@@ -534,9 +534,9 @@ export default function AuditLogsPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl overflow-hidden">
+      <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-3 bg-[#0A0A0A] border-b border-[#262626] flex items-center gap-4 text-[10px] text-[#FAFAFA] uppercase tracking-wider">
+        <div className="px-6 py-3 bg-[#F8F9FA] border-b border-[#E5E7EB] flex items-center gap-4 text-[10px] text-[#111827] uppercase tracking-wider">
           <div className="w-5 flex-shrink-0" />
           <div className="w-28 flex-shrink-0">Date</div>
           <div className="w-40 flex-shrink-0">User</div>
@@ -549,17 +549,17 @@ export default function AuditLogsPage() {
         {/* Loading state */}
         {loading && (
           <div className="px-6 py-12 text-center">
-            <RefreshCw className="w-6 h-6 text-[#FAFAFA] animate-spin mx-auto mb-3" />
-            <p className="text-sm text-[#FAFAFA]">Loading audit logs...</p>
+            <RefreshCw className="w-6 h-6 text-[#111827] animate-spin mx-auto mb-3" />
+            <p className="text-sm text-[#111827]">Loading audit logs...</p>
           </div>
         )}
 
         {/* Empty state */}
         {!loading && filteredLogs.length === 0 && (
           <div className="px-6 py-12 text-center">
-            <History className="w-8 h-8 text-[#FAFAFA] mx-auto mb-3" />
-            <p className="text-sm text-[#FAFAFA]">No audit logs found</p>
-            <p className="text-xs text-[#FAFAFA] mt-1">
+            <History className="w-8 h-8 text-[#111827] mx-auto mb-3" />
+            <p className="text-sm text-[#111827]">No audit logs found</p>
+            <p className="text-xs text-[#111827] mt-1">
               Activity will appear here as changes are made
             </p>
           </div>
@@ -572,7 +572,7 @@ export default function AuditLogsPage() {
 
       {/* Footer */}
       {filteredLogs.length > 0 && (
-        <div className="mt-4 flex items-center justify-between text-xs text-[#FAFAFA]">
+        <div className="mt-4 flex items-center justify-between text-xs text-[#111827]">
           <span>
             Showing {filteredLogs.length} of {totalCount} logs
           </span>

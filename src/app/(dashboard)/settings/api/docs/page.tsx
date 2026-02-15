@@ -294,57 +294,57 @@ export default function ApiDocsPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-white">API Documentation</h1>
-        <p className="text-[#999999] mt-1">
+        <p className="text-[#6B7280] mt-1">
           Complete reference for the Atlas ERP REST API
         </p>
       </div>
 
       {/* Getting Started */}
-      <Card className="bg-[#111111] border-[#262626]">
+      <Card className="bg-white border-[#E5E7EB]">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Book className="h-5 w-5 text-[#FAFAFA]" />
+            <Book className="h-5 w-5 text-[#111827]" />
             Getting Started
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
-            <div className="p-4 bg-[#161616] rounded-lg">
+            <div className="p-4 bg-white rounded-lg">
               <div className="flex items-center gap-2 text-white mb-2">
-                <Key className="h-4 w-4 text-[#FAFAFA]" />
+                <Key className="h-4 w-4 text-[#111827]" />
                 <span className="font-medium">1. Get an API Key</span>
               </div>
-              <p className="text-sm text-[#999999] mb-2">
+              <p className="text-sm text-[#6B7280] mb-2">
                 Create an API key from your settings to authenticate requests.
               </p>
               <Link href="/settings/api">
-                <Button variant="outline" size="sm" className="border-[#333333]">
+                <Button variant="outline" size="sm" className="border-[#D1D5DB]">
                   Manage API Keys
                   <ExternalLink className="h-3 w-3 ml-2" />
                 </Button>
               </Link>
             </div>
 
-            <div className="p-4 bg-[#161616] rounded-lg">
+            <div className="p-4 bg-white rounded-lg">
               <div className="flex items-center gap-2 text-white mb-2">
-                <Shield className="h-4 w-4 text-[#FAFAFA]" />
+                <Shield className="h-4 w-4 text-[#111827]" />
                 <span className="font-medium">2. Authenticate</span>
               </div>
-              <p className="text-sm text-[#999999]">
+              <p className="text-sm text-[#6B7280]">
                 Include your API key in the Authorization header:
               </p>
-              <code className="text-xs text-[#FAFAFA] mt-2 block">
+              <code className="text-xs text-[#111827] mt-2 block">
                 Authorization: Bearer atlas_xxxxx...
               </code>
             </div>
           </div>
 
-          <div className="p-4 bg-[#161616] rounded-lg">
+          <div className="p-4 bg-white rounded-lg">
             <div className="flex items-center gap-2 text-white mb-2">
-              <Zap className="h-4 w-4 text-[#FAFAFA]" />
+              <Zap className="h-4 w-4 text-[#111827]" />
               <span className="font-medium">Base URL</span>
             </div>
-            <code className="text-sm text-[#FAFAFA] bg-[#111111] px-3 py-2 rounded block">
+            <code className="text-sm text-[#111827] bg-white px-3 py-2 rounded block">
               {BASE_URL}
             </code>
           </div>
@@ -359,22 +359,22 @@ export default function ApiDocsPage() {
       </Card>
 
       {/* Code Examples */}
-      <Card className="bg-[#111111] border-[#262626]">
+      <Card className="bg-white border-[#E5E7EB]">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Code className="h-5 w-5 text-[#FAFAFA]" />
+            <Code className="h-5 w-5 text-[#111827]" />
             Code Examples
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Accordion type="single" collapsible className="space-y-2">
-            <AccordionItem value="auth" className="border-[#262626]">
+            <AccordionItem value="auth" className="border-[#E5E7EB]">
               <AccordionTrigger className="text-white hover:no-underline">
                 Authentication
               </AccordionTrigger>
               <AccordionContent>
                 <Tabs defaultValue="curl">
-                  <TabsList className="bg-[#1A1A1A]">
+                  <TabsList className="bg-[#F1F3F5]">
                     <TabsTrigger value="curl">cURL</TabsTrigger>
                     <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                     <TabsTrigger value="python">Python</TabsTrigger>
@@ -382,7 +382,7 @@ export default function ApiDocsPage() {
                   {Object.entries(CODE_EXAMPLES.auth).map(([lang, code]) => (
                     <TabsContent key={lang} value={lang}>
                       <div className="relative">
-                        <pre className="bg-[#0A0A0A] p-4 rounded-lg overflow-x-auto text-sm text-[#cccccc]">
+                        <pre className="bg-[#F8F9FA] p-4 rounded-lg overflow-x-auto text-sm text-[#374151]">
                           {code}
                         </pre>
                         <Button
@@ -404,13 +404,13 @@ export default function ApiDocsPage() {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="list" className="border-[#262626]">
+            <AccordionItem value="list" className="border-[#E5E7EB]">
               <AccordionTrigger className="text-white hover:no-underline">
                 List Products
               </AccordionTrigger>
               <AccordionContent>
                 <Tabs defaultValue="curl">
-                  <TabsList className="bg-[#1A1A1A]">
+                  <TabsList className="bg-[#F1F3F5]">
                     <TabsTrigger value="curl">cURL</TabsTrigger>
                     <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                     <TabsTrigger value="python">Python</TabsTrigger>
@@ -418,7 +418,7 @@ export default function ApiDocsPage() {
                   {Object.entries(CODE_EXAMPLES.listProducts).map(([lang, code]) => (
                     <TabsContent key={lang} value={lang}>
                       <div className="relative">
-                        <pre className="bg-[#0A0A0A] p-4 rounded-lg overflow-x-auto text-sm text-[#cccccc]">
+                        <pre className="bg-[#F8F9FA] p-4 rounded-lg overflow-x-auto text-sm text-[#374151]">
                           {code}
                         </pre>
                         <Button
@@ -440,13 +440,13 @@ export default function ApiDocsPage() {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="invoice" className="border-[#262626]">
+            <AccordionItem value="invoice" className="border-[#E5E7EB]">
               <AccordionTrigger className="text-white hover:no-underline">
                 Create Invoice
               </AccordionTrigger>
               <AccordionContent>
                 <Tabs defaultValue="curl">
-                  <TabsList className="bg-[#1A1A1A]">
+                  <TabsList className="bg-[#F1F3F5]">
                     <TabsTrigger value="curl">cURL</TabsTrigger>
                     <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                     <TabsTrigger value="python">Python</TabsTrigger>
@@ -454,7 +454,7 @@ export default function ApiDocsPage() {
                   {Object.entries(CODE_EXAMPLES.createInvoice).map(([lang, code]) => (
                     <TabsContent key={lang} value={lang}>
                       <div className="relative">
-                        <pre className="bg-[#0A0A0A] p-4 rounded-lg overflow-x-auto text-sm text-[#cccccc]">
+                        <pre className="bg-[#F8F9FA] p-4 rounded-lg overflow-x-auto text-sm text-[#374151]">
                           {code}
                         </pre>
                         <Button
@@ -480,10 +480,10 @@ export default function ApiDocsPage() {
       </Card>
 
       {/* Endpoints */}
-      <Card className="bg-[#111111] border-[#262626]">
+      <Card className="bg-white border-[#E5E7EB]">
         <CardHeader>
           <CardTitle className="text-white">API Endpoints</CardTitle>
-          <CardDescription className="text-[#999999]">
+          <CardDescription className="text-[#6B7280]">
             Full reference of available endpoints
           </CardDescription>
         </CardHeader>
@@ -493,13 +493,13 @@ export default function ApiDocsPage() {
               <AccordionItem 
                 key={group.name} 
                 value={group.name}
-                className="border-[#262626]"
+                className="border-[#E5E7EB]"
               >
                 <AccordionTrigger className="text-white hover:no-underline">
                   <div className="flex items-center gap-2">
                     {group.icon}
                     {group.name}
-                    <Badge variant="outline" className="border-[#333333] ml-2">
+                    <Badge variant="outline" className="border-[#D1D5DB] ml-2">
                       {group.endpoints.length}
                     </Badge>
                   </div>
@@ -509,7 +509,7 @@ export default function ApiDocsPage() {
                     {group.endpoints.map((endpoint, idx) => (
                       <div 
                         key={idx}
-                        className="p-3 bg-[#161616] rounded-lg"
+                        className="p-3 bg-white rounded-lg"
                       >
                         <div className="flex items-center gap-2 mb-2">
                           <Badge className={methodColors[endpoint.method]}>
@@ -517,18 +517,18 @@ export default function ApiDocsPage() {
                           </Badge>
                           <code className="text-sm text-white">{endpoint.path}</code>
                         </div>
-                        <p className="text-sm text-[#999999] mb-2">
+                        <p className="text-sm text-[#6B7280] mb-2">
                           {endpoint.description}
                         </p>
                         {endpoint.params && (
                           <div className="mt-2">
-                            <p className="text-xs text-[#888888] mb-1">Query Parameters:</p>
+                            <p className="text-xs text-[#9CA3AF] mb-1">Query Parameters:</p>
                             <div className="space-y-1">
                               {endpoint.params.map((p: any) => (
                                 <div key={p.name} className="text-xs">
-                                  <code className="text-[#FAFAFA]">{p.name}</code>
-                                  <span className="text-[#888888]"> ({p.type})</span>
-                                  <span className="text-[#999999]"> — {p.description}</span>
+                                  <code className="text-[#111827]">{p.name}</code>
+                                  <span className="text-[#9CA3AF]"> ({p.type})</span>
+                                  <span className="text-[#6B7280]"> — {p.description}</span>
                                 </div>
                               ))}
                             </div>
@@ -536,14 +536,14 @@ export default function ApiDocsPage() {
                         )}
                         {endpoint.body && (
                           <div className="mt-2">
-                            <p className="text-xs text-[#888888] mb-1">Request Body:</p>
+                            <p className="text-xs text-[#9CA3AF] mb-1">Request Body:</p>
                             <div className="space-y-1">
                               {endpoint.body.map((p: any) => (
                                 <div key={p.name} className="text-xs">
-                                  <code className="text-[#FAFAFA]">{p.name}</code>
+                                  <code className="text-[#111827]">{p.name}</code>
                                   {p.required && <span className="text-red-400">*</span>}
-                                  <span className="text-[#888888]"> ({p.type})</span>
-                                  <span className="text-[#999999]"> — {p.description}</span>
+                                  <span className="text-[#9CA3AF]"> ({p.type})</span>
+                                  <span className="text-[#6B7280]"> — {p.description}</span>
                                 </div>
                               ))}
                             </div>
@@ -560,25 +560,25 @@ export default function ApiDocsPage() {
       </Card>
 
       {/* Webhooks */}
-      <Card className="bg-[#111111] border-[#262626]">
+      <Card className="bg-white border-[#E5E7EB]">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Webhook className="h-5 w-5 text-[#FAFAFA]" />
+            <Webhook className="h-5 w-5 text-[#111827]" />
             Webhooks
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-[#999999]">
+          <p className="text-[#6B7280]">
             Webhooks allow you to receive real-time notifications when events occur in your Atlas account.
           </p>
 
-          <div className="p-4 bg-[#161616] rounded-lg space-y-2">
+          <div className="p-4 bg-white rounded-lg space-y-2">
             <h4 className="text-white font-medium">Signature Verification</h4>
-            <p className="text-sm text-[#999999]">
+            <p className="text-sm text-[#6B7280]">
               All webhook payloads are signed using HMAC-SHA256. Verify the signature using the 
-              <code className="text-[#FAFAFA] mx-1">X-Atlas-Signature</code> header:
+              <code className="text-[#111827] mx-1">X-Atlas-Signature</code> header:
             </p>
-            <pre className="bg-[#0A0A0A] p-3 rounded text-xs text-[#cccccc] overflow-x-auto">
+            <pre className="bg-[#F8F9FA] p-3 rounded text-xs text-[#374151] overflow-x-auto">
 {`const crypto = require('crypto');
 
 function verifySignature(payload, signature, secret) {
@@ -591,12 +591,12 @@ function verifySignature(payload, signature, secret) {
             </pre>
           </div>
 
-          <div className="p-4 bg-[#161616] rounded-lg space-y-2">
+          <div className="p-4 bg-white rounded-lg space-y-2">
             <h4 className="text-white font-medium">Retry Policy</h4>
-            <p className="text-sm text-[#999999]">
+            <p className="text-sm text-[#6B7280]">
               Failed deliveries are retried up to 5 times with exponential backoff:
             </p>
-            <ul className="text-sm text-[#999999] list-disc list-inside">
+            <ul className="text-sm text-[#6B7280] list-disc list-inside">
               <li>Retry 1: After 1 minute</li>
               <li>Retry 2: After 5 minutes</li>
               <li>Retry 3: After 30 minutes</li>
@@ -606,7 +606,7 @@ function verifySignature(payload, signature, secret) {
           </div>
 
           <Link href="/settings/webhooks">
-            <Button variant="outline" className="border-[#333333]">
+            <Button variant="outline" className="border-[#D1D5DB]">
               Configure Webhooks
               <ExternalLink className="h-3 w-3 ml-2" />
             </Button>

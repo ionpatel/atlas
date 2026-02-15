@@ -65,7 +65,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
       return (
         <div className="min-h-[400px] flex items-center justify-center p-8">
-          <div className="max-w-md w-full bg-[#111] rounded-2xl border border-[#262626] p-8 text-center">
+          <div className="max-w-md w-full bg-[#111] rounded-2xl border border-[#E5E7EB] p-8 text-center">
             <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-6">
               <AlertTriangle className="w-8 h-8 text-red-500" />
             </div>
@@ -74,19 +74,19 @@ export class ErrorBoundary extends Component<Props, State> {
               Something went wrong
             </h2>
             
-            <p className="text-[#888] text-sm mb-6">
+            <p className="text-[#9CA3AF] text-sm mb-6">
               We encountered an unexpected error. Don&apos;t worry, your work is safe.
             </p>
 
             {process.env.NODE_ENV === "development" && this.state.error && (
               <details className="text-left mb-6 bg-[#0a0a0a] rounded-lg p-4 border border-[#222]">
-                <summary className="text-xs text-[#666] cursor-pointer hover:text-[#888]">
+                <summary className="text-xs text-[#9CA3AF] cursor-pointer hover:text-[#9CA3AF]">
                   Technical details
                 </summary>
                 <pre className="mt-3 text-xs text-red-400 whitespace-pre-wrap overflow-auto max-h-48">
                   {this.state.error.message}
                   {this.state.errorInfo?.componentStack && (
-                    <span className="text-[#555] block mt-2">
+                    <span className="text-[#D1D5DB] block mt-2">
                       {this.state.errorInfo.componentStack}
                     </span>
                   )}
@@ -97,14 +97,14 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex gap-3 justify-center">
               <button
                 onClick={this.handleReset}
-                className="px-4 py-2 bg-[#161616] text-[#111] rounded-lg font-medium text-sm hover:bg-[#161616] transition-colors flex items-center gap-2"
+                className="px-4 py-2 bg-white text-[#111] rounded-lg font-medium text-sm hover:bg-white transition-colors flex items-center gap-2"
               >
                 <RefreshCw className="w-4 h-4" />
                 Try again
               </button>
               <button
                 onClick={this.handleGoHome}
-                className="px-4 py-2 bg-[#0A0A0A] text-white rounded-lg font-medium text-sm hover:bg-[#222] transition-colors border border-[#333] flex items-center gap-2"
+                className="px-4 py-2 bg-[#F8F9FA] text-white rounded-lg font-medium text-sm hover:bg-[#222] transition-colors border border-[#D1D5DB] flex items-center gap-2"
               >
                 <Home className="w-4 h-4" />
                 Go to Dashboard
@@ -163,11 +163,11 @@ export function ErrorToast({ error, onDismiss }: ErrorToastProps) {
         <AlertTriangle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
         <div className="flex-1">
           <p className="text-sm text-white font-medium">Error</p>
-          <p className="text-xs text-[#888] mt-1">{error.message}</p>
+          <p className="text-xs text-[#9CA3AF] mt-1">{error.message}</p>
         </div>
         <button
           onClick={onDismiss}
-          className="text-[#666] hover:text-white text-lg leading-none"
+          className="text-[#9CA3AF] hover:text-white text-lg leading-none"
           aria-label="Dismiss error"
         >
           ×

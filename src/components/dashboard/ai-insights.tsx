@@ -165,22 +165,22 @@ export function AIInsights() {
 
   if (loading) {
     return (
-      <Card className="bg-[#111111] border-[#262626]">
+      <Card className="bg-white border-[#E5E7EB]">
         <CardContent className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-[#FAFAFA]" />
+          <Loader2 className="h-8 w-8 animate-spin text-[#111827]" />
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card className="bg-[#111111] border-[#262626]">
+    <Card className="bg-white border-[#E5E7EB]">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <div className="flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-[#FAFAFA]" />
+          <Sparkles className="h-5 w-5 text-[#111827]" />
           <CardTitle className="text-white">AI Insights</CardTitle>
           {visibleInsights.length > 0 && (
-            <Badge className="bg-[#161616]/20 text-[#FAFAFA]">
+            <Badge className="bg-white/20 text-[#111827]">
               {visibleInsights.length}
             </Badge>
           )}
@@ -196,7 +196,7 @@ export function AIInsights() {
       </CardHeader>
       <CardContent>
         {visibleInsights.length === 0 ? (
-          <div className="text-center py-8 text-[#888888]">
+          <div className="text-center py-8 text-[#9CA3AF]">
             <Sparkles className="h-12 w-12 mx-auto mb-4 opacity-50" />
             <p>No insights right now</p>
             <p className="text-sm">Everything is running smoothly!</p>
@@ -215,9 +215,9 @@ export function AIInsights() {
                 >
                   <button
                     onClick={() => dismissInsight(insight.id)}
-                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[#1A1A1A] rounded"
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[#F1F3F5] rounded"
                   >
-                    <X className="h-3 w-3 text-[#888888]" />
+                    <X className="h-3 w-3 text-[#9CA3AF]" />
                   </button>
 
                   <div className="flex items-start gap-3">
@@ -227,12 +227,12 @@ export function AIInsights() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <h4 className="text-white font-medium">{insight.title}</h4>
-                        <Badge variant="outline" className="border-[#333333] text-xs capitalize">
+                        <Badge variant="outline" className="border-[#D1D5DB] text-xs capitalize">
                           <TypeIcon className="h-3 w-3 mr-1" />
                           {insight.type}
                         </Badge>
                       </div>
-                      <p className="text-sm text-[#999999] mb-2">
+                      <p className="text-sm text-[#6B7280] mb-2">
                         {insight.description}
                       </p>
 
@@ -249,7 +249,7 @@ export function AIInsights() {
                             )}
                             {insight.metric.change.toFixed(1)}%
                           </Badge>
-                          <span className="text-xs text-[#888888]">
+                          <span className="text-xs text-[#9CA3AF]">
                             {insight.metric.period}
                           </span>
                         </div>

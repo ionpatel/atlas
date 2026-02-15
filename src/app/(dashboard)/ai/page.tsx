@@ -129,8 +129,8 @@ export default function AIAssistantPage() {
     <div className="flex flex-col h-[calc(100vh-8rem)]">
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
-        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#CDB49E] to-[#1a2a29] flex items-center justify-center shadow-lg">
-          <Bot className="h-5 w-5 text-[#0A0A0A]" />
+        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#DC2626] to-[#1a2a29] flex items-center justify-center shadow-lg">
+          <Bot className="h-5 w-5 text-white" />
         </div>
         <div>
           <h1 className="text-lg font-semibold text-[var(--foreground)]">Atlas AI Assistant</h1>
@@ -154,8 +154,8 @@ export default function AIAssistantPage() {
             <div
               className={`h-8 w-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
                 msg.role === "user"
-                  ? "bg-[#161616] text-[#0A0A0A]"
-                  : "bg-gradient-to-br from-[#CDB49E] to-[#1a2a29] text-[#0A0A0A]"
+                  ? "bg-white text-white"
+                  : "bg-gradient-to-br from-[#DC2626] to-[#1a2a29] text-white"
               }`}
             >
               {msg.role === "user" ? (
@@ -167,7 +167,7 @@ export default function AIAssistantPage() {
             <div
               className={`max-w-[80%] rounded-xl px-4 py-3 text-sm leading-relaxed ${
                 msg.role === "user"
-                  ? "bg-[#161616] text-[#0A0A0A]"
+                  ? "bg-white text-white"
                   : "bg-[var(--secondary)] text-[var(--foreground)]"
               }`}
             >
@@ -194,11 +194,11 @@ export default function AIAssistantPage() {
         
         {isLoading && (
           <div className="flex gap-3">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#CDB49E] to-[#1a2a29] flex items-center justify-center flex-shrink-0">
-              <Sparkles className="h-4 w-4 text-[#0A0A0A]" />
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#DC2626] to-[#1a2a29] flex items-center justify-center flex-shrink-0">
+              <Sparkles className="h-4 w-4 text-white" />
             </div>
             <div className="bg-[var(--secondary)] rounded-xl px-4 py-3 flex items-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin text-[#FAFAFA]" />
+              <Loader2 className="h-4 w-4 animate-spin text-[#111827]" />
               <span className="text-sm text-[var(--muted-foreground)]">Analyzing your data...</span>
             </div>
           </div>
@@ -216,8 +216,8 @@ export default function AIAssistantPage() {
               onClick={() => handleSuggestion(sq.query)}
               className="flex items-center gap-2 p-3 rounded-lg border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--secondary)] transition-colors text-left group"
             >
-              <sq.icon className="h-4 w-4 text-[#FAFAFA] flex-shrink-0" />
-              <span className="text-xs font-medium text-[var(--foreground)] group-hover:text-[#FAFAFA] transition-colors">
+              <sq.icon className="h-4 w-4 text-[#111827] flex-shrink-0" />
+              <span className="text-xs font-medium text-[var(--foreground)] group-hover:text-[#111827] transition-colors">
                 {sq.label}
               </span>
             </button>
@@ -236,14 +236,14 @@ export default function AIAssistantPage() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
             placeholder="Ask Atlas AI anything about your business..."
-            className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--card)] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626] transition-all"
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--card)] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-[#E5E7EB] transition-all"
             disabled={isLoading}
           />
         </div>
         <button
           onClick={handleSend}
           disabled={!input.trim() || isLoading}
-          className="h-[46px] w-[46px] rounded-xl bg-[#161616] text-[#0A0A0A] flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+          className="h-[46px] w-[46px] rounded-xl bg-white text-white flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <Send className="h-4 w-4" />
         </button>

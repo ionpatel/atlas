@@ -11,7 +11,7 @@ export default function PortalLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#0A0A0A]">
+    <div className="min-h-screen bg-[#F8F9FA]">
       {children}
     </div>
   );

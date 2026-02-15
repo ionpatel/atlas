@@ -6,24 +6,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Core palette — Dark Luxury
         atlas: {
-          bg: '#0A0A0A',
-          surface: '#111111',
-          card: '#161616',
-          elevated: '#1A1A1A',
-          border: '#262626',
-          'border-light': '#333333',
-          gold: '#CDB49E',
-          'gold-light': '#E8D5B7',
-          'gold-dark': '#B89B78',
-          'gold-muted': '#A89880',
-          text: '#FAFAFA',
-          muted: '#888888',
-          dim: '#666666',
-          subtle: '#444444',
+          bg: '#F8F9FA',
+          surface: '#FFFFFF',
+          card: '#FFFFFF',
+          elevated: '#F1F3F5',
+          border: '#E5E7EB',
+          'border-light': '#F3F4F6',
+          red: '#DC2626',
+          'red-light': '#EF4444',
+          'red-dark': '#B91C1C',
+          'red-muted': '#FEE2E2',
+          text: '#111827',
+          muted: '#6B7280',
+          dim: '#9CA3AF',
+          subtle: '#D1D5DB',
         },
-        // Semantic colors (shadcn compatibility)
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -84,12 +82,10 @@ const config: Config = {
         sans: ['Inter', 'system-ui', 'sans-serif']
       },
       boxShadow: {
-        'dark': '0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3)',
-        'dark-lg': '0 10px 25px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3)',
-        'dark-xl': '0 20px 40px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4)',
-        'gold': '0 4px 14px -3px rgba(205, 180, 158, 0.2)',
-        'gold-lg': '0 8px 30px -4px rgba(205, 180, 158, 0.15)',
-        'glow': '0 0 40px rgba(205, 180, 158, 0.12), 0 0 80px rgba(205, 180, 158, 0.06)',
+        'soft': '0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06)',
+        'card': '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
+        'elevated': '0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04)',
+        'float': '0 10px 25px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04)',
       },
       keyframes: {
         'accordion-down': {
@@ -108,10 +104,6 @@ const config: Config = {
           from: { transform: 'translateY(10px)', opacity: '0' },
           to: { transform: 'translateY(0)', opacity: '1' }
         },
-        'slide-down': {
-          from: { transform: 'translateY(-10px)', opacity: '0' },
-          to: { transform: 'translateY(0)', opacity: '1' }
-        },
         'scale-in': {
           from: { transform: 'scale(0.95)', opacity: '0' },
           to: { transform: 'scale(1)', opacity: '1' }
@@ -122,7 +114,6 @@ const config: Config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in': 'fade-in 0.3s ease-out',
         'slide-up': 'slide-up 0.3s ease-out',
-        'slide-down': 'slide-down 0.3s ease-out',
         'scale-in': 'scale-in 0.3s ease-out',
       }
     }

@@ -99,11 +99,11 @@ function CreateKeyModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/60" onClick={onClose} />
-      <div className="relative w-full max-w-lg bg-[#0A0A0A] border border-[#262626] rounded-xl shadow-2xl">
-        <div className="p-6 border-b border-[#262626]">
-          <h2 className="text-lg font-semibold text-[#FAFAFA]">Create API Key</h2>
-          <p className="text-sm text-[#FAFAFA] mt-1">
+      <div className="absolute inset-0 bg-black/20" onClick={onClose} />
+      <div className="relative w-full max-w-lg bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl shadow-2xl">
+        <div className="p-6 border-b border-[#E5E7EB]">
+          <h2 className="text-lg font-semibold text-[#111827]">Create API Key</h2>
+          <p className="text-sm text-[#111827] mt-1">
             Generate a new API key for external access
           </p>
         </div>
@@ -111,7 +111,7 @@ function CreateKeyModal({
         <div className="p-6 space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-[#FAFAFA] mb-2">
+            <label className="block text-sm font-medium text-[#111827] mb-2">
               Name <span className="text-red-400">*</span>
             </label>
             <input
@@ -119,13 +119,13 @@ function CreateKeyModal({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Production API"
-              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] text-sm placeholder-[#555555] focus:outline-none focus:border-[#262626]/40"
+              className="w-full px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-[#111827] text-sm placeholder-[#9CA3AF] focus:outline-none focus:border-[#E5E7EB]/40"
             />
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-medium text-[#FAFAFA] mb-2">
+            <label className="block text-sm font-medium text-[#111827] mb-2">
               Description
             </label>
             <input
@@ -133,13 +133,13 @@ function CreateKeyModal({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="What is this key used for?"
-              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] text-sm placeholder-[#555555] focus:outline-none focus:border-[#262626]/40"
+              className="w-full px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-[#111827] text-sm placeholder-[#9CA3AF] focus:outline-none focus:border-[#E5E7EB]/40"
             />
           </div>
 
           {/* Permissions */}
           <div>
-            <label className="block text-sm font-medium text-[#FAFAFA] mb-2">
+            <label className="block text-sm font-medium text-[#111827] mb-2">
               Permissions
             </label>
             <div className="flex gap-3">
@@ -158,9 +158,9 @@ function CreateKeyModal({
                         setPermissions(permissions.filter((p) => p !== perm));
                       }
                     }}
-                    className="w-4 h-4 rounded border-[#262626] bg-[#0A0A0A] text-[#FAFAFA] focus:ring-[#CDB49E]/40"
+                    className="w-4 h-4 rounded border-[#E5E7EB] bg-[#F8F9FA] text-[#111827] focus:ring-[#DC2626]/40"
                   />
-                  <span className="text-sm text-[#cccccc] capitalize">{perm}</span>
+                  <span className="text-sm text-[#374151] capitalize">{perm}</span>
                 </label>
               ))}
             </div>
@@ -168,13 +168,13 @@ function CreateKeyModal({
 
           {/* Expiration */}
           <div>
-            <label className="block text-sm font-medium text-[#FAFAFA] mb-2">
+            <label className="block text-sm font-medium text-[#111827] mb-2">
               Expiration
             </label>
             <select
               value={expiresIn}
               onChange={(e) => setExpiresIn(e.target.value)}
-              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] text-sm focus:outline-none focus:border-[#262626]/40"
+              className="w-full px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-[#111827] text-sm focus:outline-none focus:border-[#E5E7EB]/40"
             >
               <option value="never">Never</option>
               <option value="30">30 days</option>
@@ -184,17 +184,17 @@ function CreateKeyModal({
           </div>
         </div>
 
-        <div className="p-6 border-t border-[#262626] flex justify-end gap-3">
+        <div className="p-6 border-t border-[#E5E7EB] flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors"
+            className="px-4 py-2 text-sm text-[#374151] hover:text-[#111827] transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={handleCreate}
             disabled={!name.trim() || loading}
-            className="flex items-center gap-2 px-4 py-2 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] disabled:opacity-50 transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-white text-white rounded-lg text-sm font-semibold hover:bg-white disabled:opacity-50 transition-all"
           >
             {loading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -229,27 +229,27 @@ function KeyCreatedModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/60" />
-      <div className="relative w-full max-w-lg bg-[#0A0A0A] border border-[#262626] rounded-xl shadow-2xl">
+      <div className="absolute inset-0 bg-black/20" />
+      <div className="relative w-full max-w-lg bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl shadow-2xl">
         <div className="p-6">
           <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
             <Check className="w-6 h-6 text-emerald-400" />
           </div>
-          <h2 className="text-lg font-semibold text-[#FAFAFA] text-center">
+          <h2 className="text-lg font-semibold text-[#111827] text-center">
             API Key Created
           </h2>
-          <p className="text-sm text-[#FAFAFA] text-center mt-2">
+          <p className="text-sm text-[#111827] text-center mt-2">
             Make sure to copy your API key now. You won't be able to see it again!
           </p>
         </div>
 
         <div className="px-6 pb-6">
-          <div className="p-4 bg-[#0A0A0A] border border-[#262626] rounded-lg">
+          <div className="p-4 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs text-[#FAFAFA]">Your API Key</span>
+              <span className="text-xs text-[#111827]">Your API Key</span>
               <button
                 onClick={() => setShowKey(!showKey)}
-                className="text-[#ccc] hover:text-[#FAFAFA] transition-colors"
+                className="text-[#374151] hover:text-[#111827] transition-colors"
               >
                 {showKey ? (
                   <EyeOff className="w-4 h-4" />
@@ -258,14 +258,14 @@ function KeyCreatedModal({
                 )}
               </button>
             </div>
-            <code className="block text-sm text-[#FAFAFA] font-mono break-all">
+            <code className="block text-sm text-[#111827] font-mono break-all">
               {showKey ? apiKey : "•".repeat(apiKey.length)}
             </code>
           </div>
 
           <button
             onClick={handleCopy}
-            className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0A0A0A] text-[#FAFAFA] rounded-lg text-sm font-medium hover:bg-[#0A0A0A] transition-all"
+            className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#F8F9FA] text-[#111827] rounded-lg text-sm font-medium hover:bg-[#F8F9FA] transition-all"
           >
             {copied ? (
               <>
@@ -288,10 +288,10 @@ function KeyCreatedModal({
           </div>
         </div>
 
-        <div className="p-6 border-t border-[#262626]">
+        <div className="p-6 border-t border-[#E5E7EB]">
           <button
             onClick={onClose}
-            className="w-full px-4 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all"
+            className="w-full px-4 py-2.5 bg-white text-white rounded-lg text-sm font-semibold hover:bg-white transition-all"
           >
             Done
           </button>
@@ -315,14 +315,14 @@ function ApiKeyRow({
   const isExpired = apiKey.expiresAt && new Date(apiKey.expiresAt) < new Date();
 
   return (
-    <div className="flex items-center justify-between p-4 bg-[#0A0A0A] border border-[#262626] rounded-lg">
+    <div className="flex items-center justify-between p-4 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg">
       <div className="flex items-center gap-4">
-        <div className="w-10 h-10 rounded-lg bg-[#0A0A0A] flex items-center justify-center">
-          <Key className="w-5 h-5 text-[#FAFAFA]" />
+        <div className="w-10 h-10 rounded-lg bg-[#F8F9FA] flex items-center justify-center">
+          <Key className="w-5 h-5 text-[#111827]" />
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <p className="text-sm font-medium text-[#FAFAFA]">{apiKey.name}</p>
+            <p className="text-sm font-medium text-[#111827]">{apiKey.name}</p>
             {isExpired && (
               <span className="px-1.5 py-0.5 bg-red-500/10 text-red-400 text-[10px] font-medium rounded">
                 Expired
@@ -330,11 +330,11 @@ function ApiKeyRow({
             )}
           </div>
           <div className="flex items-center gap-3 mt-1">
-            <code className="text-xs text-[#FAFAFA] font-mono">
+            <code className="text-xs text-[#111827] font-mono">
               {apiKey.keyPrefix}...
             </code>
-            <span className="text-xs text-[#FAFAFA]">•</span>
-            <span className="text-xs text-[#FAFAFA]">
+            <span className="text-xs text-[#111827]">•</span>
+            <span className="text-xs text-[#111827]">
               {apiKey.permissions.join(", ")}
             </span>
           </div>
@@ -343,12 +343,12 @@ function ApiKeyRow({
 
       <div className="flex items-center gap-4">
         <div className="text-right">
-          <p className="text-xs text-[#FAFAFA]">
+          <p className="text-xs text-[#111827]">
             {apiKey.lastUsedAt
               ? `Last used ${getRelativeTime(apiKey.lastUsedAt)}`
               : "Never used"}
           </p>
-          <p className="text-[10px] text-[#FAFAFA] mt-0.5">
+          <p className="text-[10px] text-[#111827] mt-0.5">
             Created {new Date(apiKey.createdAt).toLocaleDateString()}
           </p>
         </div>
@@ -356,7 +356,7 @@ function ApiKeyRow({
         <div className="relative">
           <button
             onClick={() => setShowMenu(!showMenu)}
-            className="p-2 text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] rounded-lg transition-all"
+            className="p-2 text-[#374151] hover:text-[#111827] hover:bg-[#F8F9FA] rounded-lg transition-all"
           >
             <MoreVertical className="w-4 h-4" />
           </button>
@@ -367,7 +367,7 @@ function ApiKeyRow({
                 className="fixed inset-0 z-10"
                 onClick={() => setShowMenu(false)}
               />
-              <div className="absolute right-0 top-full mt-1 w-40 bg-[#0A0A0A] border border-[#262626] rounded-lg shadow-xl z-20 overflow-hidden">
+              <div className="absolute right-0 top-full mt-1 w-40 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg shadow-xl z-20 overflow-hidden">
                 <button
                   onClick={() => {
                     onRevoke(apiKey.id);
@@ -435,7 +435,7 @@ export default function ApiPage() {
       {/* Back link */}
       <Link
         href="/settings"
-        className="inline-flex items-center gap-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#374151] hover:text-[#111827] transition-colors mb-6"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Settings
@@ -444,16 +444,16 @@ export default function ApiPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#FAFAFA]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#111827]">
             API Keys
           </h1>
-          <p className="text-[#FAFAFA] text-sm mt-1">
+          <p className="text-[#111827] text-sm mt-1">
             Manage API keys for external integrations
           </p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all"
+          className="flex items-center gap-2 px-4 py-2.5 bg-white text-white rounded-lg text-sm font-semibold hover:bg-white transition-all"
         >
           <Plus className="w-4 h-4" />
           Create Key
@@ -464,43 +464,43 @@ export default function ApiPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <a
           href="/docs/api"
-          className="p-4 bg-[#0A0A0A] border border-[#262626] rounded-xl hover:border-[#3a3a3a] transition-all group"
+          className="p-4 bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl hover:border-[#3a3a3a] transition-all group"
         >
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-[#0A0A0A] group-hover:bg-[#161616]/10 transition-colors">
-              <Book className="w-4 h-4 text-[#FAFAFA] group-hover:text-[#FAFAFA]" />
+            <div className="p-2 rounded-lg bg-[#F8F9FA] group-hover:bg-white/10 transition-colors">
+              <Book className="w-4 h-4 text-[#111827] group-hover:text-[#111827]" />
             </div>
             <div>
-              <p className="text-sm font-medium text-[#FAFAFA]">API Documentation</p>
-              <p className="text-xs text-[#FAFAFA]">Learn how to use the API</p>
+              <p className="text-sm font-medium text-[#111827]">API Documentation</p>
+              <p className="text-xs text-[#111827]">Learn how to use the API</p>
             </div>
           </div>
         </a>
         <a
           href="/docs/api/reference"
-          className="p-4 bg-[#0A0A0A] border border-[#262626] rounded-xl hover:border-[#3a3a3a] transition-all group"
+          className="p-4 bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl hover:border-[#3a3a3a] transition-all group"
         >
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-[#0A0A0A] group-hover:bg-[#161616]/10 transition-colors">
-              <Code className="w-4 h-4 text-[#FAFAFA] group-hover:text-[#FAFAFA]" />
+            <div className="p-2 rounded-lg bg-[#F8F9FA] group-hover:bg-white/10 transition-colors">
+              <Code className="w-4 h-4 text-[#111827] group-hover:text-[#111827]" />
             </div>
             <div>
-              <p className="text-sm font-medium text-[#FAFAFA]">API Reference</p>
-              <p className="text-xs text-[#FAFAFA]">Endpoints & schemas</p>
+              <p className="text-sm font-medium text-[#111827]">API Reference</p>
+              <p className="text-xs text-[#111827]">Endpoints & schemas</p>
             </div>
           </div>
         </a>
         <a
           href="/settings/api/webhooks"
-          className="p-4 bg-[#0A0A0A] border border-[#262626] rounded-xl hover:border-[#3a3a3a] transition-all group"
+          className="p-4 bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl hover:border-[#3a3a3a] transition-all group"
         >
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-[#0A0A0A] group-hover:bg-[#161616]/10 transition-colors">
-              <Activity className="w-4 h-4 text-[#FAFAFA] group-hover:text-[#FAFAFA]" />
+            <div className="p-2 rounded-lg bg-[#F8F9FA] group-hover:bg-white/10 transition-colors">
+              <Activity className="w-4 h-4 text-[#111827] group-hover:text-[#111827]" />
             </div>
             <div>
-              <p className="text-sm font-medium text-[#FAFAFA]">Webhooks</p>
-              <p className="text-xs text-[#FAFAFA]">Receive event notifications</p>
+              <p className="text-sm font-medium text-[#111827]">Webhooks</p>
+              <p className="text-xs text-[#111827]">Receive event notifications</p>
             </div>
           </div>
         </a>
@@ -508,7 +508,7 @@ export default function ApiPage() {
 
       {/* API Keys List */}
       <div className="mb-8">
-        <h2 className="text-lg font-semibold text-[#FAFAFA] mb-4">Your API Keys</h2>
+        <h2 className="text-lg font-semibold text-[#111827] mb-4">Your API Keys</h2>
         {apiKeys.length > 0 ? (
           <div className="space-y-3">
             {apiKeys.map((key) => (
@@ -516,10 +516,10 @@ export default function ApiPage() {
             ))}
           </div>
         ) : (
-          <div className="p-8 bg-[#0A0A0A] border border-[#262626] rounded-xl text-center">
-            <Key className="w-10 h-10 text-[#FAFAFA] mx-auto mb-3" />
-            <p className="text-[#FAFAFA] text-sm">No API keys yet</p>
-            <p className="text-[#FAFAFA] text-xs mt-1">
+          <div className="p-8 bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl text-center">
+            <Key className="w-10 h-10 text-[#111827] mx-auto mb-3" />
+            <p className="text-[#111827] text-sm">No API keys yet</p>
+            <p className="text-[#111827] text-xs mt-1">
               Create an API key to start integrating
             </p>
           </div>
@@ -527,30 +527,30 @@ export default function ApiPage() {
       </div>
 
       {/* Usage Info */}
-      <div className="p-6 bg-[#0A0A0A] border border-[#262626] rounded-xl">
-        <h3 className="text-sm font-semibold text-[#FAFAFA] mb-4">API Usage</h3>
+      <div className="p-6 bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl">
+        <h3 className="text-sm font-semibold text-[#111827] mb-4">API Usage</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <p className="text-2xl font-bold text-[#FAFAFA]">1,247</p>
-            <p className="text-xs text-[#FAFAFA] mt-1">Requests today</p>
+            <p className="text-2xl font-bold text-[#111827]">1,247</p>
+            <p className="text-xs text-[#111827] mt-1">Requests today</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-[#FAFAFA]">98.5%</p>
-            <p className="text-xs text-[#FAFAFA] mt-1">Success rate</p>
+            <p className="text-2xl font-bold text-[#111827]">98.5%</p>
+            <p className="text-xs text-[#111827] mt-1">Success rate</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-[#FAFAFA]">45ms</p>
-            <p className="text-xs text-[#FAFAFA] mt-1">Avg response time</p>
+            <p className="text-2xl font-bold text-[#111827]">45ms</p>
+            <p className="text-xs text-[#111827] mt-1">Avg response time</p>
           </div>
         </div>
       </div>
 
       {/* Security Note */}
-      <div className="mt-6 p-4 bg-[#0A0A0A] border border-[#262626] rounded-xl flex items-start gap-3">
-        <Shield className="w-5 h-5 text-[#FAFAFA] flex-shrink-0 mt-0.5" />
+      <div className="mt-6 p-4 bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl flex items-start gap-3">
+        <Shield className="w-5 h-5 text-[#111827] flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-medium text-[#FAFAFA]">Keep your keys safe</p>
-          <p className="text-xs text-[#FAFAFA] mt-1">
+          <p className="text-sm font-medium text-[#111827]">Keep your keys safe</p>
+          <p className="text-xs text-[#111827] mt-1">
             Never share API keys in public repositories or client-side code. 
             Rotate keys regularly and revoke any that may have been compromised.
           </p>

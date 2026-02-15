@@ -72,20 +72,20 @@ export function InstallPrompt() {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 z-50 animate-in slide-in-from-bottom-4 duration-300">
-      <div className="bg-[#111111] border border-[#262626] rounded-xl shadow-2xl shadow-black/50 overflow-hidden">
+      <div className="bg-white border border-[#E5E7EB] rounded-xl shadow-float overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#CDB49E]/20 to-transparent px-4 py-3 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-[#DC2626]/20 to-transparent px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-[#161616]/20">
-              <Download className="h-4 w-4 text-[#FAFAFA]" />
+            <div className="p-1.5 rounded-lg bg-white/20">
+              <Download className="h-4 w-4 text-[#111827]" />
             </div>
             <span className="text-sm font-medium text-white">Install Atlas</span>
           </div>
           <button
             onClick={handleDismiss}
-            className="p-1 hover:bg-[#1A1A1A] rounded-lg transition-colors"
+            className="p-1 hover:bg-[#F1F3F5] rounded-lg transition-colors"
           >
-            <X className="h-4 w-4 text-[#888888]" />
+            <X className="h-4 w-4 text-[#9CA3AF]" />
           </button>
         </div>
 
@@ -93,56 +93,56 @@ export function InstallPrompt() {
         <div className="p-4">
           {isIOS ? (
             <div className="space-y-3">
-              <p className="text-sm text-[#999999]">
+              <p className="text-sm text-[#6B7280]">
                 Install Atlas on your iPhone:
               </p>
-              <ol className="text-sm text-[#cccccc] space-y-2">
+              <ol className="text-sm text-[#374151] space-y-2">
                 <li className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-[#1A1A1A] flex items-center justify-center text-xs">1</span>
+                  <span className="w-5 h-5 rounded-full bg-[#F1F3F5] flex items-center justify-center text-xs">1</span>
                   Tap the Share button
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-[#1A1A1A] flex items-center justify-center text-xs">2</span>
+                  <span className="w-5 h-5 rounded-full bg-[#F1F3F5] flex items-center justify-center text-xs">2</span>
                   Scroll and tap "Add to Home Screen"
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-[#1A1A1A] flex items-center justify-center text-xs">3</span>
+                  <span className="w-5 h-5 rounded-full bg-[#F1F3F5] flex items-center justify-center text-xs">3</span>
                   Tap "Add" to install
                 </li>
               </ol>
             </div>
           ) : (
             <>
-              <p className="text-sm text-[#999999] mb-4">
+              <p className="text-sm text-[#6B7280] mb-4">
                 Get the full app experience with offline access and notifications.
               </p>
 
               {/* Features */}
               <div className="grid grid-cols-3 gap-2 mb-4">
-                <div className="flex flex-col items-center gap-1 p-2 bg-[#161616] rounded-lg">
-                  <Wifi className="h-4 w-4 text-[#FAFAFA]" />
-                  <span className="text-[10px] text-[#999999]">Offline</span>
+                <div className="flex flex-col items-center gap-1 p-2 bg-white rounded-lg">
+                  <Wifi className="h-4 w-4 text-[#111827]" />
+                  <span className="text-[10px] text-[#6B7280]">Offline</span>
                 </div>
-                <div className="flex flex-col items-center gap-1 p-2 bg-[#161616] rounded-lg">
-                  <Zap className="h-4 w-4 text-[#FAFAFA]" />
-                  <span className="text-[10px] text-[#999999]">Fast</span>
+                <div className="flex flex-col items-center gap-1 p-2 bg-white rounded-lg">
+                  <Zap className="h-4 w-4 text-[#111827]" />
+                  <span className="text-[10px] text-[#6B7280]">Fast</span>
                 </div>
-                <div className="flex flex-col items-center gap-1 p-2 bg-[#161616] rounded-lg">
-                  <Bell className="h-4 w-4 text-[#FAFAFA]" />
-                  <span className="text-[10px] text-[#999999]">Alerts</span>
+                <div className="flex flex-col items-center gap-1 p-2 bg-white rounded-lg">
+                  <Bell className="h-4 w-4 text-[#111827]" />
+                  <span className="text-[10px] text-[#6B7280]">Alerts</span>
                 </div>
               </div>
 
               <div className="flex gap-2">
                 <Button
                   variant="outline"
-                  className="flex-1 border-[#333333]"
+                  className="flex-1 border-[#D1D5DB]"
                   onClick={handleDismiss}
                 >
                   Not now
                 </Button>
                 <Button
-                  className="flex-1 bg-[#161616] hover:bg-[#1A1A1A]/90 text-black"
+                  className="flex-1 bg-white hover:bg-[#F1F3F5]/90 text-black"
                   onClick={handleInstall}
                 >
                   <Smartphone className="h-4 w-4 mr-2" />

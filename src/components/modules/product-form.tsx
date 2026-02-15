@@ -24,17 +24,17 @@ const categories = [
 const units = ["box", "bottle", "strip", "tablet", "capsule", "tube", "pack"];
 
 const inputClass =
-  "w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA]/50 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200";
+  "w-full px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] placeholder:text-[#111827]/50 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-[#E5E7EB]/50 transition-all duration-200";
 
-const labelClass = "block text-sm font-medium text-[#FAFAFA] mb-2";
+const labelClass = "block text-sm font-medium text-[#111827] mb-2";
 
 function SectionHeader({ icon: Icon, title }: { icon: React.ElementType; title: string }) {
   return (
-    <div className="flex items-center gap-2.5 pb-3 mb-5 border-b border-[#262626]">
-      <div className="p-1.5 rounded-md bg-[#0A0A0A]">
-        <Icon className="w-3.5 h-3.5 text-[#FAFAFA]" />
+    <div className="flex items-center gap-2.5 pb-3 mb-5 border-b border-[#E5E7EB]">
+      <div className="p-1.5 rounded-md bg-[#F8F9FA]">
+        <Icon className="w-3.5 h-3.5 text-[#111827]" />
       </div>
-      <h3 className="text-xs font-semibold uppercase tracking-widest text-[#FAFAFA]">{title}</h3>
+      <h3 className="text-xs font-semibold uppercase tracking-widest text-[#111827]">{title}</h3>
     </div>
   );
 }
@@ -93,11 +93,11 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Image Upload Placeholder */}
       <div className="flex justify-center">
-        <div className="w-full max-w-[200px] h-[140px] border-2 border-dashed border-[#262626] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-[#262626]/40 hover:bg-[#0A0A0A]/30 transition-all duration-200 group">
-          <div className="p-3 rounded-xl bg-[#0A0A0A] group-hover:bg-[rgba(156,74,41,0.15)] transition-colors">
-            <Camera className="w-5 h-5 text-[#FAFAFA] group-hover:text-[#FAFAFA] transition-colors" />
+        <div className="w-full max-w-[200px] h-[140px] border-2 border-dashed border-[#E5E7EB] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-[#E5E7EB]/40 hover:bg-[#F8F9FA]/30 transition-all duration-200 group">
+          <div className="p-3 rounded-xl bg-[#F8F9FA] group-hover:bg-[rgba(156,74,41,0.15)] transition-colors">
+            <Camera className="w-5 h-5 text-[#111827] group-hover:text-[#111827] transition-colors" />
           </div>
-          <span className="text-[11px] text-[#FAFAFA] group-hover:text-[#FAFAFA] transition-colors">Upload Image</span>
+          <span className="text-[11px] text-[#111827] group-hover:text-[#111827] transition-colors">Upload Image</span>
         </div>
       </div>
 
@@ -191,10 +191,10 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
                   onChange={(e) => update("is_active", e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-9 h-5 bg-[#0A0A0A] rounded-full peer-checked:bg-[#161616] transition-colors duration-200" />
-                <div className="absolute top-0.5 left-0.5 w-4 h-4 bg-[#0A0A0A] rounded-full peer-checked:translate-x-4 transition-transform duration-200" />
+                <div className="w-9 h-5 bg-[#F8F9FA] rounded-full peer-checked:bg-white transition-colors duration-200" />
+                <div className="absolute top-0.5 left-0.5 w-4 h-4 bg-[#F8F9FA] rounded-full peer-checked:translate-x-4 transition-transform duration-200" />
               </div>
-              <span className="text-[#FAFAFA] group-hover:text-[#FAFAFA] transition-colors">
+              <span className="text-[#111827] group-hover:text-[#111827] transition-colors">
                 Active product
               </span>
             </label>
@@ -235,7 +235,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
           {form.cost_price > 0 && form.sell_price > 0 && (
             <div className="sm:col-span-2">
               <div className="px-4 py-2.5 bg-emerald-500/5 border border-emerald-500/10 rounded-lg flex items-center gap-2">
-                <span className="text-xs text-[#FAFAFA]">Margin:</span>
+                <span className="text-xs text-[#111827]">Margin:</span>
                 <span className="text-xs font-semibold text-emerald-400">
                   ${(form.sell_price - form.cost_price).toFixed(2)} ({((form.sell_price - form.cost_price) / form.cost_price * 100).toFixed(1)}%)
                 </span>
@@ -271,7 +271,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
               className={inputClass}
               placeholder="0"
             />
-            <p className="text-[11px] text-[#FAFAFA] mt-1.5">Alert when stock falls below this</p>
+            <p className="text-[11px] text-[#111827] mt-1.5">Alert when stock falls below this</p>
           </div>
         </div>
       </div>
@@ -322,17 +322,17 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#262626]">
+      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E5E7EB]">
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] bg-[#1A1A1A] border border-[#333] rounded-lg hover:bg-[#262626] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-medium text-[#374151] hover:text-[#111827] bg-[#F1F3F5] border border-[#D1D5DB] rounded-lg hover:bg-[#E5E7EB] transition-all duration-200"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-5 py-2.5 text-sm font-semibold bg-[#161616] text-[#0A0A0A] rounded-lg hover:bg-[#161616] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-semibold bg-white text-white rounded-lg hover:bg-white transition-all duration-200"
         >
           {product ? "Update Product" : "Add Product"}
         </button>

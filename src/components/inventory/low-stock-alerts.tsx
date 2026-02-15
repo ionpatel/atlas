@@ -210,9 +210,9 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="w-full max-w-2xl mx-4 bg-[#0A0A0A] border border-[#262626] rounded-2xl overflow-hidden shadow-2xl max-h-[85vh] flex flex-col">
+      <div className="w-full max-w-2xl mx-4 bg-[#F8F9FA] border border-[#E5E7EB] rounded-2xl overflow-hidden shadow-2xl max-h-[85vh] flex flex-col">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#262626] flex items-center justify-between flex-shrink-0">
+        <div className="px-6 py-4 border-b border-[#E5E7EB] flex items-center justify-between flex-shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-amber-500/10 relative">
               <AlertTriangle className="w-5 h-5 text-amber-400" />
@@ -223,24 +223,24 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
               )}
             </div>
             <div>
-              <h2 className="text-base font-semibold text-[#FAFAFA]">
+              <h2 className="text-base font-semibold text-[#111827]">
                 Stock Alerts
               </h2>
-              <p className="text-xs text-[#FAFAFA]">
+              <p className="text-xs text-[#111827]">
                 {alerts.length} item{alerts.length !== 1 ? "s" : ""} need attention
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+            className="p-2 rounded-lg text-[#374151] hover:text-[#111827] hover:bg-[#F8F9FA] transition-all"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Summary Cards */}
-        <div className="px-6 py-4 border-b border-[#262626] flex-shrink-0">
+        <div className="px-6 py-4 border-b border-[#E5E7EB] flex-shrink-0">
           <div className="grid grid-cols-3 gap-3">
             <button
               onClick={() => setSeverityFilter("critical")}
@@ -277,15 +277,15 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
               className={cn(
                 "rounded-xl p-3 transition-all text-left",
                 severityFilter === "all"
-                  ? "bg-[rgba(156,74,41,0.15)] border-2 border-[#262626]/40"
-                  : "bg-[rgba(156,74,41,0.15)]/50 border border-[#262626]/20 hover:bg-[rgba(156,74,41,0.15)]"
+                  ? "bg-[rgba(156,74,41,0.15)] border-2 border-[#E5E7EB]/40"
+                  : "bg-[rgba(156,74,41,0.15)]/50 border border-[#E5E7EB]/20 hover:bg-[rgba(156,74,41,0.15)]"
               )}
             >
               <div className="flex items-center gap-2 mb-1">
-                <RefreshCcw className="w-4 h-4 text-[#FAFAFA]" />
-                <span className="text-xs text-[#FAFAFA] font-medium">Reorder Value</span>
+                <RefreshCcw className="w-4 h-4 text-[#111827]" />
+                <span className="text-xs text-[#111827] font-medium">Reorder Value</span>
               </div>
-              <p className="text-xl font-bold text-[#FAFAFA]">
+              <p className="text-xl font-bold text-[#111827]">
                 {formatCurrency(stats.totalValue)}
               </p>
             </button>
@@ -294,20 +294,20 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
 
         {/* Bulk Actions Bar */}
         {selectedForReorder.size > 0 && (
-          <div className="px-6 py-3 border-b border-[#262626] bg-[rgba(156,74,41,0.15)]/30 flex items-center justify-between flex-shrink-0">
-            <span className="text-xs text-[#FAFAFA]">
+          <div className="px-6 py-3 border-b border-[#E5E7EB] bg-[rgba(156,74,41,0.15)]/30 flex items-center justify-between flex-shrink-0">
+            <span className="text-xs text-[#111827]">
               {selectedForReorder.size} item{selectedForReorder.size !== 1 ? "s" : ""} selected
             </span>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setSelectedForReorder(new Set())}
-                className="text-xs text-[#ccc] hover:text-[#FAFAFA] px-2 py-1"
+                className="text-xs text-[#374151] hover:text-[#111827] px-2 py-1"
               >
                 Clear
               </button>
               <button
                 onClick={handleBulkReorder}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-xs font-semibold hover:bg-[#161616] transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-white rounded-lg text-xs font-semibold hover:bg-white transition-all"
               >
                 <ShoppingCart className="w-3.5 h-3.5" />
                 Reorder Selected
@@ -317,9 +317,9 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
         )}
 
         {/* Filter Tabs */}
-        <div className="px-6 py-3 border-b border-[#262626] flex items-center justify-between flex-shrink-0">
+        <div className="px-6 py-3 border-b border-[#E5E7EB] flex items-center justify-between flex-shrink-0">
           <div className="flex items-center gap-2">
-            <Filter className="w-3.5 h-3.5 text-[#FAFAFA]" />
+            <Filter className="w-3.5 h-3.5 text-[#111827]" />
             <div className="flex items-center gap-1">
               {(["all", "critical", "warning"] as AlertSeverity[]).map((sev) => (
                 <button
@@ -328,8 +328,8 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
                   className={cn(
                     "px-3 py-1.5 rounded-md text-xs font-medium transition-all",
                     severityFilter === sev
-                      ? "bg-[#161616] text-[#0A0A0A]"
-                      : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                      ? "bg-white text-white"
+                      : "text-[#374151] hover:text-[#111827] hover:bg-[#F8F9FA]"
                   )}
                 >
                   {sev === "all" && "All"}
@@ -356,10 +356,10 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
               <div className="p-4 rounded-full bg-emerald-500/10 mb-4">
                 <Package className="w-8 h-8 text-emerald-400" />
               </div>
-              <p className="text-sm font-medium text-[#FAFAFA] mb-1">
+              <p className="text-sm font-medium text-[#111827] mb-1">
                 All stock levels healthy!
               </p>
-              <p className="text-xs text-[#FAFAFA] text-center">
+              <p className="text-xs text-[#111827] text-center">
                 No products are below their minimum stock levels.
               </p>
             </div>
@@ -369,7 +369,7 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
                 <div
                   key={alert.id}
                   className={cn(
-                    "px-6 py-4 hover:bg-[#0A0A0A]/50 transition-colors",
+                    "px-6 py-4 hover:bg-[#F8F9FA]/50 transition-colors",
                     selectedForReorder.has(alert.id) && "bg-[rgba(156,74,41,0.15)]/20"
                   )}
                 >
@@ -383,9 +383,9 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
                           onChange={() => toggleReorderSelection(alert.id)}
                           className="sr-only peer"
                         />
-                        <div className="w-4 h-4 rounded border border-[#262626] bg-[#0A0A0A] peer-checked:bg-[#161616] peer-checked:border-[#262626] flex items-center justify-center transition-all">
+                        <div className="w-4 h-4 rounded border border-[#E5E7EB] bg-[#F8F9FA] peer-checked:bg-white peer-checked:border-[#E5E7EB] flex items-center justify-center transition-all">
                           {selectedForReorder.has(alert.id) && (
-                            <svg className="w-2.5 h-2.5 text-[#0A0A0A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                            <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                             </svg>
                           )}
@@ -415,18 +415,18 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
                     {/* Product info */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <h4 className="text-sm font-medium text-[#FAFAFA] truncate">
+                        <h4 className="text-sm font-medium text-[#111827] truncate">
                           {alert.name}
                         </h4>
                         <StockBadge stock={alert.stock_quantity} min={alert.min_quantity} />
                       </div>
-                      <p className="text-xs text-[#FAFAFA] mb-2">
+                      <p className="text-xs text-[#111827] mb-2">
                         SKU: {alert.sku} · {alert.category || "Uncategorized"}
                       </p>
 
                       {/* Stock info */}
                       <div className="flex items-center gap-4 text-xs flex-wrap">
-                        <span className="text-[#FAFAFA]">
+                        <span className="text-[#111827]">
                           Current:{" "}
                           <span
                             className={
@@ -438,14 +438,14 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
                             {alert.stock_quantity}
                           </span>
                         </span>
-                        <span className="text-[#FAFAFA]">|</span>
-                        <span className="text-[#FAFAFA]">
-                          Min: <span className="text-[#FAFAFA]">{alert.min_quantity}</span>
+                        <span className="text-[#111827]">|</span>
+                        <span className="text-[#111827]">
+                          Min: <span className="text-[#111827]">{alert.min_quantity}</span>
                         </span>
                         {alert.daysUntilOut > 0 && (
                           <>
-                            <span className="text-[#FAFAFA]">|</span>
-                            <span className="text-[#FAFAFA] flex items-center gap-1">
+                            <span className="text-[#111827]">|</span>
+                            <span className="text-[#111827] flex items-center gap-1">
                               <Clock className="w-3 h-3" />
                               ~{alert.daysUntilOut}d remaining
                             </span>
@@ -459,7 +459,7 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
                       {onViewProduct && (
                         <button
                           onClick={() => onViewProduct(alert)}
-                          className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+                          className="p-2 rounded-lg text-[#374151] hover:text-[#111827] hover:bg-[#F8F9FA] transition-all"
                           title="View product"
                         >
                           <ExternalLink className="w-4 h-4" />
@@ -467,14 +467,14 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
                       )}
                       <button
                         onClick={() => handleReorder(alert)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-xs font-medium hover:bg-[#161616] transition-all"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-white rounded-lg text-xs font-medium hover:bg-white transition-all"
                       >
                         <Send className="w-3 h-3" />
                         +{alert.suggestedReorder}
                       </button>
                       <button
                         onClick={() => dismissAlert(alert.id)}
-                        className="p-1.5 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A] transition-all"
+                        className="p-1.5 rounded-lg text-[#374151] hover:text-[#111827] hover:bg-[#F8F9FA] transition-all"
                         title="Dismiss"
                       >
                         <BellOff className="w-4 h-4" />
@@ -489,14 +489,14 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
 
         {/* Footer */}
         {alerts.length > 0 && (
-          <div className="px-6 py-4 bg-[#0A0A0A] border-t border-[#262626] flex items-center justify-between flex-shrink-0">
+          <div className="px-6 py-4 bg-[#F8F9FA] border-t border-[#E5E7EB] flex items-center justify-between flex-shrink-0">
             <button
               onClick={() => setDismissedIds(new Set())}
-              className="text-xs text-[#ccc] hover:text-[#FAFAFA] transition-colors"
+              className="text-xs text-[#374151] hover:text-[#111827] transition-colors"
             >
               Reset dismissed alerts
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs font-medium text-[#ccc] hover:text-[#FAFAFA] transition-all">
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-xs font-medium text-[#374151] hover:text-[#111827] transition-all">
               <Bell className="w-3.5 h-3.5" />
               Configure Alert Rules
               <ChevronRight className="w-3.5 h-3.5" />

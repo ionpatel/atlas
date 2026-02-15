@@ -10,9 +10,9 @@ interface ContactFormProps {
 }
 
 const inputClass =
-  "w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA]/50 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200";
+  "w-full px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] placeholder:text-[#111827]/50 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-[#E5E7EB]/50 transition-all duration-200";
 
-const labelClass = "block text-sm font-medium text-[#FAFAFA] mb-2";
+const labelClass = "block text-sm font-medium text-[#111827] mb-2";
 
 export function ContactForm({ contact, onSubmit, onCancel }: ContactFormProps) {
   const [form, setForm] = useState({
@@ -132,17 +132,17 @@ export function ContactForm({ contact, onSubmit, onCancel }: ContactFormProps) {
         </div>
       </div>
 
-      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#262626]">
+      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E5E7EB]">
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] bg-[#1A1A1A] border border-[#333] rounded-lg hover:bg-[#262626] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-medium text-[#374151] hover:text-[#111827] bg-[#F1F3F5] border border-[#D1D5DB] rounded-lg hover:bg-[#E5E7EB] transition-all duration-200"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-5 py-2.5 text-sm font-semibold bg-[#161616] text-[#0A0A0A] rounded-lg hover:bg-[#161616] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-semibold bg-white text-white rounded-lg hover:bg-white transition-all duration-200"
         >
           {contact ? "Update Contact" : "Add Contact"}
         </button>

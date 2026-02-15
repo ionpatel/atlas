@@ -16,10 +16,10 @@ import type { Invoice, InvoiceItem } from "@/types";
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
     paid: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    sent: "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA] border-[#262626]/20",
+    sent: "bg-[rgba(156,74,41,0.15)] text-[#111827] border-[#E5E7EB]/20",
     overdue: "bg-red-500/10 text-red-400 border-red-500/20",
-    draft: "bg-[#0A0A0A] text-[#FAFAFA] border-[#262626]",
-    cancelled: "bg-[#0A0A0A] text-[#FAFAFA]/60 border-[#262626]",
+    draft: "bg-[#F8F9FA] text-[#111827] border-[#E5E7EB]",
+    cancelled: "bg-[#F8F9FA] text-[#111827]/60 border-[#E5E7EB]",
   };
   const label = status.charAt(0).toUpperCase() + status.slice(1);
   return (
@@ -43,22 +43,22 @@ function SummaryCard({
   color: string;
 }) {
   const colorMap: Record<string, { bg: string; text: string; iconBg: string }> = {
-    accent: { bg: "bg-[rgba(156,74,41,0.15)]/50", text: "text-[#FAFAFA]", iconBg: "bg-[rgba(156,74,41,0.15)]" },
+    accent: { bg: "bg-[rgba(156,74,41,0.15)]/50", text: "text-[#111827]", iconBg: "bg-[rgba(156,74,41,0.15)]" },
     green: { bg: "bg-emerald-500/5", text: "text-emerald-400", iconBg: "bg-emerald-500/10" },
     red: { bg: "bg-red-500/5", text: "text-red-400", iconBg: "bg-red-500/10" },
     blue: { bg: "bg-blue-500/5", text: "text-blue-400", iconBg: "bg-blue-500/10" },
   };
   const c = colorMap[color] || colorMap.accent;
   return (
-    <div className={`${c.bg} border border-[#262626] rounded-xl p-5`}>
+    <div className={`${c.bg} border border-[#E5E7EB] rounded-xl p-5`}>
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-medium text-[#FAFAFA] uppercase tracking-wider">{label}</span>
+        <span className="text-xs font-medium text-[#111827] uppercase tracking-wider">{label}</span>
         <div className={`w-8 h-8 rounded-lg ${c.iconBg} flex items-center justify-center`}>
           <Icon className={`w-4 h-4 ${c.text}`} />
         </div>
       </div>
       <div className={`text-xl font-bold ${c.text}`}>{formatCurrency(amount)}</div>
-      <div className="text-xs text-[#FAFAFA] mt-1">{count} invoice{count !== 1 ? "s" : ""}</div>
+      <div className="text-xs text-[#111827] mt-1">{count} invoice{count !== 1 ? "s" : ""}</div>
     </div>
   );
 }
@@ -79,68 +79,68 @@ function InvoicePreviewModal({
   const cur = invoice.currency || "CAD";
   return (
     <Modal open={open} onClose={onClose} title="Invoice Preview" size="xl">
-      <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-8 space-y-8">
+      <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-8 space-y-8">
         {/* Header */}
         <div className="flex justify-between items-start">
           <div>
-            <h2 className="text-2xl font-bold text-[#FAFAFA]">INVOICE</h2>
-            <p className="text-sm text-[#FAFAFA] mt-1">{invoice.invoice_number}</p>
+            <h2 className="text-2xl font-bold text-[#111827]">INVOICE</h2>
+            <p className="text-sm text-[#111827] mt-1">{invoice.invoice_number}</p>
           </div>
           <div className="text-right">
-            <h3 className="text-lg font-semibold text-[#FAFAFA]">Atlas Pharmacy</h3>
-            <p className="text-xs text-[#FAFAFA] mt-1">123 Main Street, Suite 100</p>
-            <p className="text-xs text-[#FAFAFA]">Toronto, ON M5V 1A1</p>
-            <p className="text-xs text-[#FAFAFA]">info@atlaspharmacy.ca</p>
+            <h3 className="text-lg font-semibold text-[#111827]">Atlas Pharmacy</h3>
+            <p className="text-xs text-[#111827] mt-1">123 Main Street, Suite 100</p>
+            <p className="text-xs text-[#111827]">Toronto, ON M5V 1A1</p>
+            <p className="text-xs text-[#111827]">info@atlaspharmacy.ca</p>
           </div>
         </div>
 
-        <div className="border-t border-[#262626]" />
+        <div className="border-t border-[#E5E7EB]" />
 
         {/* Bill To + Dates */}
         <div className="grid grid-cols-2 gap-8">
           <div>
-            <p className="text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest mb-2">Bill To</p>
-            <p className="text-sm font-semibold text-[#FAFAFA]">{contactName}</p>
+            <p className="text-[10px] font-semibold text-[#111827] uppercase tracking-widest mb-2">Bill To</p>
+            <p className="text-sm font-semibold text-[#111827]">{contactName}</p>
           </div>
           <div className="text-right space-y-1">
             <div className="flex justify-end gap-6 text-sm">
-              <span className="text-[#FAFAFA]">Issue Date:</span>
-              <span className="text-[#FAFAFA]">{formatDate(invoice.issue_date)}</span>
+              <span className="text-[#111827]">Issue Date:</span>
+              <span className="text-[#111827]">{formatDate(invoice.issue_date)}</span>
             </div>
             <div className="flex justify-end gap-6 text-sm">
-              <span className="text-[#FAFAFA]">Due Date:</span>
-              <span className="text-[#FAFAFA]">{formatDate(invoice.due_date)}</span>
+              <span className="text-[#111827]">Due Date:</span>
+              <span className="text-[#111827]">{formatDate(invoice.due_date)}</span>
             </div>
             <div className="flex justify-end gap-6 text-sm">
-              <span className="text-[#FAFAFA]">Status:</span>
+              <span className="text-[#111827]">Status:</span>
               <StatusBadge status={invoice.status} />
             </div>
           </div>
         </div>
 
         {/* Line Items Table */}
-        <div className="border border-[#262626] rounded-lg overflow-hidden">
+        <div className="border border-[#E5E7EB] rounded-lg overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="bg-[#0A0A0A] border-b border-[#262626]">
-                <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Description</th>
-                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Qty</th>
-                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Unit Price</th>
-                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Amount</th>
+              <tr className="bg-[#F8F9FA] border-b border-[#E5E7EB]">
+                <th className="text-left px-4 py-3 text-[10px] font-semibold text-[#111827] uppercase tracking-widest">Description</th>
+                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#111827] uppercase tracking-widest">Qty</th>
+                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#111827] uppercase tracking-widest">Unit Price</th>
+                <th className="text-right px-4 py-3 text-[10px] font-semibold text-[#111827] uppercase tracking-widest">Amount</th>
               </tr>
             </thead>
             <tbody>
               {items.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-4 py-6 text-center text-[#FAFAFA] text-sm italic">No line items</td>
+                  <td colSpan={4} className="px-4 py-6 text-center text-[#111827] text-sm italic">No line items</td>
                 </tr>
               ) : (
                 items.map((item) => (
-                  <tr key={item.id} className="border-b border-[#262626]/50 last:border-0">
-                    <td className="px-4 py-3 text-sm text-[#FAFAFA]">{item.description}</td>
-                    <td className="px-4 py-3 text-sm text-[#FAFAFA] text-right">{item.quantity}</td>
-                    <td className="px-4 py-3 text-sm text-[#FAFAFA] text-right">{formatCurrency(item.unit_price, cur)}</td>
-                    <td className="px-4 py-3 text-sm text-[#FAFAFA] text-right font-medium">{formatCurrency(item.total, cur)}</td>
+                  <tr key={item.id} className="border-b border-[#E5E7EB]/50 last:border-0">
+                    <td className="px-4 py-3 text-sm text-[#111827]">{item.description}</td>
+                    <td className="px-4 py-3 text-sm text-[#111827] text-right">{item.quantity}</td>
+                    <td className="px-4 py-3 text-sm text-[#111827] text-right">{formatCurrency(item.unit_price, cur)}</td>
+                    <td className="px-4 py-3 text-sm text-[#111827] text-right font-medium">{formatCurrency(item.total, cur)}</td>
                   </tr>
                 ))
               )}
@@ -151,25 +151,25 @@ function InvoicePreviewModal({
         {/* Totals */}
         <div className="flex justify-end">
           <div className="w-72 space-y-2 text-sm">
-            <div className="flex justify-between text-[#FAFAFA]">
+            <div className="flex justify-between text-[#111827]">
               <span>Subtotal</span>
-              <span className="text-[#FAFAFA]">{formatCurrency(invoice.subtotal, cur)}</span>
+              <span className="text-[#111827]">{formatCurrency(invoice.subtotal, cur)}</span>
             </div>
-            <div className="flex justify-between text-[#FAFAFA]">
+            <div className="flex justify-between text-[#111827]">
               <span>Tax</span>
-              <span className="text-[#FAFAFA]">{formatCurrency(invoice.tax, cur)}</span>
+              <span className="text-[#111827]">{formatCurrency(invoice.tax, cur)}</span>
             </div>
-            <div className="flex justify-between font-bold text-lg border-t border-[#262626] pt-3 mt-3">
-              <span className="text-[#FAFAFA]">Total</span>
-              <span className="text-[#FAFAFA]">{formatCurrency(invoice.total, cur)}</span>
+            <div className="flex justify-between font-bold text-lg border-t border-[#E5E7EB] pt-3 mt-3">
+              <span className="text-[#111827]">Total</span>
+              <span className="text-[#111827]">{formatCurrency(invoice.total, cur)}</span>
             </div>
           </div>
         </div>
 
         {invoice.notes && (
-          <div className="border-t border-[#262626] pt-4">
-            <p className="text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest mb-2">Notes</p>
-            <p className="text-sm text-[#FAFAFA]">{invoice.notes}</p>
+          <div className="border-t border-[#E5E7EB] pt-4">
+            <p className="text-[10px] font-semibold text-[#111827] uppercase tracking-widest mb-2">Notes</p>
+            <p className="text-sm text-[#111827]">{invoice.notes}</p>
           </div>
         )}
       </div>
@@ -193,38 +193,38 @@ function KanbanColumn({
   onPreview: (inv: Invoice) => void;
 }) {
   const colorMap: Record<string, { border: string; dot: string }> = {
-    gray: { border: "border-[#262626]/30", dot: "bg-[#161616]" },
-    accent: { border: "border-[#262626]/30", dot: "bg-[#161616]" },
+    gray: { border: "border-[#E5E7EB]/30", dot: "bg-white" },
+    accent: { border: "border-[#E5E7EB]/30", dot: "bg-white" },
     green: { border: "border-emerald-500/30", dot: "bg-emerald-400" },
     red: { border: "border-red-500/30", dot: "bg-red-400" },
   };
   const c = colorMap[color] || colorMap.gray;
 
   return (
-    <div className={`flex-1 min-w-[250px] bg-[#0A0A0A] border ${c.border} rounded-xl overflow-hidden`}>
-      <div className="px-4 py-3 border-b border-[#262626] flex items-center gap-2">
+    <div className={`flex-1 min-w-[250px] bg-[#F8F9FA] border ${c.border} rounded-xl overflow-hidden`}>
+      <div className="px-4 py-3 border-b border-[#E5E7EB] flex items-center gap-2">
         <div className={`w-2 h-2 rounded-full ${c.dot}`} />
-        <h3 className="text-sm font-semibold text-[#FAFAFA]">{title}</h3>
-        <span className="ml-auto text-xs text-[#FAFAFA] bg-[#0A0A0A] px-2 py-0.5 rounded-full">{invoices.length}</span>
+        <h3 className="text-sm font-semibold text-[#111827]">{title}</h3>
+        <span className="ml-auto text-xs text-[#111827] bg-[#F8F9FA] px-2 py-0.5 rounded-full">{invoices.length}</span>
       </div>
       <div className="p-3 space-y-3 max-h-[60vh] overflow-y-auto">
         {invoices.length === 0 ? (
-          <p className="text-xs text-[#FAFAFA] text-center py-6">No invoices</p>
+          <p className="text-xs text-[#111827] text-center py-6">No invoices</p>
         ) : (
           invoices.map((inv) => (
             <div
               key={inv.id}
-              className="bg-[#0A0A0A] border border-[#262626] rounded-lg p-4 hover:border-[#262626]/25 transition-all duration-200 cursor-pointer group"
+              className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg p-4 hover:border-[#E5E7EB]/25 transition-all duration-200 cursor-pointer group"
               onClick={() => onPreview(inv)}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-mono text-[#FAFAFA] font-medium">{inv.invoice_number}</span>
+                <span className="text-xs font-mono text-[#111827] font-medium">{inv.invoice_number}</span>
                 <StatusBadge status={inv.status} />
               </div>
-              <p className="text-sm text-[#FAFAFA] font-medium">{getContactName(inv.contact_id)}</p>
+              <p className="text-sm text-[#111827] font-medium">{getContactName(inv.contact_id)}</p>
               <div className="flex items-center justify-between mt-3">
-                <span className="text-lg font-bold text-[#FAFAFA]">{formatCurrency(inv.total)}</span>
-                <span className="text-xs text-[#FAFAFA]">{formatDate(inv.due_date)}</span>
+                <span className="text-lg font-bold text-[#111827]">{formatCurrency(inv.total)}</span>
+                <span className="text-xs text-[#111827]">{formatDate(inv.due_date)}</span>
               </div>
               {inv.status !== "paid" && inv.status !== "cancelled" && (
                 <button
@@ -232,7 +232,7 @@ function KanbanColumn({
                     e.stopPropagation();
                     onAction(inv);
                   }}
-                  className="mt-3 w-full py-1.5 text-xs font-medium rounded-lg border border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:border-[#262626]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200 opacity-0 group-hover:opacity-100"
+                  className="mt-3 w-full py-1.5 text-xs font-medium rounded-lg border border-[#E5E7EB] text-[#374151] hover:text-[#111827] hover:border-[#E5E7EB]/30 hover:bg-[rgba(156,74,41,0.15)]/30 transition-all duration-200 opacity-0 group-hover:opacity-100"
                 >
                   {inv.status === "draft" && "Send Invoice"}
                   {inv.status === "sent" && "Register Payment"}
@@ -350,16 +350,16 @@ export default function InvoicesPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-[#FAFAFA]">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#111827]">
             Invoices
           </h1>
-          <p className="text-[#FAFAFA] text-sm mt-1">
+          <p className="text-[#111827] text-sm mt-1">
             {filtered.length} of {invoices.length} invoices
           </p>
         </div>
         <button
           onClick={() => setModalOpen(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#161616] text-[#0A0A0A] rounded-lg text-sm font-semibold hover:bg-[#161616] transition-all duration-200"
+          className="flex items-center gap-2 px-5 py-2.5 bg-white text-white rounded-lg text-sm font-semibold hover:bg-white transition-all duration-200"
         >
           <Plus className="w-4 h-4" />
           New Invoice
@@ -376,17 +376,17 @@ export default function InvoicesPage() {
 
       {/* Search, Filters & View Toggle */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#262626]/40 transition-colors duration-200">
-          <Search className="w-4 h-4 text-[#FAFAFA]" />
+        <div className="flex items-center gap-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg px-4 py-2.5 flex-1 max-w-md focus-within:border-[#E5E7EB]/40 transition-colors duration-200">
+          <Search className="w-4 h-4 text-[#111827]" />
           <input
             type="text"
             placeholder="Search invoices..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-none outline-none text-sm w-full text-[#FAFAFA] placeholder:text-[#FAFAFA]/60"
+            className="bg-transparent border-none outline-none text-sm w-full text-[#111827] placeholder:text-[#111827]/60"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery("")} className="text-[#ccc] hover:text-[#FAFAFA]">
+            <button onClick={() => setSearchQuery("")} className="text-[#374151] hover:text-[#111827]">
               <X className="w-3.5 h-3.5" />
             </button>
           )}
@@ -395,8 +395,8 @@ export default function InvoicesPage() {
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-medium transition-all duration-200 ${
             showFilters || filters.status
-              ? "border-[#262626]/50 text-[#FAFAFA] bg-[rgba(156,74,41,0.15)]/50"
-              : "border-[#262626] text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+              ? "border-[#E5E7EB]/50 text-[#111827] bg-[rgba(156,74,41,0.15)]/50"
+              : "border-[#E5E7EB] text-[#374151] hover:text-[#111827] hover:bg-[#F8F9FA]"
           }`}
         >
           <Filter className="w-4 h-4" />
@@ -404,13 +404,13 @@ export default function InvoicesPage() {
         </button>
 
         {/* View toggle */}
-        <div className="flex items-center border border-[#262626] rounded-lg overflow-hidden ml-auto">
+        <div className="flex items-center border border-[#E5E7EB] rounded-lg overflow-hidden ml-auto">
           <button
             onClick={() => setViewMode("list")}
             className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               viewMode === "list"
-                ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                ? "bg-[rgba(156,74,41,0.15)] text-[#111827]"
+                : "text-[#374151] hover:text-[#111827] hover:bg-[#F8F9FA]"
             }`}
           >
             <List className="w-4 h-4" />
@@ -420,8 +420,8 @@ export default function InvoicesPage() {
             onClick={() => setViewMode("kanban")}
             className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               viewMode === "kanban"
-                ? "bg-[rgba(156,74,41,0.15)] text-[#FAFAFA]"
-                : "text-[#ccc] hover:text-[#FAFAFA] hover:bg-[#0A0A0A]"
+                ? "bg-[rgba(156,74,41,0.15)] text-[#111827]"
+                : "text-[#374151] hover:text-[#111827] hover:bg-[#F8F9FA]"
             }`}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -435,7 +435,7 @@ export default function InvoicesPage() {
           <select
             value={filters.status}
             onChange={(e) => setFilter("status", e.target.value)}
-            className="px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200"
+            className="px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-[#E5E7EB]/50 transition-all duration-200"
           >
             <option value="">All Status</option>
             <option value="draft">Draft</option>
@@ -459,24 +459,24 @@ export default function InvoicesPage() {
 
       {/* List View */}
       {viewMode === "list" && (
-        <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl overflow-hidden">
+        <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[#262626]">
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Invoice</th>
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Customer</th>
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Date</th>
-                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Due Date</th>
-                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Amount</th>
-                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Status</th>
-                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#FAFAFA] uppercase tracking-widest">Actions</th>
+              <tr className="border-b border-[#E5E7EB]">
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#111827] uppercase tracking-widest">Invoice</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#111827] uppercase tracking-widest">Customer</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#111827] uppercase tracking-widest">Date</th>
+                <th className="text-left px-6 py-4 text-[10px] font-semibold text-[#111827] uppercase tracking-widest">Due Date</th>
+                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#111827] uppercase tracking-widest">Amount</th>
+                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#111827] uppercase tracking-widest">Status</th>
+                <th className="text-right px-6 py-4 text-[10px] font-semibold text-[#111827] uppercase tracking-widest">Actions</th>
               </tr>
             </thead>
             <tbody>
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-16 text-center text-[#FAFAFA] text-sm">
-                    <FileText className="w-8 h-8 mx-auto mb-3 text-[#FAFAFA]/40" />
+                  <td colSpan={7} className="px-6 py-16 text-center text-[#111827] text-sm">
+                    <FileText className="w-8 h-8 mx-auto mb-3 text-[#111827]/40" />
                     No invoices found
                   </td>
                 </tr>
@@ -484,23 +484,23 @@ export default function InvoicesPage() {
                 filtered.map((inv, i) => (
                   <tr
                     key={inv.id}
-                    className={`hover:bg-[#0A0A0A] transition-colors duration-150 cursor-pointer border-b border-[#262626]/50 last:border-0 ${
-                      i % 2 === 1 ? "bg-[#0A0A0A]/40" : ""
+                    className={`hover:bg-[#F8F9FA] transition-colors duration-150 cursor-pointer border-b border-[#E5E7EB]/50 last:border-0 ${
+                      i % 2 === 1 ? "bg-[#F8F9FA]/40" : ""
                     }`}
                     onClick={() => handlePreview(inv)}
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-lg bg-[rgba(156,74,41,0.15)] flex items-center justify-center flex-shrink-0">
-                          <FileText className="w-3.5 h-3.5 text-[#FAFAFA]" />
+                          <FileText className="w-3.5 h-3.5 text-[#111827]" />
                         </div>
-                        <span className="text-sm font-medium text-[#FAFAFA] font-mono">{inv.invoice_number}</span>
+                        <span className="text-sm font-medium text-[#111827] font-mono">{inv.invoice_number}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-[#FAFAFA]">{getContactName(inv.contact_id)}</td>
-                    <td className="px-6 py-4 text-sm text-[#FAFAFA]">{formatDate(inv.issue_date)}</td>
-                    <td className="px-6 py-4 text-sm text-[#FAFAFA]">{formatDate(inv.due_date)}</td>
-                    <td className="px-6 py-4 text-sm text-right font-semibold text-[#FAFAFA]">{formatCurrency(inv.total)}</td>
+                    <td className="px-6 py-4 text-sm text-[#111827]">{getContactName(inv.contact_id)}</td>
+                    <td className="px-6 py-4 text-sm text-[#111827]">{formatDate(inv.issue_date)}</td>
+                    <td className="px-6 py-4 text-sm text-[#111827]">{formatDate(inv.due_date)}</td>
+                    <td className="px-6 py-4 text-sm text-right font-semibold text-[#111827]">{formatCurrency(inv.total)}</td>
                     <td className="px-6 py-4 text-right">
                       <StatusBadge status={inv.status} />
                     </td>
@@ -513,7 +513,7 @@ export default function InvoicesPage() {
                               e.stopPropagation();
                               handleStatusAction(inv);
                             }}
-                            className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                            className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg text-[#111827] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                             title="Send"
                           >
                             <Send className="w-3 h-3" />
@@ -551,14 +551,14 @@ export default function InvoicesPage() {
                             e.stopPropagation();
                             handlePreview(inv);
                           }}
-                          className="p-2 rounded-lg text-[#ccc] hover:text-[#FAFAFA] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
+                          className="p-2 rounded-lg text-[#374151] hover:text-[#111827] hover:bg-[rgba(156,74,41,0.15)] transition-all duration-200"
                           title="Preview"
                         >
                           <Eye className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={(e) => handleDelete(e, inv.id)}
-                          className="p-2 rounded-lg text-[#FAFAFA] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+                          className="p-2 rounded-lg text-[#111827] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
                           title="Delete"
                         >
                           <Trash2 className="w-3.5 h-3.5" />

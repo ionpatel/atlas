@@ -71,7 +71,7 @@ const mockReports: ExpenseReport[] = [
 const isSupabaseConfigured = () => !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
 export const EXPENSE_STATUS_STYLES: Record<ExpenseStatus, { label: string; bgColor: string; textColor: string; borderColor: string }> = {
-  draft: { label: "Draft", bgColor: "bg-[#222222]", textColor: "text-[#888888]", borderColor: "border-[#2a2a2a]" },
+  draft: { label: "Draft", bgColor: "bg-[#222222]", textColor: "text-[#9CA3AF]", borderColor: "border-[#2a2a2a]" },
   pending: { label: "Pending", bgColor: "bg-amber-500/10", textColor: "text-amber-400", borderColor: "border-amber-500/20" },
   approved: { label: "Approved", bgColor: "bg-emerald-500/10", textColor: "text-emerald-400", borderColor: "border-emerald-500/20" },
   rejected: { label: "Rejected", bgColor: "bg-red-500/10", textColor: "text-red-400", borderColor: "border-red-500/20" },

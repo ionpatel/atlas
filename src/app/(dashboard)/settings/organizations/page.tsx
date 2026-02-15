@@ -62,11 +62,11 @@ interface Invitation {
 }
 
 const roleIcons: Record<string, React.ReactNode> = {
-  owner: <Crown className="h-4 w-4 text-[#FAFAFA]" />,
+  owner: <Crown className="h-4 w-4 text-[#111827]" />,
   admin: <Shield className="h-4 w-4 text-blue-400" />,
   manager: <Users className="h-4 w-4 text-green-400" />,
-  member: <User className="h-4 w-4 text-[#999999]" />,
-  viewer: <Eye className="h-4 w-4 text-[#888888]" />,
+  member: <User className="h-4 w-4 text-[#6B7280]" />,
+  viewer: <Eye className="h-4 w-4 text-[#9CA3AF]" />,
 };
 
 export default function OrganizationsPage() {
@@ -266,7 +266,7 @@ export default function OrganizationsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-[#FAFAFA]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#111827]" />
       </div>
     );
   }
@@ -277,21 +277,21 @@ export default function OrganizationsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Organizations</h1>
-          <p className="text-[#999999] mt-1">
+          <p className="text-[#6B7280] mt-1">
             Manage your organizations and team members
           </p>
         </div>
         <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
           <DialogTrigger asChild>
-            <Button className="bg-[#161616] hover:bg-[#1A1A1A]/90 text-black">
+            <Button className="bg-white hover:bg-[#F1F3F5]/90 text-black">
               <Plus className="h-4 w-4 mr-2" />
               Create Organization
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-[#111111] border-[#262626]">
+          <DialogContent className="bg-white border-[#E5E7EB]">
             <DialogHeader>
               <DialogTitle className="text-white">Create Organization</DialogTitle>
-              <DialogDescription className="text-[#999999]">
+              <DialogDescription className="text-[#6B7280]">
                 Create a new organization to collaborate with your team
               </DialogDescription>
             </DialogHeader>
@@ -303,7 +303,7 @@ export default function OrganizationsPage() {
                   value={newOrgName}
                   onChange={(e) => setNewOrgName(e.target.value)}
                   placeholder="Acme Inc."
-                  className="bg-[#1A1A1A] border-[#333333] text-white"
+                  className="bg-[#F1F3F5] border-[#D1D5DB] text-white"
                 />
               </div>
             </div>
@@ -314,7 +314,7 @@ export default function OrganizationsPage() {
               <Button 
                 onClick={createOrganization} 
                 disabled={creating || !newOrgName.trim()}
-                className="bg-[#161616] hover:bg-[#1A1A1A]/90 text-black"
+                className="bg-white hover:bg-[#F1F3F5]/90 text-black"
               >
                 {creating && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
                 Create
@@ -325,10 +325,10 @@ export default function OrganizationsPage() {
       </div>
 
       {/* Organization Selector */}
-      <Card className="bg-[#111111] border-[#262626]">
+      <Card className="bg-white border-[#E5E7EB]">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Building2 className="h-5 w-5 text-[#FAFAFA]" />
+            <Building2 className="h-5 w-5 text-[#111827]" />
             Your Organizations
           </CardTitle>
         </CardHeader>
@@ -340,14 +340,14 @@ export default function OrganizationsPage() {
                 variant={selectedOrg?.org_id === org.org_id ? 'default' : 'outline'}
                 onClick={() => setSelectedOrg(org)}
                 className={selectedOrg?.org_id === org.org_id 
-                  ? 'bg-[#161616] text-black hover:bg-[#161616]/90' 
-                  : 'border-[#333333] text-white hover:bg-[#1A1A1A]'
+                  ? 'bg-white text-black hover:bg-white/90' 
+                  : 'border-[#D1D5DB] text-white hover:bg-[#F1F3F5]'
                 }
               >
                 {roleIcons[org.role]}
                 <span className="ml-2">{org.org_name}</span>
                 {org.is_owner && (
-                  <Badge variant="secondary" className="ml-2 bg-[#161616]/20 text-[#FAFAFA]">
+                  <Badge variant="secondary" className="ml-2 bg-white/20 text-[#111827]">
                     Owner
                   </Badge>
                 )}
@@ -360,29 +360,29 @@ export default function OrganizationsPage() {
       {selectedOrg && (
         <>
           {/* Members */}
-          <Card className="bg-[#111111] border-[#262626]">
+          <Card className="bg-white border-[#E5E7EB]">
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Users className="h-5 w-5 text-[#FAFAFA]" />
+                  <Users className="h-5 w-5 text-[#111827]" />
                   Team Members
                 </CardTitle>
-                <CardDescription className="text-[#999999]">
+                <CardDescription className="text-[#6B7280]">
                   {members.length} member{members.length !== 1 ? 's' : ''} in {selectedOrg.org_name}
                 </CardDescription>
               </div>
               {(selectedOrg.role === 'owner' || selectedOrg.role === 'admin') && (
                 <Dialog open={showInviteDialog} onOpenChange={setShowInviteDialog}>
                   <DialogTrigger asChild>
-                    <Button variant="outline" className="border-[#333333]">
+                    <Button variant="outline" className="border-[#D1D5DB]">
                       <Mail className="h-4 w-4 mr-2" />
                       Invite Member
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="bg-[#111111] border-[#262626]">
+                  <DialogContent className="bg-white border-[#E5E7EB]">
                     <DialogHeader>
                       <DialogTitle className="text-white">Invite Team Member</DialogTitle>
-                      <DialogDescription className="text-[#999999]">
+                      <DialogDescription className="text-[#6B7280]">
                         Send an invitation to join {selectedOrg.org_name}
                       </DialogDescription>
                     </DialogHeader>
@@ -395,16 +395,16 @@ export default function OrganizationsPage() {
                           value={inviteEmail}
                           onChange={(e) => setInviteEmail(e.target.value)}
                           placeholder="colleague@company.com"
-                          className="bg-[#1A1A1A] border-[#333333] text-white"
+                          className="bg-[#F1F3F5] border-[#D1D5DB] text-white"
                         />
                       </div>
                       <div className="space-y-2">
                         <Label className="text-white">Role</Label>
                         <Select value={inviteRole} onValueChange={setInviteRole}>
-                          <SelectTrigger className="bg-[#1A1A1A] border-[#333333] text-white">
+                          <SelectTrigger className="bg-[#F1F3F5] border-[#D1D5DB] text-white">
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent className="bg-[#1A1A1A] border-[#333333]">
+                          <SelectContent className="bg-[#F1F3F5] border-[#D1D5DB]">
                             <SelectItem value="admin">Admin</SelectItem>
                             <SelectItem value="manager">Manager</SelectItem>
                             <SelectItem value="member">Member</SelectItem>
@@ -420,7 +420,7 @@ export default function OrganizationsPage() {
                       <Button 
                         onClick={sendInvitation} 
                         disabled={inviting || !inviteEmail}
-                        className="bg-[#161616] hover:bg-[#1A1A1A]/90 text-black"
+                        className="bg-white hover:bg-[#F1F3F5]/90 text-black"
                       >
                         {inviting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
                         Send Invitation
@@ -433,24 +433,24 @@ export default function OrganizationsPage() {
             <CardContent>
               <Table>
                 <TableHeader>
-                  <TableRow className="border-[#262626]">
-                    <TableHead className="text-[#999999]">Member</TableHead>
-                    <TableHead className="text-[#999999]">Role</TableHead>
-                    <TableHead className="text-[#999999]">Joined</TableHead>
-                    <TableHead className="text-right text-[#999999]">Actions</TableHead>
+                  <TableRow className="border-[#E5E7EB]">
+                    <TableHead className="text-[#6B7280]">Member</TableHead>
+                    <TableHead className="text-[#6B7280]">Role</TableHead>
+                    <TableHead className="text-[#6B7280]">Joined</TableHead>
+                    <TableHead className="text-right text-[#6B7280]">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {members.map((member) => (
-                    <TableRow key={member.id} className="border-[#262626]">
+                    <TableRow key={member.id} className="border-[#E5E7EB]">
                       <TableCell className="text-white">{member.email}</TableCell>
                       <TableCell>
-                        <Badge variant="outline" className="border-[#333333] capitalize">
+                        <Badge variant="outline" className="border-[#D1D5DB] capitalize">
                           {roleIcons[member.role]}
                           <span className="ml-1">{member.role}</span>
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-[#999999]">
+                      <TableCell className="text-[#6B7280]">
                         {new Date(member.created_at).toLocaleDateString()}
                       </TableCell>
                       <TableCell className="text-right">
@@ -474,12 +474,12 @@ export default function OrganizationsPage() {
 
           {/* Pending Invitations */}
           {invitations.length > 0 && (
-            <Card className="bg-[#111111] border-[#262626]">
+            <Card className="bg-white border-[#E5E7EB]">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-[#FAFAFA]" />
+                  <Clock className="h-5 w-5 text-[#111827]" />
                   Pending Invitations
-                  <Badge className="bg-[#161616]/20 text-[#FAFAFA]">
+                  <Badge className="bg-white/20 text-[#111827]">
                     {invitations.length}
                   </Badge>
                 </CardTitle>
@@ -487,23 +487,23 @@ export default function OrganizationsPage() {
               <CardContent>
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-[#262626]">
-                      <TableHead className="text-[#999999]">Email</TableHead>
-                      <TableHead className="text-[#999999]">Role</TableHead>
-                      <TableHead className="text-[#999999]">Expires</TableHead>
-                      <TableHead className="text-right text-[#999999]">Actions</TableHead>
+                    <TableRow className="border-[#E5E7EB]">
+                      <TableHead className="text-[#6B7280]">Email</TableHead>
+                      <TableHead className="text-[#6B7280]">Role</TableHead>
+                      <TableHead className="text-[#6B7280]">Expires</TableHead>
+                      <TableHead className="text-right text-[#6B7280]">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {invitations.map((inv) => (
-                      <TableRow key={inv.id} className="border-[#262626]">
+                      <TableRow key={inv.id} className="border-[#E5E7EB]">
                         <TableCell className="text-white">{inv.email}</TableCell>
                         <TableCell>
-                          <Badge variant="outline" className="border-[#333333] capitalize">
+                          <Badge variant="outline" className="border-[#D1D5DB] capitalize">
                             {inv.role}
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-[#999999]">
+                        <TableCell className="text-[#6B7280]">
                           {new Date(inv.expires_at).toLocaleDateString()}
                         </TableCell>
                         <TableCell className="text-right">

@@ -11,15 +11,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#CDB49E]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0A0A] disabled:pointer-events-none disabled:opacity-50",
+          "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-200 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
           {
-            "bg-[#CDB49E] text-[#0A0A0A] shadow-lg shadow-[#CDB49E]/10 hover:bg-[#E8D5B7] active:bg-[#B89B78]": variant === "default",
-            "bg-red-500/90 text-white shadow-sm hover:bg-red-500 active:bg-red-600": variant === "destructive",
-            "border border-[#333] bg-transparent text-[#ccc] shadow-sm hover:bg-[#1A1A1A] hover:text-[#FAFAFA] hover:border-[#444]": variant === "outline",
-            "bg-[#1A1A1A] text-[#ccc] shadow-sm hover:bg-[#262626] hover:text-[#FAFAFA]": variant === "secondary",
-            "text-[#999] hover:bg-[#1A1A1A] hover:text-[#FAFAFA]": variant === "ghost",
-            "text-[#CDB49E] underline-offset-4 hover:underline hover:text-[#E8D5B7]": variant === "link",
-            "bg-gradient-to-r from-[#CDB49E] to-[#B89B78] text-[#0A0A0A] font-semibold shadow-lg shadow-[#CDB49E]/15 hover:shadow-[#CDB49E]/25 hover:from-[#E8D5B7] hover:to-[#CDB49E] active:from-[#B89B78] active:to-[#9A8670]": variant === "gold",
+            "bg-[#DC2626] text-white shadow-sm hover:bg-[#B91C1C] active:bg-[#991B1B]": variant === "default",
+            "bg-red-50 text-[#DC2626] shadow-sm hover:bg-red-100 active:bg-red-200": variant === "destructive",
+            "border border-[#D1D5DB] bg-white text-[#374151] shadow-sm hover:bg-[#F1F3F5] hover:text-[#111827] hover:border-[#9CA3AF]": variant === "outline",
+            "bg-[#F1F3F5] text-[#374151] shadow-sm hover:bg-[#E5E7EB] hover:text-[#111827]": variant === "secondary",
+            "text-[#6B7280] hover:bg-[#F1F3F5] hover:text-[#111827]": variant === "ghost",
+            "text-[#DC2626] underline-offset-4 hover:underline hover:text-[#B91C1C]": variant === "link",
+            "bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white font-semibold shadow-md hover:from-[#B91C1C] hover:to-[#991B1B]": variant === "gold",
           },
           {
             "h-9 px-4 py-2": size === "default",

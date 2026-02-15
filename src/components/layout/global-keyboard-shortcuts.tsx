@@ -108,26 +108,26 @@ export function GlobalKeyboardShortcuts({ isOpen, onClose }: GlobalKeyboardShort
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/30 backdrop-blur-sm"
         onClick={onClose}
       />
       
       {/* Modal */}
-      <div className="relative w-full max-w-3xl bg-[#0A0A0A] border border-[#333] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-3xl bg-[#F8F9FA] border border-[#D1D5DB] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#333]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#D1D5DB]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#161616]/10 flex items-center justify-center">
-              <Keyboard className="w-5 h-5 text-[#FAFAFA]" />
+            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+              <Keyboard className="w-5 h-5 text-[#111827]" />
             </div>
             <div>
               <h2 className="text-lg font-semibold text-white">Keyboard Shortcuts</h2>
-              <p className="text-sm text-[#666]">Navigate Atlas faster with keyboard shortcuts</p>
+              <p className="text-sm text-[#9CA3AF]">Navigate Atlas faster with keyboard shortcuts</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-[#666] hover:text-white hover:bg-[#333] transition-colors"
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-[#9CA3AF] hover:text-white hover:bg-[#333] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -138,7 +138,7 @@ export function GlobalKeyboardShortcuts({ isOpen, onClose }: GlobalKeyboardShort
           <div className="grid md:grid-cols-2 gap-6">
             {SHORTCUT_GROUPS.map((group) => (
               <div key={group.title}>
-                <h3 className="text-xs font-semibold text-[#888] uppercase tracking-wider mb-3">
+                <h3 className="text-xs font-semibold text-[#9CA3AF] uppercase tracking-wider mb-3">
                   {group.title}
                 </h3>
                 <div className="space-y-2">
@@ -147,14 +147,14 @@ export function GlobalKeyboardShortcuts({ isOpen, onClose }: GlobalKeyboardShort
                       key={idx}
                       className="flex items-center justify-between py-2 px-3 rounded-lg bg-[#111] border border-[#222]"
                     >
-                      <span className="text-sm text-[#ccc]">{shortcut.description}</span>
+                      <span className="text-sm text-[#374151]">{shortcut.description}</span>
                       <div className="flex items-center gap-1">
                         {shortcut.keys.map((key, i) => (
                           <kbd
                             key={i}
                             className={cn(
                               "px-2 py-1 rounded text-xs font-mono",
-                              "bg-[#222] border border-[#333] text-[#888]",
+                              "bg-[#222] border border-[#D1D5DB] text-[#9CA3AF]",
                               "min-w-[24px] text-center"
                             )}
                           >
@@ -171,12 +171,12 @@ export function GlobalKeyboardShortcuts({ isOpen, onClose }: GlobalKeyboardShort
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-[#333] bg-[#111]">
-          <div className="flex items-center justify-between text-xs text-[#666]">
-            <span>Pro tip: Press <kbd className="px-1.5 py-0.5 mx-1 rounded bg-[#222] border border-[#333]">⌘</kbd><kbd className="px-1.5 py-0.5 rounded bg-[#222] border border-[#333]">K</kbd> to quickly access any command</span>
+        <div className="px-6 py-4 border-t border-[#D1D5DB] bg-[#111]">
+          <div className="flex items-center justify-between text-xs text-[#9CA3AF]">
+            <span>Pro tip: Press <kbd className="px-1.5 py-0.5 mx-1 rounded bg-[#222] border border-[#D1D5DB]">⌘</kbd><kbd className="px-1.5 py-0.5 rounded bg-[#222] border border-[#D1D5DB]">K</kbd> to quickly access any command</span>
             <span className="flex items-center gap-2">
               <span>Press</span>
-              <kbd className="px-1.5 py-0.5 rounded bg-[#222] border border-[#333]">ESC</kbd>
+              <kbd className="px-1.5 py-0.5 rounded bg-[#222] border border-[#D1D5DB]">ESC</kbd>
               <span>to close</span>
             </span>
           </div>

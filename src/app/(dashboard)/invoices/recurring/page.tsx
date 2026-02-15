@@ -157,7 +157,7 @@ export default function RecurringInvoicesPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-[#FAFAFA]" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#111827]" />
       </div>
     );
   }
@@ -168,18 +168,18 @@ export default function RecurringInvoicesPage() {
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <Link href="/invoices" className="text-[#FAFAFA] hover:text-white">
+            <Link href="/invoices" className="text-[#111827] hover:text-white">
               Invoices
             </Link>
-            <span className="text-[#FAFAFA]">/</span>
+            <span className="text-[#111827]">/</span>
             <span className="text-white">Recurring</span>
           </div>
           <h1 className="text-2xl font-bold text-white mt-1">Recurring Invoices</h1>
-          <p className="text-[#FAFAFA]">
+          <p className="text-[#111827]">
             Automate subscription and retainer billing
           </p>
         </div>
-        <Button className="bg-gradient-to-r from-[#CDB49E] to-[#B89B78] text-[#0A0A0A]">
+        <Button className="bg-gradient-to-r from-[#DC2626] to-[#B91C1C] text-white">
           <Plus className="h-4 w-4 mr-2" />
           New Recurring Invoice
         </Button>
@@ -187,27 +187,27 @@ export default function RecurringInvoicesPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
-        <Card className="bg-[#0A0A0A] border-[#262626]">
+        <Card className="bg-[#F8F9FA] border-[#E5E7EB]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#FAFAFA] mb-1">
+            <div className="flex items-center gap-2 text-[#111827] mb-1">
               <RefreshCw className="h-4 w-4" />
               <span className="text-sm">Active</span>
             </div>
             <p className="text-2xl font-bold text-white">{activeCount}</p>
           </CardContent>
         </Card>
-        <Card className="bg-[#0A0A0A] border-[#262626]">
+        <Card className="bg-[#F8F9FA] border-[#E5E7EB]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#FAFAFA] mb-1">
+            <div className="flex items-center gap-2 text-[#111827] mb-1">
               <Calendar className="h-4 w-4" />
               <span className="text-sm">Monthly Revenue</span>
             </div>
-            <p className="text-2xl font-bold text-[#FAFAFA]">{formatCurrency(totalMRR)}</p>
+            <p className="text-2xl font-bold text-[#111827]">{formatCurrency(totalMRR)}</p>
           </CardContent>
         </Card>
-        <Card className="bg-[#0A0A0A] border-[#262626]">
+        <Card className="bg-[#F8F9FA] border-[#E5E7EB]">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-[#FAFAFA] mb-1">
+            <div className="flex items-center gap-2 text-[#111827] mb-1">
               <FileText className="h-4 w-4" />
               <span className="text-sm">Total Generated</span>
             </div>
@@ -220,35 +220,35 @@ export default function RecurringInvoicesPage() {
 
       {/* Search */}
       <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#FAFAFA]" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#111827]" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search..."
-          className="pl-10 bg-[#0A0A0A] border-[#262626] text-white"
+          className="pl-10 bg-[#F8F9FA] border-[#E5E7EB] text-white"
         />
       </div>
 
       {/* Table */}
-      <Card className="bg-[#0A0A0A] border-[#262626]">
+      <Card className="bg-[#F8F9FA] border-[#E5E7EB]">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow className="border-[#262626] hover:bg-transparent">
-                <TableHead className="text-[#FAFAFA]">Name</TableHead>
-                <TableHead className="text-[#FAFAFA]">Customer</TableHead>
-                <TableHead className="text-[#FAFAFA]">Frequency</TableHead>
-                <TableHead className="text-[#FAFAFA]">Next Invoice</TableHead>
-                <TableHead className="text-[#FAFAFA] text-right">Amount</TableHead>
-                <TableHead className="text-[#FAFAFA]">Status</TableHead>
-                <TableHead className="text-[#FAFAFA]">Generated</TableHead>
+              <TableRow className="border-[#E5E7EB] hover:bg-transparent">
+                <TableHead className="text-[#111827]">Name</TableHead>
+                <TableHead className="text-[#111827]">Customer</TableHead>
+                <TableHead className="text-[#111827]">Frequency</TableHead>
+                <TableHead className="text-[#111827]">Next Invoice</TableHead>
+                <TableHead className="text-[#111827] text-right">Amount</TableHead>
+                <TableHead className="text-[#111827]">Status</TableHead>
+                <TableHead className="text-[#111827]">Generated</TableHead>
                 <TableHead className="w-12"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filtered.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-12 text-[#FAFAFA]">
+                  <TableCell colSpan={8} className="text-center py-12 text-[#111827]">
                     <RefreshCw className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>No recurring invoices</p>
                     <p className="text-sm">Create one to automate your billing</p>
@@ -260,22 +260,22 @@ export default function RecurringInvoicesPage() {
                   const isOverdue = inv.is_active && nextDate < new Date();
 
                   return (
-                    <TableRow key={inv.id} className="border-[#262626] hover:bg-[#0A0A0A]/50">
+                    <TableRow key={inv.id} className="border-[#E5E7EB] hover:bg-[#F8F9FA]/50">
                       <TableCell className="text-white font-medium">
                         {inv.name}
                       </TableCell>
-                      <TableCell className="text-[#FAFAFA]">
+                      <TableCell className="text-[#111827]">
                         {inv.contact_name}
                       </TableCell>
                       <TableCell>
-                        <Badge variant="outline" className="border-[#262626] text-[#FAFAFA]">
+                        <Badge variant="outline" className="border-[#E5E7EB] text-[#111827]">
                           {frequencyLabels[inv.frequency]}
                         </Badge>
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
                           {isOverdue && <AlertCircle className="h-4 w-4 text-amber-400" />}
-                          <span className={isOverdue ? 'text-amber-400' : 'text-[#FAFAFA]'}>
+                          <span className={isOverdue ? 'text-amber-400' : 'text-[#111827]'}>
                             {nextDate.toLocaleDateString()}
                           </span>
                         </div>
@@ -289,12 +289,12 @@ export default function RecurringInvoicesPage() {
                             checked={inv.is_active}
                             onCheckedChange={(checked) => toggleActive(inv.id, checked)}
                           />
-                          <span className={inv.is_active ? 'text-green-400' : 'text-[#FAFAFA]'}>
+                          <span className={inv.is_active ? 'text-green-400' : 'text-[#111827]'}>
                             {inv.is_active ? 'Active' : 'Paused'}
                           </span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-[#FAFAFA]">
+                      <TableCell className="text-[#111827]">
                         {inv.invoices_generated}
                       </TableCell>
                       <TableCell>
@@ -304,7 +304,7 @@ export default function RecurringInvoicesPage() {
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-[#0A0A0A] border-[#262626]">
+                          <DropdownMenuContent align="end" className="bg-[#F8F9FA] border-[#E5E7EB]">
                             <DropdownMenuItem
                               onClick={() => generateNow(inv.id)}
                               disabled={generating === inv.id}
@@ -320,7 +320,7 @@ export default function RecurringInvoicesPage() {
                               <Edit2 className="h-4 w-4 mr-2" />
                               Edit
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-[#0A0A0A]" />
+                            <DropdownMenuSeparator className="bg-[#F8F9FA]" />
                             <DropdownMenuItem
                               onClick={() => deleteRecurring(inv.id)}
                               className="text-red-400"

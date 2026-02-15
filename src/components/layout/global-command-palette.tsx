@@ -412,25 +412,25 @@ export function GlobalCommandPalette({
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/20 backdrop-blur-sm"
         onClick={onClose}
       />
       
       {/* Palette */}
-      <div className="relative w-full max-w-xl mx-4 bg-[#0A0A0A] border border-[#333] rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-4 duration-200">
+      <div className="relative w-full max-w-xl mx-4 bg-[#F8F9FA] border border-[#D1D5DB] rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-4 duration-200">
         {/* Search Input */}
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-[#333]">
-          <Search className="w-5 h-5 text-[#666]" />
+        <div className="flex items-center gap-3 px-4 py-3 border-b border-[#D1D5DB]">
+          <Search className="w-5 h-5 text-[#9CA3AF]" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={e => { setQuery(e.target.value); setSelectedIndex(0); }}
             placeholder="Search commands, pages, actions..."
-            className="flex-1 bg-transparent text-white text-sm placeholder:text-[#666] outline-none"
+            className="flex-1 bg-transparent text-white text-sm placeholder:text-[#9CA3AF] outline-none"
           />
-          <div className="flex items-center gap-1 text-[10px] text-[#666]">
-            <kbd className="px-1.5 py-0.5 rounded bg-[#222] border border-[#333]">ESC</kbd>
+          <div className="flex items-center gap-1 text-[10px] text-[#9CA3AF]">
+            <kbd className="px-1.5 py-0.5 rounded bg-[#222] border border-[#D1D5DB]">ESC</kbd>
             <span>to close</span>
           </div>
         </div>
@@ -438,7 +438,7 @@ export function GlobalCommandPalette({
         {/* Command List */}
         <div ref={listRef} className="max-h-[60vh] overflow-y-auto py-2">
           {flatList.length === 0 ? (
-            <div className="px-4 py-8 text-center text-[#666] text-sm">
+            <div className="px-4 py-8 text-center text-[#9CA3AF] text-sm">
               No results found for &quot;{query}&quot;
             </div>
           ) : (
@@ -449,7 +449,7 @@ export function GlobalCommandPalette({
                 return (
                   <div key={category}>
                     <div className="px-4 py-2">
-                      <span className="text-[10px] font-semibold text-[#666] uppercase tracking-wider">
+                      <span className="text-[10px] font-semibold text-[#9CA3AF] uppercase tracking-wider">
                         {CATEGORY_LABELS[category]}
                       </span>
                     </div>
@@ -465,33 +465,33 @@ export function GlobalCommandPalette({
                           onMouseEnter={() => setSelectedIndex(idx)}
                           className={cn(
                             "w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors",
-                            isSelected ? "bg-[#161616]/10" : "hover:bg-[#222]"
+                            isSelected ? "bg-white/10" : "hover:bg-[#222]"
                           )}
                         >
                           <div className={cn(
                             "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
-                            isSelected ? "bg-[#161616]/20 text-[#FAFAFA]" : "bg-[#222] text-[#888]"
+                            isSelected ? "bg-white/20 text-[#111827]" : "bg-[#222] text-[#9CA3AF]"
                           )}>
                             <Icon className="w-4 h-4" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className={cn(
                               "text-sm font-medium truncate",
-                              isSelected ? "text-[#FAFAFA]" : "text-white"
+                              isSelected ? "text-[#111827]" : "text-white"
                             )}>
                               {cmd.label}
                             </div>
                             {cmd.description && (
-                              <div className="text-xs text-[#666] truncate">{cmd.description}</div>
+                              <div className="text-xs text-[#9CA3AF] truncate">{cmd.description}</div>
                             )}
                           </div>
                           {cmd.shortcut && (
-                            <div className="text-[10px] text-[#555] font-mono shrink-0">
+                            <div className="text-[10px] text-[#D1D5DB] font-mono shrink-0">
                               {cmd.shortcut}
                             </div>
                           )}
                           {isSelected && (
-                            <ArrowRight className="w-4 h-4 text-[#FAFAFA] shrink-0" />
+                            <ArrowRight className="w-4 h-4 text-[#111827] shrink-0" />
                           )}
                         </button>
                       );
@@ -504,14 +504,14 @@ export function GlobalCommandPalette({
         </div>
 
         {/* Footer hint */}
-        <div className="px-4 py-2 border-t border-[#333] flex items-center justify-between text-[10px] text-[#555]">
+        <div className="px-4 py-2 border-t border-[#D1D5DB] flex items-center justify-between text-[10px] text-[#D1D5DB]">
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1">
-              <kbd className="px-1 py-0.5 rounded bg-[#222] border border-[#333]">↑↓</kbd>
+              <kbd className="px-1 py-0.5 rounded bg-[#222] border border-[#D1D5DB]">↑↓</kbd>
               <span>Navigate</span>
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="px-1 py-0.5 rounded bg-[#222] border border-[#333]">↵</kbd>
+              <kbd className="px-1 py-0.5 rounded bg-[#222] border border-[#D1D5DB]">↵</kbd>
               <span>Select</span>
             </span>
           </div>

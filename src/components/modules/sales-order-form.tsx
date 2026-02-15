@@ -25,12 +25,12 @@ interface LineItem {
 }
 
 const inputClass =
-  "w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder:text-[#FAFAFA]/50 focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 focus:border-[#262626]/50 transition-all duration-200";
+  "w-full px-4 py-2.5 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] placeholder:text-[#111827]/50 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-[#E5E7EB]/50 transition-all duration-200";
 
 const lineInputClass =
-  "px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/30 transition-all duration-200";
+  "px-3 py-2 bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg text-sm text-[#111827] focus:outline-none focus:ring-2 focus:ring-red-200 transition-all duration-200";
 
-const labelClass = "block text-sm font-medium text-[#FAFAFA] mb-2";
+const labelClass = "block text-sm font-medium text-[#111827] mb-2";
 
 export function SalesOrderForm({ onSubmit, onCancel }: SalesOrderFormProps) {
   const contacts = useContactsStore((s) => s.contacts);
@@ -158,7 +158,7 @@ export function SalesOrderForm({ onSubmit, onCancel }: SalesOrderFormProps) {
         <label className={labelClass}>Line Items</label>
         <div className="space-y-2">
           {/* Header */}
-          <div className="hidden sm:grid grid-cols-[1fr_2fr_70px_90px_70px_80px_40px] gap-2 text-[10px] text-[#FAFAFA] font-semibold uppercase tracking-widest px-1 pb-1">
+          <div className="hidden sm:grid grid-cols-[1fr_2fr_70px_90px_70px_80px_40px] gap-2 text-[10px] text-[#111827] font-semibold uppercase tracking-widest px-1 pb-1">
             <span>Product</span>
             <span>Description</span>
             <span className="text-right">Qty</span>
@@ -221,14 +221,14 @@ export function SalesOrderForm({ onSubmit, onCancel }: SalesOrderFormProps) {
                 className={`${lineInputClass} text-right`}
               />
 
-              <div className="text-sm text-right font-medium text-[#FAFAFA] px-1">
+              <div className="text-sm text-right font-medium text-[#111827] px-1">
                 {formatCurrency(line.quantity * line.unit_price)}
               </div>
 
               <button
                 type="button"
                 onClick={() => removeLine(line.key)}
-                className="p-2 text-[#FAFAFA] hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
+                className="p-2 text-[#111827] hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10"
                 disabled={lines.length <= 1}
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -240,7 +240,7 @@ export function SalesOrderForm({ onSubmit, onCancel }: SalesOrderFormProps) {
         <button
           type="button"
           onClick={addLine}
-          className="mt-3 flex items-center gap-2 text-sm text-[#ccc] hover:text-[#FAFAFA] transition-colors font-medium"
+          className="mt-3 flex items-center gap-2 text-sm text-[#374151] hover:text-[#111827] transition-colors font-medium"
         >
           <Plus className="w-3.5 h-3.5" />
           Add Line
@@ -250,17 +250,17 @@ export function SalesOrderForm({ onSubmit, onCancel }: SalesOrderFormProps) {
       {/* Totals */}
       <div className="flex justify-end">
         <div className="w-64 space-y-2 text-sm">
-          <div className="flex justify-between text-[#FAFAFA]">
+          <div className="flex justify-between text-[#111827]">
             <span>Subtotal</span>
-            <span className="text-[#FAFAFA]">{formatCurrency(subtotal)}</span>
+            <span className="text-[#111827]">{formatCurrency(subtotal)}</span>
           </div>
-          <div className="flex justify-between text-[#FAFAFA]">
+          <div className="flex justify-between text-[#111827]">
             <span>Tax</span>
-            <span className="text-[#FAFAFA]">{formatCurrency(tax)}</span>
+            <span className="text-[#111827]">{formatCurrency(tax)}</span>
           </div>
-          <div className="flex justify-between font-semibold text-base border-t border-[#262626] pt-2.5 mt-2.5">
-            <span className="text-[#FAFAFA]">Total</span>
-            <span className="text-[#FAFAFA]">{formatCurrency(total)}</span>
+          <div className="flex justify-between font-semibold text-base border-t border-[#E5E7EB] pt-2.5 mt-2.5">
+            <span className="text-[#111827]">Total</span>
+            <span className="text-[#111827]">{formatCurrency(total)}</span>
           </div>
         </div>
       </div>
@@ -277,17 +277,17 @@ export function SalesOrderForm({ onSubmit, onCancel }: SalesOrderFormProps) {
         />
       </div>
 
-      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#262626]">
+      <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E5E7EB]">
         <button
           type="button"
           onClick={onCancel}
-          className="px-5 py-2.5 text-sm font-medium text-[#ccc] hover:text-[#FAFAFA] bg-[#1A1A1A] border border-[#333] rounded-lg hover:bg-[#262626] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-medium text-[#374151] hover:text-[#111827] bg-[#F1F3F5] border border-[#D1D5DB] rounded-lg hover:bg-[#E5E7EB] transition-all duration-200"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-5 py-2.5 text-sm font-semibold bg-[#161616] text-[#0A0A0A] rounded-lg hover:bg-[#161616] transition-all duration-200"
+          className="px-5 py-2.5 text-sm font-semibold bg-white text-white rounded-lg hover:bg-white transition-all duration-200"
         >
           Create Sales Order
         </button>

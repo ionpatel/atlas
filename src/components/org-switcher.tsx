@@ -139,8 +139,8 @@ export function OrgSwitcher() {
   if (loading) {
     return (
       <div className="flex items-center gap-2 px-3 py-2">
-        <Loader2 className="h-4 w-4 animate-spin text-[#FAFAFA]" />
-        <span className="text-sm text-[#FAFAFA]">Loading...</span>
+        <Loader2 className="h-4 w-4 animate-spin text-[#111827]" />
+        <span className="text-sm text-[#111827]">Loading...</span>
       </div>
     );
   }
@@ -150,38 +150,38 @@ export function OrgSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
-          className="w-full justify-between px-3 py-2 h-auto hover:bg-[#0A0A0A] border border-transparent hover:border-[#262626] rounded-lg transition-all"
+          className="w-full justify-between px-3 py-2 h-auto hover:bg-[#F8F9FA] border border-transparent hover:border-[#E5E7EB] rounded-lg transition-all"
           disabled={switching}
         >
           <div className="flex items-center gap-3">
-            <Avatar className="h-8 w-8 bg-[#161616]/10 border border-[#262626]/20">
-              <AvatarFallback className="bg-transparent text-[#FAFAFA] text-sm font-medium">
+            <Avatar className="h-8 w-8 bg-white/10 border border-[#E5E7EB]/20">
+              <AvatarFallback className="bg-transparent text-[#111827] text-sm font-medium">
                 {currentOrg?.org_name?.charAt(0).toUpperCase() || 'A'}
               </AvatarFallback>
             </Avatar>
             <div className="text-left">
-              <p className="text-sm font-medium text-[#FAFAFA] truncate max-w-[140px]">
+              <p className="text-sm font-medium text-[#111827] truncate max-w-[140px]">
                 {currentOrg?.org_name || 'Select Organization'}
               </p>
-              <p className="text-xs text-[#FAFAFA] capitalize">
+              <p className="text-xs text-[#111827] capitalize">
                 {currentOrg?.role || 'No role'}
               </p>
             </div>
           </div>
           {switching ? (
-            <Loader2 className="h-4 w-4 animate-spin text-[#FAFAFA]" />
+            <Loader2 className="h-4 w-4 animate-spin text-[#111827]" />
           ) : (
-            <ChevronDown className="h-4 w-4 text-[#FAFAFA]" />
+            <ChevronDown className="h-4 w-4 text-[#111827]" />
           )}
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent 
-        className="w-64 bg-[#0A0A0A] border border-[#262626] shadow-xl" 
+        className="w-64 bg-[#F8F9FA] border border-[#E5E7EB] shadow-xl" 
         align="start"
         sideOffset={4}
       >
-        <DropdownMenuLabel className="text-[#FAFAFA] text-xs font-semibold uppercase tracking-wider">
+        <DropdownMenuLabel className="text-[#111827] text-xs font-semibold uppercase tracking-wider">
           Organizations
         </DropdownMenuLabel>
 
@@ -189,28 +189,28 @@ export function OrgSwitcher() {
           <DropdownMenuItem
             key={org.org_id}
             onClick={() => switchOrg(org)}
-            className="flex items-center justify-between cursor-pointer hover:bg-[#0A0A0A] focus:bg-[#0A0A0A] rounded-lg mx-1"
+            className="flex items-center justify-between cursor-pointer hover:bg-[#F8F9FA] focus:bg-[#F8F9FA] rounded-lg mx-1"
           >
             <div className="flex items-center gap-2">
-              <Building2 className="h-4 w-4 text-[#FAFAFA]" />
+              <Building2 className="h-4 w-4 text-[#111827]" />
               <div>
-                <p className="text-sm text-[#FAFAFA]">{org.org_name}</p>
-                <p className="text-xs text-[#FAFAFA] capitalize">{org.role}</p>
+                <p className="text-sm text-[#111827]">{org.org_name}</p>
+                <p className="text-xs text-[#111827] capitalize">{org.role}</p>
               </div>
             </div>
             {org.org_id === currentOrg?.org_id && (
-              <Check className="h-4 w-4 text-[#FAFAFA]" />
+              <Check className="h-4 w-4 text-[#111827]" />
             )}
           </DropdownMenuItem>
         ))}
 
         {invitations.length > 0 && (
           <>
-            <DropdownMenuSeparator className="bg-[#0A0A0A]" />
-            <DropdownMenuLabel className="text-[#FAFAFA] text-xs font-semibold uppercase tracking-wider flex items-center gap-2">
+            <DropdownMenuSeparator className="bg-[#F8F9FA]" />
+            <DropdownMenuLabel className="text-[#111827] text-xs font-semibold uppercase tracking-wider flex items-center gap-2">
               <Mail className="h-3 w-3" />
               Pending Invitations
-              <Badge variant="secondary" className="bg-[#161616]/10 text-[#FAFAFA] text-xs">
+              <Badge variant="secondary" className="bg-white/10 text-[#111827] text-xs">
                 {invitations.length}
               </Badge>
             </DropdownMenuLabel>
@@ -219,13 +219,13 @@ export function OrgSwitcher() {
               <DropdownMenuItem
                 key={inv.id}
                 onClick={() => acceptInvitation(inv)}
-                className="flex items-center justify-between cursor-pointer hover:bg-[#0A0A0A] focus:bg-[#0A0A0A] rounded-lg mx-1"
+                className="flex items-center justify-between cursor-pointer hover:bg-[#F8F9FA] focus:bg-[#F8F9FA] rounded-lg mx-1"
               >
                 <div className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-[#FAFAFA]" />
+                  <Users className="h-4 w-4 text-[#111827]" />
                   <div>
-                    <p className="text-sm text-[#FAFAFA]">{inv.org_name}</p>
-                    <p className="text-xs text-[#FAFAFA]">Join as {inv.role}</p>
+                    <p className="text-sm text-[#111827]">{inv.org_name}</p>
+                    <p className="text-xs text-[#111827]">Join as {inv.role}</p>
                   </div>
                 </div>
               </DropdownMenuItem>
@@ -233,22 +233,22 @@ export function OrgSwitcher() {
           </>
         )}
 
-        <DropdownMenuSeparator className="bg-[#0A0A0A]" />
+        <DropdownMenuSeparator className="bg-[#F8F9FA]" />
 
         <DropdownMenuItem 
           onClick={() => window.location.href = '/settings/organizations'}
-          className="cursor-pointer hover:bg-[#0A0A0A] focus:bg-[#0A0A0A] rounded-lg mx-1"
+          className="cursor-pointer hover:bg-[#F8F9FA] focus:bg-[#F8F9FA] rounded-lg mx-1"
         >
-          <Users className="h-4 w-4 mr-2 text-[#FAFAFA]" />
-          <span className="text-[#FAFAFA]">Manage Organizations</span>
+          <Users className="h-4 w-4 mr-2 text-[#111827]" />
+          <span className="text-[#111827]">Manage Organizations</span>
         </DropdownMenuItem>
 
         <DropdownMenuItem 
           onClick={() => window.location.href = '/settings/organizations/new'}
-          className="cursor-pointer hover:bg-[#161616]/10 focus:bg-[#161616]/10 rounded-lg mx-1"
+          className="cursor-pointer hover:bg-white/10 focus:bg-white/10 rounded-lg mx-1"
         >
-          <Plus className="h-4 w-4 mr-2 text-[#FAFAFA]" />
-          <span className="text-[#FAFAFA] font-medium">Create Organization</span>
+          <Plus className="h-4 w-4 mr-2 text-[#111827]" />
+          <span className="text-[#111827] font-medium">Create Organization</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
