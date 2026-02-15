@@ -748,7 +748,7 @@ export default function ExpensesPage() {
               setEditingExpense(null);
               setShowExpenseForm(true);
             }}
-            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#CDB49E] to-[#B89B78] hover:from-[#CDB49E]/90 hover:to-[#B89B78]/90 text-[#0A0A0A] font-medium rounded-lg transition-all shadow-lg shadow-[#273B3A]/20"
+            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#CDB49E] to-[#B89B78] hover:from-[#CDB49E]/90 hover:to-[#B89B78]/90 text-[#0A0A0A] font-medium rounded-lg transition-all shadow-lg shadow-[#CDB49E]/20"
           >
             <Plus className="w-4 h-4" />
             Add Expense

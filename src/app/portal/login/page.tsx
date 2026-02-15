@@ -77,7 +77,7 @@ export default function PortalLoginPage() {
         <div className="max-w-md w-full mx-auto">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#CDB49E] to-[#B89B78] flex items-center justify-center shadow-lg shadow-[#273B3A]/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#CDB49E] to-[#B89B78] flex items-center justify-center shadow-lg shadow-[#CDB49E]/20">
               <span className="text-[#0A0A0A] font-bold text-lg">A</span>
             </div>
             <span className="text-[#FAFAFA] font-semibold text-xl tracking-tight">
@@ -116,7 +116,7 @@ export default function PortalLoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@company.com"
-                  className="w-full pl-12 pr-4 py-3.5 bg-[#0A0A0A] border border-[#262626] rounded-xl text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
+                  className="w-full pl-12 pr-4 py-3.5 bg-[#0A0A0A] border border-[#262626] rounded-xl text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors"
                   required
                 />
               </div>
@@ -133,7 +133,7 @@ export default function PortalLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-12 pr-12 py-3.5 bg-[#0A0A0A] border border-[#262626] rounded-xl text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
+                  className="w-full pl-12 pr-12 py-3.5 bg-[#0A0A0A] border border-[#262626] rounded-xl text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors"
                   required
                 />
                 <button
@@ -201,7 +201,7 @@ export default function PortalLoginPage() {
       </div>
 
       {/* Right Panel - Features */}
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-[#E6D4C7] to-[#E6D4C7] flex-col justify-center px-16 xl:px-24 border-l border-[#262626]">
+      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-[#0A0A0A] to-[#0A0A0A] flex-col justify-center px-16 xl:px-24 border-l border-[#262626]">
         <div className="max-w-lg">
           <div className="flex items-center gap-2 text-[#FAFAFA] mb-6">
             <ShieldCheck className="w-5 h-5" />

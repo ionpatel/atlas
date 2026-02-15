@@ -119,7 +119,7 @@ function CreateKeyModal({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Production API"
-              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] text-sm placeholder-[#273B3A] focus:outline-none focus:border-[#262626]/40"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] text-sm placeholder-[#555555] focus:outline-none focus:border-[#262626]/40"
             />
           </div>
 
@@ -133,7 +133,7 @@ function CreateKeyModal({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="What is this key used for?"
-              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] text-sm placeholder-[#273B3A] focus:outline-none focus:border-[#262626]/40"
+              className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] text-sm placeholder-[#555555] focus:outline-none focus:border-[#262626]/40"
             />
           </div>
 

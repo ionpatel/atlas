@@ -206,7 +206,7 @@ export function SmartSearch({ className }: { className?: string }) {
         onClick={() => setIsOpen(true)}
         className={cn(
           "flex items-center gap-3 px-4 py-2.5 bg-[#0A0A0A] border-2 border-[#262626] rounded-xl",
-          "hover:border-[#262626]/50 hover:shadow-lg hover:shadow-[#273B3A]/10 hover:-translate-y-0.5",
+          "hover:border-[#262626]/50 hover:shadow-lg hover:shadow-[#CDB49E]/10 hover:-translate-y-0.5",
           "active:translate-y-0 active:shadow-md active:border-[#262626]",
           "transition-all duration-200 ease-out group",
           className
@@ -246,7 +246,7 @@ export function SmartSearch({ className }: { className?: string }) {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Search anything... try 'overdue invoices' or 'low stock'"
-              className="flex-1 bg-transparent text-[#FAFAFA] text-sm placeholder-[#273B3A] focus:outline-none"
+              className="flex-1 bg-transparent text-[#FAFAFA] text-sm placeholder-[#555555] focus:outline-none"
             />
             {query && (
               <button

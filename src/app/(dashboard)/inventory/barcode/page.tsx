@@ -311,7 +311,7 @@ function ScanHistoryPanel({
             <p className="text-sm">No scan history yet</p>
           </div>
         ) : (
-          <div className="divide-y divide-[#E6D4C7]/50">
+          <div className="divide-y divide-[#0A0A0A]/50">
             {history.map((item) => (
               <button
                 key={item.id}
@@ -410,7 +410,7 @@ function LabelPrintQueue({
         </div>
       ) : (
         <>
-          <div className="divide-y divide-[#E6D4C7]/50 max-h-[300px] overflow-y-auto">
+          <div className="divide-y divide-[#0A0A0A]/50 max-h-[300px] overflow-y-auto">
             {labels.map((label) => (
               <div key={label.productId} className="px-4 py-3 flex items-center gap-3">
                 <div className="w-16 h-12 bg-white rounded flex items-center justify-center overflow-hidden">
@@ -860,7 +860,7 @@ export default function BarcodeManagementPage() {
                   value={manualCode}
                   onChange={(e) => setManualCode(e.target.value)}
                   placeholder="Enter barcode or SKU..."
-                  className="w-full pl-12 pr-24 py-4 bg-[#0A0A0A] border border-[#262626] rounded-xl text-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors font-mono tracking-wider"
+                  className="w-full pl-12 pr-24 py-4 bg-[#0A0A0A] border border-[#262626] rounded-xl text-lg text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors font-mono tracking-wider"
                   autoComplete="off"
                 />
                 <button
@@ -906,7 +906,7 @@ export default function BarcodeManagementPage() {
                 </button>
               </div>
 
-              <div className="divide-y divide-[#E6D4C7]/50 max-h-[200px] overflow-y-auto">
+              <div className="divide-y divide-[#0A0A0A]/50 max-h-[200px] overflow-y-auto">
                 {Array.from(batchItems.values()).map(({ product, quantity }) => (
                   <div key={product.id} className="px-4 py-2 flex items-center justify-between">
                     <div>

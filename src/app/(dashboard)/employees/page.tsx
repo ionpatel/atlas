@@ -30,7 +30,7 @@ import type { Employee } from "@/types";
 const DEMO_ORG_ID = "00000000-0000-0000-0000-000000000001";
 
 const AVATAR_COLORS = [
-  "#273B3A", "#60a5fa", "#a78bfa", "#34d399", "#fbbf24", "#f87171", "#fb923c", "#e879f9"
+  "#CDB49E", "#60a5fa", "#a78bfa", "#34d399", "#fbbf24", "#f87171", "#fb923c", "#e879f9"
 ];
 
 const DEPARTMENTS = [
@@ -193,7 +193,7 @@ function EmployeeFormModal({ isOpen, onClose, employee, onSave, onDelete }: Empl
                     onClick={() => setFormData((p) => ({ ...p, avatar_color: color }))}
                     className={cn(
                       "w-4 h-4 rounded-full transition-transform",
-                      formData.avatar_color === color && "ring-2 ring-white ring-offset-2 ring-offset-[#E6D4C7] scale-110"
+                      formData.avatar_color === color && "ring-2 ring-white ring-offset-2 ring-offset-[#0A0A0A] scale-110"
                     )}
                     style={{ backgroundColor: color }}
                   />

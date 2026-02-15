@@ -364,7 +364,7 @@ export function LowStockAlerts({ onClose, onReorder, onViewProduct }: LowStockAl
               </p>
             </div>
           ) : (
-            <div className="divide-y divide-[#E6D4C7]/50">
+            <div className="divide-y divide-[#0A0A0A]/50">
               {alerts.map((alert) => (
                 <div
                   key={alert.id}

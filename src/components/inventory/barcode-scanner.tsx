@@ -278,7 +278,7 @@ export function BarcodeScanner({
                 No scan history yet
               </div>
             ) : (
-              <div className="divide-y divide-[#E6D4C7]/50">
+              <div className="divide-y divide-[#0A0A0A]/50">
                 {scanHistory.map((item, i) => (
                   <button
                     key={i}
@@ -362,7 +362,7 @@ export function BarcodeScanner({
                   value={manualCode}
                   onChange={(e) => setManualCode(e.target.value)}
                   placeholder="Enter or scan barcode..."
-                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626]/40 font-mono text-lg tracking-wider"
+                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626]/40 font-mono text-lg tracking-wider"
                   autoComplete="off"
                 />
               </div>

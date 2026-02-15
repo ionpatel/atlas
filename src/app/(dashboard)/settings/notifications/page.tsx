@@ -51,7 +51,7 @@ function ToggleSwitch({
       onClick={onToggle}
       disabled={disabled}
       className={cn(
-        "relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/50 focus:ring-offset-2 focus:ring-offset-[#E6D4C7]",
+        "relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/50 focus:ring-offset-2 focus:ring-offset-[#0A0A0A]",
         enabled ? "bg-[#161616]" : "bg-[#0A0A0A]",
         disabled && "opacity-50 cursor-not-allowed"
       )}
@@ -228,7 +228,7 @@ function TestEmailModal({ isOpen, onClose }: TestEmailModalProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626]/40 transition-colors"
+                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626]/40 transition-colors"
                 disabled={status === "sending"}
               />
             </div>

@@ -520,7 +520,7 @@ export function ImportWizard({
                   </div>
                 </div>
 
-                <div className="divide-y divide-[#E6D4C7]">
+                <div className="divide-y divide-[#0A0A0A]">
                   {config.fields.map((field) => (
                     <div
                       key={field.key}
@@ -674,7 +674,7 @@ export function ImportWizard({
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#E6D4C7]/50">
+                    <tbody className="divide-y divide-[#0A0A0A]/50">
                       {parsedRows.slice(0, 100).map((row) => {
                         const hasError = row.errors.length > 0;
                         const hasWarning = row.warnings.length > 0;

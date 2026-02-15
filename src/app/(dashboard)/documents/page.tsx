@@ -106,9 +106,9 @@ function FolderCard({
     >
       <div
         className="w-10 h-10 rounded-lg flex items-center justify-center"
-        style={{ backgroundColor: `${folder.color || "#273B3A"}20` }}
+        style={{ backgroundColor: `${folder.color || "#CDB49E"}20` }}
       >
-        <span style={{ color: folder.color || "#273B3A" }}><Folder className="w-5 h-5" /></span>
+        <span style={{ color: folder.color || "#CDB49E" }}><Folder className="w-5 h-5" /></span>
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-[#FAFAFA] truncate">{folder.name}</p>
@@ -594,9 +594,9 @@ function NewFolderModal({
   const addToast = useToastStore((s) => s.addToast);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [color, setColor] = useState("#273B3A");
+  const [color, setColor] = useState("#CDB49E");
 
-  const colors = ["#273B3A", "#34D399", "#A78BFA", "#F472B6", "#FBBF24", "#F87171"];
+  const colors = ["#CDB49E", "#34D399", "#A78BFA", "#F472B6", "#FBBF24", "#F87171"];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -652,7 +652,7 @@ function NewFolderModal({
                 onClick={() => setColor(c)}
                 className={cn(
                   "w-8 h-8 rounded-lg transition-all",
-                  color === c && "ring-2 ring-offset-2 ring-offset-[#E6D4C7] ring-white/30"
+                  color === c && "ring-2 ring-offset-2 ring-offset-[#0A0A0A] ring-white/30"
                 )}
                 style={{ backgroundColor: c }}
               />

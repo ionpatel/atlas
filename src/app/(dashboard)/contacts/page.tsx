@@ -79,7 +79,7 @@ function ContactDetailPanel({
       ? "border-l-emerald-400"
       : contact.type === "vendor"
       ? "border-l-blue-400"
-      : "border-l-[#273B3A]";
+      : "border-l-[#CDB49E]";
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end" onClick={onClose}>
@@ -381,7 +381,7 @@ export default function ContactsPage() {
   const borderColorForType = (type: string) => {
     if (type === "customer") return "border-l-emerald-400";
     if (type === "vendor") return "border-l-blue-400";
-    return "border-l-[#273B3A]";
+    return "border-l-[#CDB49E]";
   };
 
   return (

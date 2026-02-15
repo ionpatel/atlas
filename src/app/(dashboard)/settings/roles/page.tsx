@@ -286,7 +286,7 @@ function RoleCard({
               <div className="text-center">Delete</div>
             </div>
           </div>
-          <div className="divide-y divide-[#E6D4C7]/50">
+          <div className="divide-y divide-[#0A0A0A]/50">
             {moduleConfig.map((m) => {
               const permission = role.permissions.find((p) => p.module === m.module);
               if (!permission) return null;
@@ -354,7 +354,7 @@ function UserRoleAssignment({
         <h3 className="text-sm font-semibold text-[#FAFAFA]">User Role Assignments</h3>
         <p className="text-xs text-[#FAFAFA] mt-1">Assign roles to team members</p>
       </div>
-      <div className="divide-y divide-[#E6D4C7]/50">
+      <div className="divide-y divide-[#0A0A0A]/50">
         {users.map((user) => (
           <div
             key={user.id}

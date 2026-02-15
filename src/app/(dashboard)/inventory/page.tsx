@@ -59,7 +59,7 @@ const CATEGORY_ICON_COLORS: Record<string, string> = {
   "Blood Pressure": "#60a5fa",
   Allergy: "#f472b6",
   Digestive: "#2dd4bf",
-  Other: "#273B3A",
+  Other: "#CDB49E",
 };
 
 function getCategoryStyle(category?: string) {
@@ -68,8 +68,8 @@ function getCategoryStyle(category?: string) {
 }
 
 function getCategoryIconColor(category?: string) {
-  if (!category) return "#273B3A";
-  return CATEGORY_ICON_COLORS[category] || "#273B3A";
+  if (!category) return "#CDB49E";
+  return CATEGORY_ICON_COLORS[category] || "#CDB49E";
 }
 
 /* ─── Sort configuration ─── */

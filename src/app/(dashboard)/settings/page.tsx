@@ -599,7 +599,7 @@ function TaxSection() {
           value={businessNumber}
           onChange={(e) => setBusinessNumber(e.target.value)}
           placeholder="e.g. 123456789 RT0001"
-          className="w-full max-w-md px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626]/40 transition-colors"
+          className="w-full max-w-md px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626]/40 transition-colors"
         />
       </div>
 
@@ -632,7 +632,7 @@ function TaxSection() {
                 value={tax.number}
                 onChange={(e) => updateTaxNumber(i, e.target.value)}
                 placeholder="Tax registration #"
-                className="w-52 px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626]/40 transition-colors"
+                className="w-52 px-3 py-2 bg-[#0A0A0A] border border-[#262626] rounded-lg text-xs text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626]/40 transition-colors"
               />
             </div>
           ))}
@@ -892,13 +892,13 @@ function CompanySection() {
 /* ─────────────────────── Branding Section ─────────────────────── */
 
 function BrandingSection() {
-  const [primaryColor, setPrimaryColor] = useState("#273B3A");
+  const [primaryColor, setPrimaryColor] = useState("#CDB49E");
   const [theme, setTheme] = useState<"dark" | "light" | "system">("dark");
   const [logoUrl, setLogoUrl] = useState("");
   const [faviconUrl, setFaviconUrl] = useState("");
 
   const presetColors = [
-    "#273B3A", // Atlas default (warm gold)
+    "#CDB49E", // Atlas default (warm gold)
     "#60a5fa", // Blue
     "#34d399", // Emerald
     "#a78bfa", // Violet
@@ -1014,7 +1014,7 @@ function BrandingSection() {
                 onClick={() => setPrimaryColor(color)}
                 className={cn(
                   "w-8 h-8 rounded-lg transition-all",
-                  primaryColor === color && "ring-2 ring-offset-2 ring-offset-[#E6D4C7] ring-white/30"
+                  primaryColor === color && "ring-2 ring-offset-2 ring-offset-[#0A0A0A] ring-white/30"
                 )}
                 style={{ backgroundColor: color }}
               />

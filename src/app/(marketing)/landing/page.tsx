@@ -21,10 +21,10 @@ import {
 } from "lucide-react";
 
 /* ─────────────────────── palette tokens ─────────────────────── */
-// bg: #E6D4C7 | card: #E6D4C7 | elevated: #E6D4C7
-// border: #E6D4C7 | muted text: #273B3A | dim: #273B3A
-// accent: #273B3A | accent-hover: #273B3A | accent-muted: rgba(156,74,41,0.15)
-// warm white: #273B3A
+// bg: #0A0A0A | card: #0A0A0A | elevated: #0A0A0A
+// border: #0A0A0A | muted text: #888888 | dim: #666666
+// accent: #CDB49E | accent-hover: #E8D5B7 | accent-muted: rgba(156,74,41,0.15)
+// warm white: #FAFAFA
 // green: #34d399 | red: #f87171 | blue: #60a5fa | violet: #a78bfa | amber: #fbbf24
 
 /* ─────────────────────── scroll reveal ─────────────────────── */
@@ -129,7 +129,7 @@ const MOCKUP_KEYFRAMES = `
   100% { width: 100%; }
 }
 @keyframes blink {
-  0%, 50% { border-right-color: #273B3A; }
+  0%, 50% { border-right-color: #CDB49E; }
   51%, 100% { border-right-color: transparent; }
 }
 `;
@@ -247,7 +247,7 @@ function AnimatedBarChart({ visible, delay }: { visible: boolean; delay: number 
           className="flex-1 max-w-[24px] rounded-t origin-bottom"
           style={{
             height: `${h}%`,
-            background: i === 9 ? "#273B3A" : "rgba(205,180,158,0.15)",
+            background: i === 9 ? "#CDB49E" : "rgba(205,180,158,0.15)",
             transform: visible ? "scaleY(1)" : "scaleY(0)",
             transition: `transform 0.8s cubic-bezier(.16,1,.3,1) ${delay + i * 80}ms`,
           }}
@@ -523,7 +523,7 @@ function AnimatedDashboardMockup() {
               label="Revenue"
               value={48250}
               prefix="$"
-              color="#273B3A"
+              color="#CDB49E"
               delay={200}
               sparkData={[32, 45, 38, 52, 48, 61, 58, 65]}
             />
@@ -635,7 +635,7 @@ function Nav() {
           </Link>
           <Link
             href="/signup"
-            className="text-sm font-medium px-6 py-2.5 rounded-full bg-[#161616] text-[#0A0A0A] hover:bg-[#161616] transition-all duration-300 shadow-lg shadow-[#273B3A]/10"
+            className="text-sm font-medium px-6 py-2.5 rounded-full bg-[#161616] text-[#0A0A0A] hover:bg-[#161616] transition-all duration-300 shadow-lg shadow-[#CDB49E]/10"
           >
             Start Free Trial
           </Link>
@@ -686,7 +686,7 @@ function Hero() {
     <section className="relative min-h-screen flex items-center justify-center pt-[72px] overflow-hidden bg-[#0A0A0A]">
       {/* Ambient glow */}
       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-[#161616]/[0.04] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#E6D4C7] to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0A0A0A] to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center py-20">
         <Reveal>
@@ -717,7 +717,7 @@ function Hero() {
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/signup"
-              className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[#161616] text-[#0A0A0A] font-semibold text-base hover:bg-[#161616] transition-all duration-300 shadow-xl shadow-[#273B3A]/15"
+              className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[#161616] text-[#0A0A0A] font-semibold text-base hover:bg-[#161616] transition-all duration-300 shadow-xl shadow-[#CDB49E]/15"
             >
               Start Free Trial
               <ArrowRight
@@ -1120,7 +1120,7 @@ function Pricing() {
               <div
                 className={`relative rounded-2xl p-8 h-full transition-all duration-500 ${
                   plan.popular
-                    ? "bg-[#0A0A0A] border-2 border-[#262626] shadow-2xl shadow-[#273B3A]/5"
+                    ? "bg-[#0A0A0A] border-2 border-[#262626] shadow-2xl shadow-[#CDB49E]/5"
                     : "bg-[#0A0A0A] border border-[#262626] hover:border-[rgba(156,74,41,0.15)]"
                 }`}
               >
@@ -1145,7 +1145,7 @@ function Pricing() {
                   href="/signup"
                   className={`block text-center py-3.5 rounded-full font-semibold text-sm transition-all duration-300 ${
                     plan.popular
-                      ? "bg-[#161616] text-[#0A0A0A] hover:bg-[#161616] shadow-lg shadow-[#273B3A]/10"
+                      ? "bg-[#161616] text-[#0A0A0A] hover:bg-[#161616] shadow-lg shadow-[#CDB49E]/10"
                       : "bg-[#0A0A0A] text-[#FAFAFA] hover:bg-[#0A0A0A] border border-[#262626]"
                   }`}
                 >
@@ -1228,7 +1228,7 @@ function Testimonials() {
                     <Star
                       key={j}
                       size={14}
-                      className="fill-[#273B3A] text-[#FAFAFA]"
+                      className="fill-[#CDB49E] text-[#FAFAFA]"
                     />
                   ))}
                 </div>
@@ -1288,7 +1288,7 @@ function FinalCTA() {
             />
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#161616] text-[#0A0A0A] font-semibold text-sm hover:bg-[#161616] transition-all duration-300 shadow-lg shadow-[#273B3A]/10"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#161616] text-[#0A0A0A] font-semibold text-sm hover:bg-[#161616] transition-all duration-300 shadow-lg shadow-[#CDB49E]/10"
             >
               Get Started <ArrowRight size={14} />
             </button>

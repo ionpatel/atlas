@@ -36,7 +36,7 @@ interface BrandingConfig {
 }
 
 const COLOR_PRESETS = [
-  { name: 'Gold', primary: '#273B3A', accent: 'rgba(156,74,41,0.15)' },
+  { name: 'Gold', primary: '#CDB49E', accent: 'rgba(156,74,41,0.15)' },
   { name: 'Blue', primary: '#3B82F6', accent: '#1E40AF' },
   { name: 'Green', primary: '#10B981', accent: '#065F46' },
   { name: 'Purple', primary: '#8B5CF6', accent: '#5B21B6' },
@@ -58,7 +58,7 @@ export default function BrandingPage() {
     companyName: 'Atlas Demo',
     logoUrl: '',
     faviconUrl: '',
-    primaryColor: '#273B3A',
+    primaryColor: '#CDB49E',
     accentColor: 'rgba(156,74,41,0.15)',
     fontFamily: 'inter',
     borderRadius: 'md',

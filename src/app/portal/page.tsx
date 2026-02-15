@@ -235,7 +235,7 @@ function InvoicesTab() {
             placeholder="Search invoices..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors"
           />
         </div>
         <select
@@ -263,7 +263,7 @@ function InvoicesTab() {
               <th className="text-right px-6 py-4 text-xs font-semibold text-[#FAFAFA] uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#E6D4C7]/50">
+          <tbody className="divide-y divide-[#0A0A0A]/50">
             {filteredInvoices.map((invoice) => (
               <tr key={invoice.id} className="hover:bg-[#0A0A0A]/30 transition-colors">
                 <td className="px-6 py-4">
@@ -455,7 +455,7 @@ function SupportTab() {
                 value={newTicket.subject}
                 onChange={(e) => setNewTicket({ ...newTicket, subject: e.target.value })}
                 placeholder="Brief description of your issue"
-                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
+                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors"
                 required
               />
             </div>
@@ -466,7 +466,7 @@ function SupportTab() {
                 onChange={(e) => setNewTicket({ ...newTicket, description: e.target.value })}
                 placeholder="Please provide as much detail as possible..."
                 rows={4}
-                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors resize-none"
+                className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors resize-none"
                 required
               />
             </div>

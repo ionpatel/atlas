@@ -670,7 +670,7 @@ export default function ReportsPage() {
                 Available Reports
               </h2>
             </div>
-            <div className="divide-y divide-[#E6D4C7]/50">
+            <div className="divide-y divide-[#0A0A0A]/50">
               {filteredReports.map((report) => (
                 <button
                   key={report.id}

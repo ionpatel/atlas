@@ -132,7 +132,7 @@ function BalanceCard({ balance }: { balance: LeaveBalance }) {
   return (
     <div className="bg-[#0A0A0A] border border-[#262626] rounded-xl p-5 space-y-4">
       <h3 className="text-lg font-semibold text-[#FAFAFA]">Leave Balance ({balance.year})</h3>
-      <BalanceItem label="Vacation" used={balance.used_vacation} total={balance.vacation_days + balance.carried_over} color="#273B3A" />
+      <BalanceItem label="Vacation" used={balance.used_vacation} total={balance.vacation_days + balance.carried_over} color="#CDB49E" />
       <BalanceItem label="Sick Leave" used={balance.used_sick} total={balance.sick_days} color="#f87171" />
       <BalanceItem label="Personal" used={balance.used_personal} total={balance.personal_days} color="#a78bfa" />
       {balance.carried_over > 0 && (
@@ -202,7 +202,7 @@ function LeaveRequestForm({ onSubmit, onClose }: {
                         : "border-[#262626] bg-[#0A0A0A] hover:border-[#262626]/50"
                     )}
                   >
-                    <span style={{ color: leaveType === type ? color : "#273B3A" }}><Icon className="w-5 h-5" /></span>
+                    <span style={{ color: leaveType === type ? color : "#CDB49E" }}><Icon className="w-5 h-5" /></span>
                     <span className={cn("text-xs", leaveType === type ? "text-[#FAFAFA]" : "text-[#FAFAFA]")}>
                       {label.split(" ")[0]}
                     </span>
@@ -650,7 +650,7 @@ export default function LeavePage() {
         </div>
         <button
           onClick={() => setShowRequestForm(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#CDB49E] to-[#B89B78] hover:from-[#CDB49E]/90 hover:to-[#B89B78]/90 text-[#0A0A0A] font-medium rounded-lg transition-all shadow-lg shadow-[#273B3A]/20"
+          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#CDB49E] to-[#B89B78] hover:from-[#CDB49E]/90 hover:to-[#B89B78]/90 text-[#0A0A0A] font-medium rounded-lg transition-all shadow-lg shadow-[#CDB49E]/20"
         >
           <Plus className="w-4 h-4" />
           Request Leave

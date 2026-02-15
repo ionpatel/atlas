@@ -78,7 +78,7 @@ function StarRating({ priority }: { priority: number }) {
           key={i}
           className={cn(
             "w-3 h-3",
-            i <= priority ? "fill-[#273B3A] text-[#FAFAFA]" : "text-[#0A0A0A]"
+            i <= priority ? "fill-[#CDB49E] text-[#FAFAFA]" : "text-[#0A0A0A]"
           )}
         />
       ))}
@@ -102,7 +102,7 @@ function LeadCard({
   };
 }) {
   return (
-    <div className="bg-[#0A0A0A] border border-[#262626] rounded-lg p-4 hover:border-[#262626]/30 hover:shadow-lg hover:shadow-[#273B3A]/5 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group">
+    <div className="bg-[#0A0A0A] border border-[#262626] rounded-lg p-4 hover:border-[#262626]/30 hover:shadow-lg hover:shadow-[#CDB49E]/5 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group">
       {/* Top: Name + Amount */}
       <div className="flex items-start justify-between mb-2">
         <h4 className="text-sm font-semibold text-[#FAFAFA] leading-tight pr-2">
@@ -189,7 +189,7 @@ function KanbanColumn({
   }>;
 }) {
   const totalAmount = leads.reduce((sum, l) => sum + l.amount, 0);
-  const color = stageColors[stage] || "#273B3A";
+  const color = stageColors[stage] || "#CDB49E";
 
   return (
     <div className="flex-1 min-w-[280px]">

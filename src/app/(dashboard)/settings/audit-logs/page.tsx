@@ -314,7 +314,7 @@ function Filters({ filters, onFilterChange, onReset }: FiltersProps) {
           placeholder="Search logs..."
           value={filters.search}
           onChange={(e) => onFilterChange("search", e.target.value)}
-          className="pl-9 pr-4 py-2 w-56 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626]/40 transition-colors"
+          className="pl-9 pr-4 py-2 w-56 bg-[#0A0A0A] border border-[#262626] rounded-lg text-sm text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626]/40 transition-colors"
         />
       </div>
 

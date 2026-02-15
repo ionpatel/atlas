@@ -97,9 +97,9 @@ function WorkflowCard({
         <div className="flex items-center gap-3">
           <div
             className="w-10 h-10 rounded-lg flex items-center justify-center"
-            style={{ backgroundColor: `${appliesTo?.color || "#273B3A"}20` }}
+            style={{ backgroundColor: `${appliesTo?.color || "#CDB49E"}20` }}
           >
-            <span style={{ color: appliesTo?.color || "#273B3A" }}><Icon className="w-5 h-5" /></span>
+            <span style={{ color: appliesTo?.color || "#CDB49E" }}><Icon className="w-5 h-5" /></span>
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[#FAFAFA]">{workflow.name}</h3>

@@ -41,7 +41,7 @@ const statusConfig: Record<
   on_track: { label: "On Track", color: "#34d399", border: "border-l-emerald-400" },
   at_risk: { label: "At Risk", color: "#fbbf24", border: "border-l-amber-400" },
   off_track: { label: "Off Track", color: "#f87171", border: "border-l-red-400" },
-  done: { label: "Done", color: '#FAFAFA', border: "border-l-[#273B3A]" },
+  done: { label: "Done", color: '#FAFAFA', border: "border-l-[#CDB49E]" },
 };
 
 function getInitials(name: string) {
@@ -215,7 +215,7 @@ export default function ProjectsPage() {
                         className={cn(
                           "w-4 h-4 transition-colors duration-200",
                           proj.is_favorite
-                            ? "fill-[#273B3A] text-[#FAFAFA]"
+                            ? "fill-[#CDB49E] text-[#FAFAFA]"
                             : "text-[#0A0A0A] hover:text-[#FAFAFA]"
                         )}
                       />
@@ -365,7 +365,7 @@ export default function ProjectsPage() {
                             className={cn(
                               "w-3.5 h-3.5",
                               proj.is_favorite
-                                ? "fill-[#273B3A] text-[#FAFAFA]"
+                                ? "fill-[#CDB49E] text-[#FAFAFA]"
                                 : "text-[#0A0A0A] hover:text-[#FAFAFA]"
                             )}
                           />

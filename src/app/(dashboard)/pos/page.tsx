@@ -68,7 +68,7 @@ function ProductCard({
       disabled={isOutOfStock}
       className={cn(
         "relative bg-[#0A0A0A] border border-[#262626] rounded-xl p-4 text-left transition-all duration-200 group",
-        "hover:border-[#262626]/50 hover:shadow-lg hover:shadow-[#273B3A]/5",
+        "hover:border-[#262626]/50 hover:shadow-lg hover:shadow-[#CDB49E]/5",
         "focus:outline-none focus:ring-2 focus:ring-[#CDB49E]/50",
         isOutOfStock && "opacity-50 cursor-not-allowed"
       )}
@@ -283,7 +283,7 @@ function PaymentModal({
                   value={cashAmount}
                   onChange={(e) => setCashAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-2xl text-center text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
+                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-2xl text-center text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors"
                   autoFocus
                 />
               </div>
@@ -328,7 +328,7 @@ function PaymentModal({
                   value={splitCash}
                   onChange={(e) => setSplitCash(e.target.value)}
                   placeholder="0.00"
-                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
+                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-lg text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors"
                 />
               </div>
               <div>
@@ -338,7 +338,7 @@ function PaymentModal({
                   value={splitCard}
                   onChange={(e) => setSplitCard(e.target.value)}
                   placeholder="0.00"
-                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
+                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-lg text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors"
                 />
               </div>
               <div className="p-3 bg-[#0A0A0A] rounded-lg">
@@ -492,7 +492,7 @@ function SessionStartModal({
               type="text"
               value={form.cashierName}
               onChange={(e) => setForm({ ...form, cashierName: e.target.value })}
-              className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
+              className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors"
             />
           </div>
           <div>
@@ -501,7 +501,7 @@ function SessionStartModal({
               type="text"
               value={form.registerName}
               onChange={(e) => setForm({ ...form, registerName: e.target.value })}
-              className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
+              className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors"
             />
           </div>
           <div>
@@ -510,7 +510,7 @@ function SessionStartModal({
               type="number"
               value={form.openingBalance}
               onChange={(e) => setForm({ ...form, openingBalance: e.target.value })}
-              className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors"
+              className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#262626] rounded-lg text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors"
             />
           </div>
         </div>
@@ -644,7 +644,7 @@ export default function POSPage() {
               placeholder="Search products or scan barcode..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-12 py-3 bg-[#0A0A0A] border border-[#262626] rounded-xl text-[#FAFAFA] placeholder-[#273B3A] focus:outline-none focus:border-[#262626] transition-colors text-lg"
+              className="w-full pl-12 pr-12 py-3 bg-[#0A0A0A] border border-[#262626] rounded-xl text-[#FAFAFA] placeholder-[#555555] focus:outline-none focus:border-[#262626] transition-colors text-lg"
             />
             <Barcode className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#FAFAFA]" />
           </form>

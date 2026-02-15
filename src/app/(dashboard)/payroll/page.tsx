@@ -63,7 +63,7 @@ async function generateT4(employeeName: string, ytdData: {
   const totalTax = ytdData.federalTax + ytdData.provincialTax;
   const html = `
 <div class="t4" style="max-width: 800px; margin: 0 auto; background: white; border: 2px solid #000; font-family: Arial, sans-serif;">
-  <div style="background: #E6D4C7; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+  <div style="background: #0A0A0A; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
     <h1 style="font-size: 24px; margin: 0;">T4</h1>
     <div style="font-size: 28px; font-weight: bold;">${year}</div>
   </div>
@@ -453,9 +453,9 @@ function exportPayRunToCSV(payRun: PayRun) {
 async function generatePayStubPDF(stub: PayStub, payRunName: string) {
   const html = `
 <div class="stub" style="max-width: 800px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-  <div style="background: linear-gradient(135deg, #E6D4C7 0%, #E6D4C7 100%); color: white; padding: 30px;">
+  <div style="background: linear-gradient(135deg, #0A0A0A 0%, #0A0A0A 100%); color: white; padding: 30px;">
     <h1 style="font-size: 24px; margin: 0 0 5px 0;">PAY STUB</h1>
-    <p style="color: #273B3A; font-size: 14px; margin: 0;">${payRunName}</p>
+    <p style="color: #FAFAFA; font-size: 14px; margin: 0;">${payRunName}</p>
     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 20px;">
       <div>
         <div style="font-size: 18px; font-weight: 600;">Atlas ERP</div>
@@ -463,7 +463,7 @@ async function generatePayStubPDF(stub: PayStub, payRunName: string) {
       </div>
       <div style="text-align: right;">
         <div style="font-size: 12px; color: #888;">PAY DATE</div>
-        <div style="font-size: 16px; font-weight: 600; color: #273B3A;">${new Date(stub.payDate).toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
+        <div style="font-size: 16px; font-weight: 600; color: #FAFAFA;">${new Date(stub.payDate).toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
       </div>
     </div>
   </div>
@@ -527,7 +527,7 @@ async function generatePayStubPDF(stub: PayStub, payRunName: string) {
 
   <div style="background: #111; color: white; padding: 25px 30px; display: flex; justify-content: space-between; align-items: center;">
     <div style="font-size: 14px; color: #888;">NET PAY</div>
-    <div style="font-size: 32px; font-weight: 700; color: #273B3A;">$${stub.netPay.toFixed(2)}</div>
+    <div style="font-size: 32px; font-weight: 700; color: #FAFAFA;">$${stub.netPay.toFixed(2)}</div>
   </div>
 
   <div style="background: #f9f9f9; padding: 20px 30px;">

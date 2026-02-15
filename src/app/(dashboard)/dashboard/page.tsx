@@ -72,7 +72,7 @@ function getFormattedDate(): string {
 
 function Sparkline({
   data,
-  color = "#273B3A",
+  color = "#CDB49E",
   height = 32,
   width = 80,
 }: {
@@ -526,7 +526,7 @@ export default function DashboardPage() {
             <div className="p-2 rounded-lg bg-[rgba(156,74,41,0.15)]">
               <Clock className="w-4 h-4 text-[#FAFAFA]" />
             </div>
-            <Sparkline data={sparkOutstanding} color="#273B3A" />
+            <Sparkline data={sparkOutstanding} color="#CDB49E" />
           </div>
           <p className="text-2xl font-bold text-[#FAFAFA] tracking-tight">
             {formatCurrency(stats.totalOutstanding)}
@@ -722,7 +722,7 @@ export default function DashboardPage() {
                 <div key={i} className="flex gap-4 group">
                   {/* Timeline line + dot */}
                   <div className="flex flex-col items-center">
-                    <div className={`w-2.5 h-2.5 rounded-full ${event.dotColor} flex-shrink-0 mt-1.5 ring-4 ring-[#E6D4C7]`} />
+                    <div className={`w-2.5 h-2.5 rounded-full ${event.dotColor} flex-shrink-0 mt-1.5 ring-4 ring-[#0A0A0A]`} />
                     {i < TIMELINE_EVENTS.length - 1 && (
                       <div className="w-px flex-1 bg-[#0A0A0A] my-1" />
                     )}
